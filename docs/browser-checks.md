@@ -58,9 +58,9 @@ Used `scripts/preview-restoration.mjs`, an explicitly labeled in-memory visual f
 
 Resized a dedicated Safari window from approximately 1675×1134 to a screenshot size of **1030×703** (approximately 1030×651 page content, inferred from visible browser chrome; CSS viewport was not instrumented). No minimum-window banner appeared. At this size, the first-use dialog fit, the footer remained reachable, the mission sidebar scrolled, and all sixteen location names were readable in the Map menu. Canvas location labels are decorative and too small to read comfortably at this size; the Map menu supplies the same names as text. Saved Extra large text (24px), opened Map with the keyboard, and observed a visible focus outline and a scrollable dialog. The review window was restored to its prior approximate size. This is layout evidence only, not lowest-spec performance or measured FPS evidence.
 
-## Remaining control matrix (final activity revision)
+## Historical start of the control matrix (final activity revision)
 
-The later targeting revision requires six hits at each of three sites with a preparation signal; the later routing revision adds required relays and cable budgets. Earlier targeting/routing observations above describe the earlier versions and **do not certify these final revisions**. Rewards redemption and the optional selected-target automatic confirmation also still need browser checks.
+This section records the earlier incomplete review; the dated chapter runs below subsequently complete the bounded 48-cell matrix. The later targeting revision requires six hits at each of three sites with a preparation signal; the later routing revision adds required relays and cable budgets. Earlier targeting/routing observations above describe the earlier versions and **do not certify these final revisions**. Rewards redemption and the optional selected-target automatic confirmation also still need browser checks.
 
 A full eight-chapter × keyboard/pointer matrix was started but could not safely proceed: native Safari repeatedly reported that the user changed the application and switched back to the original 4173 window. A dedicated Chrome tab then showed unexpected typed text that this reviewer had not entered. Browser input was stopped to avoid competing with user activity. Direct Safari tab control and the isolated in-app browser were unavailable through the installed computer-use surface. No chapter-one gameplay was completed in this attempted matrix. The isolated chapter-one server was stopped. Source checks and pure route-cost, restoration, safe-preference, and device-policy tests are separate evidence; they do not replace the pending browser matrix.
 
@@ -446,4 +446,32 @@ The selected-auto-confirm screenshot was visually reviewed by the root agent: it
 
 Artifacts: [chapter 5 pointer completion](../test-results/chapter5-pointer-complete.jpg), [selected-only automatic confirmation](../test-results/chapter5-pointer-selected-auto-confirm.jpg), and [learning completion retained after refresh](../test-results/chapter5-pointer-learning-persisted.jpg).
 
-This closes **M5 pointer**, **Q5.1 pointer**, and **Q5.2 pointer**, bringing the matrix to **45 of 48** cells. Chapter 5 keyboard remains pending. This is a pointer completion pass using the available selected-target confirmation alternative, on the frozen review source. It does not establish human timing, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
+This closes **M5 pointer**, **Q5.1 pointer**, and **Q5.2 pointer**, bringing the matrix to **45 of 48** cells. Chapter 5 keyboard remained pending at this point; its completed run is recorded below. This is a pointer completion pass using the available selected-target confirmation alternative, on the frozen review source. It does not establish human timing, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
+
+
+## Chapter 5 keyboard-only, final revision, 2026-11-09
+
+The root agent completed this automated native Safari check from the detached review checkout **`/tmp/second-nature-trail-browser-f1218bf`**, frozen at **`f1218bf`**, retaining runtime **`10a674c`**, UI **`f012152`**, and the waiting preview helper. It used verified NVM **Node v24.20.0** and Safari **27.2 (21625.2.8.18.4)**. The outer window was **1447×889**; the CSS viewport was not measured.
+
+Fresh in-memory session **69069** used chapter 5 with `--wait-for-start`, beginning the normal full **300-second** window after setup. Both visual-choice radios were initially unselected; setup explicitly chose friendly robots by pointer and left the Keyboard preference. The first chapter observation showed **04:56**. **All gameplay after entry used keyboard input**, beginning with Tab, Tab, Enter from the page to activate the objective. The owned preview was stopped with Ctrl+C and exited with code 0.
+
+In round 2, warning-marked target A was visible. Key 1 selected it and Space, sent after **Signal open**, manually resolved the first hit: **1 of 6**, with Resolve disabled afterward. Close retained focus. Four Tab presses reached the unchecked automatic-confirmation checkbox, focus was verified, and Space toggled it on. With no target selected, the count remained 1. Four Shift+Tab presses returned to verified Close focus.
+
+The remaining **17 hits** used number keys 1, 2, or 3, selected only from the warning marker in a fresh visible observation. The enabled alternative confirmed the selected target; it did not choose a target. In round 6, target C was selected during **Prepare** while the count was 2. With no further action, the next observation in round 7 showed **Prepare**, all target choices off, and count 3. That establishes completion between observations and selection reset; it does **not** directly observe the exact instant the earlier signal opened. The selected-auto-confirm artifact captures round 7, the reset choices, count 3, and the enabled checkbox.
+
+| Observed milestone | Score / progress | Chapter time remaining |
+|---|---|---|
+| Apartment block: six valid hits, round 9 | 20 / 1 of 3 sites | 03:41 |
+| Maple home: six valid hits, round 15 | 40 / 2 of 3 sites | 02:48 |
+| Elm home: six valid hits, round 21 | 60 / 3 of 3 sites | 01:54 |
+| Q5.1: A clear description and location (choice 1), first answer correct | 70 | 01:41 |
+| Q5.2: No; confirm the package and service terms (choice 2), first answer correct | 80 | 01:31 |
+| Cmd+R, then three Tab presses and Enter to reopen Learning encounters | 80 / 3 of 3; both completion checkmarks retained | Refresh at 01:27 |
+
+One helper guard refused a call before round 15 because the previous selection was still active; it took no action, and play continued after a fresh accessibility observation. No native-input interruption, gameplay error, or decoy penalty occurred. There was no pointer gameplay.
+
+Artifacts: [chapter 5 keyboard completion](../test-results/chapter5-keyboard-complete.jpg), [selected automatic confirmation and round reset](../test-results/chapter5-keyboard-selected-auto-confirm.jpg), and [learning completion retained after refresh](../test-results/chapter5-keyboard-learning-persisted.jpg).
+
+This closes **M5 keyboard**, **Q5.1 keyboard**, and **Q5.2 keyboard**, completing **48 of 48** main-objective/knowledge keyboard/pointer cells on the frozen Safari review baseline. Both chapter-5 methods used **one manual hit plus 17 deliberately selected auto-confirm hits**, completed all three sites under the normal unextended clock, answered both encounters correctly on the first attempt, and retained **80 points / 3 of 3 / both learning checkmarks** after refresh. This is outcome parity for the supported alternative, not an 18-hit all-manual check or human-speed proof.
+
+The full platform matrix, novice/human rehearsal, optional activities, social controls, safety sequences, and host/presentation review remain separate open gates. These browser observations do not automatically certify later runtime changes or the concurrent capacity run.
