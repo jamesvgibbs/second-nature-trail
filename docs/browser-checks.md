@@ -419,3 +419,31 @@ Before trip 2, the visible inventory showed **one carried cable / reserve six**;
 Artifacts: [chapter 1 keyboard completion](../test-results/chapter1-keyboard-complete.jpg) and [learning completion retained after refresh](../test-results/chapter1-keyboard-learning-persisted.jpg).
 
 This closes **M1 keyboard**, **Q1.1 keyboard**, and **Q1.2 keyboard**, bringing the matrix to **42 of 48** cells. Only chapter **5** remains pending for both methods. The separate chapter-1 runs completed identical delivery choices, recorded both knowledge answers correctly on the first attempt, and retained **80 points / 3 of 3 / both learning checkmarks** after refresh. This is observed outcome equivalence on the frozen source, not a human timing or usability claim, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
+
+
+## Chapter 5 pointer-only, final revision, 2026-11-09
+
+The root agent completed this automated native Safari check from the detached review checkout **`/tmp/second-nature-trail-browser-f1218bf`**, frozen at **`f1218bf`**, retaining runtime **`10a674c`**, UI **`f012152`**, and the waiting preview helper. It used verified NVM **Node v24.20.0** and Safari **27.2 (21625.2.8.18.4)**. The outer window was **1447×889**; the CSS viewport was not measured.
+
+Fresh in-memory session **21198** used chapter 5 with `--wait-for-start`, beginning the normal full **300-second** window after setup. Both visual-choice radios were initially unselected; friendly robots were explicitly chosen and Keyboard remained the preference. The first chapter observation showed **04:52**. **All gameplay after entry used pointer input.** The owned preview was stopped with Ctrl+C and exited with code 0.
+
+At the first outbreak, play began in round 4. The reviewer clicked warning-marked target B, verified **Signal open**, and manually clicked Resolve. The count became **1 of 6**, and Resolve was disabled after the hit. In round 5 all target choices reset to off and the count remained 1. In round 6, enabling the selected-target automatic-confirmation checkbox without choosing a target left the count unchanged.
+
+The subsequent **17 hits** each required a deliberate pointer click on the currently visible warning-marked target, with the enabled alternative confirming that selected target when the signal was open. This run therefore verifies **one manual hit plus 17 selected auto-confirm hits**, not 18 manual confirmations. It does not establish that every target was selected before the preparation signal ended. Selection reset each round, the checkbox preference persisted, and the global one-action-per-round restriction carried across sites.
+
+| Observed milestone | Score / progress | Chapter time remaining |
+|---|---|---|
+| Apartment block: six valid hits | 20 / 1 of 3 sites | 03:10 |
+| Maple home: six valid hits | 40 / 2 of 3 sites | 02:15 |
+| Elm home: six valid hits | 60 / 3 of 3 sites | 01:22 |
+| Q5.1: A clear description and location (choice 1), first answer correct | 70 | 01:11 |
+| Q5.2: No; confirm the package and service terms (choice 2), first answer correct | 80 | 01:02 |
+| Clicked reload, then reopened Learning encounters by pointer | 80 / 3 of 3; both completion checkmarks retained | Refresh at 00:57 |
+
+Two computer-use calls encountered invalid or stale element IDs: before the first objective click and during a rapidly changing target view. Fresh accessibility observations and newly derived indices resolved both. A helper guard also refused one call before the current round ended, without acting; play proceeded from fresh state. These were tool-control recoveries, not gameplay request errors. No gameplay request error, penalty, native-app interruption, or keyboard gameplay occurred.
+
+The selected-auto-confirm screenshot was visually reviewed by the root agent: it shows three friendly robots, a warning icon, the checked alternative, round 10, all target choices off, and an unchanged **3 of 6** count while **Signal open** is displayed. It supports the observed requirement to select a target even when automatic confirmation is enabled.
+
+Artifacts: [chapter 5 pointer completion](../test-results/chapter5-pointer-complete.jpg), [selected-only automatic confirmation](../test-results/chapter5-pointer-selected-auto-confirm.jpg), and [learning completion retained after refresh](../test-results/chapter5-pointer-learning-persisted.jpg).
+
+This closes **M5 pointer**, **Q5.1 pointer**, and **Q5.2 pointer**, bringing the matrix to **45 of 48** cells. Chapter 5 keyboard remains pending. This is a pointer completion pass using the available selected-target confirmation alternative, on the frozen review source. It does not establish human timing, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
