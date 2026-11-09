@@ -53,17 +53,25 @@ export function instrumentProfile(app, { preparedStatements = [] } = {}) {
   let enabled=false,currentBatch=null,restored=false;
   const record=(name,ms)=>{if(enabled)(samples[name]??=[]).push(ms)};
   const measure=(name,fn)=>{const start=performance.now();try{return fn()}finally{record(name,performance.now()-start)}};
+  function finishCommandScope() {
+    if(enabled && currentBatch?.commandStartedAt!==undefined) {
+      const ms=performance.now()-currentBatch.commandStartedAt;
+      record('commandScopeIncludingValidation',ms);currentBatch.commandScopeMs+=ms;delete currentBatch.commandStartedAt;
+    }
+  }
   const originalClone=globalThis.structuredClone,originalStringify=JSON.stringify;
   globalThis.structuredClone=function(value,...rest){
-    const category=value===app.engine.state?'batchBackupClone':value?.players&&!value.event&&!value.actions&&!value.requests?'commandCheckpointClone':'otherClone';
-    if(enabled && category==='batchBackupClone')currentBatch={commands:0,startedAt:performance.now(),backupCloneMs:0,checkpointCloneMs:0,dispatchMs:0,serializationMs:0,sqliteWriteMs:0,commitMs:0};
+    const category=value===app.engine.state?'batchBackupClone':value?.ranked&&value?.phase&&!value.event&&!value.actions&&!value.requests?'commandCheckpointClone':value?.id&&Array.isArray(value.progress)&&Array.isArray(value.items)?'commandPlayerClone':'otherClone';
+    if(enabled && category==='batchBackupClone')currentBatch={commands:0,startedAt:performance.now(),commandScopeMs:0,backupCloneMs:0,checkpointCloneMs:0,playerCloneMs:0,dispatchMs:0,serializationMs:0,sqliteWriteMs:0,commitMs:0};
+    if(enabled && currentBatch && category==='commandCheckpointClone'){finishCommandScope();currentBatch.commandStartedAt=performance.now()}
     const start=performance.now();try{return originalClone(value,...rest)}finally{
       const ms=performance.now()-start;record(category,ms);
-      if(enabled&&currentBatch){if(category==='batchBackupClone')currentBatch.backupCloneMs+=ms;if(category==='commandCheckpointClone'){currentBatch.checkpointCloneMs+=ms;currentBatch.commands++}}
+      if(enabled&&currentBatch){if(category==='batchBackupClone')currentBatch.backupCloneMs+=ms;if(category==='commandCheckpointClone'){currentBatch.checkpointCloneMs+=ms;currentBatch.commands++}if(category==='commandPlayerClone'){currentBatch.checkpointCloneMs+=ms;currentBatch.playerCloneMs+=ms}}
     }
   };
   JSON.stringify=function(value,...rest){
     if(value!==app.engine.state)return originalStringify(value,...rest);
+    finishCommandScope();
     const start=performance.now();try{return originalStringify(value,...rest)}finally{
       const ms=performance.now()-start;record('stateSerialization',ms);if(enabled&&currentBatch)currentBatch.serializationMs+=ms;
     }
@@ -107,7 +115,7 @@ export function instrumentProfile(app, { preparedStatements = [] } = {}) {
   app.server.prependListener('request',onRequest);
   return {
     start(){for(const key of Object.keys(samples))delete samples[key];batches.length=0;requestArrivals.clear();enabled=true},
-    stop(){enabled=false;return {stageTimingMs:Object.fromEntries(Object.entries(samples).map(([k,v])=>[k,distribution(v)])),batches:clone(batches),notes:['Stage times overlap: dispatch contains engine tick/clone work; do not add every category.','httpArrivalToDispatch includes body parsing, queue delay, batch backup and preceding commands; it is not pure enqueue wait.','Hooks add measurement overhead equally to baseline/candidate; CPU-profile runs should use matching flags.']}},
+    stop(){enabled=false;return {stageTimingMs:Object.fromEntries(Object.entries(samples).map(([k,v])=>[k,distribution(v)])),batches:clone(batches),notes:['Stage times overlap: commandScopeIncludingValidation includes checkpoint clones, dispatch, proxy validation and command-loop overhead; dispatch includes engine tick/clone work. Do not add every category.','httpArrivalToDispatch includes body parsing, queue delay, batch backup and preceding commands; it is not pure enqueue wait.','Hooks add measurement overhead equally to baseline/candidate; CPU-profile runs should use matching flags.']}},
     restore(){if(restored)return;restored=true;enabled=false;globalThis.structuredClone=originalClone;JSON.stringify=originalStringify;app.server.removeListener('request',onRequest);for(const undo of wrapped.reverse())undo()},
   };
 }
@@ -115,7 +123,7 @@ export function instrumentProfile(app, { preparedStatements = [] } = {}) {
 export async function runLateEventProfile({journalPath,outputPath,waves=10,warmupWaves=2,waveGapMs=1000,movement=false,cpuProfilePath=null,label='baseline'}) {
   if(!Number.isInteger(waves)||waves<1||waves>100||!Number.isInteger(warmupWaves)||warmupWaves<0||warmupWaves>10||!Number.isFinite(waveGapMs)||waveGapMs<0)throw Error('Invalid profile options');
   const journalBytes=readFileSync(journalPath),journal=JSON.parse(journalBytes),state=reconstructProfileState(journal);
-  const sourceHashes=Object.fromEntries(['engine.mjs','server.mjs','content.mjs','scripts/profile-late-event.mjs'].map(path=>[path,sha(readFileSync(new URL('../'+path,import.meta.url)))]));
+  const sourceHashes=Object.fromEntries(['engine.mjs','server.mjs','content.mjs','command-checkpoint.mjs','scripts/profile-late-event.mjs'].map(path=>[path,sha(readFileSync(new URL('../'+path,import.meta.url)))]));
   const temp=mkdtempSync(join(tmpdir(),'trail-late-profile-')),dbPath=join(temp,'event.sqlite');
   const db=new DatabaseSync(dbPath),identities=Object.keys(state.players),tokens=new Map(identities.map((id,i)=>[id,`synthetic-profile-invitation-${i}`]));
   db.exec('CREATE TABLE game(id INTEGER PRIMARY KEY,state TEXT NOT NULL);CREATE TABLE invitations(hash TEXT PRIMARY KEY,player TEXT NOT NULL,name TEXT NOT NULL)');

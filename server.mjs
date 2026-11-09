@@ -13,6 +13,7 @@ import {
 import { fileURLToPath } from "node:url";
 import { resolve, extname } from "node:path";
 import { Engine } from "./engine.mjs";
+import { createCommandCheckpoint } from "./command-checkpoint.mjs";
 
 const root = fileURLToPath(new URL(".", import.meta.url));
 const hash = (x) => createHash("sha256").update(x).digest("hex");
@@ -226,24 +227,21 @@ export function createGameServer({
         for (const command of batch) {
           // Recorded actions, audit, deduplication results and frozen awards are append-only.
           // Preserve those references instead of copying the entire event history per player.
-          const { actions, audit, requests, snapshot, ...mutable } =
-            engine.state;
-          const checkpoint = {
-            ...structuredClone(mutable),
-            actions,
-            audit,
-            requests,
-            snapshot,
-          };
+          const { actions, audit, requests } = engine.state;
+          const checkpoint = createCommandCheckpoint(
+            engine.state,
+            command.requestKey,
+          );
           const actionCount = actions.length,
             auditCount = audit.length;
           const priorRequest = command.requestKey
             ? requests[command.requestKey]
             : undefined;
           try {
-            accepted.push({ command, result: command.fn() });
+            const result = checkpoint.run(command.fn, () => engine.state);
+            accepted.push({ command, result });
           } catch (e) {
-            engine.state = checkpoint;
+            engine.state = checkpoint.rollback();
             actions.length = actionCount;
             audit.length = auditCount;
             if (command.requestKey) {
