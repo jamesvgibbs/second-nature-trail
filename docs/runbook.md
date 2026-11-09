@@ -53,3 +53,15 @@ Every intervention records operator, timestamp, and reason. An end-scoring actio
 Export the immutable snapshot, award allocation, and audit log from the authenticated operator route. Verify fifteen distinct qualifying recipients in a normal successful run; after skipped chapters or missing qualifiers, report the unawarded prizes and reasons. Compare displayed winners to exported winners before distributing prizes.
 
 Store exports and backups in the approved location. Apply the agreed retention period to invitations, sessions, event state, logs, and exports. Revoke operator credentials after handover. Retain source, frozen content, build instructions, deployment configuration, test evidence, and this runbook. Delivery and deletion dates remain unset until the organizer decides them.
+
+## Backup and restore commands
+
+Create a new backup file with the supplied SQLite backup helper. It supports a live WAL database, checks SQLite integrity, and refuses to overwrite an existing backup:
+
+```sh
+node scripts/backup.mjs data/event.sqlite /approved/private/location/event-backup.sqlite
+```
+
+For a restore rehearsal, stop the event server, preserve its existing files, and select the backup through a new `DB_PATH`. Start with the same frozen source/content version and verify progress before reopening access. A backup restore during competition requires an explicit explanation of any rollback to earlier scores.
+
+After final export, stop the event service. Keep its database and backups only for the agreed retention period. Any later event should use a fresh database and new operator/display credentials. Changing environment tokens alone does not revoke existing session cookies stored in the old event database.

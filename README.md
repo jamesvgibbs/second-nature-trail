@@ -18,7 +18,7 @@ npm test
 
 ## Event setup
 
-Set `HOST_TOKENS` to two comma-separated independent random credentials of at least 32 characters. Set `PRESENTATION_TOKEN` to a separate random read-only credential of at least32 characters. Store them in your hosting secret manager. Each authenticates a separately audited operator. Employee invitations never grant operator access. These operator tokens are an interim mechanism pending the organization's chosen sign-in provider.
+Set `HOST_TOKENS` to two comma-separated independent random credentials of at least 32 characters. Set `PRESENTATION_TOKEN` to a separate random read-only credential of at least 32 characters. Store them in your hosting secret manager. Each authenticates a separately audited operator. Employee invitations never grant operator access. These operator tokens are an interim mechanism pending the organization's chosen sign-in provider.
 
 Supply a JSON roster of `{ "id": "stable-employee-id", "name": "Display name" }` entries. Names are public to participants; email addresses are not required.
 

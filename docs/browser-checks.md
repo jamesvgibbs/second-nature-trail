@@ -35,3 +35,19 @@ Retested in Safari after the fix: saved the temporary insect-enabled test settin
 ## Limits
 
 No claim is made here about the employee three-minute onboarding target, a 95-minute real-user rehearsal, all eight chapters completed with each input method, phone/tablet hardware checks, previous browser versions, representative network latency, or rendering performance. Those remain separate acceptance evidence.
+
+## Finale spot check
+
+The chapter 8 preview transitioned automatically from its brag break to the finale. Clicking Restore a home filled the contribution meter and produced a distinct map tile labeled YOUR REPAIR and a confirmation identifying repair 1. The client was then corrected to display the server-authored finale ending and disable the participant's contribution button once their repair is recorded. This is a UI change; award snapshot and server contribution rules were unchanged.
+
+After reloading Safari, verified the authored success line was visible: “The neighborhood is back online. The AI has accepted a new job: labeling extension cords.” The button showed “✓ Your home is restored” and was disabled. The isolated preview remains on a safe game view.
+
+## Pointer-only mystery entry
+
+Added clickable discovered-clue letters, Backspace, and Clear answer while retaining the ordinary text field and the same server-validated reveal action. Helper-created buttons now explicitly use `type="button"`, so avatar, palette, and letter controls cannot accidentally submit enclosing forms. The disconnected action helper returns `null` consistently, preventing reconnect failures from being mistaken for successful setup or actions.
+
+First tested with an ordinary isolated chapter 8 preview: walked to AI headquarters and actually discovered the chapter's R clue. Opened the mystery and clicked R, Backspace, R, R, and Clear answer. The answer field visibly changed through R, empty, RR, and empty without typing or unintended submission. Clicking Reveal with only the R clue was correctly rejected with “Find all eight clues first.” This exposed a dialog feedback issue: the toast was behind the modal and absent from the accessibility tree. Feedback now appears in a live region inside the open dialog; after reload, the same rejection was present in Safari's accessibility tree. Also verified that changing an avatar after choosing visual preferences stayed on setup instead of submitting it.
+
+For the complete answer check, used **`scripts/preview-mystery.mjs`, a synthetic UI fixture** with all eight clues preloaded for Neighbor 1 in an in-memory database. The visible banner explicitly said: “UI FIXTURE ONLY: all eight clues are preloaded for Neighbor 1. They were not earned through gameplay.” This does not establish legitimate clue acquisition, balance, prize qualification, or an event result.
+
+Clicked the eight visible clue buttons N, E, I, G, H, B, O, R in order. Safari's accessibility tree showed the answer field value **NEIGHBOR**. Clicked Reveal the message with the pointer. The dialog closed. Refreshed and observed **✓ Mystery solved**, confirming the server-saved discovery flag. No typing was used to enter or submit this complete answer. The real event and capacity processes were not changed.

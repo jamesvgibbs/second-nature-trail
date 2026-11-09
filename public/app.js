@@ -120,6 +120,7 @@ const esc = (s) =>
   );
 const btn = (text, fn, cls = "") => {
   const b = document.createElement("button");
+  b.type = "button";
   b.textContent = text;
   b.className = cls;
   if (cls.split(" ").includes("choice"))
@@ -128,6 +129,20 @@ const btn = (text, fn, cls = "") => {
   return b;
 };
 function toast(text) {
+  if (modal.open) {
+    $("#toast").style.display = "none";
+    let feedback = $("#dialog-feedback");
+    if (!feedback) {
+      feedback = document.createElement("p");
+      feedback.id = "dialog-feedback";
+      feedback.className = "notice";
+      feedback.setAttribute("role", "status");
+      feedback.setAttribute("aria-live", "polite");
+      body.prepend(feedback);
+    }
+    feedback.textContent = text;
+    return;
+  }
   $("#toast").textContent = text;
   $("#toast").style.display = "block";
   clearTimeout(toast.timer);
@@ -173,7 +188,7 @@ async function act(type, fields = {}) {
   startAudio();
   if (!connected) {
     toast("Reconnecting. Your saved progress is safe; actions are paused.");
-    return;
+    return null;
   }
   try {
     const v = await api("/api/action", {
@@ -536,6 +551,7 @@ function accept(s) {
     state.me?.progress,
     state.me?.tutorial,
     state.me?.ready,
+    state.me?.mystery,
   ]);
   if ($("#mission") && signature !== missionSignature) {
     missionSignature = signature;
@@ -619,7 +635,7 @@ function renderMission() {
     html +=
       '<span class="chapter-count">HERE WE GO</span><h2>The trail<br>starts here.</h2><p>Pack some patience. The machines packed none.</p><div class="notice">The shared countdown is part of the first chapter’s five minutes.</div>';
   } else if (e.phase === "finale") {
-    html += `<span class="chapter-count">THE NEIGHBORHOOD FINALE</span><h2>Bring the<br>lights home.</h2><p>One last repair. One home at a time. Every neighbor gets a turn.</p><div class="progress-track"><div class="progress-fill" style="width:${Math.min(100, (100 * (e.finale?.contributors?.length || 0)) / (e.finale?.target || 1))}%"></div></div><p class="small">Award results are locked. This moment belongs to everyone.</p><div id="finale-action"></div>`;
+    html += `<span class="chapter-count">THE NEIGHBORHOOD FINALE</span><h2>Bring the<br>lights home.</h2><p>One last repair. One home at a time. Every neighbor gets a turn.</p><div class="progress-track"><div class="progress-fill" style="width:${Math.min(100, (100 * (e.finale?.contributors?.length || 0)) / (e.finale?.target || 1))}%"></div></div>${e.finale?.ending ? `<div class="notice" role="status">${esc(e.finale.ending)}</div>` : `<p class="small">${e.finale?.contributors?.length || 0} neighbors have contributed toward ${e.finale?.target || 1} repairs.</p>`}<p class="small">Award results are locked. This moment belongs to everyone.</p><div id="finale-action"></div>`;
   } else if (["awards", "closed"].includes(e.phase)) {
     html +=
       '<span class="chapter-count">HUMANS: STILL PRETTY GOOD</span><h2>A neighborhood<br>restored.</h2><p>For the fixers, the thinkers, and the people who stopped to help.</p>' +
@@ -662,7 +678,10 @@ function renderMission() {
       btn(progress?.secret ? "✓ Clue discovered" : "Look for a secret", () =>
         travel(1, "secret"),
       ),
-      btn("The neighborhood mystery", mystery),
+      btn(
+        me.mystery ? "✓ Mystery solved" : "The neighborhood mystery",
+        mystery,
+      ),
     );
     if (e.paused) {
       n.querySelectorAll("button").forEach((b) => (b.disabled = true));
@@ -689,6 +708,10 @@ function renderMission() {
         "primary",
       ),
     );
+  if ($("#finale-action button") && e.finale?.contributors?.includes(me.id)) {
+    $("#finale-action button").textContent = "✓ Your home is restored";
+    $("#finale-action button").disabled = true;
+  }
 }
 function contributionsHTML() {
   const c = state.event?.contributions || [];
@@ -1162,22 +1185,66 @@ function map() {
   });
 }
 function mystery() {
+  const chapterIndex = state.event.chapter;
   panel = "mystery";
   open(
     "The neighborhood mystery",
-    `<p>Eight districts. Eight overlooked clues. The AI missed a very human message.</p><p class="small">Your discovered clues:</p><div class="mystery">${districts.map((_, i) => esc(state.me.clues?.find((c) => c.chapter === i)?.letter || "_")).join(" ")}</div><form id="mystery-form"><label>Your answer<input id="mystery-answer" autocomplete="off" required></label><button class="primary">Reveal the message</button></form>`,
+    `<p>Eight districts. Eight overlooked clues. The AI missed a very human message.</p><p class="small">Your discovered clues:</p><div class="mystery">${districts.map((_, i) => esc(state.me.clues?.find((c) => c.chapter === i)?.letter || "_")).join(" ")}</div><form id="mystery-form"><label>Your answer<input id="mystery-answer" autocomplete="off" maxlength="64" required></label><p class="small">Type your answer or click your discovered letters. Both submit the same answer.</p><div id="mystery-letters" class="row" role="group" aria-label="Discovered clue letters"></div><div id="mystery-edit" class="row" style="margin:16px 0"></div><p id="mystery-entry-status" class="small" role="status" aria-live="polite"></p><button class="primary">Reveal the message</button></form>`,
+  );
+  const input = $("#mystery-answer");
+  const announce = () => {
+    $("#mystery-entry-status").textContent = input.value
+      ? `Your answer: ${input.value}`
+      : "Your answer is empty.";
+  };
+  for (const clue of [...(state.me.clues || [])].sort(
+    (a, b) => a.chapter - b.chapter,
+  )) {
+    const letter = btn(`${clue.letter} · chapter ${clue.chapter + 1}`, () => {
+      input.value = (input.value + clue.letter).slice(0, 64);
+      announce();
+    });
+    letter.setAttribute(
+      "aria-label",
+      `Add ${clue.letter}, clue from chapter ${clue.chapter + 1}`,
+    );
+    $("#mystery-letters").append(letter);
+  }
+  if (!state.me.clues?.length)
+    $("#mystery-letters").textContent =
+      "Discovered letters will appear here as you find chapter secrets.";
+  $("#mystery-edit").append(
+    btn(
+      "Backspace",
+      () => {
+        input.value = input.value.slice(0, -1);
+        announce();
+      },
+      "quiet",
+    ),
+    btn(
+      "Clear answer",
+      () => {
+        input.value = "";
+        announce();
+      },
+      "quiet",
+    ),
   );
   $("#mystery-form").onsubmit = async (e) => {
     e.preventDefault();
-    const r = await act("mystery", { answer: $("#mystery-answer").value });
+    const r = await act("mystery", {
+      answer: input.value,
+      expectedChapter: chapterIndex,
+    });
     if (r !== null) {
+      if (r.correct) close();
       toast(
         r.message ||
           (r.correct
             ? "Mystery solved."
             : "That message does not fit the clues yet."),
       );
-      if (r.correct) close();
     }
   };
 }
@@ -1869,42 +1936,155 @@ function standingsHTML() {
   );
 }
 function rulesHTML() {
-  const r = state.rules || {};
-  const rows = [
-    ["Version", r.version],
-    ["Cart capacity", `${r.storageLimit || 12} items`],
+  const r = state.rules;
+  if (!r) return "<p>The event rules are still loading.</p>";
+  const list = (values, suffix = "") =>
+    Object.entries(values || {})
+      .map(([item, value]) => `${item}: ${value}${suffix}`)
+      .join(" · ");
+  const planValue = (plan) =>
+    Object.entries(plan).reduce(
+      (sum, [item, quantity]) => sum + r.values[item] * quantity,
+      0,
+    );
+  const maxLoadValue = Math.max(...r.cargoPlans.map(planValue));
+  const maxima = r.chapterMaxima;
+  const maximumDescription =
+    new Set(maxima).size === 1
+      ? `${maxima[0]} points per chapter`
+      : maxima
+          .map(
+            (value, index) =>
+              `${state.world?.[index]?.title || `Chapter ${index + 1}`}: ${value}`,
+          )
+          .join("; ");
+  const groups = [
     [
-      "Item values",
-      Object.entries(r.values || {})
-        .map(([k, v]) => `${k}: ${v}`)
-        .join(" · "),
+      "Supplies",
+      [
+        [
+          "Storage",
+          `${r.storageLimit} tradable items. Starting allocation: ${list(r.allocation)}.`,
+        ],
+        ["Published item values", list(r.values)],
+        [
+          "Delivery cart",
+          `${r.cargoSlots} slots per load. Slot weights: ${list(r.cargoWeights)}.`,
+        ],
+        [
+          "Available loads",
+          r.cargoPlans
+            .map((plan) => `${list(plan)}; safe value ${planValue(plan)}`)
+            .join(" / "),
+        ],
+        [
+          "Personal reserve",
+          `${r.reservePerChapter} of each supply per chapter, used when that item runs out in your cart. Reserve items cannot be traded and do not count toward Top hoarder.`,
+        ],
+      ],
     ],
-    ["Chapter play", `${(r.chapterMs || 300000) / 60000} minutes`],
-    ["Bragging break", `${(r.breakMs || 120000) / 60000} minutes`],
-    ["Correct task", `${r.taskPoints || 20} points`],
-    ["Mistake", `${r.mistakePenalty || 5} point penalty`],
-    ["Harder challenge", `${r.challengePoints || 10} points`],
-    ["Correct first learning answer", `${r.quizPoints || 10} points`],
     [
-      "Confirmed assist",
-      `${r.assistPoints || 5} points maximum per chapter. Hero count: one completed assist per pair per chapter.`,
+      "Chapter scoring",
+      [
+        [
+          "Site work",
+          `${r.spatialTaskCount} inspected sites × ${r.spatialTaskPoints} points for each correct decision. Inspection itself earns no points. Applies to filters, identity, insurance, and rewards.`,
+        ],
+        [
+          "Cargo delivery",
+          `Each delivery earns round(useful cargo value ÷ ${maxLoadValue} × ${r.taskPoints}) points, at most ${r.taskPoints}. The shortcut reduces every delivered item's value by ${r.deliveryDamage}, with a minimum item value of zero.`,
+        ],
+        [
+          "Targeting and routing",
+          `${r.taskPoints} points per valid target resolved or valid home connection.`,
+        ],
+        [
+          "Fictional payments",
+          `${r.taskPoints} points when the full amount is paid before that cycle's deadline; zero for a late or incomplete payment. The chapter ranks on-time payments first, then retained budget.`,
+        ],
+        [
+          "Mistakes",
+          `Wrong site decisions, decoy hits, invalid routes, and wrong harder-challenge answers subtract ${r.mistakePenalty} chapter points, with a zero-point floor. Wrong site, target, or route decisions also subtract one from that chapter's primary ranking metric.`,
+        ],
+        [
+          "Harder challenge",
+          `${r.challengePoints} points once per chapter, after completing the main objective.`,
+        ],
+        [
+          "Learning encounters",
+          `${r.quizPoints} points for each correct first answer. Incorrect or unanswered encounters earn zero. Later retries are unscored.`,
+        ],
+        [
+          "Assists",
+          `At most ${r.assistPoints} bonus points per chapter. Further distinct completed assists can count toward Neighborhood hero, but add no more chapter points. Each player pair counts once per chapter; reciprocal repeats do not count.`,
+        ],
+        [
+          "All-round survivor",
+          `Fixed maxima: ${maximumDescription}. Each ranked chapter is normalized to 0–100, then averaged. Unplayed ranked chapters count as zero; skipped chapters are excluded.`,
+        ],
+        [
+          "Current objective",
+          `${state.chapter?.title || "Current chapter"}: ${state.chapter?.taskCount ?? "loading"} main-objective steps.`,
+        ],
+      ],
+    ],
+    [
+      "Timing",
+      [
+        [
+          "Chapter and break",
+          `${r.chapterMs / 60000} minutes of play, then ${r.breakMs / 60000} minutes of bragging. The opening ${r.countdownMs / 1000}-second countdown is included in chapter one's play window.`,
+        ],
+        [
+          "Target rounds",
+          `One attempt per ${r.targetRoundMs / 1000}-second round. Faster clicking earns no additional attempts.`,
+        ],
+        [
+          "Payment cycles",
+          `${r.budgetIncomes.length} cycles of ${r.budgetCycleMs / 1000} seconds, measured from the chapter opening. A cycle cannot be paid early. Its full payment must arrive before the deadline.`,
+        ],
+        [
+          "Payment amounts",
+          `Cycle income: ${r.budgetIncomes.join(" / ")}. Amount due: ${r.budgetDues.join(" / ")}. Retained budget carries forward; the optional decoration costs ${r.optionalExpense}. This budget cannot be traded.`,
+        ],
+        [
+          "Finale",
+          `${r.finaleMs / 60000} minutes. Award inputs are frozen before it begins; finale contributions cannot change prizes.`,
+        ],
+      ],
     ],
   ];
+  const names = {
+    chapter: "Chapter prize",
+    hoarder: "Top hoarder",
+    trailblazer: "Trailblazer",
+    hero: "Neighborhood hero",
+    intelligence: "Human intelligence champion",
+    discovery: "Easter egg hunter",
+    trader: "Master trader",
+    survivor: "All-round survivor",
+  };
   return (
-    '<table class="compact-table">' +
-    rows
-      .map(([a, b]) => `<tr><th>${esc(a)}</th><td>${esc(b)}</td></tr>`)
+    `<p class="small muted">Frozen ruleset: ${esc(r.version)}</p>` +
+    groups
+      .map(
+        ([title, rows]) =>
+          `<h3 style="margin-top:20px">${esc(title)}</h3><table class="compact-table">${rows.map(([label, value]) => `<tr><th>${esc(label)}</th><td>${esc(value)}</td></tr>`).join("")}</table>`,
+      )
       .join("") +
-    "</table>" +
-    `<h3 style="margin-top:20px">Who qualifies?</h3><p class="small">${Object.entries(
-      r.thresholds || {},
+    `<h3 style="margin-top:20px">Who qualifies?</h3><table class="compact-table">${Object.entries(
+      r.thresholds,
     )
-      .map(([k, v]) => `${esc(k)}: ${esc(v)}`)
+      .map(
+        ([key, value]) =>
+          `<tr><th>${esc(names[key] || key)}</th><td>${esc(value)}</td></tr>`,
+      )
       .join(
-        "<br>",
-      )}</p><h3>Ties and unawarded prizes</h3><p class="small">${esc(r.ties)}</p><p class="small">${esc(r.fallback)}</p><div class="notice">${esc(r.fiction || "All game financial outcomes are fictional.")}</div>`
+        "",
+      )}</table><h3 style="margin-top:20px">Published tie breakers</h3><p class="small">${esc(r.ties)}</p><h3>When no one qualifies</h3><p class="small">${esc(r.fallback)}</p><div class="notice">${esc(r.fiction)}</div>`
   );
 }
+
 function targeting(task) {
   panel = "targeting";
   open(
