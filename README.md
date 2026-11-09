@@ -10,7 +10,7 @@ Requires Node 24. No third-party runtime dependencies.
 DEMO=1 npm start
 ```
 
-Open http://localhost:4173/?invite=demo-1. There are twenty local test invitations, `demo-1` through `demo-20`. Open `/host` and use `local-host-one` or `local-host-two` for the two test operators. `/presentation` is the safe meeting display; its separate demo credential is `local-presentation`. These credentials are deliberately limited to demo mode. Never deploy with `DEMO=1`.
+Open http://localhost:4173/?invite=demo-1. There are twenty local test invitations, `demo-1` through `demo-20`. Open `/host` and use `local-host-one` or `local-host-two` for the two test operators. `/presentation` is the safe meeting display; its separate demo credential is `local-presentation`. To host and play simultaneously, use separate browsers or browser profiles. Tabs share the same sign-in. The host’s **Open safe presentation** link can share its existing operator sign-in without another login. These credentials are deliberately limited to demo mode. Never deploy with `DEMO=1`.
 
 To review one chapter after completing setup, start a waiting local preview:
 
@@ -18,7 +18,7 @@ To review one chapter after completing setup, start a waiting local preview:
 node scripts/preview-chapter.mjs 6 --wait-for-start
 ```
 
-Open the printed invitation, finish setup/practice, then press Enter in that terminal. The selected chapter starts once; earlier chapters remain visibly unplayed. Later chapters receive their full five-minute clock. Chapter 1 retains the normal countdown within its five-minute window. Without the flag, the existing immediate preview behavior is unchanged. This helper is not full-event timing evidence.
+Open the printed invitation, finish setup/practice, then press Enter in that terminal. The selected chapter starts once; earlier chapters remain visibly unplayed. Later chapters receive their full five-minute clock. The chapter-1 helper advances past the ten-second countdown, leaving about 4:50 to play; use the ordinary server and host controls to review the actual countdown. Without the flag, the existing immediate preview behavior is unchanged. This helper is not full-event timing evidence.
 
 ```sh
 npm test
