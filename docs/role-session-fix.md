@@ -20,11 +20,11 @@ The design remains one role per browser profile; it does not add simultaneous pl
 
 Actual binary: `/Users/jgibbs/.nvm/versions/node/v24.20.0/bin/node`, verified `v24.20.0`.
 
-- `node --test test/client-transport.test.mjs`: 11 passed, including real client-function adapter tests for 401 gating, stale callback isolation, lease failure, and role-conflict entry guidance. Last run: 52.38 ms total.
+- `node --test test/client-transport.test.mjs`: 13 passed after `7592d92`, including real client-function adapter tests for 401 gating, stale callback isolation, lease failure, and role-conflict entry guidance. Last run: 54.16 ms total.
 - `node --test --test-name-pattern='cross-role login preserves|host session opens safe display|explicit takeover revokes' test/integration-security.test.mjs`: 3 passed. The new HTTP test exercises all six cross-role directions, no Set-Cookie on rejection, continued original authority, preserved live player lease/action, same-role relogin, and role separation. Existing tests cover safe host/display streaming and explicit player takeover. Last run: 435.08 ms total.
-- Server/client syntax and whitespace checks passed. No full suite, load test, or browser interaction was run for this patch during the capacity run.
+- Server/client syntax and whitespace checks passed. No full suite or load test was run for this patch during the capacity run; bounded native checks are recorded below.
 
-Native browser regression of the new guidance and sign-in-required UI remains pending. The previously observed pause state does not prove authenticated no-submit behavior while paused; that separate check needs independent player/operator profiles. Review and merge are deferred until the active capacity run finishes.
+Bounded native regression of the new guidance and amended sign-in-required UI passed, as recorded below. The previously observed pause state does not prove authenticated no-submit behavior while paused; that separate check needs independent player/operator profiles. Review and merge are deferred until the active capacity run finishes.
 
 
 ## Native review follow-up: expired-session takeover
@@ -33,4 +33,11 @@ The root agent's native review of `42523bb` verified player-to-host conflict gui
 
 The same review exposed a recovery gap: restarting the isolated in-memory candidate server invalidated its cookies. The player showed RECONNECTING, and Resume here → Take over here remained there because `connect(true)` skipped the player authorization probe. That observation is a failed recovery check, not a sign-in-required pass.
 
-The follow-up probes player authorization for every connection attempt, including explicit takeover. A valid takeover ignores `otherClient` as intended, while 401 enters the existing SIGN-IN REQUIRED state before any new stream opens. Generation guards still discard stale probe completions. Added adapter regressions cover both expired-cookie takeover and authorized takeover with another client lease. Native retest of the amended candidate remains pending; the main/capacity build is unchanged.
+The follow-up probes player authorization for every connection attempt, including explicit takeover. A valid takeover ignores `otherClient` as intended, while 401 enters the existing SIGN-IN REQUIRED state before any new stream opens. Generation guards still discard stale probe completions. Added adapter regressions cover both expired-cookie takeover and authorized takeover with another client lease. The amended native retest passed as described below; the main/capacity build is unchanged.
+
+
+## Amended native recovery passed
+
+The root agent retested `7592d92` using in-memory candidate 95250 on port 4175: Safari demo-1 explicitly chose robots and reached CONNECTED. A clean stop followed by fresh in-memory candidate 89421 deliberately invalidated the tokens. Resume here → Take over here now opened Player sign-in required. Closing it left SIGN-IN REQUIRED / Sign-in help, with no Resume here action. Meet guide → Say hello reopened sign-in guidance without practice completion; Open invitation entry reached the real homepage form. Candidate 89421 stopped normally.
+
+This is synthetic authorization expiry, not a durability or restart-restoration test. Earlier `42523bb` cross-role checks preserved a usable player after rejected operator login, preserved host actions after rejected player login, and rendered safe host presentation without operator controls. The main-checkout browser ledger contains seven captures, including the failed initial recovery image explicitly labeled as historical failure. Wider authentication/network/platform and authenticated pause-no-submit checks remain open. No runtime merge has occurred; merge remains deferred until capacity completion.
