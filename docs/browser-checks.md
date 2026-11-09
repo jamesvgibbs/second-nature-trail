@@ -131,11 +131,35 @@ The root agent completed this automated native Safari run on **`81953ca`**, runt
 
 Artifacts: [cycle-3 early payment disabled](../test-results/chapter6-pointer-early-payment-disabled.jpg), [chapter 6 pointer completion](../test-results/chapter6-pointer-complete.jpg), and [learning completion retained after refresh](../test-results/chapter6-pointer-learning-persisted.jpg).
 
-This closes only **M6 pointer**, **Q6.1 pointer**, and **Q6.2 pointer**. Chapter 6 keyboard completion and input-method comparison remain pending. The observed timing describes this automated preview; it is not evidence of representative human performance, the complete browser/device matrix, or the outstanding safety/network regressions.
+This closes only **M6 pointer**, **Q6.1 pointer**, and **Q6.2 pointer**. At the end of this pointer run, chapter 6 keyboard completion and input-method comparison remained pending; the later keyboard result is recorded below. The observed timing describes this automated preview; it is not evidence of representative human performance, the complete browser/device matrix, or the outstanding safety/network regressions.
 
 
 ## Chapter 6 keyboard attempt excluded, 2026-11-09
 
 Fresh preview **22315** was stopped without a payment or knowledge encounter being attempted. Setup and travel consumed a reported 32 seconds while the preview clock was already running; on arrival, the first payment deadline had elapsed. This immediate preview also began chapter 6 ten seconds into the phase. The attempt is excluded from completion evidence and does not establish an input-method failure: normal event setup precedes competitive play.
 
-The next keyboard check is planned to use the optional preview `--wait-for-start` mode being added to the helper: finish setup first, then explicitly start the selected chapter at its proper opening with the normal 300-second window. This is a visible fixture-start boundary, not a hidden clock extension. No existing run was altered. The chapter-6 pointer pass on `81953ca` remains valid in its shorter, unextended preview window; M6/Q6.1/Q6.2 keyboard cells remain pending.
+The next keyboard check was planned to use the optional preview `--wait-for-start` mode: finish setup first, then explicitly start the selected chapter at its proper opening with the normal 300-second window. This is a visible fixture-start boundary, not a hidden clock extension. No existing run was altered. The chapter-6 pointer pass on `81953ca` remains valid in its shorter, unextended preview window; M6/Q6.1/Q6.2 keyboard cells remained pending at this point; the successful fresh run is recorded below.
+
+
+## Chapter 6 keyboard-only, final revision, 2026-11-09
+
+The root agent completed this automated native Safari check on source **`7cf4d16`**, a documentation-only successor to preview-helper revision **`2b20574`**, with unchanged runtime **`10a674c`** and UI **`f012152`**. It used the actual NVM **Node v24.20.0** binary and Safari **27.2 (21625.2.8.18.4)**. The outer window was **1379×851**; the CSS viewport was not measured.
+
+Fresh in-memory preview session **19487** ran `scripts/preview-chapter.mjs 6 --wait-for-start` with **`tty: true`**. Setup finished before the explicit terminal start; the first chapter accessibility observation showed **04:57** remaining. The clock then ran normally without pause or extension. Earlier session **80485** had closed stdin, remained in the lobby, and never started gameplay; its owned process 74425 was stopped before the fresh run. It contributes no gameplay evidence. Session 19487 was stopped cleanly after the successful check.
+
+After entry, all gameplay used **Tab, Return, and Escape**, with **Cmd+R** for refresh. There was no pointer gameplay.
+
+| Observed action | Result / timing |
+|---|---|
+| Cycle 1 arrival with 32 seconds until due; selected Pay 60; save 40 with 28 seconds until due, then confirmed | Cycle 2 showed retained 40, opening in 23 seconds, with Confirm disabled. Closed panel: score 20 / progress 1 of 3 at 04:33. |
+| Q6.1: No, first answer correct | Score 30 at 04:02. |
+| Cycle 2 opened with 29 seconds until due; selected Pay 50; save 80 with 26 seconds until due, then confirmed | Cycle 3 showed retained 80 + income 80 = 160, opening in 21 seconds, with Confirm disabled. Closed panel: score 50 / progress 2 of 3 at 03:47. |
+| Q6.2: Its actual reporting terms and eligibility, first answer correct | Score 60 at 03:26. |
+| Cycle 3 opened with 38 seconds until due; selected Pay 50; save 110 with 35 seconds until due, then confirmed | Score 80 / progress 3 of 3 at 03:15. |
+| Cmd+R at 03:07, then keyboard reopening of Learning encounters | Score 80 / progress 3 of 3 retained; both knowledge completion checkmarks observed. |
+
+The final action selected saving 110; the completed screen did not independently display that balance. One native-input interruption occurred before opening Q6.1. A fresh accessibility observation showed unchanged state with Close focused, and subsequent Tab input succeeded. No pointer gameplay was needed. No gameplay error or penalty was observed.
+
+Artifacts: [early payment disabled](../test-results/chapter6-keyboard-early-payment-disabled.jpg), [chapter 6 keyboard completion](../test-results/chapter6-keyboard-complete.jpg), and [learning completion retained after refresh](../test-results/chapter6-keyboard-learning-persisted.jpg).
+
+This closes **M6 keyboard**, **Q6.1 keyboard**, and **Q6.2 keyboard**, bringing the matrix to **12 of 48** cells. The separate pointer and keyboard checks both completed the same three on-time payments and both first knowledge answers correctly, then retained **80 points / 3 of 3 / both learning checkmarks** after refresh. Their start conditions differed: pointer used the older immediate preview's 10-second offset, while keyboard completed setup before the full normal chapter window began. This establishes observed outcome parity only, not matched human timing, general usability, other chapters/browsers, or the outstanding safety/network regressions.
