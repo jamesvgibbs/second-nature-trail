@@ -8,6 +8,7 @@ import {
   writeFileSync,
   rmSync,
   readFileSync,
+  existsSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -17,6 +18,11 @@ import { findPath, isWalkable } from "../public/world.mjs";
 import { nextWaypoint } from "./load-navigation.mjs";
 import { solveRoute } from "./load-routing.mjs";
 import { createProjection, reduceProjection } from "../public/projection.mjs";
+import {
+  createTimingRecorder,
+  quantile,
+  SCORING_ACTIONS,
+} from "./load-timings.mjs";
 
 const sourceHashes = Object.fromEntries(
   [
@@ -32,6 +38,7 @@ const sourceHashes = Object.fromEntries(
     "scripts/load.mjs",
     "scripts/load-navigation.mjs",
     "scripts/load-routing.mjs",
+    "scripts/load-timings.mjs",
   ].map((path) => [
     path,
     createHash("sha256")
@@ -42,6 +49,10 @@ const sourceHashes = Object.fromEntries(
 const duration = Number(process.env.LOAD_SECONDS || 3605);
 const joinWindow = Number(process.env.LOAD_JOIN_SECONDS || 60);
 const count = Number(process.env.LOAD_PLAYERS || 100);
+const out = resolve(process.env.LOAD_OUTPUT || "test-results/load-latest.json");
+const timingOut = out.replace(/\.json$/, "") + ".timings.json";
+if (existsSync(timingOut))
+  throw Error("Choose a fresh LOAD_OUTPUT; raw timings already exist");
 const startChapter = Number(process.env.LOAD_START_CHAPTER || 0);
 const variedStarts = process.env.LOAD_VARIED_STARTS === "1";
 if (variedStarts && startChapter === 0)
@@ -52,6 +63,7 @@ if (
   !Number.isFinite(joinWindow) ||
   joinWindow < 0 ||
   count < 2 ||
+  !Number.isInteger(count) ||
   count > 100 ||
   !Number.isInteger(startChapter) ||
   startChapter < 0 ||
@@ -82,6 +94,7 @@ const started = Date.now(),
   phaseSamples = [],
   clients = [],
   streams = [];
+const timings = createTimingRecorder();
 let requests = 0,
   seq = 0,
   stopping = false,
@@ -102,6 +115,9 @@ function project(c, incoming, kind, allowEpoch = false) {
   return c.state;
 }
 async function request(path, body, cookie, client) {
+  const sentAt = Date.now(),
+    phaseAtSend = app.engine.state.phase,
+    chapterAtSend = app.engine.state.chapter;
   const begin = performance.now();
   const r = await fetch(origin + path, {
     method: body === undefined ? "GET" : "POST",
@@ -117,20 +133,20 @@ async function request(path, body, cookie, client) {
   if (path === "/api/action" && r.ok) {
     const elapsed = performance.now() - begin;
     samples.push(elapsed);
-    if (
-      [
-        "task",
-        "quiz",
-        "tradeOffer",
-        "tradeConfirm",
-        "assist",
-        "challenge",
-        "secret",
-        "mystery",
-        "rewardRedeem",
-      ].includes(body.type)
-    )
-      scoringSamples.push(elapsed);
+    timings.record({
+      requestId: body.requestId,
+      type: body.type,
+      phaseAtSend,
+      chapterAtSend,
+      phaseAtConfirm: app.engine.state.phase,
+      chapterAtConfirm: app.engine.state.chapter,
+      sentAt,
+      confirmedAt: Date.now(),
+      durationMs: elapsed,
+      httpStatus: r.status,
+      result: value.result,
+    });
+    if (SCORING_ACTIONS.includes(body.type)) scoringSamples.push(elapsed);
   }
   if (!r.ok) {
     const key = `${r.status}: ${value.error}`;
@@ -639,20 +655,21 @@ try {
   await app.close();
   samples.sort((a, b) => a - b);
   scoringSamples.sort((a, b) => a - b);
-  const scoreP = (q) =>
-    scoringSamples.length
-      ? scoringSamples[
-          Math.min(
-            scoringSamples.length - 1,
-            Math.floor(scoringSamples.length * q),
-          )
-        ]
-      : null;
-  const p = (q) =>
-    samples.length
-      ? samples[Math.min(samples.length - 1, Math.floor(samples.length * q))]
-      : null;
+  const scoreP = (q) => quantile(scoringSamples, q);
+  const p = (q) => quantile(samples, q);
   const elapsed = (Date.now() - started) / 1000;
+  const timingArtifact = timings.export({
+    sourceHashes,
+    nodeVersion: process.version,
+    rulesVersion: RULES.version,
+    contentHash: app.engine.state.contentHash,
+    requestedPlayers: count,
+    startedAt: new Date(started).toISOString(),
+    syntheticPriorActions: Number(process.env.LOAD_LEDGER_PREFILL || 0),
+    syntheticVariedNearSiteStarts: variedStarts,
+    startChapter,
+    network: "localhost; clients and server share this process",
+  });
   const clockLags = phaseSamples
     .map((x) => x.arrivalLagMs)
     .filter((x) => Number.isFinite(x) && x >= 0)
@@ -720,6 +737,10 @@ try {
     network: "localhost; not the representative company network",
     requests,
     confirmedActionSamples: samples.length,
+    rawTimingArtifact: timingOut,
+    rawTimingComplete: timingArtifact.complete,
+    rawTimingRecords: timingArtifact.recordCount,
+    rawTimingDropped: timingArtifact.dropped,
     tradeCompletions,
     reconnectsAfterThirtySecondOutage: reconnects,
     latencyMs: { p50: p(0.5), p95: p(0.95), p99: p(0.99) },
@@ -748,10 +769,11 @@ try {
       "Phase observations are raw arrival times; no one-second clock compliance claim",
     ],
   };
-  const out = resolve(
-    process.env.LOAD_OUTPUT || "test-results/load-latest.json",
-  );
   mkdirSync(resolve(out, ".."), { recursive: true });
+  writeFileSync(timingOut, JSON.stringify(timingArtifact) + "\n", {
+    flag: "wx",
+    mode: 0o600,
+  });
   writeFileSync(out, JSON.stringify(result, null, 2));
   writeFileSync(
     out.replace(/\.json$/, ".export.json"),
