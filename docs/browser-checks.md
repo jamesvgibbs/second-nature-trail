@@ -371,3 +371,27 @@ At Night market, selecting the community garden (choice 1, cost 4) produced **sc
 No gameplay error or penalty was observed. Artifacts: [chapter 7 keyboard main completion](../test-results/chapter7-keyboard-complete.jpg), [reward redemption and disabled controls](../test-results/chapter7-keyboard-rewards.jpg), and [learning completion retained after refresh](../test-results/chapter7-keyboard-learning-persisted.jpg).
 
 This closes **M7 keyboard**, **Q7.1 keyboard**, and **Q7.2 keyboard**, bringing the matrix to **36 of 48** cells. Chapters **2, 3, 4, 6, 7, and 8** now have both-method evidence; chapters **1 and 5** remain pending. Chapter 7's separate runs produced the same completed jobs, garden and welcome station, zero remaining balance, both first-correct answers, and persisted **80 points / 7 of 7 / both learning checkmarks**. This is observed outcome equivalence on the frozen source, not a human timing or usability claim, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
+
+
+## Chapter 1 pointer-only, final revision, 2026-11-09
+
+The root agent completed this automated native Safari check from the detached review checkout **`/tmp/second-nature-trail-browser-f1218bf`**, frozen at **`f1218bf`**, retaining runtime **`10a674c`**, UI **`f012152`**, and the waiting preview helper. It used verified NVM **Node v24.20.0** and Safari **27.2 (21625.2.8.18.4)**. Both saved artifacts measure **1447×889 pixels**, consistent with the observed outer window; the CSS viewport was not measured.
+
+Fresh in-memory session **94352** used chapter 1 with `--wait-for-start`. Setup began with both visual-choice radios unselected; the reviewer explicitly selected friendly robots and left the Keyboard preference. The chapter-1 waiting helper's **300 seconds include its 10-second countdown**, leaving **290 seconds of chapter play**, with no extension. The first observed play state showed **04:46**. **Every gameplay input after entry, including browser reload, used the pointer.** The owned preview was stopped with Ctrl+C and exited with code 0.
+
+Each of three full trips loaded **Connection kit: two cables, four slots, useful value 12** (choice 3), selected the **protected paved route** (choice 1), traveled to Paved detour and inspected/confirmed, then traveled to Broken highway and delivered/confirmed. Completing each stage automatically began walking to its next site.
+
+| Observed milestone | Score / progress | Chapter time remaining |
+|---|---|---|
+| Delivery 1 | 20 / 1 of 3 | 04:16 |
+| Delivery 2 | 40 / 2 of 3 | 03:50 |
+| Delivery 3 | 60 / 3 of 3 | 03:14 |
+| Q1.1: Plan the essential services and supplies (choice 1), first answer correct | 70 | 03:04 |
+| Q1.2: No; confirm the actual package (choice 2), first answer correct | 80 | 02:53 |
+| Clicked reload, then reopened Learning encounters by pointer | 80 / 3 of 3; both completion checkmarks retained | Refresh at 02:50 |
+
+Before trip 2, the visible inventory showed **one carried cable / reserve six**; before trip 3 it showed **zero carried cables / reserve five**. The total useful cargo value of 36 follows from three protected loads valued at 12 each; it was **not independently displayed after completion** and is recorded as an inference, not an additional rendered observation. No keyboard gameplay, native-input interruption, gameplay error, or penalty occurred.
+
+Artifacts: [chapter 1 pointer completion](../test-results/chapter1-pointer-complete.jpg) and [learning completion retained after refresh](../test-results/chapter1-pointer-learning-persisted.jpg).
+
+This closes **M1 pointer**, **Q1.1 pointer**, and **Q1.2 pointer**, bringing the matrix to **39 of 48** cells. Chapter 1 keyboard and chapter 5 both methods remain pending. These observations apply to the frozen review source and do not establish human timing, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
