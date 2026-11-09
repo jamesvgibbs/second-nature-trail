@@ -1,0 +1,35 @@
+{
+  "reviewedAt": "2026-11-09T22:00:24.403026+00:00",
+  "scope": "Read-only consistency and field inspection of synthetic profiling artifacts; no benchmark rerun",
+  "files": {
+    "checkpoint-copy-9252731.json": "dfa61467678fe6a840fd2dd20f8c95dababff48d3ec5a7b73f4073741730b8e1",
+    "checkpoint-copy-9252731.log": "dfa61467678fe6a840fd2dd20f8c95dababff48d3ec5a7b73f4073741730b8e1",
+    "late-profile-151c0e0-baseline-movement.json": "d3fd6eef04de68d32c45d27be2582cf6b08a5090a6f929e4930fe00ef413128e",
+    "late-profile-151c0e0-baseline-movement.log": "a5d1eadf2eb4c8d26a5591df72aca0bc8d06527ca4b6e3b10c72b2db728b53ed",
+    "late-profile-151c0e0-baseline-scoring.json": "fad2f97215091055ef0831c5a90ad08a0e08e3ef0c0e0804b2738402ceefdf19",
+    "late-profile-151c0e0-baseline-scoring.log": "d2e34a519f9e0417f3b1c8e1687fd68bf19b63f2edf9e3fd2ffc7d18e1dde38e",
+    "late-profile-151c0e0-baseline2-movement.json": "082e9176b643a74b52ed9335e071ca8beacb08a5f95191d6711567886d010ee0",
+    "late-profile-151c0e0-baseline2-movement.log": "a0e39663810907934abe84adf0897128f2a788db44124783b7c3f943e16e9a11",
+    "late-profile-151c0e0-baseline2-scoring.json": "3b2add7fa0677bb08e0eccffc40cbf98fa194ae97340589ffe31e6a26ca04a0f",
+    "late-profile-151c0e0-baseline2-scoring.log": "a66d5a6681a4251b2ae020fd2dacc46487862b6b8005e4ead6166679f0fba38e",
+    "late-profile-9252731-candidate1-movement.json": "0e8f27ef47f90ecb28989c36b8306e6143b2d1c702f6c0a029c8a4d0a6e0b590",
+    "late-profile-9252731-candidate1-movement.log": "d4e409d7ebdc10788e34e9ba59310df6976bdb6421cc90efde553e9f0ecb40cd",
+    "late-profile-9252731-candidate1-scoring.json": "eaf82b3ddee0098e50c747b3cf694a096329ce5209874c4d4b9d4d2b0d9000b6",
+    "late-profile-9252731-candidate1-scoring.log": "675aac4133b6b0dd512c0e77b095b97f7dcc1237e6bf3bc097a0f57f7efa187a",
+    "late-profile-9252731-candidate2-movement.json": "302389fcffda82d16b67dda1ca9551b7ce9bcfbeabd563ea8c4d3a5ff515f710",
+    "late-profile-9252731-candidate2-movement.log": "88a1d1753b56b7e0d4749d232465334d7b658c40568ff8c8b5c9e006c46a5df5",
+    "late-profile-9252731-candidate2-scoring.json": "830f976cd7b02f1007e8648f8eed395250712c2a401a2933d28ebe1542f1c649",
+    "late-profile-9252731-candidate2-scoring.log": "36a9d53bec3d55eee784bc45177536baf81922935906a27475d5489b62bb8341",
+    "late-profile-9252731-comparison.json": "cc5b9be81c3837c949a34ee64a2c60b07f070716c94ec4029d197df5c318a617"
+  },
+  "checks": {
+    "eightProfileSummariesMatchComparison": true,
+    "allProfilesUseSameEngineHash": true,
+    "allScoringSamples1000": true,
+    "allRecordedRequestErrorsEmpty": true,
+    "inputJournalHashMatchesPreservedJournal": true,
+    "credentialPayloadKeysAndKnownFixtureCredentialsAbsent": true,
+    "jsonCopySlowerInAllSixRounds": true
+  },
+  "releaseAcceptance": false
+}

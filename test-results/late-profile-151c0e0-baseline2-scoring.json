@@ -1,0 +1,1336 @@
+{
+  "label": "SYNTHETIC late-event profile; not a normal event or acceptance run",
+  "candidate": "baseline2-scoring",
+  "journalSha256": "4e6d449422a3326e1ee1095858195c3f1ed96e12dbb63dab8e024ed9e0166a20",
+  "sourceHashes": {
+    "engine.mjs": "b72996297521dd375ecabcacdcee6dc8579e8f3dbd1296b44bce3060272be2f5",
+    "server.mjs": "9b52b242fc18055f11c3c90117e0c67dde47790ed8d94f56269a8dc16a6abc2b",
+    "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+    "scripts/profile-late-event.mjs": "9fa89978ce0f2f6ada39db7114aeb4b26330bf203239db7d00333830c052e953"
+  },
+  "nodeVersion": "v24.20.0",
+  "platform": "darwin",
+  "network": "localhost clients/server same process",
+  "players": 100,
+  "operatorConnections": 2,
+  "presentationConnections": 1,
+  "waves": 10,
+  "warmupWaves": 2,
+  "waveGapMs": 1000,
+  "movement": false,
+  "measuredSeconds": 14.6417795,
+  "scoringLatencyMs": {
+    "count": 1000,
+    "p50": 454.73562499999935,
+    "p95": 490.17470799999865,
+    "p99": 492.7975829999996,
+    "max": 492.93987500000003,
+    "total": 458978.9914739994
+  },
+  "movementLatencyMs": {
+    "count": 0,
+    "p50": null,
+    "p95": null,
+    "p99": null,
+    "max": null,
+    "total": 0
+  },
+  "cpuMicroseconds": {
+    "user": 8014725,
+    "system": 673613
+  },
+  "eventLoopDelayMs": {
+    "p50": 10.002431,
+    "p95": 85.458943,
+    "p99": 370.671615,
+    "max": 421.003263
+  },
+  "gc": [
+    {
+      "durationMs": 1.2452499866485596,
+      "kind": 1
+    },
+    {
+      "durationMs": 2.6966251134872437,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.1799160242080688,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.4249999523162842,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.0611250400543213,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.16254103183746338,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.611167073249817,
+      "kind": 4
+    },
+    {
+      "durationMs": 1.227000117301941,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.13958299160003662,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.376792073249817,
+      "kind": 4
+    },
+    {
+      "durationMs": 1.4794169664382935,
+      "kind": 1
+    },
+    {
+      "durationMs": 2.0937910079956055,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.1612499952316284,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.4467499256134033,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.1317499876022339,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.4945000410079956,
+      "kind": 4
+    },
+    {
+      "durationMs": 1.288457989692688,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.8314590454101562,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.6354999542236328,
+      "kind": 1
+    },
+    {
+      "durationMs": 2.373540997505188,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.2141250371932983,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.5139999389648438,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.5325000286102295,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.3688749074935913,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.12612497806549072,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.4726669788360596,
+      "kind": 4
+    },
+    {
+      "durationMs": 1.1131670475006104,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.14399993419647217,
+      "kind": 8
+    },
+    {
+      "durationMs": 0.9512920379638672,
+      "kind": 4
+    },
+    {
+      "durationMs": 2.3268749713897705,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.2627919912338257,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.43633389472961426,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.4054170846939087,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.08058297634124756,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.3522920608520508,
+      "kind": 4
+    },
+    {
+      "durationMs": 1.2799170017242432,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.8426249027252197,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.149999976158142,
+      "kind": 1
+    },
+    {
+      "durationMs": 2.0390830039978027,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.1908750534057617,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.48912501335144043,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.13354206085205078,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.5179170370101929,
+      "kind": 4
+    },
+    {
+      "durationMs": 1.3252090215682983,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.9684159755706787,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.6691250801086426,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.09441697597503662,
+      "kind": 8
+    },
+    {
+      "durationMs": 0.9862079620361328,
+      "kind": 4
+    },
+    {
+      "durationMs": 2.9809999465942383,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.3235409259796143,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.436708927154541,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.13266706466674805,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.7236250638961792,
+      "kind": 4
+    },
+    {
+      "durationMs": 1.381208062171936,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.9581660032272339,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.2540829181671143,
+      "kind": 1
+    },
+    {
+      "durationMs": 2.2570420503616333,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.063249945640564,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.4040839672088623,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.0444999933242798,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.8833750486373901,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.13216698169708252,
+      "kind": 8
+    },
+    {
+      "durationMs": 0.9839999675750732,
+      "kind": 4
+    },
+    {
+      "durationMs": 1.2133749723434448,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.7305830717086792,
+      "kind": 1
+    },
+    {
+      "durationMs": 2.3427079916000366,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.0782500505447388,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.422374963760376,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.2355830669403076,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.1372089385986328,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.9444999694824219,
+      "kind": 4
+    },
+    {
+      "durationMs": 1.146291971206665,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.1528329849243164,
+      "kind": 8
+    },
+    {
+      "durationMs": 2.091917037963867,
+      "kind": 4
+    },
+    {
+      "durationMs": 3.455375075340271,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.5109590291976929,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.42362499237060547,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.1495000123977661,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.4683749675750732,
+      "kind": 4
+    },
+    {
+      "durationMs": 1.2349579334259033,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.13487493991851807,
+      "kind": 8
+    },
+    {
+      "durationMs": 0.8619168996810913,
+      "kind": 4
+    },
+    {
+      "durationMs": 1.07716703414917,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.11479198932647705,
+      "kind": 8
+    },
+    {
+      "durationMs": 0.9007500410079956,
+      "kind": 4
+    },
+    {
+      "durationMs": 3.1015000343322754,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.4007500410079956,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.38883304595947266,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.5353749990463257,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.10095798969268799,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.1152079105377197,
+      "kind": 4
+    },
+    {
+      "durationMs": 1.3680830001831055,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.11958301067352295,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.0130420923233032,
+      "kind": 4
+    },
+    {
+      "durationMs": 1.1338330507278442,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.11879098415374756,
+      "kind": 8
+    },
+    {
+      "durationMs": 0.8756669759750366,
+      "kind": 4
+    }
+  ],
+  "memoryStart": {
+    "rss": 509870080,
+    "heapTotal": 228442112,
+    "heapUsed": 111099336,
+    "external": 22212731,
+    "arrayBuffers": 18141224
+  },
+  "memoryEnd": {
+    "rss": 558202880,
+    "heapTotal": 182435840,
+    "heapUsed": 56891584,
+    "external": 27881360,
+    "arrayBuffers": 9126260
+  },
+  "initialStateBytes": 5883235,
+  "finalStateBytes": 6612231,
+  "history": {
+    "requests": 13654,
+    "actions": 16567,
+    "reconstructedTrades": 84
+  },
+  "streams": [
+    {
+      "id": "load-player-0",
+      "frames": 74,
+      "bytes": 2504025,
+      "ended": false
+    },
+    {
+      "id": "load-player-1",
+      "frames": 74,
+      "bytes": 2495441,
+      "ended": false
+    },
+    {
+      "id": "load-player-2",
+      "frames": 74,
+      "bytes": 2504174,
+      "ended": false
+    },
+    {
+      "id": "load-player-3",
+      "frames": 74,
+      "bytes": 2495368,
+      "ended": false
+    },
+    {
+      "id": "load-player-4",
+      "frames": 74,
+      "bytes": 2504100,
+      "ended": false
+    },
+    {
+      "id": "load-player-5",
+      "frames": 74,
+      "bytes": 2495516,
+      "ended": false
+    },
+    {
+      "id": "load-player-6",
+      "frames": 74,
+      "bytes": 2504026,
+      "ended": false
+    },
+    {
+      "id": "load-player-7",
+      "frames": 73,
+      "bytes": 2461440,
+      "ended": false
+    },
+    {
+      "id": "load-player-8",
+      "frames": 73,
+      "bytes": 2470051,
+      "ended": false
+    },
+    {
+      "id": "load-player-9",
+      "frames": 73,
+      "bytes": 2461367,
+      "ended": false
+    },
+    {
+      "id": "load-player-10",
+      "frames": 73,
+      "bytes": 2470857,
+      "ended": false
+    },
+    {
+      "id": "load-player-11",
+      "frames": 73,
+      "bytes": 2461808,
+      "ended": false
+    },
+    {
+      "id": "load-player-12",
+      "frames": 73,
+      "bytes": 2470710,
+      "ended": false
+    },
+    {
+      "id": "load-player-13",
+      "frames": 73,
+      "bytes": 2461661,
+      "ended": false
+    },
+    {
+      "id": "load-player-14",
+      "frames": 73,
+      "bytes": 2470856,
+      "ended": false
+    },
+    {
+      "id": "load-player-15",
+      "frames": 72,
+      "bytes": 2443464,
+      "ended": false
+    },
+    {
+      "id": "load-player-16",
+      "frames": 72,
+      "bytes": 2452533,
+      "ended": false
+    },
+    {
+      "id": "load-player-17",
+      "frames": 72,
+      "bytes": 2443608,
+      "ended": false
+    },
+    {
+      "id": "load-player-18",
+      "frames": 72,
+      "bytes": 2452461,
+      "ended": false
+    },
+    {
+      "id": "load-player-19",
+      "frames": 72,
+      "bytes": 2443536,
+      "ended": false
+    },
+    {
+      "id": "load-player-20",
+      "frames": 72,
+      "bytes": 2452605,
+      "ended": false
+    },
+    {
+      "id": "load-player-21",
+      "frames": 72,
+      "bytes": 2443464,
+      "ended": false
+    },
+    {
+      "id": "load-player-22",
+      "frames": 72,
+      "bytes": 2452606,
+      "ended": false
+    },
+    {
+      "id": "load-player-23",
+      "frames": 71,
+      "bytes": 2424178,
+      "ended": false
+    },
+    {
+      "id": "load-player-24",
+      "frames": 71,
+      "bytes": 2432837,
+      "ended": false
+    },
+    {
+      "id": "load-player-25",
+      "frames": 71,
+      "bytes": 2424036,
+      "ended": false
+    },
+    {
+      "id": "load-player-26",
+      "frames": 71,
+      "bytes": 2432979,
+      "ended": false
+    },
+    {
+      "id": "load-player-27",
+      "frames": 71,
+      "bytes": 2423965,
+      "ended": false
+    },
+    {
+      "id": "load-player-28",
+      "frames": 71,
+      "bytes": 2432908,
+      "ended": false
+    },
+    {
+      "id": "load-player-29",
+      "frames": 71,
+      "bytes": 2424107,
+      "ended": false
+    },
+    {
+      "id": "load-player-30",
+      "frames": 70,
+      "bytes": 2411831,
+      "ended": false
+    },
+    {
+      "id": "load-player-31",
+      "frames": 70,
+      "bytes": 2403154,
+      "ended": false
+    },
+    {
+      "id": "load-player-32",
+      "frames": 70,
+      "bytes": 2411971,
+      "ended": false
+    },
+    {
+      "id": "load-player-33",
+      "frames": 70,
+      "bytes": 2403084,
+      "ended": false
+    },
+    {
+      "id": "load-player-34",
+      "frames": 70,
+      "bytes": 2411972,
+      "ended": false
+    },
+    {
+      "id": "load-player-35",
+      "frames": 70,
+      "bytes": 2403295,
+      "ended": false
+    },
+    {
+      "id": "load-player-36",
+      "frames": 70,
+      "bytes": 2411831,
+      "ended": false
+    },
+    {
+      "id": "load-player-37",
+      "frames": 69,
+      "bytes": 2381061,
+      "ended": false
+    },
+    {
+      "id": "load-player-38",
+      "frames": 69,
+      "bytes": 2389752,
+      "ended": false
+    },
+    {
+      "id": "load-player-39",
+      "frames": 69,
+      "bytes": 2380993,
+      "ended": false
+    },
+    {
+      "id": "load-player-40",
+      "frames": 69,
+      "bytes": 2389684,
+      "ended": false
+    },
+    {
+      "id": "load-player-41",
+      "frames": 69,
+      "bytes": 2381131,
+      "ended": false
+    },
+    {
+      "id": "load-player-42",
+      "frames": 69,
+      "bytes": 2389615,
+      "ended": false
+    },
+    {
+      "id": "load-player-43",
+      "frames": 69,
+      "bytes": 2381062,
+      "ended": false
+    },
+    {
+      "id": "load-player-44",
+      "frames": 68,
+      "bytes": 2366326,
+      "ended": false
+    },
+    {
+      "id": "load-player-45",
+      "frames": 68,
+      "bytes": 2357693,
+      "ended": false
+    },
+    {
+      "id": "load-player-46",
+      "frames": 68,
+      "bytes": 2366327,
+      "ended": false
+    },
+    {
+      "id": "load-player-47",
+      "frames": 68,
+      "bytes": 2357898,
+      "ended": false
+    },
+    {
+      "id": "load-player-48",
+      "frames": 68,
+      "bytes": 2366190,
+      "ended": false
+    },
+    {
+      "id": "load-player-49",
+      "frames": 68,
+      "bytes": 2357761,
+      "ended": false
+    },
+    {
+      "id": "load-player-50",
+      "frames": 68,
+      "bytes": 2366326,
+      "ended": false
+    },
+    {
+      "id": "load-player-51",
+      "frames": 67,
+      "bytes": 2333184,
+      "ended": false
+    },
+    {
+      "id": "load-player-52",
+      "frames": 67,
+      "bytes": 2341623,
+      "ended": false
+    },
+    {
+      "id": "load-player-53",
+      "frames": 67,
+      "bytes": 2333318,
+      "ended": false
+    },
+    {
+      "id": "load-player-54",
+      "frames": 67,
+      "bytes": 2341556,
+      "ended": false
+    },
+    {
+      "id": "load-player-55",
+      "frames": 67,
+      "bytes": 2333251,
+      "ended": false
+    },
+    {
+      "id": "load-player-56",
+      "frames": 67,
+      "bytes": 2341690,
+      "ended": false
+    },
+    {
+      "id": "load-player-57",
+      "frames": 67,
+      "bytes": 2333184,
+      "ended": false
+    },
+    {
+      "id": "load-player-58",
+      "frames": 66,
+      "bytes": 2315847,
+      "ended": false
+    },
+    {
+      "id": "load-player-59",
+      "frames": 66,
+      "bytes": 2307666,
+      "ended": false
+    },
+    {
+      "id": "load-player-60",
+      "frames": 66,
+      "bytes": 2315714,
+      "ended": false
+    },
+    {
+      "id": "load-player-61",
+      "frames": 66,
+      "bytes": 2307533,
+      "ended": false
+    },
+    {
+      "id": "load-player-62",
+      "frames": 66,
+      "bytes": 2315846,
+      "ended": false
+    },
+    {
+      "id": "load-player-63",
+      "frames": 66,
+      "bytes": 2307467,
+      "ended": false
+    },
+    {
+      "id": "load-player-64",
+      "frames": 66,
+      "bytes": 2315780,
+      "ended": false
+    },
+    {
+      "id": "load-player-65",
+      "frames": 65,
+      "bytes": 2280671,
+      "ended": false
+    },
+    {
+      "id": "load-player-66",
+      "frames": 65,
+      "bytes": 2288663,
+      "ended": false
+    },
+    {
+      "id": "load-player-67",
+      "frames": 65,
+      "bytes": 2280606,
+      "ended": false
+    },
+    {
+      "id": "load-player-68",
+      "frames": 65,
+      "bytes": 2288793,
+      "ended": false
+    },
+    {
+      "id": "load-player-69",
+      "frames": 65,
+      "bytes": 2280541,
+      "ended": false
+    },
+    {
+      "id": "load-player-70",
+      "frames": 65,
+      "bytes": 2288794,
+      "ended": false
+    },
+    {
+      "id": "load-player-71",
+      "frames": 65,
+      "bytes": 2280737,
+      "ended": false
+    },
+    {
+      "id": "load-player-72",
+      "frames": 64,
+      "bytes": 2260404,
+      "ended": false
+    },
+    {
+      "id": "load-player-73",
+      "frames": 64,
+      "bytes": 2252471,
+      "ended": false
+    },
+    {
+      "id": "load-player-74",
+      "frames": 64,
+      "bytes": 2260532,
+      "ended": false
+    },
+    {
+      "id": "load-player-75",
+      "frames": 64,
+      "bytes": 2252407,
+      "ended": false
+    },
+    {
+      "id": "load-player-76",
+      "frames": 64,
+      "bytes": 2260468,
+      "ended": false
+    },
+    {
+      "id": "load-player-77",
+      "frames": 64,
+      "bytes": 2252535,
+      "ended": false
+    },
+    {
+      "id": "load-player-78",
+      "frames": 64,
+      "bytes": 2260404,
+      "ended": false
+    },
+    {
+      "id": "load-player-79",
+      "frames": 63,
+      "bytes": 2223125,
+      "ended": false
+    },
+    {
+      "id": "load-player-80",
+      "frames": 63,
+      "bytes": 2231060,
+      "ended": false
+    },
+    {
+      "id": "load-player-81",
+      "frames": 63,
+      "bytes": 2223062,
+      "ended": false
+    },
+    {
+      "id": "load-player-82",
+      "frames": 63,
+      "bytes": 2231061,
+      "ended": false
+    },
+    {
+      "id": "load-player-83",
+      "frames": 63,
+      "bytes": 2223252,
+      "ended": false
+    },
+    {
+      "id": "load-player-84",
+      "frames": 63,
+      "bytes": 2230934,
+      "ended": false
+    },
+    {
+      "id": "load-player-85",
+      "frames": 63,
+      "bytes": 2223125,
+      "ended": false
+    },
+    {
+      "id": "load-player-86",
+      "frames": 62,
+      "bytes": 2200382,
+      "ended": false
+    },
+    {
+      "id": "load-player-87",
+      "frames": 62,
+      "bytes": 2192511,
+      "ended": false
+    },
+    {
+      "id": "load-player-88",
+      "frames": 62,
+      "bytes": 2200320,
+      "ended": false
+    },
+    {
+      "id": "load-player-89",
+      "frames": 62,
+      "bytes": 2192635,
+      "ended": false
+    },
+    {
+      "id": "load-player-90",
+      "frames": 62,
+      "bytes": 2200258,
+      "ended": false
+    },
+    {
+      "id": "load-player-91",
+      "frames": 62,
+      "bytes": 2192573,
+      "ended": false
+    },
+    {
+      "id": "load-player-92",
+      "frames": 61,
+      "bytes": 2168493,
+      "ended": false
+    },
+    {
+      "id": "load-player-93",
+      "frames": 61,
+      "bytes": 2160749,
+      "ended": false
+    },
+    {
+      "id": "load-player-94",
+      "frames": 61,
+      "bytes": 2168494,
+      "ended": false
+    },
+    {
+      "id": "load-player-95",
+      "frames": 61,
+      "bytes": 2160933,
+      "ended": false
+    },
+    {
+      "id": "load-player-96",
+      "frames": 61,
+      "bytes": 2168371,
+      "ended": false
+    },
+    {
+      "id": "load-player-97",
+      "frames": 61,
+      "bytes": 2160810,
+      "ended": false
+    },
+    {
+      "id": "load-player-98",
+      "frames": 60,
+      "bytes": 2135569,
+      "ended": false
+    },
+    {
+      "id": "load-player-99",
+      "frames": 60,
+      "bytes": 2127952,
+      "ended": false
+    },
+    {
+      "id": "operator-0",
+      "frames": 60,
+      "bytes": 1918503,
+      "ended": false
+    },
+    {
+      "id": "operator-1",
+      "frames": 60,
+      "bytes": 1918503,
+      "ended": false
+    },
+    {
+      "id": "presentation",
+      "frames": 60,
+      "bytes": 995217,
+      "ended": false
+    }
+  ],
+  "errors": [],
+  "stageTimingMs": {
+    "stateSerialization": {
+      "count": 110,
+      "p50": 16.64220800000112,
+      "p95": 24.53033399999913,
+      "p99": 25.838666999999987,
+      "max": 27.661000000000058,
+      "total": 1947.9426650000114
+    },
+    "sqlite.BEGIN IMMEDIATE": {
+      "count": 60,
+      "p50": 0.020542000000205007,
+      "p95": 0.02808300000106101,
+      "p99": 0.038458999999420485,
+      "max": 0.038458999999420485,
+      "total": 1.2654979999879288
+    },
+    "engine.tick": {
+      "count": 1050,
+      "p50": 0.0002500000009604264,
+      "p95": 0.00220900000022084,
+      "p99": 0.0033750000002328306,
+      "max": 0.017374999999447027,
+      "total": 0.5981289999936052
+    },
+    "sqlite.COMMIT": {
+      "count": 60,
+      "p50": 0.01962499999717693,
+      "p95": 15.362291999999798,
+      "p99": 17.640833999997994,
+      "max": 17.640833999997994,
+      "total": 133.22150099998726
+    },
+    "otherClone": {
+      "count": 7350,
+      "p50": 0.1385420000005979,
+      "p95": 0.1820000000006985,
+      "p99": 0.22545800000079907,
+      "max": 0.6760839999988093,
+      "total": 815.8829070000947
+    },
+    "engine.view": {
+      "count": 5000,
+      "p50": 0.15245800000047893,
+      "p95": 0.20737499999813735,
+      "p99": 0.2679169999973965,
+      "max": 0.7669580000001588,
+      "total": 803.1086369999139
+    },
+    "engine.presentation": {
+      "count": 150,
+      "p50": 0.08316700000068522,
+      "p95": 0.10379199999806588,
+      "p99": 0.13012499999967986,
+      "max": 0.20970800000031886,
+      "total": 12.948873000002095
+    },
+    "engine.hostView": {
+      "count": 100,
+      "p50": 0.12012500000128057,
+      "p95": 0.1556250000012369,
+      "p99": 0.19741699999940465,
+      "max": 0.19741699999940465,
+      "total": 12.57041699999354
+    },
+    "batchBackupClone": {
+      "count": 10,
+      "p50": 26.893834000000425,
+      "p95": 35.78337499999907,
+      "p99": 35.78337499999907,
+      "max": 35.78337499999907,
+      "total": 280.83216699999775
+    },
+    "commandCheckpointClone": {
+      "count": 1000,
+      "p50": 2.6346250000005966,
+      "p95": 2.948833000000377,
+      "p99": 4.7850409999991825,
+      "max": 6.44920799999818,
+      "total": 2703.09434600004
+    },
+    "httpArrivalToDispatch": {
+      "count": 1000,
+      "p50": 175.71720800000003,
+      "p95": 295.38887500000055,
+      "p99": 309.518458999999,
+      "max": 325.4667079999999,
+      "total": 175016.51573399987
+    },
+    "scoringDispatch": {
+      "count": 1000,
+      "p50": 0.012541000000055647,
+      "p95": 0.03708299999925657,
+      "p99": 0.04949999999917054,
+      "max": 0.1422500000007858,
+      "total": 16.07355900002858
+    },
+    "sqliteStateWrite": {
+      "count": 10,
+      "p50": 19.445917000000918,
+      "p95": 24.928084000002855,
+      "p99": 24.928084000002855,
+      "max": 24.928084000002855,
+      "total": 177.33962800000154
+    },
+    "engine.actionView": {
+      "count": 1000,
+      "p50": 0.050834000001486856,
+      "p95": 0.06974999999874854,
+      "p99": 0.1134170000004815,
+      "max": 0.5944159999999101,
+      "total": 52.2446170000112
+    },
+    "httpArrivalToResponseFinish": {
+      "count": 1000,
+      "p50": 366.0154999999995,
+      "p95": 397.80412499999875,
+      "p99": 399.0456250000025,
+      "max": 399.96708299999955,
+      "total": 368232.27744500054
+    }
+  },
+  "batches": [
+    {
+      "commands": 100,
+      "startedAt": 6975.265,
+      "backupCloneMs": 26.33245799999986,
+      "checkpointCloneMs": 269.7676640000045,
+      "dispatchMs": 1.420208000002276,
+      "serializationMs": 16.006749999999556,
+      "sqliteWriteMs": 12.567833999999493,
+      "commitMs": 10.06433399999969,
+      "durationMs": 338.67562499999985,
+      "ending": "COMMIT"
+    },
+    {
+      "commands": 100,
+      "startedAt": 8429.018417,
+      "backupCloneMs": 26.52900000000045,
+      "checkpointCloneMs": 273.59383399999933,
+      "dispatchMs": 2.0885030000044935,
+      "serializationMs": 16.29899999999907,
+      "sqliteWriteMs": 13.148541999998997,
+      "commitMs": 9.918874999999389,
+      "durationMs": 345.23312500000065,
+      "ending": "COMMIT"
+    },
+    {
+      "commands": 100,
+      "startedAt": 9892.40925,
+      "backupCloneMs": 26.552749999998923,
+      "checkpointCloneMs": 271.3513440000006,
+      "dispatchMs": 1.8245510000033391,
+      "serializationMs": 17.900166999999783,
+      "sqliteWriteMs": 13.876374999999825,
+      "commitMs": 11.404249999999593,
+      "durationMs": 345.7716249999994,
+      "ending": "COMMIT"
+    },
+    {
+      "commands": 100,
+      "startedAt": 11343.006083,
+      "backupCloneMs": 27.96045800000138,
+      "checkpointCloneMs": 266.4767570000058,
+      "dispatchMs": 1.1645010000047478,
+      "serializationMs": 16.755875000000742,
+      "sqliteWriteMs": 13.50579099999959,
+      "commitMs": 10.446165999999721,
+      "durationMs": 338.33529199999975,
+      "ending": "COMMIT"
+    },
+    {
+      "commands": 100,
+      "startedAt": 12791.482542,
+      "backupCloneMs": 26.738416000000143,
+      "checkpointCloneMs": 270.89674900000136,
+      "dispatchMs": 2.054042000003392,
+      "serializationMs": 17.293875000001208,
+      "sqliteWriteMs": 15.322959000000992,
+      "commitMs": 11.83612499999981,
+      "durationMs": 348.25591600000007,
+      "ending": "COMMIT"
+    },
+    {
+      "commands": 100,
+      "startedAt": 14247.622083,
+      "backupCloneMs": 26.893834000000425,
+      "checkpointCloneMs": 265.3264990000007,
+      "dispatchMs": 1.3742899999942892,
+      "serializationMs": 16.64220800000112,
+      "sqliteWriteMs": 20.79962499999965,
+      "commitMs": 17.355499999999665,
+      "durationMs": 350.56558399999994,
+      "ending": "COMMIT"
+    },
+    {
+      "commands": 100,
+      "startedAt": 15710.095208,
+      "backupCloneMs": 28.24341699999968,
+      "checkpointCloneMs": 265.8435420000169,
+      "dispatchMs": 1.1730440000064846,
+      "serializationMs": 17.707083999999668,
+      "sqliteWriteMs": 19.840958999999202,
+      "commitMs": 15.362291999999798,
+      "durationMs": 350.1585839999989,
+      "ending": "COMMIT"
+    },
+    {
+      "commands": 100,
+      "startedAt": 17175.339875,
+      "backupCloneMs": 35.78337499999907,
+      "checkpointCloneMs": 271.9130840000071,
+      "dispatchMs": 1.725376000009419,
+      "serializationMs": 17.177625000000262,
+      "sqliteWriteMs": 19.445917000000918,
+      "commitMs": 14.052457999998296,
+      "durationMs": 363.351666999999,
+      "ending": "COMMIT"
+    },
+    {
+      "commands": 100,
+      "startedAt": 18649.721958,
+      "backupCloneMs": 29.358541999998124,
+      "checkpointCloneMs": 284.6441280000108,
+      "dispatchMs": 2.3457090000265453,
+      "serializationMs": 20.336082999998325,
+      "sqliteWriteMs": 23.903542000000016,
+      "commitMs": 17.640833999997994,
+      "durationMs": 382.6505840000027,
+      "ending": "COMMIT"
+    },
+    {
+      "commands": 100,
+      "startedAt": 20151.641542,
+      "backupCloneMs": 26.439916999999696,
+      "checkpointCloneMs": 263.28074499999275,
+      "dispatchMs": 0.9033349999735947,
+      "serializationMs": 17.458833000000595,
+      "sqliteWriteMs": 24.928084000002855,
+      "commitMs": 14.208208000000013,
+      "durationMs": 348.8284160000003,
+      "ending": "COMMIT"
+    }
+  ],
+  "notes": [
+    "Stage times overlap: dispatch contains engine tick/clone work; do not add every category.",
+    "httpArrivalToDispatch includes body parsing, queue delay, batch backup and preceding commands; it is not pure enqueue wait.",
+    "Hooks add measurement overhead equally to baseline/candidate; CPU-profile runs should use matching flags."
+  ],
+  "limitations": [
+    "Missing top-level fields and historical trade versions are reconstructed, not recovered.",
+    "Chapter8 routing steps, positions, reserve and score are reset before each wave; these are synthetic scoring opportunities.",
+    "Shared computer activity and instrumentation may affect timings.",
+    "Only paired equivalent fixtures can support optimization comparisons; a fresh complete capacity run remains required."
+  ],
+  "cpuProfilePath": "/Users/jgibbs/Code/second-nature-trail/test-results/late-profile-151c0e0-baseline2-scoring.cpuprofile"
+}

@@ -1,0 +1,177 @@
+{
+  "label": "Synthetic copy-kernel microbenchmark; not confirmed-action latency or acceptance evidence",
+  "nodeVersion": "v24.20.0",
+  "equivalence": [
+    {
+      "name": "actual-history-synthetic-late-mutable",
+      "mutableBytes": 731956,
+      "historyReferencesPreserved": true,
+      "deepStrictEqual": true
+    },
+    {
+      "name": "draft",
+      "mutableBytes": 557,
+      "historyReferencesPreserved": true,
+      "deepStrictEqual": true
+    },
+    {
+      "name": "lobby",
+      "mutableBytes": 11634,
+      "historyReferencesPreserved": true,
+      "deepStrictEqual": true
+    },
+    {
+      "name": "countdown",
+      "mutableBytes": 11641,
+      "historyReferencesPreserved": true,
+      "deepStrictEqual": true
+    },
+    {
+      "name": "chapter",
+      "mutableBytes": 11639,
+      "historyReferencesPreserved": true,
+      "deepStrictEqual": true
+    },
+    {
+      "name": "partially-confirmed-trade",
+      "mutableBytes": 11878,
+      "historyReferencesPreserved": true,
+      "deepStrictEqual": true
+    },
+    {
+      "name": "committed-trade",
+      "mutableBytes": 11894,
+      "historyReferencesPreserved": true,
+      "deepStrictEqual": true
+    },
+    {
+      "name": "paused",
+      "mutableBytes": 11939,
+      "historyReferencesPreserved": true,
+      "deepStrictEqual": true
+    },
+    {
+      "name": "brag",
+      "mutableBytes": 12039,
+      "historyReferencesPreserved": true,
+      "deepStrictEqual": true
+    },
+    {
+      "name": "frozen-finale",
+      "mutableBytes": 13009,
+      "historyReferencesPreserved": true,
+      "deepStrictEqual": true
+    }
+  ],
+  "rounds": 6,
+  "copiesPerRound": 50,
+  "rows": [
+    {
+      "round": 0,
+      "method": "structuredClone",
+      "count": 50,
+      "totalMs": 152.68041899999992,
+      "p50Ms": 2.9821249999999964,
+      "p95Ms": 3.783416999999986
+    },
+    {
+      "round": 0,
+      "method": "jsonRoundtrip",
+      "count": 50,
+      "totalMs": 158.86599699999994,
+      "p50Ms": 3.150874999999985,
+      "p95Ms": 3.509749999999997
+    },
+    {
+      "round": 1,
+      "method": "jsonRoundtrip",
+      "count": 50,
+      "totalMs": 159.78724899999997,
+      "p50Ms": 3.191291999999976,
+      "p95Ms": 3.348165999999992
+    },
+    {
+      "round": 1,
+      "method": "structuredClone",
+      "count": 50,
+      "totalMs": 144.79487700000016,
+      "p50Ms": 2.8484589999999343,
+      "p95Ms": 3.277208000000087
+    },
+    {
+      "round": 2,
+      "method": "structuredClone",
+      "count": 50,
+      "totalMs": 147.62812400000018,
+      "p50Ms": 2.880375000000072,
+      "p95Ms": 3.1896659999999883
+    },
+    {
+      "round": 2,
+      "method": "jsonRoundtrip",
+      "count": 50,
+      "totalMs": 162.79954200000032,
+      "p50Ms": 3.220666999999935,
+      "p95Ms": 3.4034169999999904
+    },
+    {
+      "round": 3,
+      "method": "jsonRoundtrip",
+      "count": 50,
+      "totalMs": 160.27212499999928,
+      "p50Ms": 3.201041999999916,
+      "p95Ms": 3.358500000000049
+    },
+    {
+      "round": 3,
+      "method": "structuredClone",
+      "count": 50,
+      "totalMs": 142.0114640000004,
+      "p50Ms": 2.823917000000165,
+      "p95Ms": 3.035374999999931
+    },
+    {
+      "round": 4,
+      "method": "structuredClone",
+      "count": 50,
+      "totalMs": 143.05879299999992,
+      "p50Ms": 2.8367909999999483,
+      "p95Ms": 3.0492920000001504
+    },
+    {
+      "round": 4,
+      "method": "jsonRoundtrip",
+      "count": 50,
+      "totalMs": 161.74384100000066,
+      "p50Ms": 3.1781670000000304,
+      "p95Ms": 3.3543750000001182
+    },
+    {
+      "round": 5,
+      "method": "jsonRoundtrip",
+      "count": 50,
+      "totalMs": 161.00428799999986,
+      "p50Ms": 3.2045409999998355,
+      "p95Ms": 3.3800410000001193
+    },
+    {
+      "round": 5,
+      "method": "structuredClone",
+      "count": 50,
+      "totalMs": 147.84999500000185,
+      "p50Ms": 2.9308750000000146,
+      "p95Ms": 3.0815000000000055
+    }
+  ],
+  "limitations": [
+    "Measured JSON-shaped captured state and representative live engine states only.",
+    "JSON cannot preserve undefined, NaN, bigint, cycles or object alias topology; persisted game state must remain JSON-compatible.",
+    "History references remain unchanged; no runtime copy method changed by this script."
+  ],
+  "journalSha256": "4e6d449422a3326e1ee1095858195c3f1ed96e12dbb63dab8e024ed9e0166a20",
+  "sourceHashes": {
+    "server.mjs": "d269f916dfd2f23e2be46dd7b125bf9520664357a49e88a496ad07cae6493620",
+    "engine.mjs": "b72996297521dd375ecabcacdcee6dc8579e8f3dbd1296b44bce3060272be2f5",
+    "scripts/benchmark-checkpoint-copy.mjs": "1803b81fb4e79ef053a54e2adb07780d14e416e030c2c0d41a565215b7136366"
+  }
+}
