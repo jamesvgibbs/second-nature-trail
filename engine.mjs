@@ -821,7 +821,9 @@ export class Engine {
       return { ok: true, inspected: true };
     }
     const authored = CHAPTERS[c].tasks[r.step],
-      correct = a.choice === authored.answer;
+      correct = a.choice === authored.answer,
+      falseAccusation =
+        c === 2 && !correct && authored.falseAccusations.includes(a.choice);
     if (correct) {
       this.consume(p, authored.item);
       r.primary += c === 3 ? RULES.spatialTaskPoints : 1;
@@ -839,8 +841,6 @@ export class Engine {
       this.finishTask(p, RULES.spatialTaskPoints);
     } else {
       r.mistakes++;
-      const falseAccusation =
-        c === 2 && authored.falseAccusations.includes(a.choice);
       if (falseAccusation) r.falseAccusations++;
       if (c !== 2 || falseAccusation) r.primary -= 1;
       r.score = Math.max(0, r.score - RULES.mistakePenalty);
@@ -850,6 +850,7 @@ export class Engine {
       chapter: c,
       step: r.step,
       correct,
+      ...(c === 2 ? { falseAccusation } : {}),
       score: r.score,
     });
     return { ok: true, correct, complete: r.complete };

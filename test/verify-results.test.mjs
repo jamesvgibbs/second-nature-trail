@@ -5,7 +5,7 @@ import { verifyResults, auditPhases } from '../scripts/verify-results.mjs';
 
 const eventNames=['Top hoarder','Trailblazer','Neighborhood hero','Human intelligence champion','Easter egg hunter','Master trader','All-round survivor'];
 const rules={version:'trail-0.3.0-draft',values:{parts:5,filters:4,food:3,cable:6},chapterMaxima:Array(8).fill(95),tradeMaxQuantity:3,storageLimit:12,reservePerChapter:6,cargoPlans:[{parts:2},{parts:1,food:2},{cable:2}],taskPoints:20,spatialTaskPoints:10,quizPoints:10,assistPoints:5,challengePoints:10,mistakePenalty:5,targetHitsPerSite:6,chapterMs:300000,countdownMs:10000,breakMs:120000,finaleMs:240000};
-const empty=()=>({score:0,primary:0,mistakes:0,step:0,complete:false,timeMs:null,secret:false,assists:[],quiz:[null,null],targetHits:0,budget:0});
+const empty=()=>({score:0,primary:0,mistakes:0,step:0,complete:false,timeMs:null,secret:false,assists:[],quiz:[null,null],targetHits:0,budget:0,falseAccusations:0});
 const unawarded=category=>({category,playerId:null,name:null,metric:null,secondary:null,reason:'No qualifying recipient',draw:null});
 function fixture() {
   const players=['alpha','beta'].map(id=>({id,name:id,items:[],mystery:false,progress:Array.from({length:8},empty),metrics:{inventoryValue:0,completed:1,total:51,timeMs:100,assists:0,assistRecipients:0,correct:0,secrets:0,traders:0,suppliedConsumed:0,mean:51/95*100}}));
@@ -177,4 +177,18 @@ test('exact completion records remove legacy timing gap and reject duplicate or 
   const paused=structuredClone(s);paused.audit.push({type:'pause'});
   const completion=paused.actions.at(-1);completion.completedAt=completion.at=30100;completion.chapterOpenedAt=30000;
   assert.equal(verifyResults(paused).fullActionReconciliationPass,true);
+});
+
+test('clone decision classifications replay distinct penalties and preserve legacy missing-field gap',()=>{
+  const s=fixture(),p=s.players[0],r=p.progress[2];
+  Object.assign(r,{step:1,primary:0,score:5,mistakes:2,falseAccusations:1});
+  s.actions.push({type:'spatialTask',playerId:p.id,chapter:2,correct:false,falseAccusation:false}, {type:'spatialTask',playerId:p.id,chapter:2,correct:true,falseAccusation:false}, {type:'spatialTask',playerId:p.id,chapter:2,correct:false,falseAccusation:true});
+  const report=verifyResults(s);assert.equal(report.recordedOutcomeReplayPass,true,JSON.stringify(report.actionErrors));
+  assert(!report.evidenceGaps.some(g=>g.includes('clone')));
+  const wrongCounter=structuredClone(s);wrongCounter.players[0].progress[2].falseAccusations=0;
+  assert.equal(verifyResults(wrongCounter).recordedOutcomeReplayPass,false);
+  const legacy=structuredClone(s);delete legacy.actions.at(-1).falseAccusation;
+  assert(verifyResults(legacy).evidenceGaps.some(g=>g.includes('clone')));
+  const contradictory=structuredClone(s);contradictory.actions.at(-2).falseAccusation=true;
+  assert.equal(verifyResults(contradictory).recordedOutcomeReplayPass,false);
 });

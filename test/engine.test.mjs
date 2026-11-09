@@ -606,7 +606,18 @@ test("false accusations reduce clone primary; unsafe mistakes still lose score b
   assert.equal(r.primary, 0);
   assert.equal(r.falseAccusations, 1);
   assert.equal(r.step, 1);
+  assert.equal(r.score, 5);
+  assert.equal(r.mistakes, 2);
+  const decisions = f.e.state.actions.filter((a) => a.type === "spatialTask");
+  assert.deepEqual(decisions.map((a) => [a.correct, a.falseAccusation]), [
+    [false, false], [true, false], [false, true],
+  ]);
   assert(!JSON.stringify(f.e.view("p0").chapter).includes("falseAccusations"));
+  assert(!JSON.stringify(f.e.view("p0").chapter).includes("falseAccusation"));
+  f.host("endScoring");
+  const independent = verifyResults(f.e.exportResults());
+  assert.equal(independent.recordedOutcomeReplayPass, true, JSON.stringify(independent.actionErrors));
+  assert(!independent.evidenceGaps.some((gap) => gap.includes("clone")));
 });
 function earnRewards(f, id = "p0") {
   for (let step = 0; step < 6; step++) {

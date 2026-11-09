@@ -142,7 +142,7 @@ export function verifyResults(snapshot, { requireFifteen = false, journal = null
 
   // Replay scored outcomes, not answer-key correctness: the immutable ledger records
   // correctness but generally omits the submitted authored answer/puzzle contents.
-  const replay = new Map(players.map(p => [p.id, Array.from({length:8}, () => ({ score:0, primary:0, mistakes:0, step:0, hits:0, budget:0, quiz:[null,null], secret:false, assists:[], complete:false, at:null, unknownPrimary:false }))]));
+  const replay = new Map(players.map(p => [p.id, Array.from({length:8}, () => ({ score:0, primary:0, mistakes:0, step:0, hits:0, budget:0, quiz:[null,null], secret:false, assists:[], complete:false, at:null, unknownPrimary:false, falseAccusations:0 }))]));
   const completions = [3,6,6,6,3,3,7,3];
   function finish(r, c, at) { r.step++; if (r.step === completions[c]) { r.complete = true; r.at = at; } }
   const maxCargo = Math.max(...rules.cargoPlans.map(plan => Object.entries(plan).reduce((n,[kind,qty]) => n + rules.values[kind]*qty,0)));
@@ -163,8 +163,9 @@ export function verifyResults(snapshot, { requireFifteen = false, journal = null
     } else if (a.type === 'delivery') {
       r.primary += a.value; r.score += Math.round(a.value/maxCargo*rules.taskPoints); finish(r, a.chapter, a.at);
     } else if (a.type === 'spatialTask') {
+      if(a.chapter===2 && a.correct && a.falseAccusation===true) actionErrors.push(`${a.playerId}: correct clone decision cannot be a false accusation`);
       if (a.correct) { r.primary += a.chapter === 3 ? rules.spatialTaskPoints : 1; r.score += rules.spatialTaskPoints; finish(r,a.chapter,a.at); }
-      else { penalize(); if (a.chapter !== 2) r.primary--; else if (typeof a.falseAccusation === 'boolean') r.primary -= Number(a.falseAccusation); else { r.unknownPrimary=true; gap('Wrong clone submissions omit falseAccusation; clone primary cannot be replayed for affected players.'); } }
+      else { penalize(); if (a.chapter !== 2) r.primary--; else if (typeof a.falseAccusation === 'boolean') { r.primary -= Number(a.falseAccusation); r.falseAccusations += Number(a.falseAccusation); } else { r.unknownPrimary=true; gap('Wrong clone submissions omit falseAccusation; clone primary cannot be replayed for affected players.'); } }
     } else if (a.type === 'target') {
       if (a.correct) { r.primary++; r.hits++; if (r.hits % rules.targetHitsPerSite === 0) { r.score += rules.taskPoints; finish(r,a.chapter,a.at); } }
       else { r.primary--; penalize(); }
@@ -215,6 +216,7 @@ export function verifyResults(snapshot, { requireFifteen = false, journal = null
       if (!r.unknownPrimary && actual.primary !== r.primary) actionErrors.push(`${p.id} chapter ${c}: primary differs from action replay`);
       if (!same(actual.assists,r.assists)) actionErrors.push(`${p.id} chapter ${c}: assists differ from action replay`);
       if (!same(actual.quiz.map(q => q?.correct ?? null),r.quiz)) actionErrors.push(`${p.id} chapter ${c}: quizzes differ from action replay`);
+      if(c===2 && !r.unknownPrimary && actual.falseAccusations!==r.falseAccusations) actionErrors.push(`${p.id}: false accusation count differs from recorded classifications`);
       if(c===4 && actual.targetHits!==r.hits) actionErrors.push(`${p.id}: target hits differ`);
       if(c===5 && actual.budget!==r.budget) actionErrors.push(`${p.id}: retained budget differs`);
       if(r.complete) {
