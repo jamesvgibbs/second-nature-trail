@@ -439,7 +439,7 @@ function setup() {
     e.preventDefault();
     const form = new FormData(e.target);
     const insects = form.get("insects") === "true";
-    safe = !insects;
+    if (!insects) safe = true;
     const settings = readSettings();
     const r = await act("setup", {
       character: chosen,
@@ -1419,7 +1419,8 @@ function settings() {
           ]),
         );
         const insects = $("#safe-select").value === "true";
-        safe = !insects;
+        // Replacement is immediate; enabling imagery waits for a committed choice.
+        if (!insects) safe = true;
         const settings = readSettings();
         const result = await act("setup", {
           character: state.me.character,
