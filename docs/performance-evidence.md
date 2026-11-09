@@ -28,3 +28,20 @@ The [checkpoint-copy microbenchmark](../test-results/checkpoint-copy-9252731.jso
 Value-equivalence and retained-history-reference checks passed on ten representative JSON-shaped states. That does not establish preservation of undefined values, nonfinite numbers, bigint, cycles, or shared-reference topology. This was a copy-kernel comparison, not HTTP latency or capacity evidence.
 
 Any later checkpoint optimization needs independent rollback review and focused failure tests before equivalent profiling. A new frozen-source complete-event run and the specified representative-network measurement remain required for performance acceptance. The historical failed full run is preserved as failed; synthetic profiles do not replace it.
+
+## Scoped player checkpoints
+
+The next paired comparison used baseline server `6284c63` and candidate `c9ea9c5`, which snapshots players when a synchronous command first accesses them. Both use the same engine, content, profiling script, and captured journal. The helper hash is recorded in both cases, but the baseline server does not use it. Independent source review found no player-alias bypass in current command paths; rollback equivalence tests cover barter, supplier credit, assists, freeze, rejected commands, and persistence failures.
+
+| Paired run | Scoring-only p95 | With movement p95 |
+| --- | ---: | ---: |
+| Baseline, first | 453.80 ms | 466.14 ms |
+| Scoped candidate, first | 213.44 ms | 253.58 ms |
+| Baseline, second | 436.56 ms | 467.03 ms |
+| Scoped candidate, second | 221.35 ms | 243.30 ms |
+
+Each report contains 1,000 awaited scoring responses, zero reported errors, and 103 streams observed without an ended flag. Command scope including validation fell from roughly 2.64–2.67 seconds to 0.469–0.486 seconds per 1,000 commands. These repeat measurements support a substantial improvement for this synthetic fixture. They do not establish a passing complete event or representative-network latency.
+
+The candidate finished the waves sooner, so movement counts and elapsed time differ. Movement instrumentation also has a window-boundary limitation: candidate pair two records 9,019 server movement dispatches but 8,919 measured client responses because warmup requests can cross the instrumentation start. The scoring waves are awaited and retain the same 1,000 samples. The localhost/shared-host, reconstruction, instrumentation, and overlapping-category limits above still apply. No new benchmark was run during the independent review.
+
+The [scoped-checkpoint evidence check](../test-results/late-scoped-evidence-check.json) links all eight reports, binds their 16 JSON/log artifacts, verifies source hashes against the recorded commits, and records count and credential/payload inspection. Full-event and representative-network acceptance remain pending.

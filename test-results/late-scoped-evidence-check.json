@@ -1,0 +1,185 @@
+{
+  "label": "Independent review of completed synthetic paired scoped-checkpoint profiles; not release acceptance",
+  "reviewedAt": "2026-11-09T22:11:15.794732+00:00",
+  "journalSha256": "4e6d449422a3326e1ee1095858195c3f1ed96e12dbb63dab8e024ed9e0166a20",
+  "checks": {
+    "eightReports": true,
+    "equalScoringSamples": true,
+    "zeroReportedErrors": true,
+    "all103StreamsObservedNotEnded": true,
+    "gitSourceHashesMatch": true,
+    "credentialPayloadFieldsAbsent": true
+  },
+  "rows": [
+    {
+      "report": "test-results/late-scoped-baseline6284c63-pair1-movement.json",
+      "candidate": "baseline6284c63-pair1-movement-helper-present-inactive",
+      "movement": true,
+      "scoringSamples": 1000,
+      "scoringP95Ms": 466.14358300000094,
+      "movementSamples": 9908,
+      "movementDispatchCount": 9908,
+      "measuredSeconds": 14.592899708000001,
+      "commandScopeTotalMs": 2668.090025000015,
+      "sourceHashes": {
+        "engine.mjs": "4fde6096ce97d58f5f8d3e8257275aebadbb69a65db16a95b9e330122cbec442",
+        "server.mjs": "ad5074049a7af49d381eb64596305ae2206f1dfeaafa84c5425525b214a81cd7",
+        "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+        "command-checkpoint.mjs": "1f3df952d81bae0148e9f6f7840ea2117577cfc1ae66b48de941af869fc471e7",
+        "scripts/profile-late-event.mjs": "3fd17069a4b5a596bc22980b355ce14e31f9be535d47fda15ba3e447863b8edd"
+      }
+    },
+    {
+      "report": "test-results/late-scoped-baseline6284c63-pair1-scoring.json",
+      "candidate": "baseline6284c63-pair1-scoring-helper-present-inactive",
+      "movement": false,
+      "scoringSamples": 1000,
+      "scoringP95Ms": 453.7990829999999,
+      "movementSamples": 0,
+      "movementDispatchCount": 0,
+      "measuredSeconds": 14.296145540999998,
+      "commandScopeTotalMs": 2660.016710000011,
+      "sourceHashes": {
+        "engine.mjs": "4fde6096ce97d58f5f8d3e8257275aebadbb69a65db16a95b9e330122cbec442",
+        "server.mjs": "ad5074049a7af49d381eb64596305ae2206f1dfeaafa84c5425525b214a81cd7",
+        "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+        "command-checkpoint.mjs": "1f3df952d81bae0148e9f6f7840ea2117577cfc1ae66b48de941af869fc471e7",
+        "scripts/profile-late-event.mjs": "3fd17069a4b5a596bc22980b355ce14e31f9be535d47fda15ba3e447863b8edd"
+      }
+    },
+    {
+      "report": "test-results/late-scoped-baseline6284c63-pair2-movement.json",
+      "candidate": "baseline6284c63-pair2-movement-helper-present-inactive",
+      "movement": true,
+      "scoringSamples": 1000,
+      "scoringP95Ms": 467.025875000003,
+      "movementSamples": 9702,
+      "movementDispatchCount": 9702,
+      "measuredSeconds": 14.686292083,
+      "commandScopeTotalMs": 2645.883628000028,
+      "sourceHashes": {
+        "engine.mjs": "4fde6096ce97d58f5f8d3e8257275aebadbb69a65db16a95b9e330122cbec442",
+        "server.mjs": "ad5074049a7af49d381eb64596305ae2206f1dfeaafa84c5425525b214a81cd7",
+        "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+        "command-checkpoint.mjs": "1f3df952d81bae0148e9f6f7840ea2117577cfc1ae66b48de941af869fc471e7",
+        "scripts/profile-late-event.mjs": "3fd17069a4b5a596bc22980b355ce14e31f9be535d47fda15ba3e447863b8edd"
+      }
+    },
+    {
+      "report": "test-results/late-scoped-baseline6284c63-pair2-scoring.json",
+      "candidate": "baseline6284c63-pair2-scoring-helper-present-inactive",
+      "movement": false,
+      "scoringSamples": 1000,
+      "scoringP95Ms": 436.56495899999936,
+      "movementSamples": 0,
+      "movementDispatchCount": 0,
+      "measuredSeconds": 14.335787041,
+      "commandScopeTotalMs": 2635.566759000014,
+      "sourceHashes": {
+        "engine.mjs": "4fde6096ce97d58f5f8d3e8257275aebadbb69a65db16a95b9e330122cbec442",
+        "server.mjs": "ad5074049a7af49d381eb64596305ae2206f1dfeaafa84c5425525b214a81cd7",
+        "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+        "command-checkpoint.mjs": "1f3df952d81bae0148e9f6f7840ea2117577cfc1ae66b48de941af869fc471e7",
+        "scripts/profile-late-event.mjs": "3fd17069a4b5a596bc22980b355ce14e31f9be535d47fda15ba3e447863b8edd"
+      }
+    },
+    {
+      "report": "test-results/late-scoped-candidatec9ea9c5-pair1-movement.json",
+      "candidate": "candidatec9ea9c5-pair1-movement-helper-active",
+      "movement": true,
+      "scoringSamples": 1000,
+      "scoringP95Ms": 253.5758339999993,
+      "movementSamples": 8956,
+      "movementDispatchCount": 8956,
+      "measuredSeconds": 12.025082667,
+      "commandScopeTotalMs": 476.538014000007,
+      "sourceHashes": {
+        "engine.mjs": "4fde6096ce97d58f5f8d3e8257275aebadbb69a65db16a95b9e330122cbec442",
+        "server.mjs": "f3862b45f387642efbf79dcafb793fcdbba86aed758b52cac9894dfe1af6a48e",
+        "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+        "command-checkpoint.mjs": "1f3df952d81bae0148e9f6f7840ea2117577cfc1ae66b48de941af869fc471e7",
+        "scripts/profile-late-event.mjs": "3fd17069a4b5a596bc22980b355ce14e31f9be535d47fda15ba3e447863b8edd"
+      }
+    },
+    {
+      "report": "test-results/late-scoped-candidatec9ea9c5-pair1-scoring.json",
+      "candidate": "candidatec9ea9c5-pair1-scoring-helper-active",
+      "movement": false,
+      "scoringSamples": 1000,
+      "scoringP95Ms": 213.44312499999978,
+      "movementSamples": 0,
+      "movementDispatchCount": 0,
+      "measuredSeconds": 11.848137791999998,
+      "commandScopeTotalMs": 480.05173500000546,
+      "sourceHashes": {
+        "engine.mjs": "4fde6096ce97d58f5f8d3e8257275aebadbb69a65db16a95b9e330122cbec442",
+        "server.mjs": "f3862b45f387642efbf79dcafb793fcdbba86aed758b52cac9894dfe1af6a48e",
+        "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+        "command-checkpoint.mjs": "1f3df952d81bae0148e9f6f7840ea2117577cfc1ae66b48de941af869fc471e7",
+        "scripts/profile-late-event.mjs": "3fd17069a4b5a596bc22980b355ce14e31f9be535d47fda15ba3e447863b8edd"
+      }
+    },
+    {
+      "report": "test-results/late-scoped-candidatec9ea9c5-pair2-movement.json",
+      "candidate": "candidatec9ea9c5-pair2-movement-helper-active",
+      "movement": true,
+      "scoringSamples": 1000,
+      "scoringP95Ms": 243.30274999999892,
+      "movementSamples": 8919,
+      "movementDispatchCount": 9019,
+      "measuredSeconds": 12.031885292,
+      "commandScopeTotalMs": 469.0765029999784,
+      "sourceHashes": {
+        "engine.mjs": "4fde6096ce97d58f5f8d3e8257275aebadbb69a65db16a95b9e330122cbec442",
+        "server.mjs": "f3862b45f387642efbf79dcafb793fcdbba86aed758b52cac9894dfe1af6a48e",
+        "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+        "command-checkpoint.mjs": "1f3df952d81bae0148e9f6f7840ea2117577cfc1ae66b48de941af869fc471e7",
+        "scripts/profile-late-event.mjs": "3fd17069a4b5a596bc22980b355ce14e31f9be535d47fda15ba3e447863b8edd"
+      }
+    },
+    {
+      "report": "test-results/late-scoped-candidatec9ea9c5-pair2-scoring.json",
+      "candidate": "candidatec9ea9c5-pair2-scoring-helper-active",
+      "movement": false,
+      "scoringSamples": 1000,
+      "scoringP95Ms": 221.34583399999974,
+      "movementSamples": 0,
+      "movementDispatchCount": 0,
+      "measuredSeconds": 11.861881333,
+      "commandScopeTotalMs": 486.48130800001945,
+      "sourceHashes": {
+        "engine.mjs": "4fde6096ce97d58f5f8d3e8257275aebadbb69a65db16a95b9e330122cbec442",
+        "server.mjs": "f3862b45f387642efbf79dcafb793fcdbba86aed758b52cac9894dfe1af6a48e",
+        "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+        "command-checkpoint.mjs": "1f3df952d81bae0148e9f6f7840ea2117577cfc1ae66b48de941af869fc471e7",
+        "scripts/profile-late-event.mjs": "3fd17069a4b5a596bc22980b355ce14e31f9be535d47fda15ba3e447863b8edd"
+      }
+    }
+  ],
+  "artifactSha256": {
+    "test-results/late-scoped-baseline6284c63-pair1-movement.json": "2b6d09bf78abfbc3ebd5dfae1cc5ca8058f3bbc69e736dc4a77157d2749d8dd7",
+    "test-results/late-scoped-baseline6284c63-pair1-movement.log": "fcd4947b617b71fc2190aa822cbafbca4b764c460320c2eb85b67238d4b11429",
+    "test-results/late-scoped-baseline6284c63-pair1-scoring.json": "18929de96a77bbd4e1d5f34eeae8b00c9f8ff28f988bafbbc0d7576dc137e6fb",
+    "test-results/late-scoped-baseline6284c63-pair1-scoring.log": "94ace3825f253d6ff95f3aec663d077b5c78b3e1aea1b6f6dfdfaa694800471c",
+    "test-results/late-scoped-baseline6284c63-pair2-movement.json": "95784110ea3f3e036643306df65d0b3b6b00210ffe9636f2b3915473d6ab5592",
+    "test-results/late-scoped-baseline6284c63-pair2-movement.log": "7d59af5982f386a3f3b07060aaa2343c390fbc0088e55a42f0d49a10c6852f9c",
+    "test-results/late-scoped-baseline6284c63-pair2-scoring.json": "88560d982a35e4a7aae6b75c4e7b95ea91bbbf11b64cdb458b9090847e115432",
+    "test-results/late-scoped-baseline6284c63-pair2-scoring.log": "054db8f52b1600b2b5c3cc3d898f3c67e7edc9130b2ce98c3cb117750b4406f5",
+    "test-results/late-scoped-candidatec9ea9c5-pair1-movement.json": "441d39c2fd915c77c4542539463767b081b943cc1be97732abb254121b42c34c",
+    "test-results/late-scoped-candidatec9ea9c5-pair1-movement.log": "2ec3ea739f6cdd363cba4097d6c68b43b989e477d12e419712bbd9aa3939743a",
+    "test-results/late-scoped-candidatec9ea9c5-pair1-scoring.json": "96a8a7fc5bdff65f3e002d7c4e877e6bc511352b2756964c51e333387d27277e",
+    "test-results/late-scoped-candidatec9ea9c5-pair1-scoring.log": "c20272f27bf336304af31b9292534c4bc10331fb9cd7b7065aa017df816557d0",
+    "test-results/late-scoped-candidatec9ea9c5-pair2-movement.json": "b6f10a81c283d097c5c93e54a8d83d6c9d44715c1fb960cc4f107206b23aed06",
+    "test-results/late-scoped-candidatec9ea9c5-pair2-movement.log": "98bd849444a83b0e34c45de2c9f79a58e08298eb6e27c19f4892f74753376539",
+    "test-results/late-scoped-candidatec9ea9c5-pair2-scoring.json": "9d77ec52364f1eb9ac656f96bea57e7e8ea8049496ef13ce42506d443e61aa00",
+    "test-results/late-scoped-candidatec9ea9c5-pair2-scoring.log": "d122177f4d3926bd446c1cba83ee1dcbfee7e793ff1db4ed3377d89bb5c15288"
+  },
+  "limitations": [
+    "Synthetic reconstructed late-event routing waves, not a normal event; source helper is hashed but inactive in baseline server.",
+    "Same development Mac and localhost, with instrumentation; uncontrolled user preview/activity.",
+    "Movement dispatch counters use execution-time window; response samples use request-start flag. Warmup movement may cross boundary (candidate pair2 9019 dispatches versus8919 measured responses). Scoring waves are awaited and all contain1000 samples.",
+    "Candidate completes waves sooner, so duration and movement counts differ; compare scoring load, not identical movement work.",
+    "Full capacity and representative-network acceptance still required."
+  ],
+  "releaseAcceptance": false
+}

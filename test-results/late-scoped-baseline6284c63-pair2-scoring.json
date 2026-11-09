@@ -1,0 +1,1361 @@
+{
+  "label": "SYNTHETIC late-event profile; not a normal event or acceptance run",
+  "candidate": "baseline6284c63-pair2-scoring-helper-present-inactive",
+  "journalSha256": "4e6d449422a3326e1ee1095858195c3f1ed96e12dbb63dab8e024ed9e0166a20",
+  "sourceHashes": {
+    "engine.mjs": "4fde6096ce97d58f5f8d3e8257275aebadbb69a65db16a95b9e330122cbec442",
+    "server.mjs": "ad5074049a7af49d381eb64596305ae2206f1dfeaafa84c5425525b214a81cd7",
+    "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+    "command-checkpoint.mjs": "1f3df952d81bae0148e9f6f7840ea2117577cfc1ae66b48de941af869fc471e7",
+    "scripts/profile-late-event.mjs": "3fd17069a4b5a596bc22980b355ce14e31f9be535d47fda15ba3e447863b8edd"
+  },
+  "nodeVersion": "v24.20.0",
+  "platform": "darwin",
+  "network": "localhost clients/server same process",
+  "players": 100,
+  "operatorConnections": 2,
+  "presentationConnections": 1,
+  "waves": 10,
+  "warmupWaves": 2,
+  "waveGapMs": 1000,
+  "movement": false,
+  "measuredSeconds": 14.335787041,
+  "scoringLatencyMs": {
+    "count": 1000,
+    "p50": 421.0525409999991,
+    "p95": 436.56495899999936,
+    "p99": 447.97812500000146,
+    "max": 450.06316699999843,
+    "total": 421296.0119820002
+  },
+  "movementLatencyMs": {
+    "count": 0,
+    "p50": null,
+    "p95": null,
+    "p99": null,
+    "max": null,
+    "total": 0
+  },
+  "cpuMicroseconds": {
+    "user": 6970011,
+    "system": 672881
+  },
+  "eventLoopDelayMs": {
+    "p50": 10.018815,
+    "p95": 66.945023,
+    "p99": 343.932927,
+    "max": 361.234431
+  },
+  "gc": [
+    {
+      "durationMs": 0.4187920093536377,
+      "kind": 1
+    },
+    {
+      "durationMs": 2.5061250925064087,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.2421660423278809,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.41041696071624756,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.6771670579910278,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.5755829811096191,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.403499960899353,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.3980419635772705,
+      "kind": 1
+    },
+    {
+      "durationMs": 2.3517500162124634,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.2109169960021973,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.408750057220459,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.16133296489715576,
+      "kind": 8
+    },
+    {
+      "durationMs": 2.193874955177307,
+      "kind": 4
+    },
+    {
+      "durationMs": 0.6692910194396973,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.24787497520446777,
+      "kind": 8
+    },
+    {
+      "durationMs": 2.451915979385376,
+      "kind": 4
+    },
+    {
+      "durationMs": 2.8993340730667114,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.2167080640792847,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.43887507915496826,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.13829100131988525,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.581125020980835,
+      "kind": 4
+    },
+    {
+      "durationMs": 0.5440000295639038,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.15316593647003174,
+      "kind": 8
+    },
+    {
+      "durationMs": 0.9591670036315918,
+      "kind": 4
+    },
+    {
+      "durationMs": 0.4274580478668213,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.13329195976257324,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.0663330554962158,
+      "kind": 4
+    },
+    {
+      "durationMs": 2.6128329038619995,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.1785000562667847,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.4205000400543213,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.1471250057220459,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.509458065032959,
+      "kind": 4
+    },
+    {
+      "durationMs": 0.5757079124450684,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.3887079954147339,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.09091603755950928,
+      "kind": 8
+    },
+    {
+      "durationMs": 0.8177920579910278,
+      "kind": 4
+    },
+    {
+      "durationMs": 0.5930420160293579,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.13466596603393555,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.6035829782485962,
+      "kind": 4
+    },
+    {
+      "durationMs": 1.8441659212112427,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.062958002090454,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.4032078981399536,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.14129197597503662,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.2861250638961792,
+      "kind": 4
+    },
+    {
+      "durationMs": 0.5832500457763672,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.44058406352996826,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.5300829410552979,
+      "kind": 1
+    },
+    {
+      "durationMs": 2.439542055130005,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.0839170217514038,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.41383397579193115,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.6665829420089722,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.5085830688476562,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.15679097175598145,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.2624579668045044,
+      "kind": 4
+    },
+    {
+      "durationMs": 0.7530829906463623,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.1707090139389038,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.7848330736160278,
+      "kind": 4
+    },
+    {
+      "durationMs": 1.8834580183029175,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.0643339157104492,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.41520798206329346,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.11762499809265137,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.4059170484542847,
+      "kind": 4
+    },
+    {
+      "durationMs": 0.5842499732971191,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.15241706371307373,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.3517920970916748,
+      "kind": 4
+    },
+    {
+      "durationMs": 0.6789590120315552,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.13670897483825684,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.1800000667572021,
+      "kind": 4
+    },
+    {
+      "durationMs": 1.7445000410079956,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.0619169473648071,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.40654194355010986,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.12287497520446777,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.2881669998168945,
+      "kind": 4
+    },
+    {
+      "durationMs": 0.5647079944610596,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.39283299446105957,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.08274996280670166,
+      "kind": 8
+    },
+    {
+      "durationMs": 0.840041995048523,
+      "kind": 4
+    },
+    {
+      "durationMs": 0.5360829830169678,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.13137507438659668,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.3060001134872437,
+      "kind": 4
+    },
+    {
+      "durationMs": 1.7792080640792847,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.9959580898284912,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.4147920608520508,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.11695802211761475,
+      "kind": 8
+    },
+    {
+      "durationMs": 1.3734999895095825,
+      "kind": 4
+    },
+    {
+      "durationMs": 0.500959038734436,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.3652501106262207,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.5570828914642334,
+      "kind": 1
+    },
+    {
+      "durationMs": 2.232832908630371,
+      "kind": 1
+    },
+    {
+      "durationMs": 1.0995830297470093,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.3995000123977661,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.7400830984115601,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.5973329544067383,
+      "kind": 1
+    },
+    {
+      "durationMs": 0.12504088878631592,
+      "kind": 8
+    },
+    {
+      "durationMs": 0.9257500171661377,
+      "kind": 4
+    },
+    {
+      "durationMs": 0.43370795249938965,
+      "kind": 1
+    }
+  ],
+  "memoryStart": {
+    "rss": 476987392,
+    "heapTotal": 234782720,
+    "heapUsed": 123294080,
+    "external": 50940545,
+    "arrayBuffers": 46869038
+  },
+  "memoryEnd": {
+    "rss": 571539456,
+    "heapTotal": 191873024,
+    "heapUsed": 81263368,
+    "external": 27881360,
+    "arrayBuffers": 23815240
+  },
+  "initialStateBytes": 5883235,
+  "finalStateBytes": 6612231,
+  "history": {
+    "requests": 13654,
+    "actions": 16567,
+    "reconstructedTrades": 84
+  },
+  "streams": [
+    {
+      "id": "load-player-0",
+      "frames": 72,
+      "bytes": 2450121,
+      "ended": false
+    },
+    {
+      "id": "load-player-1",
+      "frames": 72,
+      "bytes": 2441769,
+      "ended": false
+    },
+    {
+      "id": "load-player-2",
+      "frames": 72,
+      "bytes": 2450266,
+      "ended": false
+    },
+    {
+      "id": "load-player-3",
+      "frames": 72,
+      "bytes": 2441698,
+      "ended": false
+    },
+    {
+      "id": "load-player-4",
+      "frames": 72,
+      "bytes": 2450194,
+      "ended": false
+    },
+    {
+      "id": "load-player-5",
+      "frames": 72,
+      "bytes": 2441842,
+      "ended": false
+    },
+    {
+      "id": "load-player-6",
+      "frames": 72,
+      "bytes": 2450122,
+      "ended": false
+    },
+    {
+      "id": "load-player-7",
+      "frames": 71,
+      "bytes": 2407768,
+      "ended": false
+    },
+    {
+      "id": "load-player-8",
+      "frames": 71,
+      "bytes": 2416143,
+      "ended": false
+    },
+    {
+      "id": "load-player-9",
+      "frames": 71,
+      "bytes": 2407697,
+      "ended": false
+    },
+    {
+      "id": "load-player-10",
+      "frames": 71,
+      "bytes": 2416927,
+      "ended": false
+    },
+    {
+      "id": "load-player-11",
+      "frames": 71,
+      "bytes": 2408126,
+      "ended": false
+    },
+    {
+      "id": "load-player-12",
+      "frames": 71,
+      "bytes": 2416784,
+      "ended": false
+    },
+    {
+      "id": "load-player-13",
+      "frames": 71,
+      "bytes": 2407983,
+      "ended": false
+    },
+    {
+      "id": "load-player-14",
+      "frames": 71,
+      "bytes": 2416926,
+      "ended": false
+    },
+    {
+      "id": "load-player-15",
+      "frames": 71,
+      "bytes": 2407912,
+      "ended": false
+    },
+    {
+      "id": "load-player-16",
+      "frames": 70,
+      "bytes": 2398605,
+      "ended": false
+    },
+    {
+      "id": "load-player-17",
+      "frames": 70,
+      "bytes": 2389929,
+      "ended": false
+    },
+    {
+      "id": "load-player-18",
+      "frames": 70,
+      "bytes": 2398536,
+      "ended": false
+    },
+    {
+      "id": "load-player-19",
+      "frames": 70,
+      "bytes": 2389859,
+      "ended": false
+    },
+    {
+      "id": "load-player-20",
+      "frames": 70,
+      "bytes": 2398676,
+      "ended": false
+    },
+    {
+      "id": "load-player-21",
+      "frames": 70,
+      "bytes": 2389789,
+      "ended": false
+    },
+    {
+      "id": "load-player-22",
+      "frames": 70,
+      "bytes": 2398677,
+      "ended": false
+    },
+    {
+      "id": "load-player-23",
+      "frames": 70,
+      "bytes": 2390000,
+      "ended": false
+    },
+    {
+      "id": "load-player-24",
+      "frames": 70,
+      "bytes": 2398536,
+      "ended": false
+    },
+    {
+      "id": "load-player-25",
+      "frames": 69,
+      "bytes": 2370184,
+      "ended": false
+    },
+    {
+      "id": "load-player-26",
+      "frames": 69,
+      "bytes": 2378875,
+      "ended": false
+    },
+    {
+      "id": "load-player-27",
+      "frames": 69,
+      "bytes": 2370115,
+      "ended": false
+    },
+    {
+      "id": "load-player-28",
+      "frames": 69,
+      "bytes": 2378806,
+      "ended": false
+    },
+    {
+      "id": "load-player-29",
+      "frames": 69,
+      "bytes": 2370253,
+      "ended": false
+    },
+    {
+      "id": "load-player-30",
+      "frames": 69,
+      "bytes": 2378737,
+      "ended": false
+    },
+    {
+      "id": "load-player-31",
+      "frames": 69,
+      "bytes": 2370184,
+      "ended": false
+    },
+    {
+      "id": "load-player-32",
+      "frames": 69,
+      "bytes": 2378875,
+      "ended": false
+    },
+    {
+      "id": "load-player-33",
+      "frames": 69,
+      "bytes": 2370115,
+      "ended": false
+    },
+    {
+      "id": "load-player-34",
+      "frames": 68,
+      "bytes": 2357522,
+      "ended": false
+    },
+    {
+      "id": "load-player-35",
+      "frames": 68,
+      "bytes": 2349093,
+      "ended": false
+    },
+    {
+      "id": "load-player-36",
+      "frames": 68,
+      "bytes": 2357385,
+      "ended": false
+    },
+    {
+      "id": "load-player-37",
+      "frames": 68,
+      "bytes": 2348956,
+      "ended": false
+    },
+    {
+      "id": "load-player-38",
+      "frames": 68,
+      "bytes": 2357521,
+      "ended": false
+    },
+    {
+      "id": "load-player-39",
+      "frames": 68,
+      "bytes": 2348888,
+      "ended": false
+    },
+    {
+      "id": "load-player-40",
+      "frames": 68,
+      "bytes": 2357453,
+      "ended": false
+    },
+    {
+      "id": "load-player-41",
+      "frames": 68,
+      "bytes": 2349024,
+      "ended": false
+    },
+    {
+      "id": "load-player-42",
+      "frames": 67,
+      "bytes": 2334478,
+      "ended": false
+    },
+    {
+      "id": "load-player-43",
+      "frames": 67,
+      "bytes": 2326173,
+      "ended": false
+    },
+    {
+      "id": "load-player-44",
+      "frames": 67,
+      "bytes": 2334612,
+      "ended": false
+    },
+    {
+      "id": "load-player-45",
+      "frames": 67,
+      "bytes": 2326106,
+      "ended": false
+    },
+    {
+      "id": "load-player-46",
+      "frames": 67,
+      "bytes": 2334613,
+      "ended": false
+    },
+    {
+      "id": "load-player-47",
+      "frames": 67,
+      "bytes": 2326308,
+      "ended": false
+    },
+    {
+      "id": "load-player-48",
+      "frames": 67,
+      "bytes": 2334478,
+      "ended": false
+    },
+    {
+      "id": "load-player-49",
+      "frames": 67,
+      "bytes": 2326173,
+      "ended": false
+    },
+    {
+      "id": "load-player-50",
+      "frames": 66,
+      "bytes": 2310321,
+      "ended": false
+    },
+    {
+      "id": "load-player-51",
+      "frames": 66,
+      "bytes": 2301943,
+      "ended": false
+    },
+    {
+      "id": "load-player-52",
+      "frames": 66,
+      "bytes": 2310256,
+      "ended": false
+    },
+    {
+      "id": "load-player-53",
+      "frames": 66,
+      "bytes": 2302075,
+      "ended": false
+    },
+    {
+      "id": "load-player-54",
+      "frames": 66,
+      "bytes": 2310190,
+      "ended": false
+    },
+    {
+      "id": "load-player-55",
+      "frames": 66,
+      "bytes": 2302009,
+      "ended": false
+    },
+    {
+      "id": "load-player-56",
+      "frames": 66,
+      "bytes": 2310322,
+      "ended": false
+    },
+    {
+      "id": "load-player-57",
+      "frames": 66,
+      "bytes": 2301943,
+      "ended": false
+    },
+    {
+      "id": "load-player-58",
+      "frames": 65,
+      "bytes": 2284650,
+      "ended": false
+    },
+    {
+      "id": "load-player-59",
+      "frames": 65,
+      "bytes": 2276593,
+      "ended": false
+    },
+    {
+      "id": "load-player-60",
+      "frames": 65,
+      "bytes": 2284519,
+      "ended": false
+    },
+    {
+      "id": "load-player-61",
+      "frames": 65,
+      "bytes": 2276462,
+      "ended": false
+    },
+    {
+      "id": "load-player-62",
+      "frames": 65,
+      "bytes": 2284649,
+      "ended": false
+    },
+    {
+      "id": "load-player-63",
+      "frames": 65,
+      "bytes": 2276397,
+      "ended": false
+    },
+    {
+      "id": "load-player-64",
+      "frames": 65,
+      "bytes": 2284584,
+      "ended": false
+    },
+    {
+      "id": "load-player-65",
+      "frames": 65,
+      "bytes": 2276527,
+      "ended": false
+    },
+    {
+      "id": "load-player-66",
+      "frames": 64,
+      "bytes": 2257468,
+      "ended": false
+    },
+    {
+      "id": "load-player-67",
+      "frames": 64,
+      "bytes": 2249535,
+      "ended": false
+    },
+    {
+      "id": "load-player-68",
+      "frames": 64,
+      "bytes": 2257596,
+      "ended": false
+    },
+    {
+      "id": "load-player-69",
+      "frames": 64,
+      "bytes": 2249471,
+      "ended": false
+    },
+    {
+      "id": "load-player-70",
+      "frames": 64,
+      "bytes": 2257597,
+      "ended": false
+    },
+    {
+      "id": "load-player-71",
+      "frames": 64,
+      "bytes": 2249664,
+      "ended": false
+    },
+    {
+      "id": "load-player-72",
+      "frames": 64,
+      "bytes": 2257468,
+      "ended": false
+    },
+    {
+      "id": "load-player-73",
+      "frames": 64,
+      "bytes": 2249535,
+      "ended": false
+    },
+    {
+      "id": "load-player-74",
+      "frames": 63,
+      "bytes": 2229161,
+      "ended": false
+    },
+    {
+      "id": "load-player-75",
+      "frames": 63,
+      "bytes": 2221163,
+      "ended": false
+    },
+    {
+      "id": "load-player-76",
+      "frames": 63,
+      "bytes": 2229098,
+      "ended": false
+    },
+    {
+      "id": "load-player-77",
+      "frames": 63,
+      "bytes": 2221289,
+      "ended": false
+    },
+    {
+      "id": "load-player-78",
+      "frames": 63,
+      "bytes": 2229035,
+      "ended": false
+    },
+    {
+      "id": "load-player-79",
+      "frames": 63,
+      "bytes": 2221226,
+      "ended": false
+    },
+    {
+      "id": "load-player-80",
+      "frames": 63,
+      "bytes": 2229161,
+      "ended": false
+    },
+    {
+      "id": "load-player-81",
+      "frames": 63,
+      "bytes": 2221163,
+      "ended": false
+    },
+    {
+      "id": "load-player-82",
+      "frames": 62,
+      "bytes": 2199345,
+      "ended": false
+    },
+    {
+      "id": "load-player-83",
+      "frames": 62,
+      "bytes": 2191660,
+      "ended": false
+    },
+    {
+      "id": "load-player-84",
+      "frames": 62,
+      "bytes": 2199220,
+      "ended": false
+    },
+    {
+      "id": "load-player-85",
+      "frames": 62,
+      "bytes": 2191535,
+      "ended": false
+    },
+    {
+      "id": "load-player-86",
+      "frames": 62,
+      "bytes": 2199344,
+      "ended": false
+    },
+    {
+      "id": "load-player-87",
+      "frames": 62,
+      "bytes": 2191473,
+      "ended": false
+    },
+    {
+      "id": "load-player-88",
+      "frames": 62,
+      "bytes": 2199282,
+      "ended": false
+    },
+    {
+      "id": "load-player-89",
+      "frames": 62,
+      "bytes": 2191597,
+      "ended": false
+    },
+    {
+      "id": "load-player-90",
+      "frames": 61,
+      "bytes": 2168025,
+      "ended": false
+    },
+    {
+      "id": "load-player-91",
+      "frames": 61,
+      "bytes": 2160464,
+      "ended": false
+    },
+    {
+      "id": "load-player-92",
+      "frames": 61,
+      "bytes": 2168147,
+      "ended": false
+    },
+    {
+      "id": "load-player-93",
+      "frames": 61,
+      "bytes": 2160403,
+      "ended": false
+    },
+    {
+      "id": "load-player-94",
+      "frames": 61,
+      "bytes": 2168148,
+      "ended": false
+    },
+    {
+      "id": "load-player-95",
+      "frames": 61,
+      "bytes": 2160587,
+      "ended": false
+    },
+    {
+      "id": "load-player-96",
+      "frames": 61,
+      "bytes": 2168025,
+      "ended": false
+    },
+    {
+      "id": "load-player-97",
+      "frames": 61,
+      "bytes": 2160464,
+      "ended": false
+    },
+    {
+      "id": "load-player-98",
+      "frames": 60,
+      "bytes": 2135568,
+      "ended": false
+    },
+    {
+      "id": "load-player-99",
+      "frames": 60,
+      "bytes": 2127951,
+      "ended": false
+    },
+    {
+      "id": "operator-0",
+      "frames": 60,
+      "bytes": 1918502,
+      "ended": false
+    },
+    {
+      "id": "operator-1",
+      "frames": 60,
+      "bytes": 1918502,
+      "ended": false
+    },
+    {
+      "id": "presentation",
+      "frames": 60,
+      "bytes": 995216,
+      "ended": false
+    }
+  ],
+  "errors": [],
+  "stageTimingMs": {
+    "otherClone": {
+      "count": 7350,
+      "p50": 0.17433299999902374,
+      "p95": 0.3322919999991427,
+      "p99": 0.5974999999998545,
+      "max": 4.295083999999406,
+      "total": 1203.8594710001043
+    },
+    "engine.view": {
+      "count": 5000,
+      "p50": 0.21508400000129768,
+      "p95": 0.4100830000006681,
+      "p99": 0.7781670000003942,
+      "max": 4.688709000000017,
+      "total": 1224.4138400000047
+    },
+    "engine.presentation": {
+      "count": 150,
+      "p50": 0.10600000000158616,
+      "p95": 0.13062499999978172,
+      "p99": 0.13966700000128185,
+      "max": 0.14066600000296603,
+      "total": 15.762467000007746
+    },
+    "engine.hostView": {
+      "count": 100,
+      "p50": 0.15200000000004366,
+      "p95": 0.18649999999979627,
+      "p99": 0.22858400000041001,
+      "max": 0.22858400000041001,
+      "total": 15.262289000009332
+    },
+    "batchBackupClone": {
+      "count": 10,
+      "p50": 25.829334000000017,
+      "p95": 27.706500000000233,
+      "p99": 27.706500000000233,
+      "max": 27.706500000000233,
+      "total": 256.9544999999971
+    },
+    "sqlite.BEGIN IMMEDIATE": {
+      "count": 10,
+      "p50": 0.02200000000084401,
+      "p95": 0.0232079999987036,
+      "p99": 0.0232079999987036,
+      "max": 0.0232079999987036,
+      "total": 0.20058300000255258
+    },
+    "commandCheckpointClone": {
+      "count": 1000,
+      "p50": 2.548792000001413,
+      "p95": 2.925167000001238,
+      "p99": 4.281707999998616,
+      "max": 5.6599999999998545,
+      "total": 2607.4086939999806
+    },
+    "httpArrivalToDispatch": {
+      "count": 1000,
+      "p50": 167.07808399999976,
+      "p95": 282.70950000000084,
+      "p99": 294.15491700000075,
+      "max": 300.25629200000185,
+      "total": 166418.8832919998
+    },
+    "engine.tick": {
+      "count": 1000,
+      "p50": 0.00016599999980826396,
+      "p95": 0.0007089999999152496,
+      "p99": 0.002749999999650754,
+      "max": 0.005875000000742148,
+      "total": 0.24103799997374153
+    },
+    "scoringDispatch": {
+      "count": 1000,
+      "p50": 0.008208999999624211,
+      "p95": 0.025042000000212283,
+      "p99": 0.04433400000016263,
+      "max": 0.08487500000046566,
+      "total": 10.589458000038576
+    },
+    "commandScopeIncludingValidation": {
+      "count": 1000,
+      "p50": 2.5700839999999516,
+      "p95": 2.9610840000004828,
+      "p99": 4.346874999999272,
+      "max": 5.779291999999259,
+      "total": 2635.566759000014
+    },
+    "stateSerialization": {
+      "count": 10,
+      "p50": 16.531750000000102,
+      "p95": 17.23029200000019,
+      "p99": 17.23029200000019,
+      "max": 17.23029200000019,
+      "total": 164.08808399999998
+    },
+    "sqliteStateWrite": {
+      "count": 10,
+      "p50": 14.288958999999522,
+      "p95": 14.873583000000508,
+      "p99": 14.873583000000508,
+      "max": 14.873583000000508,
+      "total": 140.93379099999947
+    },
+    "sqlite.COMMIT": {
+      "count": 10,
+      "p50": 10.93212500000027,
+      "p95": 11.366792000000714,
+      "p99": 11.366792000000714,
+      "max": 11.366792000000714,
+      "total": 109.04695899999842
+    },
+    "engine.actionView": {
+      "count": 1000,
+      "p50": 0.046875,
+      "p95": 0.060666999999739346,
+      "p99": 0.10158299999966403,
+      "max": 0.13341700000091805,
+      "total": 47.7798899999716
+    },
+    "httpArrivalToResponseFinish": {
+      "count": 1000,
+      "p50": 345.36958400000003,
+      "p95": 355.0922920000012,
+      "p99": 357.0017079999998,
+      "max": 357.55887500000244,
+      "total": 346776.9200129997
+    }
+  },
+  "batches": [
+    {
+      "commands": 100,
+      "startedAt": 6358.834,
+      "commandScopeMs": 263.96004399999674,
+      "backupCloneMs": 22.675874999999905,
+      "checkpointCloneMs": 261.3309169999993,
+      "playerCloneMs": 0,
+      "dispatchMs": 0.9720429999924818,
+      "serializationMs": 15.412833000000319,
+      "sqliteWriteMs": 13.703708000000006,
+      "commitMs": 10.93212500000027,
+      "durationMs": 326.91041700000005,
+      "ending": "COMMIT"
+    },
+    {
+      "commands": 100,
+      "startedAt": 7797.415084,
+      "commandScopeMs": 262.525544000001,
+      "backupCloneMs": 25.829334000000017,
+      "checkpointCloneMs": 259.829831,
+      "playerCloneMs": 0,
+      "dispatchMs": 0.9999970000026224,
+      "serializationMs": 16.042582999999468,
+      "sqliteWriteMs": 12.657541999999921,
+      "commitMs": 10.77716700000019,
+      "durationMs": 327.9432079999997,
+      "ending": "COMMIT"
+    },
+    {
+      "commands": 100,
+      "startedAt": 9223.216792,
+      "commandScopeMs": 269.6235399999932,
+      "backupCloneMs": 24.832209000000148,
+      "checkpointCloneMs": 266.0794999999871,
+      "playerCloneMs": 0,
+      "dispatchMs": 1.474794000005204,
+      "serializationMs": 16.547167000000627,
+      "sqliteWriteMs": 13.519458000000668,
+      "commitMs": 10.925917000000481,
+      "durationMs": 335.5665000000008,
+      "ending": "COMMIT"
+    },
+    {
+      "commands": 100,
+      "startedAt": 10661.04775,
+      "commandScopeMs": 262.9711259999949,
+      "backupCloneMs": 26.688749999999345,
+      "checkpointCloneMs": 260.5031139999992,
+      "playerCloneMs": 0,
+      "dispatchMs": 0.9339160000054108,
+      "serializationMs": 16.338291999998546,
+      "sqliteWriteMs": 14.288958999999522,
+      "commitMs": 10.695458999998664,
+      "durationMs": 331.09483399999954,
+      "ending": "COMMIT"
+    },
+    {
+      "commands": 100,
+      "startedAt": 12096.73775,
+      "commandScopeMs": 261.6069560000142,
+      "backupCloneMs": 25.073999999998705,
+      "checkpointCloneMs": 258.9699249999994,
+      "playerCloneMs": 0,
+      "dispatchMs": 0.9836240000004182,
+      "serializationMs": 16.152792000000773,
+      "sqliteWriteMs": 14.011833000000479,
+      "commitMs": 10.578457999999955,
+      "durationMs": 327.52008399999977,
+      "ending": "COMMIT"
+    },
+    {
+      "commands": 100,
+      "startedAt": 13525.785584,
+      "commandScopeMs": 262.19297300000835,
+      "backupCloneMs": 25.827416000000085,
+      "checkpointCloneMs": 259.1303759999937,
+      "playerCloneMs": 0,
+      "dispatchMs": 1.1988760000058392,
+      "serializationMs": 16.531750000000102,
+      "sqliteWriteMs": 14.272415999999794,
+      "commitMs": 10.384083000000828,
+      "durationMs": 329.3225000000002,
+      "ending": "COMMIT"
+    },
+    {
+      "commands": 100,
+      "startedAt": 14977.717542,
+      "commandScopeMs": 266.30146499999137,
+      "backupCloneMs": 26.191541000000143,
+      "checkpointCloneMs": 263.40554499999416,
+      "playerCloneMs": 0,
+      "dispatchMs": 1.0601200000073732,
+      "serializationMs": 16.588207999999213,
+      "sqliteWriteMs": 14.583082999999533,
+      "commitMs": 11.095290999999634,
+      "durationMs": 334.87616700000035,
+      "ending": "COMMIT"
+    },
+    {
+      "commands": 100,
+      "startedAt": 16417.172292,
+      "commandScopeMs": 257.3933270000016,
+      "backupCloneMs": 25.526832999999897,
+      "checkpointCloneMs": 254.8540799999937,
+      "playerCloneMs": 0,
+      "dispatchMs": 0.9030410000050324,
+      "serializationMs": 16.836875000000873,
+      "sqliteWriteMs": 14.506916999998793,
+      "commitMs": 11.222458000000188,
+      "durationMs": 325.59958299999926,
+      "ending": "COMMIT"
+    },
+    {
+      "commands": 100,
+      "startedAt": 17845.693125,
+      "commandScopeMs": 259.68787100002373,
+      "backupCloneMs": 27.706500000000233,
+      "checkpointCloneMs": 257.07707599999776,
+      "playerCloneMs": 0,
+      "dispatchMs": 0.9923300000264135,
+      "serializationMs": 16.40729199999987,
+      "sqliteWriteMs": 14.516292000000249,
+      "commitMs": 11.0692089999975,
+      "durationMs": 329.4897089999977,
+      "ending": "COMMIT"
+    },
+    {
+      "commands": 100,
+      "startedAt": 19281.7625,
+      "commandScopeMs": 269.3039129999888,
+      "backupCloneMs": 26.60204199999862,
+      "checkpointCloneMs": 266.2283300000163,
+      "playerCloneMs": 0,
+      "dispatchMs": 1.0707169999877806,
+      "serializationMs": 17.23029200000019,
+      "sqliteWriteMs": 14.873583000000508,
+      "commitMs": 11.366792000000714,
+      "durationMs": 339.4804589999985,
+      "ending": "COMMIT"
+    }
+  ],
+  "notes": [
+    "Stage times overlap: commandScopeIncludingValidation includes checkpoint clones, dispatch, proxy validation and command-loop overhead; dispatch includes engine tick/clone work. Do not add every category.",
+    "httpArrivalToDispatch includes body parsing, queue delay, batch backup and preceding commands; it is not pure enqueue wait.",
+    "Hooks add measurement overhead equally to baseline/candidate; CPU-profile runs should use matching flags."
+  ],
+  "limitations": [
+    "Missing top-level fields and historical trade versions are reconstructed, not recovered.",
+    "Chapter8 routing steps, positions, reserve and score are reset before each wave; these are synthetic scoring opportunities.",
+    "Shared computer activity and instrumentation may affect timings.",
+    "Only paired equivalent fixtures can support optimization comparisons; a fresh complete capacity run remains required."
+  ],
+  "cpuProfilePath": "/Users/jgibbs/Code/second-nature-trail/test-results/late-scoped-baseline6284c63-pair2-scoring.cpuprofile"
+}
