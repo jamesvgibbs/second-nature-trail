@@ -1,0 +1,10 @@
+{"at":"2026-11-09T23:17:30.623Z","message":"Building exact merged source in clean archive context"}
+{"at":"2026-11-09T23:17:32.171Z","message":"Production-mode non-root container running with offline synthetic roster"}
+{
+  "passed": false,
+  "error": "Command failed: docker port trail-smoke-c37f09a-55064 4173/tcp\nno public port '4173/tcp' published for trail-smoke-c37f09a-55064\n",
+  "image": "second-nature-trail:c37f09a",
+  "imageId": "sha256:3846fa36e5bdeb7d8ebc38106c7a1b77817c572fad5f13aa0f9c85b12e3e31f2",
+  "checks": 3,
+  "report": "test-results/container-c37f09a.json"
+}

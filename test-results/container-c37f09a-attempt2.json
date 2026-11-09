@@ -1,0 +1,78 @@
+{
+  "build": "c37f09a711c13a7bf6c47c17388ff2f585d8ce94",
+  "startedAt": "2026-11-09T23:20:40.426Z",
+  "image": "second-nature-trail:c37f09a",
+  "productionDeployed": false,
+  "network": "loopback HTTP; Secure cookie flag disabled only for disposable synthetic test",
+  "storage": "two disposable Docker named volumes",
+  "checks": [
+    {
+      "name": "non-root Node24 production-mode startup, health and public modules"
+    },
+    {
+      "name": "two operators, safe display isolation and role-conflict rejection preserve original player"
+    },
+    {
+      "name": "committed quiz, atomic barter, pending barter and pause saved; live-WAL backup passed integrity and refused overwrite"
+    }
+  ],
+  "sourceHashes": {
+    "server.mjs": "b590ec6f0b613769566390c6d6e5e705172681d633c0c1991cfc844a5bea26d9",
+    "engine.mjs": "4fde6096ce97d58f5f8d3e8257275aebadbb69a65db16a95b9e330122cbec442",
+    "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+    "command-checkpoint.mjs": "1f3df952d81bae0148e9f6f7840ea2117577cfc1ae66b48de941af869fc471e7",
+    "public/app.js": "653bccdb015737d17d5ae857c0c2cda1b893c78e2632ad40ceb10e2bc378ed1b",
+    "public/projection.mjs": "90b19560a0e02a7b9d19d69e567d2ef332526f351b2370040a5d7e60a47d6b79",
+    "scripts/backup.mjs": "0c58ec798a9271ab642d862648800362d0efa543e89542f9d138934503afb4de",
+    "Dockerfile": "a34eef0517f7f154d6bc27ba51946214dfd0ec35b5473dfaf41cdf9df8ab9e52"
+  },
+  "containers": [
+    {
+      "name": "trail-smoke-c37f09a-56819",
+      "loopbackBinding": "127.0.0.1:62265"
+    }
+  ],
+  "cleanup": [
+    {
+      "container": "trail-smoke-c37f09a-56819",
+      "removed": true
+    },
+    {
+      "container": "trail-smoke-c37f09a-56819-restored",
+      "removed": true
+    },
+    {
+      "volume": "trail-smoke-c37f09a-56819",
+      "removed": true
+    },
+    {
+      "volume": "trail-smoke-c37f09a-56819-restore",
+      "removed": true
+    }
+  ],
+  "imageId": "sha256:79f5edbd80dde5b4f2e350f78dda4a1914139d7889cfb063efedc14182a3eb1f",
+  "imageUser": "node",
+  "baseImage": "node:24.20.0-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e",
+  "passed": false,
+  "error": "Container trail-smoke-c37f09a-56819 exited (1): ",
+  "finishedAt": "2026-11-09T23:20:56.122Z",
+  "containerDiagnostics": [
+    {
+      "name": "trail-smoke-c37f09a-56819",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 1,
+        "Error": "",
+        "StartedAt": "2026-11-09T23:20:55.827516382Z",
+        "FinishedAt": "2026-11-09T23:20:55.899989716Z"
+      },
+      "logs": ""
+    }
+  ]
+}

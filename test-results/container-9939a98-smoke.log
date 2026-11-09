@@ -1,0 +1,12 @@
+{"at":"2026-11-09T23:29:24.543Z","message":"Building exact merged source in clean archive context"}
+{"at":"2026-11-09T23:29:25.660Z","message":"Production-mode non-root container running with offline synthetic roster"}
+{"at":"2026-11-09T23:29:37.500Z","message":"{\"firstStop\":{\"elapsedMs\":1152,\"state\":{\"Status\":\"exited\",\"Running\":false,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":0,\"ExitCode\":0,\"Error\":\"\",\"StartedAt\":\"2026-11-09T23:29:25.486426299Z\",\"FinishedAt\":\"2026-11-09T23:29:37.330343013Z\"},\"logs\":\"Second Nature Trail: http://localhost:4173\\n\"}}"}
+{"at":"2026-11-09T23:29:37.899Z","message":"Durable-volume restart checks passed"}
+{"at":"2026-11-09T23:29:39.572Z","message":"Fresh-volume backup restoration passed"}
+{
+  "passed": true,
+  "image": "second-nature-trail:9939a98",
+  "imageId": "sha256:e5336274d412c78bd55d1b3e92426db0d0534a326aba7644a37569ced3ee4be6",
+  "checks": 5,
+  "report": "test-results/container-9939a98.json"
+}

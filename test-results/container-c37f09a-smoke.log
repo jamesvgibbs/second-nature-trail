@@ -1,0 +1,11 @@
+{"at":"2026-11-09T23:24:34.694Z","message":"Building exact merged source in clean archive context"}
+{"at":"2026-11-09T23:24:35.872Z","message":"Production-mode non-root container running with offline synthetic roster"}
+{"at":"2026-11-09T23:24:49.814Z","message":"{\"firstStop\":{\"elapsedMs\":3157,\"state\":{\"Status\":\"exited\",\"Running\":false,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":0,\"ExitCode\":137,\"Error\":\"\",\"StartedAt\":\"2026-11-09T23:24:35.629359012Z\",\"FinishedAt\":\"2026-11-09T23:24:49.650669088Z\"},\"logs\":\"Second Nature Trail: http://localhost:4173\\n\"}}"}
+{
+  "passed": false,
+  "error": "Container trail-smoke-c37f09a-59038 exited (1): file:///app/server.mjs:71\n        throw Error(\n              ^\n\nError: Event database is locked. Stop its server before roster import. Recover stale locks offline after verifying their recorded process has exited.\n    at createGameServer (file:///app/server.mjs:71:15)\n    at file:///app/server.mjs:730:15\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.20.0\n",
+  "image": "second-nature-trail:c37f09a",
+  "imageId": "sha256:f643a46add57334985f9383aa8528b89658639f2e8db7f67732bd8fd102b3b60",
+  "checks": 3,
+  "report": "test-results/container-c37f09a.json"
+}

@@ -1,0 +1,45 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 503B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:24.20.0-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 76B done
+#3 DONE 0.0s
+
+#4 [1/6] FROM docker.io/library/node:24.20.0-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
+#4 resolve docker.io/library/node:24.20.0-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 360.46kB done
+#5 DONE 0.0s
+
+#6 [2/6] WORKDIR /app
+#6 CACHED
+
+#7 [3/6] COPY --chown=node:node package.json server.mjs engine.mjs content.mjs command-checkpoint.mjs ./
+#7 DONE 0.0s
+
+#8 [4/6] COPY --chown=node:node public ./public
+#8 DONE 0.0s
+
+#9 [5/6] COPY --chown=node:node scripts ./scripts
+#9 DONE 0.0s
+
+#10 [6/6] RUN mkdir /app/data && chown node:node /app/data
+#10 DONE 0.1s
+
+#11 exporting to image
+#11 exporting layers 0.0s done
+#11 exporting manifest sha256:e665627e1684223d62fec04e2a56dd071ccd30ff70efb56c5cc2dccdebb91ff0 done
+#11 exporting config sha256:86b3f7bbe055d46a06c099f2262b418b01678e685f3b2e38bbc9ae01d7ab26da done
+#11 exporting attestation manifest sha256:818dde6874509b3f3c74eaaca3e2cddddaa24e904669a382a1cfa59177c365ea done
+#11 exporting manifest list sha256:e5336274d412c78bd55d1b3e92426db0d0534a326aba7644a37569ced3ee4be6 done
+#11 naming to docker.io/library/second-nature-trail:9939a98 done
+#11 unpacking to docker.io/library/second-nature-trail:9939a98 0.0s done
+#11 DONE 0.1s

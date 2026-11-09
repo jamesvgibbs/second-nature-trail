@@ -1,0 +1,12 @@
+{"at":"2026-11-09T23:25:38.129Z","message":"Building c37 source plus disposable shutdown-only logging"}
+{"at":"2026-11-09T23:25:39.445Z","message":"Production-mode non-root container running with offline synthetic roster"}
+{"at":"2026-11-09T23:25:54.131Z","message":"{\"firstStop\":{\"elapsedMs\":4121,\"state\":{\"Status\":\"exited\",\"Running\":false,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":0,\"ExitCode\":0,\"Error\":\"\",\"StartedAt\":\"2026-11-09T23:25:39.262183055Z\",\"FinishedAt\":\"2026-11-09T23:25:53.982220506Z\"},\"logs\":\"Second Nature Trail: http://localhost:4173\\nDIAG signal SIGTERM\\nDIAG closing 1794266749988 0\\nDIAG before server.close\\nDIAG connections 5\\nDIAG after server.close\\nDIAG persist done\\nDIAG lock released\\nDIAG closed\\n\"}}"}
+{"at":"2026-11-09T23:25:54.513Z","message":"Durable-volume restart checks passed"}
+{"at":"2026-11-09T23:25:59.187Z","message":"Fresh-volume backup restoration passed"}
+{
+  "passed": true,
+  "image": "second-nature-trail:c37f09a-shutdown-diagnostic",
+  "imageId": "sha256:ef748d2ffa9e2350fa41d9d991573d716037be8e242ced128651374b27e76cc7",
+  "checks": 5,
+  "report": "test-results/container-c37f09a.json"
+}

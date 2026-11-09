@@ -1,0 +1,10 @@
+{"at":"2026-11-09T23:20:40.590Z","message":"Building exact merged source in clean archive context"}
+{"at":"2026-11-09T23:20:41.732Z","message":"Production-mode non-root container running with offline synthetic roster"}
+{
+  "passed": false,
+  "error": "Container trail-smoke-c37f09a-56819 exited (1): ",
+  "image": "second-nature-trail:c37f09a",
+  "imageId": "sha256:79f5edbd80dde5b4f2e350f78dda4a1914139d7889cfb063efedc14182a3eb1f",
+  "checks": 3,
+  "report": "test-results/container-c37f09a.json"
+}

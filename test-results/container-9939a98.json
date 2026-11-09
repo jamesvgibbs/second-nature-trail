@@ -1,0 +1,126 @@
+{
+  "build": "9939a989d2771e679ba6afd95a3790f58f73f046",
+  "startedAt": "2026-11-09T23:29:24.285Z",
+  "image": "second-nature-trail:9939a98",
+  "productionDeployed": false,
+  "network": "loopback HTTP; Secure cookie flag disabled only for disposable synthetic test",
+  "storage": "two disposable Docker named volumes",
+  "stopGraceSeconds": 3,
+  "checks": [
+    {
+      "name": "non-root Node24 production-mode startup, health and public modules"
+    },
+    {
+      "name": "two operators, safe display isolation and role-conflict rejection preserve original player"
+    },
+    {
+      "name": "committed quiz, atomic barter, pending barter and pause saved; live-WAL backup passed integrity and refused overwrite"
+    },
+    {
+      "name": "container recreation preserved committed score/inventory/preferences/cursor/pause; deduplicated quiz replay; pending trade cancelled; epoch changed"
+    },
+    {
+      "name": "backup restored into a fresh volume with intact committed state, session identities, deduplication, pause and SQLite integrity"
+    }
+  ],
+  "sourceHashes": {
+    "server.mjs": "3e0006a03cf775cf6fd6e0dd9847185a146c45d0e1fa1ba9c8cf52183d36df4f",
+    "engine.mjs": "f12ed35ca76a1746924efb60633daea4028f75ed418c31af85885a784e61c213",
+    "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+    "command-checkpoint.mjs": "1f3df952d81bae0148e9f6f7840ea2117577cfc1ae66b48de941af869fc471e7",
+    "public/app.js": "b13f76b46fb6cd1f22c303e7a23797f856ac55fd933b60c2b425227888bc62f2",
+    "public/projection.mjs": "90b19560a0e02a7b9d19d69e567d2ef332526f351b2370040a5d7e60a47d6b79",
+    "scripts/backup.mjs": "0c58ec798a9271ab642d862648800362d0efa543e89542f9d138934503afb4de",
+    "Dockerfile": "a34eef0517f7f154d6bc27ba51946214dfd0ec35b5473dfaf41cdf9df8ab9e52"
+  },
+  "containers": [
+    {
+      "name": "trail-smoke-9939a98-62156",
+      "loopbackBinding": "127.0.0.1:64333"
+    },
+    {
+      "name": "trail-smoke-9939a98-62156",
+      "loopbackBinding": "127.0.0.1:64381"
+    },
+    {
+      "name": "trail-smoke-9939a98-62156-restored",
+      "loopbackBinding": "127.0.0.1:64391"
+    }
+  ],
+  "cleanup": [
+    {
+      "container": "trail-smoke-9939a98-62156",
+      "removed": true
+    },
+    {
+      "container": "trail-smoke-9939a98-62156-restored",
+      "removed": true
+    },
+    {
+      "volume": "trail-smoke-9939a98-62156",
+      "removed": true
+    },
+    {
+      "volume": "trail-smoke-9939a98-62156-restore",
+      "removed": true
+    }
+  ],
+  "imageId": "sha256:e5336274d412c78bd55d1b3e92426db0d0534a326aba7644a37569ced3ee4be6",
+  "imageUser": "node",
+  "baseImage": "node:24.20.0-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e",
+  "firstStop": {
+    "elapsedMs": 1152,
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-09T23:29:25.486426299Z",
+      "FinishedAt": "2026-11-09T23:29:37.330343013Z"
+    },
+    "logs": "Second Nature Trail: http://localhost:4173\n"
+  },
+  "passed": true,
+  "finishedAt": "2026-11-09T23:29:39.572Z",
+  "containerDiagnostics": [
+    {
+      "name": "trail-smoke-9939a98-62156",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-09T23:29:37.583054805Z",
+        "FinishedAt": "2026-11-09T23:29:38.937624139Z"
+      },
+      "logs": "Second Nature Trail: http://localhost:4173\n"
+    },
+    {
+      "name": "trail-smoke-9939a98-62156-restored",
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 32631,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-09T23:29:39.285552514Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "logs": "Second Nature Trail: http://localhost:4173\n"
+    }
+  ]
+}

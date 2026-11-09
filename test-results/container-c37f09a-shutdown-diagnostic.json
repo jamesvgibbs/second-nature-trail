@@ -1,0 +1,126 @@
+{
+  "build": "c37f09a711c13a7bf6c47c17388ff2f585d8ce94",
+  "startedAt": "2026-11-09T23:25:37.950Z",
+  "image": "second-nature-trail:c37f09a-shutdown-diagnostic",
+  "productionDeployed": false,
+  "network": "loopback HTTP; Secure cookie flag disabled only for disposable synthetic test",
+  "storage": "two disposable Docker named volumes",
+  "checks": [
+    {
+      "name": "non-root Node24 production-mode startup, health and public modules"
+    },
+    {
+      "name": "two operators, safe display isolation and role-conflict rejection preserve original player"
+    },
+    {
+      "name": "committed quiz, atomic barter, pending barter and pause saved; live-WAL backup passed integrity and refused overwrite"
+    },
+    {
+      "name": "container recreation preserved committed score/inventory/preferences/cursor/pause; deduplicated quiz replay; pending trade cancelled; epoch changed"
+    },
+    {
+      "name": "backup restored into a fresh volume with intact committed state, session identities, deduplication, pause and SQLite integrity"
+    }
+  ],
+  "sourceHashes": {
+    "server.mjs": "b590ec6f0b613769566390c6d6e5e705172681d633c0c1991cfc844a5bea26d9",
+    "engine.mjs": "4fde6096ce97d58f5f8d3e8257275aebadbb69a65db16a95b9e330122cbec442",
+    "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+    "command-checkpoint.mjs": "1f3df952d81bae0148e9f6f7840ea2117577cfc1ae66b48de941af869fc471e7",
+    "public/app.js": "653bccdb015737d17d5ae857c0c2cda1b893c78e2632ad40ceb10e2bc378ed1b",
+    "public/projection.mjs": "90b19560a0e02a7b9d19d69e567d2ef332526f351b2370040a5d7e60a47d6b79",
+    "scripts/backup.mjs": "0c58ec798a9271ab642d862648800362d0efa543e89542f9d138934503afb4de",
+    "Dockerfile": "a34eef0517f7f154d6bc27ba51946214dfd0ec35b5473dfaf41cdf9df8ab9e52"
+  },
+  "containers": [
+    {
+      "name": "trail-smoke-c37f09a-59992",
+      "loopbackBinding": "127.0.0.1:63507"
+    },
+    {
+      "name": "trail-smoke-c37f09a-59992",
+      "loopbackBinding": "127.0.0.1:63570"
+    },
+    {
+      "name": "trail-smoke-c37f09a-59992-restored",
+      "loopbackBinding": "127.0.0.1:63599"
+    }
+  ],
+  "cleanup": [
+    {
+      "container": "trail-smoke-c37f09a-59992",
+      "removed": true
+    },
+    {
+      "container": "trail-smoke-c37f09a-59992-restored",
+      "removed": true
+    },
+    {
+      "volume": "trail-smoke-c37f09a-59992",
+      "removed": true
+    },
+    {
+      "volume": "trail-smoke-c37f09a-59992-restore",
+      "removed": true
+    }
+  ],
+  "diagnosticOnly": true,
+  "imageId": "sha256:ef748d2ffa9e2350fa41d9d991573d716037be8e242ced128651374b27e76cc7",
+  "imageUser": "node",
+  "baseImage": "node:24.20.0-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e",
+  "firstStop": {
+    "elapsedMs": 4121,
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-09T23:25:39.262183055Z",
+      "FinishedAt": "2026-11-09T23:25:53.982220506Z"
+    },
+    "logs": "Second Nature Trail: http://localhost:4173\nDIAG signal SIGTERM\nDIAG closing 1794266749988 0\nDIAG before server.close\nDIAG connections 5\nDIAG after server.close\nDIAG persist done\nDIAG lock released\nDIAG closed\n"
+  },
+  "passed": true,
+  "finishedAt": "2026-11-09T23:25:59.187Z",
+  "containerDiagnostics": [
+    {
+      "name": "trail-smoke-c37f09a-59992",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-09T23:25:54.20627784Z",
+        "FinishedAt": "2026-11-09T23:25:58.529923592Z"
+      },
+      "logs": "Second Nature Trail: http://localhost:4173\nDIAG signal SIGTERM\nDIAG closing 1794266754543 0\nDIAG before server.close\nDIAG connections 4\nDIAG after server.close\nDIAG persist done\nDIAG lock released\nDIAG closed\n"
+    },
+    {
+      "name": "trail-smoke-c37f09a-59992-restored",
+      "state": {
+        "Status": "running",
+        "Running": true,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 31728,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-09T23:25:58.879978509Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "logs": "Second Nature Trail: http://localhost:4173\n"
+    }
+  ]
+}
