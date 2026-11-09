@@ -261,3 +261,28 @@ At every home, the reviewer inspected and confirmed, read the notice, then selec
 No gameplay error, penalty, false accusation, or native-input interruption was observed. Artifacts: [chapter 3 keyboard completion](../test-results/chapter3-keyboard-complete.jpg) and [learning completion retained after refresh](../test-results/chapter3-keyboard-learning-persisted.jpg).
 
 This closes **M3 keyboard**, **Q3.1 keyboard**, and **Q3.2 keyboard**, bringing the matrix to **24 of 48** cells. The separate keyboard and pointer runs completed the same six inspected verdicts, answered both encounters correctly on the first attempt, and retained **80 points / 6 of 6 / both learning checkmarks** after refresh. This establishes observed outcome equivalence on the frozen source, not a timing or human-usability claim, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
+
+
+## Chapter 4 pointer-only, final revision, 2026-11-09
+
+The root agent completed this automated native Safari check from the detached review checkout **`/tmp/second-nature-trail-browser-f1218bf`**, frozen at **`f1218bf`**, with runtime **`10a674c`**, UI **`f012152`**, and the waiting preview helper. It used verified NVM **Node v24.20.0** and Safari **27.2 (21625.2.8.18.4)**. The outer window was **1379×851**; the CSS viewport was not measured.
+
+Fresh in-memory preview session **88901** used chapter 4 with `--wait-for-start`, starting the normal full **300-second** window after setup; the first chapter UI observation showed **04:55**. Both visual-choice radios were initially unselected. The reviewer explicitly chose friendly robots and left the Keyboard preference unchanged. **Every gameplay input after entry, including browser reload, used the pointer.** A navigation interruption before setup was recovered using a fresh accessibility observation and screenshot; there was no gameplay interruption. The owned preview was stopped with Ctrl+C and exited with code 0.
+
+At each home, the reviewer inspected and confirmed, read the visible scenario, then selected and confirmed the decision below. Completing each site automatically began walking to the next objective.
+
+| Home / selected decision | Observed score | Chapter time remaining |
+|---|---|---|
+| Maple: Inventory and photos (choice 1) | 10 | 04:40 |
+| Juniper: Keep clear and use emergency support (choice 2) | 20 | 04:17 |
+| Cedar: Document damage and consult the policy (choice 3) | 30 | 04:04 |
+| Willow: Confirm safety and follow guidance (choice 1) | 40 | 03:54 |
+| Elm: Inventory, photos, and records (choice 2) | 50 | 03:43 |
+| Oak: Actual terms and documented loss (choice 3) | 60; objective 6 of 6 | 03:30 |
+| Q4.1: No; coverage depends on policy terms (choice 1), first answer correct | 70 | 03:11 |
+| Q4.2: The actual policy and provider (choice 2), first answer correct | 80 | 03:02 |
+| Clicked browser reload, then reopened Learning encounters by pointer | 80; objective 6 of 6; both completion checkmarks retained | Refresh at 02:58 |
+
+No gameplay error or penalty was observed. Artifacts: [chapter 4 pointer completion](../test-results/chapter4-pointer-complete.jpg) and [learning completion retained after refresh](../test-results/chapter4-pointer-learning-persisted.jpg).
+
+This closes **M4 pointer**, **Q4.1 pointer**, and **Q4.2 pointer**, bringing the matrix to **27 of 48** cells. Chapter 4 keyboard completion and input-method comparison remain pending. The observations apply to the frozen review source and do not establish human timing, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
