@@ -1,10 +1,20 @@
-import { DOORS, OBSTACLES, isWalkable, clipMove, findPath } from "/world.mjs";
+import {
+  DOORS,
+  OBSTACLES,
+  isWalkable,
+  clipMove,
+  findPath,
+  waypointReached,
+  stepToward,
+} from "/world.mjs";
 import {
   classifyDevice,
   readStoredPreferences,
   clientPreferences,
   serverPreferences,
   isValidKeyMap,
+  readSafeOverride,
+  writeSafeOverride,
 } from "/helpers.mjs";
 const $ = (s) => document.querySelector(s),
   app = $("#app"),
@@ -80,6 +90,12 @@ let forceSafe = false,
   routePath = [],
   tutorialMovePending = false,
   presentedTarget = null;
+try {
+  forceSafe = readSafeOverride(localStorage);
+} catch {
+  forceSafe = true;
+}
+let replacementSavePending = false;
 const defaultKeys = {
   up: "w",
   left: "a",
@@ -122,6 +138,7 @@ function open(title, html = "") {
   $("#modal-title").textContent = title;
   body.innerHTML = html;
   if (!modal.open) modal.showModal();
+  else $("#close-modal").focus({ preventScroll: true });
 }
 function close() {
   modal.close();
@@ -288,7 +305,7 @@ async function join(token, takeover = false) {
 }
 async function loadPlayer() {
   state = await api("/api/state");
-  safe = state.me?.insects !== true;
+  safe = forceSafe || state.me?.insects !== true;
   prefs = { ...prefs, ...normalizedSettings(state.me?.settings) };
   keys = { ...defaultKeys, ...prefs.keys };
   applyPrefs();
@@ -316,6 +333,7 @@ async function connect(takeover = false) {
   stream.onopen = () => {
     connected = true;
     updateConnection();
+    if (forceSafe) persistReplacement();
   };
   stream.onmessage = (e) => {
     try {
@@ -397,15 +415,23 @@ function setup() {
   $("#setup-form").onsubmit = async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
-    safe = form.get("insects") !== "true";
+    const insects = form.get("insects") === "true";
+    safe = !insects;
     const settings = readSettings();
     const r = await act("setup", {
       character: chosen,
       palette: swatch,
-      insects: !safe,
+      insects,
       settings: serverSettings(settings),
     });
-    if (r !== null) game();
+    if (r !== null) {
+      forceSafe = !insects;
+      safe = !insects;
+      try {
+        writeSafeOverride(localStorage, !insects);
+      } catch {}
+      game();
+    }
   };
 }
 function avatarOptions() {
@@ -1185,6 +1211,10 @@ function settings() {
     if ($("#safe-select").value === "false") {
       forceSafe = true;
       safe = true;
+      try {
+        writeSafeOverride(localStorage, true);
+      } catch {}
+      persistReplacement();
     }
   };
   Object.entries(keys).forEach(([action, key]) => {
@@ -1224,7 +1254,10 @@ function settings() {
           settings: serverSettings(settings),
         });
         if (result !== null) {
-          forceSafe = false;
+          forceSafe = !insects;
+          try {
+            writeSafeOverride(localStorage, !insects);
+          } catch {}
           safe = !insects;
           updateControlHints();
           close();
@@ -1310,10 +1343,7 @@ function frame(now) {
       const elapsed = Math.min(0.25, (now - lastMove) / 1000);
       lastMove = now;
       const waypoint = target.path?.[0] || target;
-      const dx = waypoint.x - p.x,
-        dy = waypoint.y - p.y,
-        d = Math.hypot(dx, dy);
-      if (d < 0.5) {
+      if (waypointReached(p, waypoint)) {
         if (target.path?.length > 1) {
           target.path.shift();
         } else {
@@ -1322,8 +1352,10 @@ function frame(now) {
           if (arrival) showActivity(arrival);
         }
       } else {
-        const step = Math.min((state.rules?.moveSpeed || 190) * elapsed, d);
-        act("move", { x: p.x + (dx / d) * step, y: p.y + (dy / d) * step });
+        act(
+          "move",
+          stepToward(p, waypoint, state.rules?.moveSpeed || 190, elapsed),
+        );
         if (
           ["lobby", "draft"].includes(state.event.phase) &&
           !tutorialDone("move") &&
@@ -1897,6 +1929,7 @@ function drawTargets(task) {
       () => {
         selection = t.id;
         drawTargets(state.chapter.task);
+        $("#targets").children[i]?.focus({ preventScroll: true });
       },
       selection === t.id ? "selected" : "",
     );
@@ -2088,9 +2121,14 @@ function drawRouting(task) {
       () => {
         routePath.push(n.id);
         drawRouting(task);
+        [...$("#route-nodes").children]
+          .find((el) => el.dataset.nodeId === n.id)
+          ?.focus({ preventScroll: true });
       },
       routePath.at(-1) === n.id ? "selected" : "",
     );
+    b.dataset.nodeId = n.id;
+    b.setAttribute("aria-pressed", String(routePath.at(-1) === n.id));
     list.append(b);
   });
 }
@@ -2135,7 +2173,6 @@ setInterval(() => {
     if ($("#round-timer"))
       $("#round-timer").textContent =
         `Next round in ${Math.max(0, Math.ceil((task.nextRoundAt - Date.now() - serverOffset) / 1000))}s`;
-    if (forceSafe) drawTargets(task);
   }
 }, 250);
 let audioContext = null,
@@ -2388,4 +2425,26 @@ function verifiedHighlightHTML() {
     "valid homes connected minus invalid attempts",
   ];
   return `<section class="notice" aria-label="Recorded chapter highlight"><strong>Chapter prize: ${esc(award.name)}</strong><p class="small" style="margin:8px 0 0">Recorded result: ${award.metric} ${labels[chapter]}.${chapter === 5 ? ` Retained fictional budget: ${award.secondary}.` : ""}</p></section>`;
+}
+
+async function persistReplacement() {
+  if (
+    !forceSafe ||
+    !connected ||
+    !state?.me?.setup ||
+    replacementSavePending ||
+    state.me.insects === false
+  )
+    return;
+  replacementSavePending = true;
+  try {
+    await act("setup", {
+      character: state.me.character,
+      palette: state.me.palette,
+      insects: false,
+      settings: state.me.settings,
+    });
+  } finally {
+    replacementSavePending = false;
+  }
 }

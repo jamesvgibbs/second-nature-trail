@@ -1,0 +1,61 @@
+{
+  "status": "aborted: simulation harness defect, not capacity acceptance",
+  "sourceCommit": "ee0857d",
+  "stoppedAt": "2026-11-09T19:17:25.598251+00:00",
+  "nodeVersion": "v24.20.0",
+  "phase": "chapter",
+  "chapterIndex": 1,
+  "chapterCompletionCounts": [
+    100,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "currentSteps": {
+    "0": 0,
+    "1": 0,
+    "2": 100,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    "6": 0
+  },
+  "exampleStalls": [
+    {
+      "id": "load-player-0",
+      "position": {
+        "x": 978.1698377950584,
+        "y": 356.1943584966395
+      },
+      "step": 2,
+      "inspected": false
+    },
+    {
+      "id": "load-player-1",
+      "position": {
+        "x": 861.8301622049416,
+        "y": 356.1943584966395
+      },
+      "step": 2,
+      "inspected": false
+    },
+    {
+      "id": "load-player-2",
+      "position": {
+        "x": 861.8301622049416,
+        "y": 356.1943584966395
+      },
+      "step": 2,
+      "inspected": false
+    }
+  ],
+  "completedTrades": 67,
+  "acceptedActionLogEntries": 2569,
+  "cause": "Harness advanced intermediate A* waypoints at <8px, cutting expanded building corners. Client already uses <0.5px and was not implicated by this run. Move from861.83,356.19 toward920,370 clips at wall left862/bottom358; waypoint860,360 must be reached first.",
+  "evidence": "capacity-full-ee0857d-live.log; chapter1 cumulative scoring/inventory p95333.7ms across1800samples; no complete-event latency/awards claim",
+  "followupRegression": "The recorded stalled fractional origins also exposed a separate shared pathfinding bug: reconstruction omitted the rounded start node and could return an unreachable first segment. The browser already used the correct 0.5px corner tolerance. The pathfinder connector and harness tolerance are now fixed, with shared waypointReached/stepToward regression coverage."
+}

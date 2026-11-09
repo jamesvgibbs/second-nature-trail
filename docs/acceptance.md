@@ -67,3 +67,19 @@ LOAD_SECONDS=3605 LOAD_JOIN_SECONDS=60 LOAD_PLAYERS=100 LOAD_OUTPUT=test-results
 `LOAD_SECONDS` measures game time from the confirmed Start command, in addition to joining and setup. The default is 3,605 seconds so the normal 60-minute schedule reaches awards. The report must show the actual final phase, fifteen distinct qualifying winners, matching export, completed trades, the thirty-second reconnect, request errors, and scoring/inventory latency. Inspect per-phase logs for missed transitions or stalled activity. Latency remains localhost evidence until the representative company network is agreed and exercised.
 
 For development only, shorten `LOAD_SECONDS` and `LOAD_JOIN_SECONDS`. `LOAD_LEDGER_PREFILL=10000` seeds ten thousand synthetic historical actions before measured play to probe late-event ledger costs. The report labels that prefill explicitly; it is not ten thousand measured network requests. A short smoke run cannot satisfy the hour-long capacity requirement.
+
+## Full-run environment
+
+The `ee0857d` capacity run uses a Mac16,5 with an Apple M4 Max, 64 GiB RAM, macOS 26.7.2 build 25G332, and Node v24.20.0. Clients and server share one process over localhost. Manual Safari checks and lightweight development work continue on the same computer; CPU-heavy builds are avoided. This is not an isolated benchmark, the agreed lowest-spec laptop, or the representative company network. Environment evidence is in `test-results/capacity-full-ee0857d-environment.json`.
+
+## Balance review still required
+
+The current main-objective structures differ in length. Moving uses three cargo trips with packing, route choice, checkpoints, and delivery. Filters, clones, insurance, and rewards each use six locations with inspection and a decision or delivery. Pest targeting currently requires three correct timed rounds, payment planning spans three server-timed cycles, and internet restoration uses three routing puzzles. The targeting and routing objectives may still finish well under the proposed three-minute main-objective target for experienced players. Do not treat matching chapter counts or passing the virtual event test as evidence of that balance target. Record novice and experienced completion times, then adjust activity depth and difficulty before release.
+
+Browser evidence so far: native Safari manually rendered setup with neither visual preference preselected; replacement mode was selected; keyboard movement, guide interaction, practice collection, practice answer, help request, and ready status were completed. The initial delivery flow was exercised through loading, route choice, and travel to the checkpoint. This was an agent-operated check on the development machine, not the required ten-employee joining test or all-input-method rehearsal.
+
+## Aborted first capacity attempt
+
+The full run from `ee0857d` was stopped in chapter 2. Chapter 1 completed for all 100 players; its cumulative scoring/inventory p95 was 333.7 ms over 1,800 samples with no request errors. In chapter 2, the simulator skipped intermediate path corners at eight pixels and stalled at Willow home. This was a harness defect; the browser already used a half-pixel threshold. A regression starting at the recorded fractional positions then exposed a separate shared pathfinder defect: the first route segment could cross a corner because reconstruction omitted the rounded starting node. Both defects were fixed, and the harness now shares browser waypoint logic. Tests simulate actual movement/collision along all thirty distinct spatial-site routes and both recorded stall origins.
+
+The aborted attempt is not full capacity evidence. Its log, partial-state report, and environment record remain under `test-results/capacity-full-ee0857d-*`. A new frozen-source full run is required.

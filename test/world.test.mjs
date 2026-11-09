@@ -87,3 +87,42 @@ test("path planning preserves input positions", () => {
   assert.deepEqual(from, square);
   assert.deepEqual(to, { x: 160, y: 160 });
 });
+
+test("actual client traversal reaches every spatial route without cutting wall corners", async () => {
+  const { waypointReached, stepToward } = await import("../public/world.mjs");
+  const destinations = ACTIVITY_STOPS.map((s) => ({ x: s.x, y: s.y }));
+  const pairs = destinations.map((from, i) => [
+    from,
+    destinations[(i + 1) % destinations.length],
+  ]);
+  pairs.push(
+    [
+      { x: 861.83, y: 356.19 },
+      { x: 920, y: 370 },
+    ],
+    [
+      { x: 978.17, y: 356.19 },
+      { x: 920, y: 370 },
+    ],
+  );
+  for (const [from, to] of pairs) {
+    let position = { ...from },
+      path = findPath(position, to),
+      steps = 0;
+    assert.ok(path?.length);
+    while (path.length && steps++ < 2000) {
+      if (waypointReached(position, path[0])) path.shift();
+      else {
+        const candidate = stepToward(position, path[0], 190, 0.1),
+          next = clipMove(position, candidate);
+        assert.ok(
+          Math.hypot(next.x - position.x, next.y - position.y) > 0.00001,
+          `Stalled at ${JSON.stringify(position)} aiming at ${JSON.stringify(path[0])}`,
+        );
+        position = next;
+      }
+    }
+    assert.equal(path.length, 0);
+    assert.ok(Math.hypot(position.x - to.x, position.y - to.y) < 0.5);
+  }
+});

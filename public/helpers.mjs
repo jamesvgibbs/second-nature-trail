@@ -47,3 +47,16 @@ export function isValidKeyMap(map) {
     new Set(values).size === values.length
   );
 }
+export function readSafeOverride(storage) {
+  try {
+    return storage.getItem("trail-safe-override") === "1";
+  } catch {
+    return true;
+  }
+}
+export function writeSafeOverride(storage, enabled) {
+  try {
+    if (enabled) storage.setItem("trail-safe-override", "1");
+    else storage.removeItem("trail-safe-override");
+  } catch {}
+}

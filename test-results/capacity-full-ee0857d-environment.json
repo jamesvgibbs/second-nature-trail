@@ -1,0 +1,25 @@
+{
+  "run": "capacity-full-ee0857d",
+  "sourceCommit": "ee0857d",
+  "measuredBy": "parent agent using sysctl and sw_vers during this session",
+  "hardwareModel": "Mac16,5",
+  "processor": "Apple M4 Max",
+  "memoryBytes": 68719476736,
+  "memoryGiB": 64,
+  "operatingSystem": "macOS 26.7.2",
+  "operatingSystemBuild": "25G332",
+  "nodeVersion": "v24.20.0",
+  "networkProfile": "localhost; simulated clients and authoritative server in the same Node process",
+  "concurrentActivity": [
+    "Manual Safari UI checks on the same development computer",
+    "Lightweight source and documentation work",
+    "Docker builds and other CPU-heavy work intentionally avoided during the capacity run",
+    "Official Node 24.20 Docker base image pull with brief network/decompression activity around 19:13 UTC during chapter 1 brag break; no image build during play"
+  ],
+  "limitations": [
+    "This is not an isolated benchmark machine",
+    "This is not the agreed lowest-spec company laptop; that baseline is still unset",
+    "This is not an agreed representative company network",
+    "No real employee participation or browser-rendering FPS is measured by the Node load runner"
+  ]
+}

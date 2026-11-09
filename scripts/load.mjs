@@ -14,6 +14,7 @@ import { join, resolve } from "node:path";
 import { createGameServer } from "../server.mjs";
 import { CHAPTERS, RULES } from "../content.mjs";
 import { findPath } from "../public/world.mjs";
+import { nextWaypoint } from "./load-navigation.mjs";
 
 const sourceHashes = Object.fromEntries(
   [
@@ -25,6 +26,7 @@ const sourceHashes = Object.fromEntries(
     "public/helpers.mjs",
     "public/style.css",
     "scripts/load.mjs",
+    "scripts/load-navigation.mjs",
   ].map((path) => [
     path,
     createHash("sha256")
@@ -384,12 +386,7 @@ const movementTimer = setInterval(() => {
       c.destination = null;
       continue;
     }
-    while (
-      c.path?.length &&
-      Math.hypot(c.path[0].x - p.x, c.path[0].y - p.y) < 8
-    )
-      c.path.shift();
-    const waypoint = c.path?.[0] || d;
+    const waypoint = nextWaypoint(p, c.path || []) || d;
     c.moving = true;
     act(c, { type: "move", x: waypoint.x, y: waypoint.y })
       .catch((e) => {

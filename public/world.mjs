@@ -133,6 +133,10 @@ export function findPath(from, to) {
     at = n.parent;
   }
   raw.reverse();
+  // A fractional player position may not see the first grid neighbor around a
+  // corner. Preserve its connector to the rounded start node before smoothing.
+  if (!visible(from, point(start))) return null;
+  raw.unshift(point(start));
   const result = [];
   let previous = from;
   for (let i = 0; i < raw.length; ) {
@@ -143,4 +147,16 @@ export function findPath(from, to) {
     i = far + 1;
   }
   return result;
+}
+// Shared traversal helpers keep browser and test bots from cutting a wall corner.
+export function waypointReached(position, waypoint) {
+  return Math.hypot(waypoint.x - position.x, waypoint.y - position.y) < 0.5;
+}
+export function stepToward(position, waypoint, speed, elapsed) {
+  const dx = waypoint.x - position.x,
+    dy = waypoint.y - position.y,
+    d = Math.hypot(dx, dy);
+  if (!d) return { ...position };
+  const step = Math.min(Math.max(0, speed * elapsed), d);
+  return { x: position.x + (dx / d) * step, y: position.y + (dy / d) * step };
 }
