@@ -1,0 +1,303 @@
+{
+  "label": "SHORTENED SMOKE TEST, not release capacity acceptance",
+  "syntheticPriorActions": 0,
+  "startChapter": 0,
+  "syntheticVariedNearSiteStarts": false,
+  "rulesVersion": "trail-0.3.0-draft",
+  "contentHash": "368f66fb87ee9d1690c61e1c0457abba7049bde20c0af2d466a634d0b953dd5f",
+  "sourceHashes": {
+    "server.mjs": "9b52b242fc18055f11c3c90117e0c67dde47790ed8d94f56269a8dc16a6abc2b",
+    "engine.mjs": "b72996297521dd375ecabcacdcee6dc8579e8f3dbd1296b44bce3060272be2f5",
+    "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+    "public/world.mjs": "d412a2dee8b4b1dc3779d1dabc46561383646ac63651dcf7cd30eeba8bd063a0",
+    "public/app.js": "a9ed518d0422576b22a22d0fc7cba84fb68856dcb24be92d5467401428e99317",
+    "public/helpers.mjs": "b9b7a13a5df95d718e851b8dc4a0c62e6c562941f00d63804b7f0b1b306b9443",
+    "public/performance.mjs": "090cdd66c6b421fa0265b76aad7fa59738486fcd498110d87c60303cf78d4898",
+    "public/projection.mjs": "90b19560a0e02a7b9d19d69e567d2ef332526f351b2370040a5d7e60a47d6b79",
+    "public/style.css": "02b44b30cf3ca76ec55df81443513596e1ac423918d654ea4677bb1ab3ee0566",
+    "scripts/load.mjs": "86dced85e3bd7c2ffdcde23a823592fac001ea5a98f5fe5b3897eeb9ae3c8305",
+    "scripts/load-navigation.mjs": "520f2128823f27adfbe41b394702d77682a69612114abb57c6520e378323b6e4",
+    "scripts/load-routing.mjs": "0b02bddb26279933f28ecf5eadedb8c15b9e9baa4f2672c1bc61175f5ca3e279",
+    "scripts/load-timings.mjs": "89af581c11aedd551e1693bf88e20f6986041a10eb01376f7c7fdd12fbb36458"
+  },
+  "nodeVersion": "v24.20.0",
+  "platform": "darwin",
+  "memoryBytes": {
+    "rss": 117702656,
+    "heapTotal": 32194560,
+    "heapUsed": 17342208,
+    "external": 5134839,
+    "arrayBuffers": 1071460
+  },
+  "startedAt": "2026-11-09T21:38:58.155Z",
+  "elapsedSeconds": 35.118,
+  "eventPlaySeconds": 32.251,
+  "finalPhase": "chapter",
+  "exportReconciles": null,
+  "awardCount": 0,
+  "distinctWinners": 0,
+  "requestedPlayers": 3,
+  "joinedPlayers": 3,
+  "actualJoinSpanSeconds": 1.006,
+  "chapterCompletionCounts": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "simulatedMainObjectiveTimesMs": [
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    }
+  ],
+  "rewardProjects": {
+    "garden": 0,
+    "welcome": 0,
+    "festival": 0
+  },
+  "targetResolutions": [
+    0,
+    0,
+    0
+  ],
+  "joinWindowSeconds": 1,
+  "network": "localhost; not the representative company network",
+  "requests": 133,
+  "confirmedActionSamples": 116,
+  "rawTimingArtifact": "/Users/jgibbs/Code/second-nature-trail/test-results/raw-timings-contract-smoke.timings.json",
+  "rawTimingComplete": true,
+  "rawTimingRecords": 116,
+  "rawTimingDropped": 0,
+  "tradeCompletions": 1,
+  "reconnectsAfterThirtySecondOutage": 0,
+  "latencyMs": {
+    "p50": 12.57400000000007,
+    "p95": 21.76879199999894,
+    "p99": 28.95220799999879
+  },
+  "scoringInventorySamples": 19,
+  "scoringInventoryLatencyMs": {
+    "p50": 20.36054200000035,
+    "p95": 28.95220799999879,
+    "p99": 28.95220799999879
+  },
+  "clockTransitionSamples": 6,
+  "clockArrivalLagMs": {
+    "p95": 190,
+    "max": 190,
+    "withinOneSecond": 6
+  },
+  "movementProfile": "10 requests/second per player while traveling; at most one in-flight per player",
+  "errors": {},
+  "phaseSamples": [
+    {
+      "client": "operator-one",
+      "phase": "draft",
+      "receivedAt": 1794260338170,
+      "serverTime": 1794260338169,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "operator-two",
+      "phase": "draft",
+      "receivedAt": 1794260338171,
+      "serverTime": 1794260338170,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "presentation",
+      "phase": "draft",
+      "receivedAt": 1794260338174,
+      "serverTime": 1794260338174,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-0",
+      "phase": "lobby",
+      "receivedAt": 1794260338191,
+      "serverTime": 1794260338190,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "operator-one",
+      "phase": "lobby",
+      "receivedAt": 1794260338409,
+      "serverTime": 1794260338404,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "operator-two",
+      "phase": "lobby",
+      "receivedAt": 1794260338410,
+      "serverTime": 1794260338405,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "presentation",
+      "phase": "lobby",
+      "receivedAt": 1794260338410,
+      "serverTime": 1794260338406,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-1",
+      "phase": "lobby",
+      "receivedAt": 1794260338692,
+      "serverTime": 1794260338692,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-2",
+      "phase": "lobby",
+      "receivedAt": 1794260339200,
+      "serverTime": 1794260339196,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "operator-one",
+      "phase": "countdown",
+      "receivedAt": 1794260341167,
+      "serverTime": 1794260341165,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "operator-two",
+      "phase": "countdown",
+      "receivedAt": 1794260341168,
+      "serverTime": 1794260341165,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "presentation",
+      "phase": "countdown",
+      "receivedAt": 1794260341168,
+      "serverTime": 1794260341165,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-0",
+      "phase": "countdown",
+      "receivedAt": 1794260341168,
+      "serverTime": 1794260341165,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-1",
+      "phase": "countdown",
+      "receivedAt": 1794260341168,
+      "serverTime": 1794260341165,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-2",
+      "phase": "countdown",
+      "receivedAt": 1794260341168,
+      "serverTime": 1794260341165,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "operator-one",
+      "phase": "chapter",
+      "receivedAt": 1794260351210,
+      "serverTime": 1794260351197,
+      "previousDeadline": 1794260351022,
+      "arrivalLagMs": 188
+    },
+    {
+      "client": "operator-two",
+      "phase": "chapter",
+      "receivedAt": 1794260351211,
+      "serverTime": 1794260351198,
+      "previousDeadline": 1794260351022,
+      "arrivalLagMs": 189
+    },
+    {
+      "client": "presentation",
+      "phase": "chapter",
+      "receivedAt": 1794260351211,
+      "serverTime": 1794260351198,
+      "previousDeadline": 1794260351022,
+      "arrivalLagMs": 189
+    },
+    {
+      "client": "load-player-0",
+      "phase": "chapter",
+      "receivedAt": 1794260351211,
+      "serverTime": 1794260351198,
+      "previousDeadline": 1794260351022,
+      "arrivalLagMs": 189
+    },
+    {
+      "client": "load-player-1",
+      "phase": "chapter",
+      "receivedAt": 1794260351212,
+      "serverTime": 1794260351199,
+      "previousDeadline": 1794260351022,
+      "arrivalLagMs": 190
+    },
+    {
+      "client": "load-player-2",
+      "phase": "chapter",
+      "receivedAt": 1794260351212,
+      "serverTime": 1794260351209,
+      "previousDeadline": 1794260351022,
+      "arrivalLagMs": 190
+    }
+  ],
+  "limitations": [
+    "No browser rendering measured",
+    "No human rehearsal",
+    "Inspect tradeCompletions and reconnectsAfterThirtySecondOutage to verify scenario coverage",
+    "Phase observations are raw arrival times; no one-second clock compliance claim"
+  ]
+}

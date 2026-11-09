@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "rawCoverageComplete": true,
+  "independentPercentilesMatch": true,
+  "sourceHashesMatch": true,
+  "allowlistedFieldsOnly": true,
+  "credentialStringsAbsent": true,
+  "mode": "0600",
+  "metrics": {
+    "all": {
+      "samples": 116,
+      "p50": 12.57400000000007,
+      "p95": 21.76879199999894,
+      "p99": 28.95220799999879
+    },
+    "scoring": {
+      "samples": 19,
+      "p50": 20.36054200000035,
+      "p95": 28.95220799999879,
+      "p99": 28.95220799999879
+    }
+  },
+  "requestErrors": {},
+  "scope": "Three-player30-second localhost contract smoke; not capacity acceptance"
+}
