@@ -285,4 +285,31 @@ At each home, the reviewer inspected and confirmed, read the visible scenario, t
 
 No gameplay error or penalty was observed. Artifacts: [chapter 4 pointer completion](../test-results/chapter4-pointer-complete.jpg) and [learning completion retained after refresh](../test-results/chapter4-pointer-learning-persisted.jpg).
 
-This closes **M4 pointer**, **Q4.1 pointer**, and **Q4.2 pointer**, bringing the matrix to **27 of 48** cells. Chapter 4 keyboard completion and input-method comparison remain pending. The observations apply to the frozen review source and do not establish human timing, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
+This closes **M4 pointer**, **Q4.1 pointer**, and **Q4.2 pointer**, bringing the matrix to **27 of 48** cells. At the end of this pointer run, chapter 4 keyboard completion and input-method comparison remained pending; the later keyboard result is recorded below. The observations apply to the frozen review source and do not establish human timing, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
+
+
+## Chapter 4 keyboard-only, final revision, 2026-11-09
+
+The root agent completed this automated native Safari check from the detached review checkout **`/tmp/second-nature-trail-browser-f1218bf`**, frozen at **`f1218bf`**, retaining runtime **`10a674c`**, UI **`f012152`**, and the waiting preview helper. It used verified NVM **Node v24.20.0** and Safari **27.2 (21625.2.8.18.4)**. The outer window was **1379×851**; the CSS viewport was not measured.
+
+Fresh in-memory preview session **64656** used chapter 4 with `--wait-for-start`, beginning the normal full **300-second** window after setup. The first chapter observation showed **04:56**. Setup used pointer input: both visual-choice radios were initially unselected, friendly robots were explicitly selected, and Keyboard remained the default. A URL typing error before setup was corrected by pasting the URL and had no gameplay effect. **After entry, gameplay used only keyboard input**, beginning with Tab, Tab, Enter from the page to activate the objective. No pointer input was used after entry. The owned preview was stopped with Ctrl+C and exited with code 0.
+
+Each site was inspected and confirmed, its visible evidence read, then its decision selected and confirmed using the keyboard.
+
+| Home / selected decision | Observed score | Chapter time remaining |
+|---|---|---|
+| Maple: Inventory and photos (choice 1) | 10 | 04:37 |
+| Juniper: Keep clear and use emergency support (choice 2) | 20 | 04:23 |
+| Cedar: Document damage and consult the policy (choice 3) | 30 | 04:07 |
+| Willow: Confirm safety and follow guidance (choice 1) | 40 | 03:13 |
+| Elm: Inventory, photos, and records (choice 2) | 50 | 03:00 |
+| Oak: Actual terms and documented loss (choice 3) | 60; objective 6 of 6 | 02:47 |
+| Q4.1: No; coverage depends on policy terms (choice 1), first answer correct | 70 | 02:30 |
+| Q4.2: The actual policy and provider (choice 2), first answer correct | 80 | 02:17 |
+| Cmd+R, then Tab three times and Enter to reopen Learning encounters | 80; objective 6 of 6; both completion checkmarks retained | Refresh at 02:14 |
+
+Two native-input interruptions occurred at Willow. During inspection, the selection was already active; a fresh accessibility observation followed by Tab verified confirmation focus, then Enter completed it. The later decision interruption occurred before any key was sent and left heading focus; the reviewer read fresh accessibility state and the keyboard helper then succeeded. Neither recovery used pointer gameplay. No gameplay error or penalty was observed.
+
+Artifacts: [chapter 4 keyboard completion](../test-results/chapter4-keyboard-complete.jpg) and [learning completion retained after refresh](../test-results/chapter4-keyboard-learning-persisted.jpg).
+
+This closes **M4 keyboard**, **Q4.1 keyboard**, and **Q4.2 keyboard**, bringing the matrix to **30 of 48** cells. The separate keyboard and pointer runs completed the same six inspected decisions, answered both encounters correctly on the first attempt, and retained **80 points / 6 of 6 / both learning checkmarks** after refresh. These are identical observed outcomes on the frozen source, not a human timing or usability claim, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
