@@ -1,0 +1,47 @@
+{
+  "commit": "d042570f0504dff8314116bff211e79e91849d16",
+  "capturedAt": "2026-11-09T22:12:14.398912+00:00",
+  "node": "v24.20.0",
+  "hardware": "Mac16,5 Apple M4 Max",
+  "memoryBytes": 68719476736,
+  "os": "macOS26.7.2 build25G332",
+  "network": "localhost; clients and server in same process",
+  "requestedPlayers": 100,
+  "operators": 2,
+  "presentationConnections": 1,
+  "joinWindowSeconds": 60,
+  "requestedGameSeconds": 3605,
+  "fullRunSyntheticPriorActions": 0,
+  "limitations": [
+    "Shared development computer, not isolated benchmark",
+    "Not agreed lowest-spec company laptop",
+    "Not representative company network",
+    "No browser rendering or human comprehension measured"
+  ],
+  "backgroundActivity": [
+    "Root stopped owned4174previews during paired synthetic profiles",
+    "Root may resume lightweight Safari input-method reviews on a separate frozen preview during this fullrun",
+    "User4173preview remains running; other user/system activity uncontrolled",
+    "No Docker builds or CPU-heavy tests planned during fullrun"
+  ],
+  "verification": {
+    "fullCombinedSuite": "full-suite-c9ea9c5-runtime.log",
+    "tests": 124,
+    "passed": 124,
+    "scopedCheckpointComparison": "late-scoped-c9ea9c5-comparison.json"
+  },
+  "sourceHashes": {
+    "server.mjs": "f3862b45f387642efbf79dcafb793fcdbba86aed758b52cac9894dfe1af6a48e",
+    "engine.mjs": "4fde6096ce97d58f5f8d3e8257275aebadbb69a65db16a95b9e330122cbec442",
+    "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+    "command-checkpoint.mjs": "1f3df952d81bae0148e9f6f7840ea2117577cfc1ae66b48de941af869fc471e7",
+    "scripts/load.mjs": "77196bded03b5ea462e4cc11170121f1f743bfa0e3278f3a3b135dbde41d7f06",
+    "public/app.js": "a9ed518d0422576b22a22d0fc7cba84fb68856dcb24be92d5467401428e99317",
+    "public/world.mjs": "d412a2dee8b4b1dc3779d1dabc46561383646ac63651dcf7cd30eeba8bd063a0",
+    "public/projection.mjs": "90b19560a0e02a7b9d19d69e567d2ef332526f351b2370040a5d7e60a47d6b79"
+  },
+  "expectedFinishEstimate": "2026-11-09T23:13:29.398912+00:00",
+  "processId": 8251,
+  "sessionId": 90140,
+  "databasePath": "/private/var/folders/tv/v_sfgxtn1wxc60czy1jq7sw00000gn/T/trail-load-e8Mrf9/event.sqlite"
+}

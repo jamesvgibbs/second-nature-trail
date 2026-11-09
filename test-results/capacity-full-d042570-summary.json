@@ -1,0 +1,81 @@
+{
+  "label": "Completed frozen d042570 localhost full-event scenario with independently verified results and raw timings; not full release acceptance",
+  "sourceCommit": "d042570f0504dff8314116bff211e79e91849d16",
+  "verifiedAt": "2026-11-09T23:14:44.334403+00:00",
+  "runtime": "v24.20.0",
+  "startedAt": "2026-11-09T22:12:14.453Z",
+  "elapsedSeconds": 3670.663,
+  "eventPlaySeconds": 3608.334,
+  "finalPhase": "awards",
+  "players": 100,
+  "joinSpanSeconds": 60.007,
+  "operatorConnections": 2,
+  "presentationConnections": 1,
+  "chapterCompletionCounts": [
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+  ],
+  "requests": 75633,
+  "tradeCompletions": 84,
+  "plannedOutageReconnects": 1,
+  "errors": {},
+  "awardCount": 15,
+  "distinctWinners": 15,
+  "scoringSamples": 12452,
+  "scoringLatencyMs": {
+    "p50": 125.10008400003426,
+    "p95": 231.0794589999132,
+    "p99": 316.31679099984467
+  },
+  "rawTimingsIndependentCheckPass": true,
+  "rawTimingRecords": 75228,
+  "rawTimingDropped": 0,
+  "localScoringP95Within500ms": true,
+  "verification": {
+    "rankingPass": true,
+    "inventoryReplayPass": true,
+    "recordedOutcomeReplayPass": true,
+    "fullActionReconciliationPass": true,
+    "fifteenQualifyingDistinctRecipients": true,
+    "journalBound": true
+  },
+  "phases": {
+    "pass": true,
+    "expectedConnections": 103,
+    "expectedTimedBoundariesPerConnection": 18,
+    "observations": 1854,
+    "maxLagMs": 392,
+    "negativeLags": 0,
+    "errors": []
+  },
+  "rewardProjects": {
+    "garden": 34,
+    "welcome": 33,
+    "festival": 33
+  },
+  "targetHitsAll18": true,
+  "artifactSha256": {
+    "capacity-full-d042570-environment.json": "88c5f7d67798ad293dda41b87da47baaf90cb1b39c27c806faa255447e72fe47",
+    "capacity-full-d042570-journal-watch.log": "d4224451c83b72574ea9b5c5e1b83084128a1ee46a9237fec3a34406e7e42fef",
+    "capacity-full-d042570-journal.json": "ddb58806367518cf04aedeb06e217f032a9984576068d38f860fb64558c6d16f",
+    "capacity-full-d042570-live.log": "551b939b068e6d4b24b26c429bfb3e52c634356dc82dcc23f015f68a1cfe2001",
+    "capacity-full-d042570-qa-verification.json": "60d85b5e6dd5bb79bd5cbdce62b42a77db6ce41245d6a4720cc6b1f0bf5755b3",
+    "capacity-full-d042570-timing-verification.json": "e1ebf44cd4275eca9ffa931738c44308d657ef9e0240629b47e0b86aacb063e8",
+    "capacity-full-d042570.export.json": "132163acadcd587d1e2af79faa3ba3457c2c02fe2e9251ff26a883da6ae773c6",
+    "capacity-full-d042570.json": "19961597f937d27b3cc11fc2370387b776c15fb0ce8a95ee835a7537e7779ad8",
+    "capacity-full-d042570.timings.json": "e53b54478cd1d0b84329a62ce02c8c0013fc4a7c18eab85e12c659a1205c7a3f"
+  },
+  "limitations": [
+    "Localhost Node clients/server share the development Mac; light Safari reviews and user activity continued. Not representative company network or lowest-spec rendering hardware.",
+    "Recorded outcomes are replayed; authored-answer correctness, physical proximity, browser rendering, human balance and content approval are not established by this verifier.",
+    "Session authorization guard c37f09a merged after this workload exited; performance evidence remains frozen d042570.",
+    "Full release approval and95-minute meeting rehearsal remain pending."
+  ],
+  "releaseApproved": false
+}

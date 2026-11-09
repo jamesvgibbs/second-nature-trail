@@ -1,6 +1,8 @@
 # Performance evidence
 
-Updated 2026-11-09. The completed `10a674c` run exercised 100 players, both operators, and presentation through 60 real game minutes. It completed every objective for every player, but scoring/inventory latency **failed the 500 ms target**: p95 506.95 ms and p99 1,097.72 ms over 12,452 samples. That historical harness did not export individual timing values. Its computed percentiles cannot be independently reconstructed afterward. See [the full-run summary](../test-results/capacity-full-10a674c-summary.json).
+Updated 2026-11-09. The later frozen `d042570` complete localhost run passed its measured latency check at p95 **231.08 ms**, independently recomputed from raw samples; representative-network acceptance remains pending. Details follow below.
+
+The historical completed `10a674c` run exercised 100 players, both operators, and presentation through 60 real game minutes. It completed every objective for every player, but scoring/inventory latency **failed the 500 ms target**: p95 506.95 ms and p99 1,097.72 ms over 12,452 samples. That historical harness did not export individual timing values. Its computed percentiles cannot be independently reconstructed afterward. See [the full-run summary](../test-results/capacity-full-10a674c-summary.json).
 
 ## Alternating synthetic profiles
 
@@ -45,3 +47,12 @@ Each report contains 1,000 awaited scoring responses, zero reported errors, and 
 The candidate finished the waves sooner, so movement counts and elapsed time differ. Movement instrumentation also has a window-boundary limitation: candidate pair two records 9,019 server movement dispatches but 8,919 measured client responses because warmup requests can cross the instrumentation start. The scoring waves are awaited and retain the same 1,000 samples. The localhost/shared-host, reconstruction, instrumentation, and overlapping-category limits above still apply. No new benchmark was run during the independent review.
 
 The [scoped-checkpoint evidence check](../test-results/late-scoped-evidence-check.json) links all eight reports, binds their 16 JSON/log artifacts, verifies source hashes against the recorded commits, and records count and credential/payload inspection. Full-event and representative-network acceptance remain pending.
+
+
+## Complete-event validation after scoped checkpoints
+
+The frozen `d042570` run completed 3,608.334 real game seconds with 100 players, two operators, and presentation. All 800 main objectives completed; 84 trades and the planned thirty-second reconnect were recorded with no request errors. Scoring/inventory p50/p95/p99 were **125.10 / 231.08 / 316.32 ms** over 12,452 accepted samples. Independent raw-series recomputation matched exactly; all 75,228 accepted-action rows were retained, with no truncation. The highest chapter-specific scoring p95 was chapter 8 at 404.94 ms.
+
+Ranking, inventory replay, recorded outcomes, exact objective-time reconciliation, and the hash-bound journal all passed independent verification. All 103 connections observed all eighteen scheduled boundaries, maximum Node SSE receipt lag 392 ms. See the [complete-event summary](../test-results/capacity-full-d042570-summary.json), [timing verification](../test-results/capacity-full-d042570-timing-verification.json), and [acceptance qualifications](acceptance.md#completed-scoped-checkpoint-capacity-run).
+
+This closes the local full-event performance regression. The environment was still a shared development Mac and localhost, with light Safari activity, not the agreed representative company network or rendering laptop. The later session-role guard `c37f09a` is outside the frozen workload. Production performance and human release gates remain pending; the old failed run remains failed.

@@ -7,18 +7,18 @@ Status: not release-approved. Updated 2026-11-09. This checklist records evidenc
 | Scope requirement | Evidence needed | Current status |
 | --- | --- | --- |
 | Ready within three minutes | Ten representative employees, at least nine successful unassisted; start/end times | Pending human test |
-| 100-player capacity | Full 60-minute active run, 100 joins over 60 seconds, two operators, presentation, trades, submissions, reconnects | Completed full localhost scenario; latency target missed; representative network still pending |
+| 100-player capacity | Full 60-minute active run, 100 joins over 60 seconds, two operators, presentation, trades, submissions, reconnects | Frozen d042570 full localhost scenario and latency check passed; representative network still pending |
 | Meeting operation | Full 95-minute dress rehearsal, attendee/input-method record, host commentary, awards | Pending human rehearsal |
 | Rendering | Lowest-spec agreed laptop and browser; >=30 FPS for 95% of measured play | Hardware baseline and measurement pending |
-| Action latency | Representative network profile; p95 confirmed inventory/scoring <=500 ms; sampling method | Localhost scoring p95 506.95 ms exceeds 500 ms; representative network pending |
-| Clock | Phase transitions within one second of server under agreed network | Localhost 103×18 transitions verified, max 372 ms; representative network pending |
+| Action latency | Representative network profile; p95 confirmed inventory/scoring <=500 ms; sampling method | Frozen d042570 scoring p95 231.08 ms independently recomputed; representative network pending |
+| Clock | Phase transitions within one second of server under agreed network | Frozen d042570: 103×18 transitions verified, max 392 ms; representative network pending |
 | Browser support | Current and previous Chrome, Edge, Firefox, Safari, exact versions and OS | Pending matrix |
 | Recovery | Refresh, duplicate requests, two tabs/takeover, host loss, 30-second player outage, server restart | Automated coverage in progress; rehearsal pending |
 | Controls | All main objectives/learning keyboard-only and pointer-only, comparable attainable scores | Pending complete interaction checks |
 | Accessibility | Visible focus, large text, contrast, reduced motion, visual alerts, no rapid-input requirement | Pending review and novice test |
 | Insect replacement | No exposure before choice, replacement, presentation, reconnect, secrets, preview, awards | Pending full visual/sound audit |
 | Unsupported devices | Real representative iOS/Android phones/tablets; touchscreen laptop remains supported | Pending device checks |
-| Scoring | Expected rankings, 15 distinct qualifying winners, ties, fallbacks, export reconciliation | Automated coverage in progress; balance rehearsal pending |
+| Scoring | Expected rankings, 15 distinct qualifying winners, ties, fallbacks, export reconciliation | Frozen d042570 ranking, inventory, recorded outcomes and exact objective times independently verified; balance rehearsal pending |
 | Abuse | Forged score/inventory/host requests, repeated assists, collusive/circular trades | Automated coverage in progress |
 | Timing | 60-minute normal game inside 95-minute meeting; pause/skip recovery | Pending real-time rehearsal |
 | Content | Named SN owners approve all 16 questions, answer keys, benefit claims | Pending approval |
@@ -124,7 +124,7 @@ A separate transport-ordering repair adds projection epoch/version metadata and 
 
 The final combined protocol baseline passes 89 automated tests, including exact geometry, stale projection/move handling, persistent settings-order protection across restart, and rollback-safe retry. Command output is `test-results/functional-exact-geometry-ordering.log`. This does not upgrade earlier rendered Safari evidence to the final source revision; the final compatibility/control matrix remains pending.
 
-## Completed final-runtime capacity run
+## Historical completed 10a674c capacity run
 
 Frozen commit `10a674c` includes exact continuous geometry and the final movement/projection/settings ordering contracts. Its clean 100-player preflight with 10,000 explicitly synthetic prior actions recorded 600 scoring/inventory samples, p95 393.5 ms, fifty trades, and zero errors. Report: `test-results/load-10a674c-ledger.json`.
 
@@ -134,10 +134,23 @@ The result is **functional scenario completion, not a passing release-capacity r
 
 Independent post-run verification passed prize allocation/qualification/tie draws, final inventory replay, and recorded-outcome replay against the hash-bound accepted-request journal. All 15 recipients were distinct and qualified. All 103 connections reached all 18 timed boundaries: 1,854 observations, maximum 372 ms receipt lag, no negative or missing observations. This is Node SSE receipt evidence, not browser painting or representative-network timing.
 
-Exact completion-time provenance remains incomplete because the objective completion and its outcome log use separate clock reads. The verifier checks upper-bound consistency and reports `fullActionReconciliationPass: false`; recorded server correctness is not independent content approval, physical-proximity proof, or human acceptance. Reports are [summary](../test-results/capacity-full-10a674c-summary.json), [raw load report](../test-results/capacity-full-10a674c.json), [results export](../test-results/capacity-full-10a674c.export.json), [independent verification](../test-results/capacity-full-10a674c-qa-verification.json), and [bound journal](../test-results/capacity-full-10a674c-journal.json).
+In this historical run, exact completion-time provenance remains incomplete because the objective completion and its outcome log use separate clock reads. The verifier checks upper-bound consistency and reports `fullActionReconciliationPass: false`; recorded server correctness is not independent content approval, physical-proximity proof, or human acceptance. Reports are [summary](../test-results/capacity-full-10a674c-summary.json), [raw load report](../test-results/capacity-full-10a674c.json), [results export](../test-results/capacity-full-10a674c.export.json), [independent verification](../test-results/capacity-full-10a674c-qa-verification.json), and [bound journal](../test-results/capacity-full-10a674c-journal.json).
 
 Future harness runs write a separate `.timings.json` artifact containing every retained confirmed `/api/action` sample, its action type, phase/chapter at send and confirmation, request ID, wall-clock timestamps, monotonic elapsed milliseconds, and a small allowlisted outcome. Authentication calls, cookies, tokens, answer text, and other payload fields are excluded. The artifact carries source hashes and synthetic-prefill metadata; synthetic history never becomes a measured network sample.
 
 Raw recording is bounded at 500,000 samples. Both report and timing artifact explicitly report any dropped rows and incomplete coverage; independent full-series recomputation is valid only when coverage is complete and counts match. The quantile method is preserved: zero-based sorted index `min(n-1, floor(n*q))`, without interpolation. Files are created exclusively with mode 0600; choose a fresh `LOAD_OUTPUT` for each run. These new records do not retroactively supply the missing raw latencies for the historical `10a674c` run.
 
 Raw timing contract verification passed on a separate three-player, thirty-second localhost smoke after instrumentation: all 116 confirmed-action samples and 19 scoring-category samples were present. Independently sorting the raw durations reproduced every reported p50/p95/p99 exactly. Source hashes matched, every record used the allowlisted fields, tested credential strings were absent, and file mode was 0600. Two focused unit tests also passed for quantile/filter behavior, bounded truncation, and field exclusion. This checks recording correctness only; it does not establish 100-player performance or replace the historical full run. Evidence: `test-results/raw-timings-contract-verification.json` and the corresponding smoke artifacts.
+
+
+## Completed scoped-checkpoint capacity run
+
+Frozen source **d042570** completed the normal schedule on Node v24.20.0: 3,608.334 real game seconds and 3,670.663 total seconds, ending at awards. All 100 players joined over 60.007 seconds and completed all eight chapters. Two operators and one presentation remained represented in the phase observations. The harness recorded 75,633 requests, 84 completed trades, one planned thirty-second outage/reconnect, and no reported errors. All players resolved eighteen targeting hits; reward choices were garden 34, welcome 33, and celebration 33. No synthetic history or varied-start fixture was injected.
+
+The **localhost scoring/inventory latency check passed**: p50 **125.10 ms**, p95 **231.08 ms**, p99 **316.32 ms**, over 12,452 samples. Independently sorting the complete raw artifact reproduced all reported percentiles exactly, including the 75,228 total accepted-action samples. No timing rows were dropped. Metadata matches the frozen source hashes, including the scoped-checkpoint helper. Chapter 8 had the highest chapter-specific scoring p95, 404.94 ms. Authentication, host commands, and rejected requests are outside this accepted-action latency series; the error report is checked separately.
+
+Independent verification passed ranking/allocation, inventory replay, recorded-outcome replay, **full action reconciliation including exact objective-completion timestamps**, and journal binding. All fifteen recipients were distinct and qualified. All 103 connections observed all eighteen timed transitions: 1,854 observations, maximum 392 ms, no missing or negative observations. The exact-time evidence gap in the historical 10a674c run is closed for this later run only.
+
+This is a passing complete **local automated scenario**, not release approval. Clients and server shared the development Mac; lightweight Safari reviews and uncontrolled user activity continued. Representative-network latency, browser painting/FPS, supported-platform review, human readiness/balance and the full 95-minute rehearsal, approved content, and production deployment remain separate gates. Replay uses recorded server correctness and does not independently establish authored-answer correctness or physical proximity. The session-role fix c37f09a landed after the workload exited and is not included in this performance evidence.
+
+Evidence: [summary and artifact hashes](../test-results/capacity-full-d042570-summary.json), [load report](../test-results/capacity-full-d042570.json), [results export](../test-results/capacity-full-d042570.export.json), [independent result/phase verification](../test-results/capacity-full-d042570-qa-verification.json), [raw timing verification and chapter/type breakdown](../test-results/capacity-full-d042570-timing-verification.json), [raw accepted-action timings](../test-results/capacity-full-d042570.timings.json), and [bound frozen journal](../test-results/capacity-full-d042570-journal.json). The 124-test combined suite passed before launch; its environment record links that separate functional evidence. Historical failed and superseded runs remain unchanged.

@@ -1,0 +1,259 @@
+{"at":"2026-11-09T22:12:14.471Z","phase":"draft","chapter":0,"chapterCompletionCounts":[0,0,0,0,0,0,0,0],"requests":3,"scoringSamples":0,"scoringP95Ms":null,"errors":{}}
+{"at":"2026-11-09T22:12:14.710Z","phase":"lobby","chapter":0,"chapterCompletionCounts":[0,0,0,0,0,0,0,0],"requests":5,"scoringSamples":0,"scoringP95Ms":null,"errors":{}}
+{"at":"2026-11-09T22:13:17.000Z","phase":"countdown","chapter":0,"chapterCompletionCounts":[0,0,0,0,0,0,0,0],"requests":1305,"scoringSamples":0,"scoringP95Ms":null,"errors":{}}
+{"at":"2026-11-09T22:13:27.072Z","phase":"chapter","chapter":0,"chapterCompletionCounts":[0,0,0,0,0,0,0,0],"requests":1305,"scoringSamples":0,"scoringP95Ms":null,"errors":{}}
+{"at":"2026-11-09T22:18:16.895Z","phase":"brag","chapter":0,"chapterCompletionCounts":[100,0,0,0,0,0,0,0],"requests":7356,"scoringSamples":1800,"scoringP95Ms":146.4437920000055,"errors":{}}
+{"at":"2026-11-09T22:20:16.860Z","phase":"chapter","chapter":1,"chapterCompletionCounts":[100,0,0,0,0,0,0,0],"requests":7356,"scoringSamples":1800,"scoringP95Ms":146.4437920000055,"errors":{}}
+{"at":"2026-11-09T22:25:17.069Z","phase":"brag","chapter":1,"chapterCompletionCounts":[100,100,0,0,0,0,0,0],"requests":17417,"scoringSamples":3501,"scoringP95Ms":147.68412499999977,"errors":{}}
+{"at":"2026-11-09T22:27:16.986Z","phase":"chapter","chapter":2,"chapterCompletionCounts":[100,100,0,0,0,0,0,0],"requests":17417,"scoringSamples":3501,"scoringP95Ms":147.68412499999977,"errors":{}}
+{"at":"2026-11-09T22:32:16.902Z","phase":"brag","chapter":2,"chapterCompletionCounts":[100,100,100,0,0,0,0,0],"requests":27468,"scoringSamples":5202,"scoringP95Ms":174.95762500003912,"errors":{}}
+{"at":"2026-11-09T22:34:16.959Z","phase":"chapter","chapter":3,"chapterCompletionCounts":[100,100,100,0,0,0,0,0],"requests":27468,"scoringSamples":5202,"scoringP95Ms":174.95762500003912,"errors":{}}
+{"at":"2026-11-09T22:39:17.082Z","phase":"brag","chapter":3,"chapterCompletionCounts":[100,100,100,100,0,0,0,0],"requests":38668,"scoringSamples":6852,"scoringP95Ms":184.1773749999702,"errors":{}}
+{"at":"2026-11-09T22:41:16.886Z","phase":"chapter","chapter":4,"chapterCompletionCounts":[100,100,100,100,0,0,0,0],"requests":38668,"scoringSamples":6852,"scoringP95Ms":184.1773749999702,"errors":{}}
+{"at":"2026-11-09T22:46:17.157Z","phase":"brag","chapter":4,"chapterCompletionCounts":[100,100,100,100,100,0,0,0],"requests":49868,"scoringSamples":9102,"scoringP95Ms":196.82941700005904,"errors":{}}
+{"at":"2026-11-09T22:48:16.959Z","phase":"chapter","chapter":5,"chapterCompletionCounts":[100,100,100,100,100,0,0,0],"requests":49868,"scoringSamples":9102,"scoringP95Ms":196.82941700005904,"errors":{}}
+{"at":"2026-11-09T22:53:17.134Z","phase":"brag","chapter":5,"chapterCompletionCounts":[100,100,100,100,100,100,0,0],"requests":54268,"scoringSamples":9852,"scoringP95Ms":200.40200000000186,"errors":{}}
+{"at":"2026-11-09T22:55:16.935Z","phase":"chapter","chapter":6,"chapterCompletionCounts":[100,100,100,100,100,100,0,0],"requests":54268,"scoringSamples":9852,"scoringP95Ms":200.40200000000186,"errors":{}}
+{"at":"2026-11-09T23:00:16.979Z","phase":"brag","chapter":6,"chapterCompletionCounts":[100,100,100,100,100,100,100,0],"requests":62733,"scoringSamples":11602,"scoringP95Ms":217.56837499979883,"errors":{}}
+{"at":"2026-11-09T23:02:17.004Z","phase":"chapter","chapter":7,"chapterCompletionCounts":[100,100,100,100,100,100,100,0],"requests":62733,"scoringSamples":11602,"scoringP95Ms":217.56837499979883,"errors":{}}
+{"at":"2026-11-09T23:07:16.965Z","phase":"brag","chapter":7,"chapterCompletionCounts":[100,100,100,100,100,100,100,100],"requests":75533,"scoringSamples":12452,"scoringP95Ms":231.0794589999132,"errors":{}}
+{"at":"2026-11-09T23:09:17.083Z","phase":"finale","chapter":7,"chapterCompletionCounts":[100,100,100,100,100,100,100,100],"requests":75533,"scoringSamples":12452,"scoringP95Ms":231.0794589999132,"errors":{}}
+{"at":"2026-11-09T23:13:17.004Z","phase":"awards","chapter":7,"chapterCompletionCounts":[100,100,100,100,100,100,100,100],"requests":75633,"scoringSamples":12452,"scoringP95Ms":231.0794589999132,"errors":{}}
+{
+  "label": "capacity duration exercised; inspect scenario coverage",
+  "syntheticPriorActions": 0,
+  "startChapter": 0,
+  "syntheticVariedNearSiteStarts": false,
+  "rulesVersion": "trail-0.3.0-draft",
+  "contentHash": "368f66fb87ee9d1690c61e1c0457abba7049bde20c0af2d466a634d0b953dd5f",
+  "sourceHashes": {
+    "server.mjs": "f3862b45f387642efbf79dcafb793fcdbba86aed758b52cac9894dfe1af6a48e",
+    "command-checkpoint.mjs": "1f3df952d81bae0148e9f6f7840ea2117577cfc1ae66b48de941af869fc471e7",
+    "engine.mjs": "4fde6096ce97d58f5f8d3e8257275aebadbb69a65db16a95b9e330122cbec442",
+    "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+    "public/world.mjs": "d412a2dee8b4b1dc3779d1dabc46561383646ac63651dcf7cd30eeba8bd063a0",
+    "public/app.js": "a9ed518d0422576b22a22d0fc7cba84fb68856dcb24be92d5467401428e99317",
+    "public/helpers.mjs": "b9b7a13a5df95d718e851b8dc4a0c62e6c562941f00d63804b7f0b1b306b9443",
+    "public/performance.mjs": "090cdd66c6b421fa0265b76aad7fa59738486fcd498110d87c60303cf78d4898",
+    "public/projection.mjs": "90b19560a0e02a7b9d19d69e567d2ef332526f351b2370040a5d7e60a47d6b79",
+    "public/style.css": "02b44b30cf3ca76ec55df81443513596e1ac423918d654ea4677bb1ab3ee0566",
+    "scripts/load.mjs": "77196bded03b5ea462e4cc11170121f1f743bfa0e3278f3a3b135dbde41d7f06",
+    "scripts/load-navigation.mjs": "520f2128823f27adfbe41b394702d77682a69612114abb57c6520e378323b6e4",
+    "scripts/load-routing.mjs": "0b02bddb26279933f28ecf5eadedb8c15b9e9baa4f2672c1bc61175f5ca3e279",
+    "scripts/load-timings.mjs": "89af581c11aedd551e1693bf88e20f6986041a10eb01376f7c7fdd12fbb36458"
+  },
+  "nodeVersion": "v24.20.0",
+  "platform": "darwin",
+  "memoryBytes": {
+    "rss": 531759104,
+    "heapTotal": 250216448,
+    "heapUsed": 177647752,
+    "external": 14293394,
+    "arrayBuffers": 10148035
+  },
+  "startedAt": "2026-11-09T22:12:14.453Z",
+  "elapsedSeconds": 3670.663,
+  "eventPlaySeconds": 3608.334,
+  "finalPhase": "awards",
+  "exportReconciles": true,
+  "awardCount": 15,
+  "distinctWinners": 15,
+  "requestedPlayers": 100,
+  "joinedPlayers": 100,
+  "actualJoinSpanSeconds": 60.007,
+  "chapterCompletionCounts": [
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+  ],
+  "simulatedMainObjectiveTimesMs": [
+    {
+      "samples": 100,
+      "p50": 98829,
+      "p95": 98844
+    },
+    {
+      "samples": 100,
+      "p50": 74566,
+      "p95": 74585
+    },
+    {
+      "samples": 100,
+      "p50": 79794,
+      "p95": 79815
+    },
+    {
+      "samples": 100,
+      "p50": 76159,
+      "p95": 76183
+    },
+    {
+      "samples": 100,
+      "p50": 166512,
+      "p95": 166539
+    },
+    {
+      "samples": 100,
+      "p50": 91700,
+      "p95": 91724
+    },
+    {
+      "samples": 100,
+      "p50": 88217,
+      "p95": 88240
+    },
+    {
+      "samples": 100,
+      "p50": 33049,
+      "p95": 33075
+    }
+  ],
+  "rewardProjects": {
+    "garden": 34,
+    "welcome": 33,
+    "festival": 33
+  },
+  "targetResolutions": [
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18
+  ],
+  "joinWindowSeconds": 60,
+  "network": "localhost; not the representative company network",
+  "requests": 75633,
+  "confirmedActionSamples": 75228,
+  "rawTimingArtifact": "/Users/jgibbs/Code/second-nature-trail/test-results/capacity-full-d042570.timings.json",
+  "rawTimingComplete": true,
+  "rawTimingRecords": 75228,
+  "rawTimingDropped": 0,
+  "tradeCompletions": 84,
+  "reconnectsAfterThirtySecondOutage": 1,
+  "latencyMs": {
+    "p50": 11.820625000167638,
+    "p95": 153.04724999994505,
+    "p99": 229.37825000006706
+  },
+  "scoringInventorySamples": 12452,
+  "scoringInventoryLatencyMs": {
+    "p50": 125.10008400003426,
+    "p95": 231.0794589999132,
+    "p99": 316.31679099984467
+  },
+  "clockTransitionSamples": 1854,
+  "clockArrivalLagMs": {
+    "p95": 378,
+    "max": 392,
+    "withinOneSecond": 1854
+  },
+  "movementProfile": "10 requests/second per player while traveling; at most one in-flight per player",
+  "errors": {},
+  "phaseSamples": "2063 observations in /Users/jgibbs/Code/second-nature-trail/test-results/capacity-full-d042570.json",
+  "limitations": [
+    "No browser rendering measured",
+    "No human rehearsal",
+    "Inspect tradeCompletions and reconnectsAfterThirtySecondOutage to verify scenario coverage",
+    "Phase observations are raw arrival times; no one-second clock compliance claim"
+  ]
+}
