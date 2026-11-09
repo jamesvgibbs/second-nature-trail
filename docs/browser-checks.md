@@ -475,3 +475,25 @@ Artifacts: [chapter 5 keyboard completion](../test-results/chapter5-keyboard-com
 This closes **M5 keyboard**, **Q5.1 keyboard**, and **Q5.2 keyboard**, completing **48 of 48** main-objective/knowledge keyboard/pointer cells on the frozen Safari review baseline. Both chapter-5 methods used **one manual hit plus 17 deliberately selected auto-confirm hits**, completed all three sites under the normal unextended clock, answered both encounters correctly on the first attempt, and retained **80 points / 3 of 3 / both learning checkmarks** after refresh. This is outcome parity for the supported alternative, not an 18-hit all-manual check or human-speed proof.
 
 The full platform matrix, novice/human rehearsal, optional activities, social controls, safety sequences, and host/presentation review remain separate open gates. These browser observations do not automatically certify later runtime changes or the concurrent capacity run.
+
+
+## Settings remapping and text-size checks, 2026-11-09
+
+The root agent completed these bounded native Safari checks on the frozen **`f1218bf`** review checkout, retaining UI **`f012152`**, in isolated chapter-5 waiting-preview session **10296**. Safari was **27.2 (21625.2.8.18.4)** and the outer window was **1447×889**; the CSS viewport was not measured. These observations are separate from the 48 main-objective/knowledge cells. No main objective or scored activity was completed in this preview.
+
+In the lobby, assigning **W** to both up and interact was rejected with the inline message **“Choose a different, non-empty key for every action.”** Settings stayed open. The reviewer then saved **up Z / interact F / inventory V / map N / help J**, leaving A/S/D unchanged. Canvas accessibility text and footer showed **ZASD / F**, and menu hints showed **V / N / J**. From map focus, J opened Help with matching controls; Escape then V opened the cart, and Escape then N opened Map. Cmd+R retained the updated hints.
+
+With the canvas focused by Tab, holding Z for 900ms visibly moved the avatar upward and completed the tutorial's Move around step. Cmd+L followed by typing `jvnz` left those letters in the browser address field without opening any gameplay menu or navigating. This tests that browser-field context only, not every in-page input. An empty up binding was also rejected with the same inline message; Z was restored and saved.
+
+The reviewer explicitly started the waiting chapter-5 preview with its normal 300-second play window, clicked a path to Apartment block, and used F to open Outbreak response. Escape then J opened Help again. Saving **left X / down C / right B** produced movement hints **ZXCB**. Separate 700ms holds of X, C, and B visibly moved the avatar left, down, and right. Cmd+R retained **ZXCB / F** and **V / N / J**; reopening Settings showed all eight correct fields. No scored target action was taken.
+
+Text-size checks followed:
+
+- Selected **Large** through the pointer dropdown and saved. The inspected screenshot showed visibly larger text and a scrolling sidebar, with the world and footer retained.
+- Selected **Extra large** using Down/Enter in the popup and saved. The inspected screenshot showed sidebar wrapping without observed horizontal clipping. Scrolling one page exposed harder-challenge, secret, and mystery actions; the footer remained accessible.
+- Cmd+R and reopening Settings explicitly showed **Extra large** retained.
+- Restored all eight default keys **W/A/S/D, E/I/M/H** and **Standard** through Settings, then saved. Canvas accessibility text, footer, and menu hints were checked and showed the defaults.
+
+Artifacts: [remapped Help with initial ZASD bindings](../test-results/settings-remapped-help.jpg), [all eight remapped bindings retained](../test-results/settings-all-bindings-persisted.jpg), [Large text](../test-results/settings-large-text.jpg), and [Extra large actions reachable](../test-results/settings-extra-large-actions.jpg).
+
+Reduced motion remained checked, friendly robots remained selected, and audio stayed at zero throughout. Those unchanged settings do **not** constitute reduced-motion toggle, audio, or visual-preference race tests. These are narrow remapping, validation, hint consistency, layout, and persistence observations on the frozen Safari baseline, not a whole Settings pass or full remapped activity/platform matrix. No conclusion about novice usability or later runtime revisions follows from this check.
