@@ -235,4 +235,29 @@ At each of six homes, the reviewer selected and confirmed inspection, read the v
 
 Both legitimate and suspicious notices were handled correctly; no false accusation was observed. No native-input interruption, gameplay error, or penalty was observed. Artifacts: [chapter 3 pointer completion](../test-results/chapter3-pointer-complete.jpg) and [learning completion retained after refresh](../test-results/chapter3-pointer-learning-persisted.jpg).
 
-This closes **M3 pointer**, **Q3.1 pointer**, and **Q3.2 pointer**, bringing the matrix to **21 of 48** cells. Chapter 3 keyboard completion and input-method comparison remain pending. These observations apply to the frozen review source, not automatically to later runtime changes. They do not establish human timing, the complete browser/device matrix, or the outstanding safety/network regressions.
+This closes **M3 pointer**, **Q3.1 pointer**, and **Q3.2 pointer**, bringing the matrix to **21 of 48** cells. At the end of this pointer run, chapter 3 keyboard completion and input-method comparison remained pending; the later keyboard result is recorded below. These observations apply to the frozen review source, not automatically to later runtime changes. They do not establish human timing, the complete browser/device matrix, or the outstanding safety/network regressions.
+
+
+## Chapter 3 keyboard-only, final revision, 2026-11-09
+
+The root agent completed this automated native Safari check from the detached review checkout **`/tmp/second-nature-trail-browser-f1218bf`**, frozen at **`f1218bf`**, retaining runtime **`10a674c`**, UI **`f012152`**, and the waiting preview helper. It used verified NVM **Node v24.20.0** and Safari **27.2 (21625.2.8.18.4)**. The outer window was **1379×851**; the CSS viewport was not measured.
+
+Fresh in-memory session **56135** used `scripts/preview-chapter.mjs 3 --wait-for-start` with **`tty: true`**. Setup selected friendly robots and the default Keyboard preference by pointer. After setup, the normal **300-second** chapter clock started explicitly; the first accessibility observation showed **04:57**. **All gameplay after entry used Tab, Return, and Escape; refresh used Cmd+R.** No pointer gameplay was used. The session was stopped cleanly after the check, and port 4174 was verified unoccupied.
+
+At every home, the reviewer inspected and confirmed, read the notice, then selected and confirmed the verdict using the keyboard helper with fresh accessibility selection/focus checks.
+
+| Home / decision | Observed score | Chapter time remaining |
+|---|---|---|
+| Cedar: Verify through a known official channel | 10 | 04:33 |
+| Willow: Legitimate channel; verify the request normally | 20 | 04:02 |
+| Elm: Stop and independently verify | 30 | 03:47 |
+| Oak: Verified notice; use the known portal to respond | 40 | 03:34 |
+| Maple: Treat it as suspicious; report through the known channel | 50 | 03:18 |
+| Juniper: Verified channel; confirm through the portal | 60; objective 6 of 6 | 03:00 |
+| Q3.1: Verify using a trusted contact method, first answer correct | 70 | 02:35 |
+| Q3.2: No; residents still need safe habits, first answer correct | 80 | 02:16 |
+| Cmd+R, then keyboard reopening of Learning encounters | 80; objective 6 of 6; both completion checkmarks retained | Refresh at 02:10 |
+
+No gameplay error, penalty, false accusation, or native-input interruption was observed. Artifacts: [chapter 3 keyboard completion](../test-results/chapter3-keyboard-complete.jpg) and [learning completion retained after refresh](../test-results/chapter3-keyboard-learning-persisted.jpg).
+
+This closes **M3 keyboard**, **Q3.1 keyboard**, and **Q3.2 keyboard**, bringing the matrix to **24 of 48** cells. The separate keyboard and pointer runs completed the same six inspected verdicts, answered both encounters correctly on the first attempt, and retained **80 points / 6 of 6 / both learning checkmarks** after refresh. This establishes observed outcome equivalence on the frozen source, not a timing or human-usability claim, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
