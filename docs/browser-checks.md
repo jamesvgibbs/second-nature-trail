@@ -646,3 +646,9 @@ No main objective was completed and no points were earned. Early End scoring dur
 Artifacts: [paused countdown retained](../test-results/paused-countdown-context.jpg), [paused brag context](../test-results/paused-brag-context.jpg), [paused brag safe presentation](../test-results/paused-brag-presentation.jpg), [paused finale and disabled Restore](../test-results/paused-finale-context.jpg), [success ending in results](../test-results/finale-success-results.jpg), and [closed ENDED label](../test-results/closed-ended-label.jpg).
 
 These are narrow native rendering, pause-context, reload, and contribution-availability checks. They do not establish authenticated no-submit behavior for targeting automatic confirmation while paused, full-event duration, fifteen distinct winners, prize immutability, or broad platform/novice acceptance. The completed 48-cell main/knowledge matrix retains its own frozen-source provenance; these later checks do not replace that matrix or retroactively certify every surface on `6c5d511`.
+
+## Review connection unavailable · 2026-11-09
+
+After the completed `d4c25c2` native pause/finale checks, both native review windows became unavailable. A subsequent Safari rebind still returned `cgWindowNotFound`. The retained Brave connection could list its review tabs and create an `about:blank` tab, but navigation and the documented alternative tab binding both failed with an unavailable `timeoutMs` property. Closing that unused tab through the same connection also failed. No user tab was modified through this attempt.
+
+The new `9939a98` chapter-8 waiting preview (session 99647, port 4174) was stopped normally before setup or play began. This attempt supplies no new control, social, or compatibility evidence. Remaining rendered checks need a working browser-control connection; the independently verified source, capacity, and container evidence remains as recorded.

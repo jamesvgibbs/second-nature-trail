@@ -2,6 +2,12 @@
 
 Status: not release-approved. Updated 2026-11-09. This checklist records evidence; the presence of code is not a passing test. Automated tests cannot replace employee rehearsals, content approval, or hardware/browser measurements.
 
+## Current verified build
+
+Source package `a5cf0b9` contains runtime `9939a98`. The combined Node 24.20.0 suite passed **143 tests**, with no failures or skips: [test output](../test-results/full-suite-9939a98-runtime.log). The exact runtime image passed a three-second graceful-stop limit, same-volume recreation, and backup restoration into a fresh volume: [container evidence](../test-results/container-9939a98.json), [deployment details](deployment-check.md).
+
+The full 100-player performance and award evidence remains tied to **`d042570`**, before the later sign-in, finale display, paused display, and shutdown fixes. The controls ledger likewise retains each reviewed source/browser boundary. A passing current test suite does not silently recertify those earlier rendered or load measurements.
+
 ## Evidence register
 
 | Scope requirement | Evidence needed | Current status |
@@ -13,16 +19,16 @@ Status: not release-approved. Updated 2026-11-09. This checklist records evidenc
 | Action latency | Representative network profile; p95 confirmed inventory/scoring <=500 ms; sampling method | Frozen d042570 scoring p95 231.08 ms independently recomputed; representative network pending |
 | Clock | Phase transitions within one second of server under agreed network | Frozen d042570: 103×18 transitions verified, max 392 ms; representative network pending |
 | Browser support | Current and previous Chrome, Edge, Firefox, Safari, exact versions and OS | Pending matrix |
-| Recovery | Refresh, duplicate requests, two tabs/takeover, host loss, 30-second player outage, server restart | Automated coverage in progress; rehearsal pending |
-| Controls | All main objectives/learning keyboard-only and pointer-only, comparable attainable scores | Pending complete interaction checks |
-| Accessibility | Visible focus, large text, contrast, reduced motion, visual alerts, no rapid-input requirement | Pending review and novice test |
+| Recovery | Refresh, duplicate requests, two tabs/takeover, host loss, 30-second player outage, server restart | Disk/crash, transport, and shutdown regressions pass; `9939a98` container restart/backup restore passed. Bounded native sign-in and pause/reload checks are recorded. Human/network rehearsal pending. |
+| Controls | All main objectives/learning keyboard-only and pointer-only, comparable attainable scores | All 48 main-objective/learning cells passed in the recorded Safari revisions; both mystery methods and chapter-8 keyboard challenge passed. Remaining optional/social/other controls and novice comparison pending; see [controls matrix](controls-matrix.md). |
+| Accessibility | Visible focus, large text, contrast, reduced motion, visual alerts, no rapid-input requirement | Bounded focus, remapping, enlarged-text, and selected-target alternative checks passed. Remaining visual/audio/platform review and novice test pending. |
 | Insect replacement | No exposure before choice, replacement, presentation, reconnect, secrets, preview, awards | Pending full visual/sound audit |
 | Unsupported devices | Real representative iOS/Android phones/tablets; touchscreen laptop remains supported | Pending device checks |
 | Scoring | Expected rankings, 15 distinct qualifying winners, ties, fallbacks, export reconciliation | Frozen d042570 ranking, inventory, recorded outcomes and exact objective times independently verified; balance rehearsal pending |
 | Abuse | Forged score/inventory/host requests, repeated assists, collusive/circular trades | Automated coverage in progress |
-| Timing | 60-minute normal game inside 95-minute meeting; pause/skip recovery | Pending real-time rehearsal |
+| Timing | 60-minute normal game inside 95-minute meeting; pause/skip recovery | `d042570` completed the normal 60-minute localhost schedule; native countdown/brag/finale pause checks passed on the recorded revisions. Full 95-minute human rehearsal and remaining recovery operation checks pending. |
 | Content | Named SN owners approve all 16 questions, answer keys, benefit claims | Pending approval |
-| Production | HTTPS deployment, durable storage, backup/restore, roster invitation delivery, operator authentication | Pending decisions and deployment verification |
+| Production | HTTPS deployment, durable storage, backup/restore, roster invitation delivery, operator authentication | Local production-mode container restart/backup restore passed. Hosting/domain/budget/auth/roster/retention decisions and actual HTTPS deployment/invitation delivery remain pending. |
 
 ## Recorded development runs
 
