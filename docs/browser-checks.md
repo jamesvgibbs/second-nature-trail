@@ -585,3 +585,28 @@ In chapter 8, typing `NNNNNNNN` and pressing Enter produced the wrong-answer mes
 Artifacts: [keyboard wrong-answer rejection](../test-results/mystery-keyboard-wrong-answer.jpg), [keyboard solution](../test-results/mystery-keyboard-solved.jpg), and [clues and solution retained](../test-results/mystery-keyboard-clues-persisted.jpg).
 
 The two independent ordinary-server runs now establish legitimate eight-clue acquisition and a persisted solved mystery with both input methods: pointer clue buttons and keyboard text entry. They remain accelerated optional-content evidence, not normal-duration, main-objective, prize, or human-usability evidence. The 48-cell main/knowledge matrix is unchanged; broader optional/social/platform/safety gates remain open. Runtime files were not edited. Owned server session 50648 was stopped normally with exit code 0.
+
+
+## Chapter 8 keyboard harder challenge, finale, and awards, 2026-11-09
+
+The root agent reviewed frozen **`f1218bf`** with the chapter-8 `--wait-for-start` helper, owned session **89348**, using Safari **27.2 (21625.2.8.18.4)** at a **1447×889** outer window; CSS viewport dimensions were not measured. Setup explicitly chose friendly robots and default keyboard controls by pointer. **All gameplay after entry used keyboard input.** Tutorial practice was deliberately unplayed. The helper started at **18:11:17 EST** and applied its initial **49-minute clock offset**; earlier chapters had no gameplay progress. This is a synthetic chapter preview, not an ordinary full event. The owned server later stopped normally with exit code 0.
+
+At **04:36** remaining, an early harder-challenge answer 2 was confirmed. The UI rejected it with **“Complete the main objective first”**, retained Confirm focus, and left score zero. The reviewer then completed the three actual spatial network routes through the UI:
+
+| Home / route | Cost | Observed result | Chapter time remaining |
+|---|---|---|---|
+| A: Exchange → North → West → Bypass → Home A | 8 of 9 | 20 points / 1 of 3 | 04:14 |
+| B: Exchange → South → East → Hub → Home B | 8 of 9 | 40 points / 2 of 3 | 03:48 |
+| C: Exchange → South → North → West → Hub → Home C | 12 of 12 | 60 points / 3 of 3 | 03:31 |
+
+Three Tab presses reached the optional challenge action and initiated travel to HQ. Key 2 selected answer 2, then two Tab presses and confirmation completed the challenge: **70 points**, a **10-point increase**, and **Challenge complete** at **03:05**. Reopening and submitting the same answer produced **“Challenge already complete.”** Cmd+R at **02:53** retained score **70**, main progress **3 of 3**, and challenge completion. No wrong-answer penalty check is claimed. The root agent visually reviewed the persisted challenge screenshot.
+
+A separate Chrome operator advanced the chapter and brag break through the UI. Their reasons were mistakenly labeled “Accelerated keyboard mystery review after chapter 8 chapter/brag”; those are recorded labels, not a claim that this was a mystery run. The synthetic-offset host logs displayed **19:02:39 / 19:02:41 EST**, corresponding to actual **18:13:39 / 18:13:41 EST**.
+
+The finale initially showed zero contributions toward its target of one. From map focus, Tab reached Restore a home and Enter contributed at **03:41** remaining. The UI displayed the authored success narrative, a disabled **Your home is restored** button, the toast **“Repair 1 is yours”**, and a visible **YOUR REPAIR** marker. The root agent visually reviewed the contribution screenshot. Cmd+R at **03:17** retained the disabled completed button and success state.
+
+The operator then advanced with reason “Finish accelerated keyboard finale review.” Its log showed synthetic **19:03:26 EST**, corresponding to actual **18:14:26 EST**. The awards screen rendered **15 rows**: chapter 8 listed Neighbor 1; the other **14 were Unawarded**, as expected for a fixture with earlier chapters unplayed. This is rendered awarded/empty-row evidence, not fifteen distinct winners, a full-duration event, or prize-immutability proof.
+
+Artifacts: [harder challenge complete](../test-results/challenge8-keyboard-complete.jpg), [challenge retained after refresh](../test-results/challenge8-keyboard-persisted.jpg), [keyboard finale contribution](../test-results/finale-keyboard-contribution.jpg), [finale retained after refresh](../test-results/finale-keyboard-persisted.jpg), and [synthetic preview awards](../test-results/finale-keyboard-awards.jpg).
+
+These are bounded keyboard checks for chapter-8 harder-challenge gating/completion/idempotent feedback and finale contribution/persistence on frozen `f1218bf`. Other harder challenges and input methods, fallback finale behavior, full-event timing, prize immutability, platform/novice review, and other optional/social/safety gates remain separate. The completed 48-cell main/knowledge count is unchanged. The main checkout had meanwhile advanced to role-fix revision `c37f09a` with its reported test results; these frozen UI observations do not automatically certify that later runtime. No runtime code was changed for this review.
