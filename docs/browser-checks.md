@@ -163,3 +163,28 @@ The final action selected saving 110; the completed screen did not independently
 Artifacts: [early payment disabled](../test-results/chapter6-keyboard-early-payment-disabled.jpg), [chapter 6 keyboard completion](../test-results/chapter6-keyboard-complete.jpg), and [learning completion retained after refresh](../test-results/chapter6-keyboard-learning-persisted.jpg).
 
 This closes **M6 keyboard**, **Q6.1 keyboard**, and **Q6.2 keyboard**, bringing the matrix to **12 of 48** cells. The separate pointer and keyboard checks both completed the same three on-time payments and both first knowledge answers correctly, then retained **80 points / 3 of 3 / both learning checkmarks** after refresh. Their start conditions differed: pointer used the older immediate preview's 10-second offset, while keyboard completed setup before the full normal chapter window began. This establishes observed outcome parity only, not matched human timing, general usability, other chapters/browsers, or the outstanding safety/network regressions.
+
+
+## Chapter 2 pointer-only, final revision, 2026-11-09
+
+The root agent completed this automated native Safari check on source **`f2ddb58`**, with unchanged runtime **`10a674c`** and UI **`f012152`**, using verified NVM **Node v24.20.0** and Safari **27.2 (21625.2.8.18.4)**. The outer window measured **1379×851**; the CSS viewport was not measured. Fresh in-memory preview session **98047** used `scripts/preview-chapter.mjs 2 --wait-for-start` with **`tty: true`**. Setup completed before the explicit start of the normal **300-second** chapter window; the first accessibility observation showed **04:57**. The session was stopped cleanly after the check.
+
+Setup explicitly selected friendly robots and left the control preference at its default Keyboard value. **Every gameplay interaction after entry, including browser reload, used pointer clicks.** The preference label does not classify the actual input method. The reviewer used batched native clicks, with a fresh accessibility observation between selecting a choice and confirming it; no API calls changed gameplay state.
+
+At each home, the reviewer selected **Inspect this site**, confirmed, read the visible evidence, then selected and confirmed the decision below.
+
+| Home / decision | Observed score | Chapter time remaining |
+|---|---|---|
+| Juniper: 16 × 20 | 10 | 04:31 |
+| Cedar: Toward the unit | 20 | 04:18 |
+| Willow: Install the matching clean filter | 30 | 04:03 |
+| Elm: 20 × 25, arrow toward unit | 40 | 03:47 |
+| Oak: Use one correctly sized filter as specified | 50 | 03:36 |
+| Maple: A clean replacement matching the inspected equipment label | 60; objective 6 of 6 | 03:19 |
+| Q2.1: The required size and airflow direction, first answer correct | 70 | 03:02 |
+| Q2.2: No; the replacement still needs installation, first answer correct | 80 | 02:47 |
+| Clicked browser reload, then reopened Learning encounters by pointer | 80; objective 6 of 6; both completion checkmarks retained | Refresh at 02:41 |
+
+No gameplay error, penalty, or native-input interruption was observed. Artifacts: [chapter 2 pointer completion](../test-results/chapter2-pointer-complete.jpg) and [learning completion retained after refresh](../test-results/chapter2-pointer-learning-persisted.jpg).
+
+This closes **M2 pointer**, **Q2.1 pointer**, and **Q2.2 pointer**, bringing the matrix to **15 of 48** cells. Chapter 2 keyboard completion and input-method comparison remain pending. This automated preview does not establish human timing, the complete browser/device matrix, or the outstanding safety/network regressions.
