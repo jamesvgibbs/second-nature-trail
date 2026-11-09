@@ -202,25 +202,33 @@ small,
 }
 .landing {
   max-width: 1240px;
+  min-height: 100vh;
+  min-height: 100svh;
   margin: auto;
+  display: grid;
+  grid-template-rows: auto minmax(min-content, 1fr) auto;
 }
 .hero {
   display: grid;
-  grid-template-columns: 0.94fr 1.06fr;
-  min-height: 560px;
+  grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
+  min-height: 0;
   color: var(--paper);
 }
 .hero-copy {
-  padding: 70px 44px 50px 30px;
+  padding: clamp(16px, 2.5vh, 32px) 30px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
+  min-width: 0;
 }
 .hero-copy h1 {
-  margin: 24px 0;
+  font-size: clamp(2.25rem, min(4.2vw, 7vh), 3.7rem);
+  margin: 12px 0;
 }
 .hero-copy p {
   max-width: 410px;
+  margin-bottom: 12px;
   color: #c7d4cb;
   font-family: system-ui, sans-serif;
   font-size: 1rem;
@@ -231,11 +239,14 @@ small,
 .hero-art {
   position: relative;
   overflow: hidden;
-  min-height: 500px;
+  min-height: 0;
   background: #739579;
   border-left: 1px solid #49605f;
 }
 .hero-art canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
   height: 100%;
   width: 100%;
   object-fit: cover;
@@ -261,14 +272,14 @@ small,
 }
 .landing-bottom > div {
   background: var(--navy);
-  padding: 24px 30px;
+  padding: 14px 24px;
   color: var(--paper);
 }
 .landing-bottom strong {
   display: block;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   color: var(--mint);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 .landing-bottom p {
   font-size: 0.75rem;
@@ -280,13 +291,23 @@ small,
   max-width: 420px;
 }
 .join-form input {
+  min-width: 0;
   background: #e9eedb;
+}
+.join-form button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.hero-copy .entry-note {
+  margin: 12px 0 0;
+  font-size: 0.76rem;
 }
 .join-form .row {
   flex-wrap: nowrap;
   align-items: stretch;
 }
 .join-form label {
+  margin: 8px 0;
   color: #e2e8d6;
 }
 .error {
@@ -781,15 +802,6 @@ dialog h2 {
   }
   .topbar {
     padding: 15px;
-  }
-  .hero-copy {
-    padding: 50px 25px;
-  }
-  .hero-art {
-    min-height: 480px;
-  }
-  .hero h1 {
-    font-size: 3.7rem;
   }
   .game-footer > .small {
     display: none;

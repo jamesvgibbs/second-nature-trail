@@ -67,3 +67,11 @@ A full eight-chapter × keyboard/pointer matrix was started but could not safely
 ## Post-c595925 failed-enable safety patch
 
 Static inspection found a pre-acknowledgment assignment that could enable local insect rendering after a failed Settings save. The client now changes to insect rendering only after the explicit enable request succeeds; replacement remains immediate. Setup uses the same ordering. No backend/content/harness changes were made. Syntax and the existing three safe-override helper tests passed. The asynchronous failed-enable/offline browser sequence remains untested; [the controls matrix](controls-matrix.md) specifies the exact regression and separates all final-revision keyboard/pointer evidence.
+
+## Invitation homepage layout, 2026-11-09
+
+Jim requested a homepage that fits without a scrollbar. The invitation screen now uses a viewport-filling three-row layout, a smaller responsive headline, compact spacing and footer, and a decorative canvas that does not impose its own minimum height. The character setup screen is unchanged.
+
+Verified through native Safari on the current local preview: at a 1035×708 outer window (approximately 1035×656 page area), the complete invitation form and all three footer sections are visible and the accessibility tree has no scrollbar. The same check passed at a 1625×988 outer window. Two browser zoom-in steps add a scrollbar; scrolling reaches the form and complete footer. Zoom and window size were restored. Exact CSS viewport dimensions were not measured. This is homepage evidence only, not the full browser/device or gameplay matrix.
+
+Screenshots: [before](../test-results/homepage-before-compact.png), [compact after](../test-results/homepage-after-compact.png), [enlarged content reachable](../test-results/homepage-enlarged-reachable.png), [desktop after](../test-results/homepage-after-desktop.png). These homepage-only changes follow the 10a674c frozen backend used by the concurrent capacity run; that run does not exercise the homepage rendering.
