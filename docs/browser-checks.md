@@ -187,4 +187,27 @@ At each home, the reviewer selected **Inspect this site**, confirmed, read the v
 
 No gameplay error, penalty, or native-input interruption was observed. Artifacts: [chapter 2 pointer completion](../test-results/chapter2-pointer-complete.jpg) and [learning completion retained after refresh](../test-results/chapter2-pointer-learning-persisted.jpg).
 
-This closes **M2 pointer**, **Q2.1 pointer**, and **Q2.2 pointer**, bringing the matrix to **15 of 48** cells. Chapter 2 keyboard completion and input-method comparison remain pending. This automated preview does not establish human timing, the complete browser/device matrix, or the outstanding safety/network regressions.
+This closes **M2 pointer**, **Q2.1 pointer**, and **Q2.2 pointer**, bringing the matrix to **15 of 48** cells. At the end of this pointer run, chapter 2 keyboard completion and input-method comparison remained pending; the later keyboard result is recorded below. This automated preview does not establish human timing, the complete browser/device matrix, or the outstanding safety/network regressions.
+
+
+## Chapter 2 keyboard-only, final revision, 2026-11-09
+
+The root agent completed this automated native Safari check on source **`5ccda41`**, with unchanged runtime **`10a674c`** and UI **`f012152`**, using verified NVM **Node v24.20.0** and Safari **27.2 (21625.2.8.18.4)**. The outer window was **1379×851**; CSS viewport dimensions were not measured. Fresh in-memory session **85621** used `scripts/preview-chapter.mjs 2 --wait-for-start` with **`tty: true`**. Setup finished before the explicit start of the normal **300-second** chapter window; the first observation showed **04:57**. The session was stopped cleanly after the check.
+
+Setup used pointer input to select friendly robots and left the default Keyboard preference. **After entry, all gameplay used Tab, Return, and Escape; refresh used Cmd+R.** No pointer input was used after entry. At every home, the reviewer inspected the site and confirmed the inspection, read the visible evidence, then selected and confirmed the decision using Tab/Return. The batched native-input helper read fresh accessibility selection/focus state before confirmation.
+
+| Home / decision | Observed score | Chapter time remaining |
+|---|---|---|
+| Juniper: 16 × 20 | 10 | 04:37 |
+| Cedar: Toward the unit | 20 | 04:25 |
+| Willow: Install the matching clean filter | 30 | 03:54 |
+| Elm: 20 × 25, arrow toward unit | 40 | 03:29 |
+| Oak: Use one correctly sized filter as specified | 50 | 03:17 |
+| Maple: A clean replacement matching the inspected equipment label | 60; objective 6 of 6 | 03:03 |
+| Q2.1: The required size and airflow direction, first answer correct | 70 | 02:46 |
+| Q2.2: No; the replacement still needs installation, first answer correct | 80 | 02:28 |
+| Cmd+R, then keyboard reopening of Learning encounters | 80; objective 6 of 6; both completion checkmarks retained | Refresh at 02:25 |
+
+No native-input interruption, gameplay error, or penalty was observed. Artifacts: [chapter 2 keyboard completion](../test-results/chapter2-keyboard-complete.jpg) and [learning completion retained after refresh](../test-results/chapter2-keyboard-learning-persisted.jpg).
+
+This closes **M2 keyboard**, **Q2.1 keyboard**, and **Q2.2 keyboard**, bringing the matrix to **18 of 48** cells. Chapter 2's separate keyboard and pointer runs completed the same six inspections and decisions, answered both encounters correctly on the first attempt, and retained **80 points / 6 of 6 / both learning checkmarks** after refresh. This is observed outcome parity, not a human-speed benchmark or evidence for other chapters/browsers or the outstanding safety/network regressions.
