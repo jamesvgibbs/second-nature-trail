@@ -533,7 +533,7 @@ A final identity check navigated Safari to demo-2. Neighbor 2's setup again had 
 
 Artifacts: [actual countdown](../test-results/mystery-pointer-countdown.jpg), [wrong-answer rejection](../test-results/mystery-pointer-wrong-answer.jpg), [pointer-only solution](../test-results/mystery-pointer-solved.jpg), [clues and solution retained](../test-results/mystery-pointer-clues-persisted.jpg), and [fresh identity empty](../test-results/mystery-fresh-identity-empty.jpg).
 
-This supplies legitimate pointer acquisition and mystery evidence beyond the earlier synthetic preloaded-clue fixture. Keyboard acquisition/mystery remains pending. The full platform, novice, optional-activity, social, and safety gates remain separate; the completed 48-cell main/knowledge matrix is unchanged. Main runtime and the concurrent capacity run were not modified.
+This supplies legitimate pointer acquisition and mystery evidence beyond the earlier synthetic preloaded-clue fixture. Keyboard acquisition/mystery remained pending at the end of this pointer run; the later keyboard result is recorded below. The full platform, novice, optional-activity, social, and safety gates remain separate; the completed 48-cell main/knowledge matrix is unchanged. Main runtime and the concurrent capacity run were not modified.
 
 
 ## Isolated role guard and expired-sign-in recovery, 2026-11-09
@@ -555,3 +555,33 @@ The old player showed RECONNECTING. **Resume here → Take over here** now opene
 Artifacts: [operator-login rejection from player profile](../test-results/profile-role-guard-host-rejected.jpg), [original player still usable](../test-results/profile-role-guard-player-preserved.jpg), [safe host presentation](../test-results/profile-role-guard-host-presentation.jpg), [player-login rejection from host profile](../test-results/profile-role-guard-player-rejected.jpg), [operator action retained](../test-results/profile-role-guard-host-preserved.jpg), [failed initial expired-session takeover](../test-results/profile-role-guard-takeover-expired-before.jpg), and [amended sign-in-required recovery](../test-results/profile-role-guard-signin-required.jpg).
 
 These are bounded native passes for cross-role rejection, preserved player/operator use, safe host display, and amended expired-sign-in recovery. They do not certify all authentication/network scenarios, the broader platform matrix, durability, or authenticated no-submit behavior while paused. The latter remains separate from the earlier pause view observed after the player's cookie had already been replaced. Main runtime and the concurrent capacity source were unchanged; the role-guard implementation remains isolated pending review and merge after capacity completion.
+
+
+## Ordinary-server keyboard secrets and mystery, 2026-11-09
+
+The root agent completed a fresh ordinary in-memory server review from frozen **`f1218bf`**, on port 4174, owned session **50648**, with **no clock offset, chapter helper, or preloaded clues**. Safari **27.2 (21625.2.8.18.4)** held the player at a **1447×889** outer window; the CSS viewport was not measured. Chrome **157.0.8103.51** held the operator in a separate browser profile.
+
+Setup used pointer input before entry to explicitly select friendly robots and retain default keyboard controls. **All player interaction after entry, including practice and Ready, used native keyboard input.** The five practice steps were completed with a verified 1000ms Down movement, Tab/Enter to the guide, supply collection, the repair-parts answer, and help. Six Tab presses from map focus and Enter activated Ready. The operator opened the lobby at **18:03:10 EST**, with reason “Eight-secret keyboard UI rehearsal,” then started at **18:04:03 EST**, with reason “Begin keyboard secret acquisition.” Safari displayed the actual **COUNTDOWN 00:10** with map focus, then chapter play was observed at **04:45**.
+
+In chapter 1, Tab from Close reached Your answer. Typing N and pressing Enter showed **“Find all eight clues first.”** N and input focus were retained. Keyboard Backspace/Clear outcome details were not sufficiently retained in the review record and are not claimed here; the separate pointer run supplies those edit-control observations.
+
+For every chapter, keyboard navigation used Tab to **Look for secret**, traveled to its site, then Tab/Enter to **Inspect**. Mystery was reopened by keyboard to verify each accumulated clue. The operator explicitly advanced fourteen chapter/brag phases through the UI with the keyboard-review reason; this accelerated the review and does not establish normal-duration or main-objective completion.
+
+| Chapter | Clue / accumulated letters | Chapter time remaining | Operator advance from chapter / from brag (EST) |
+|---|---|---|---|
+| 1 | N / N | 04:26 | 18:04:54 / 18:04:55 |
+| 2 | E / NE | 02:26 | 18:07:36 / 18:07:38 |
+| 3 | I / NEI | 04:53 | 18:07:51 / 18:07:52 |
+| 4 | G / NEIG | 04:47 | 18:08:08 / 18:08:09 |
+| 5 | H / NEIGH | 04:53 | 18:08:23 / 18:08:24 |
+| 6 | B / NEIGHB | 04:52 | 18:08:39 / 18:08:40 |
+| 7 | O / NEIGHBO | 04:48 | 18:08:59 / 18:09:01 |
+| 8 | R / NEIGHBOR | 04:47 | No further advance |
+
+During chapter 4, an early inspection helper encountered unexpected focus while the player was still walking and stopped before sending Enter. A fresh accessibility observation showed the dialog Close control; ordinary keyboard interaction then continued. No pointer fallback was used. This run does not claim a repeated-secret inspection check; that observation belongs to the separate pointer run.
+
+In chapter 8, typing `NNNNNNNN` and pressing Enter produced the wrong-answer message **“That message does not fit the clues yet.”** The input retained the value and focus; the wrong-answer screenshot shows **04:45**. Cmd+A, typing `NEIGHBOR`, then Enter solved the mystery at **04:40**, with score **0**, main progress **0 of 3**, and the neighbor toast. The root agent visually reviewed all three artifacts. Cmd+R at **04:39** retained solved/clue state and zero score; returning focus to the map and using five Tab presses reopened all eight letters at **04:33**; the persistence screenshot shows **04:32**.
+
+Artifacts: [keyboard wrong-answer rejection](../test-results/mystery-keyboard-wrong-answer.jpg), [keyboard solution](../test-results/mystery-keyboard-solved.jpg), and [clues and solution retained](../test-results/mystery-keyboard-clues-persisted.jpg).
+
+The two independent ordinary-server runs now establish legitimate eight-clue acquisition and a persisted solved mystery with both input methods: pointer clue buttons and keyboard text entry. They remain accelerated optional-content evidence, not normal-duration, main-objective, prize, or human-usability evidence. The 48-cell main/knowledge matrix is unchanged; broader optional/social/platform/safety gates remain open. Runtime files were not edited. Owned server session 50648 was stopped normally with exit code 0.
