@@ -27,6 +27,7 @@ import {
 const sourceHashes = Object.fromEntries(
   [
     "server.mjs",
+    "command-checkpoint.mjs",
     "engine.mjs",
     "content.mjs",
     "public/world.mjs",
