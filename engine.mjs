@@ -1619,6 +1619,11 @@ export class Engine {
             ? null
             : Math.max(0, s.deadline - this.now()),
       paused: s.phase === "paused",
+      pausedPhase:
+        s.phase === "paused" &&
+        ["countdown", "chapter", "brag", "finale"].includes(s.pause?.phase)
+          ? s.pause.phase
+          : null,
       ranked: s.ranked,
       contributions: s.contributions,
       restoration: {
@@ -1691,7 +1696,8 @@ export class Engine {
       trades: Object.values(this.state.trades).filter(
         (t) => (t.from === id || t.to === id) && t.status === "pending",
       ),
-      standings: ["brag", "awards", "closed"].includes(this.state.phase)
+      standings: (["brag", "awards", "closed"].includes(this.state.phase) ||
+        (this.state.phase === "paused" && this.state.pause?.phase === "brag"))
         ? this.standings()
         : [],
       rules: RULES,
@@ -1726,7 +1732,8 @@ export class Engine {
         index: this.state.chapter,
         title: CHAPTERS[this.state.chapter].title,
       },
-      standings: ["brag", "awards", "closed"].includes(this.state.phase)
+      standings: (["brag", "awards", "closed"].includes(this.state.phase) ||
+        (this.state.phase === "paused" && this.state.pause?.phase === "brag"))
         ? this.standings()
         : [],
       players: Object.values(this.state.players)

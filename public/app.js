@@ -761,13 +761,18 @@ function renderMission() {
   const e = state.event || {},
     me = state.me || {},
     ch = state.chapter,
-    progress = me.progress?.[e.chapter];
+    progress = me.progress?.[e.chapter],
+    displayPhase =
+      e.phase === "paused" &&
+      ["countdown", "chapter", "brag", "finale"].includes(e.pausedPhase)
+        ? e.pausedPhase
+        : e.phase;
   $("#phase-label").textContent = (
     e.paused ? "Paused" : e.phase || "Lobby"
   ).replaceAll("_", " ");
   let html = "";
   if (e.broadcast) html += `<div class="notice">${esc(e.broadcast)}</div>`;
-  if (e.phase === "lobby" || e.phase === "draft") {
+  if (displayPhase === "lobby" || displayPhase === "draft") {
     html += `<span class="chapter-count">BEFORE THE ADVENTURE</span><h2>Welcome to<br>Bragging Square.</h2><p>The AI has put the neighborhood on “permanent optimization.” Let’s remind it who lives here.</p>`;
     if (!isPresentation) {
       const t = me.tutorial || [];
@@ -775,12 +780,12 @@ function renderMission() {
     } else
       html +=
         '<div class="notice">Open your private invitation on a laptop or desktop. Choose a character, practice, and mark yourself ready.</div>';
-  } else if (e.phase === "countdown") {
+  } else if (displayPhase === "countdown") {
     html +=
       '<span class="chapter-count">HERE WE GO</span><h2>The trail<br>starts here.</h2><p>Pack some patience. The machines packed none.</p><div class="notice">The shared countdown is part of the first chapter’s five minutes.</div>';
-  } else if (e.phase === "finale") {
+  } else if (displayPhase === "finale") {
     html += `<span class="chapter-count">THE NEIGHBORHOOD FINALE</span><h2>Bring the<br>lights home.</h2><p>One last repair. One home at a time. Every neighbor gets a turn.</p><div class="progress-track"><div class="progress-fill" style="width:${Math.min(100, (100 * (e.finale?.contributors?.length || 0)) / (e.finale?.target || 1))}%"></div></div>${e.finale?.ending ? `<div class="notice" role="status">${esc(e.finale.ending)}</div>` : `<p class="small">${e.finale?.contributors?.length || 0} neighbors have contributed toward ${e.finale?.target || 1} repairs.</p>`}<p class="small">Award results are locked. This moment belongs to everyone.</p><div id="finale-action"></div>`;
-  } else if (["awards", "closed"].includes(e.phase)) {
+  } else if (["awards", "closed"].includes(displayPhase)) {
     html +=
       '<span class="chapter-count">HUMANS: STILL PRETTY GOOD</span><h2>The end of<br>the trail.</h2>' +
       (e.finale?.ending
@@ -790,7 +795,7 @@ function renderMission() {
       awardsHTML();
   } else {
     html += `<span class="chapter-count">CHAPTER ${Number(e.chapter) + 1} / 08 ${e.ranked?.[e.chapter] === false ? "· UNRANKED" : ""}</span><h2>${esc(ch?.title || districts[e.chapter]?.[0] || "The adventure")}</h2><p>${esc(ch?.objective || "Help your neighbors restore the district.")}</p>`;
-    if (e.phase === "brag" || e.phase === "brag_break") {
+    if (displayPhase === "brag" || displayPhase === "brag_break") {
       html +=
         '<div class="phase-banner"><strong>Bragging rights.</strong><p class="small" style="margin:8px 0 0">Supplies and scoring are frozen. Tell us how you did it.</p></div>' +
         verifiedHighlightHTML() +
@@ -803,7 +808,7 @@ function renderMission() {
     html += "<hr><h3>Neighborhood restoration</h3>" + contributionsHTML();
   }
   $("#mission").innerHTML = html;
-  mission.dataset.phase = `${e.phase}:${e.chapter}`;
+  mission.dataset.phase = `${e.phase}:${displayPhase}:${e.chapter}`;
   $("#map-label").textContent = (ch?.title || "Bragging Square").toUpperCase();
   if ($("#tutorial-actions")) renderTutorial();
   if ($("#chapter-actions")) {
@@ -864,9 +869,11 @@ function renderMission() {
         "primary",
       ),
     );
-  if ($("#finale-action button") && e.finale?.contributors?.includes(me.id)) {
-    $("#finale-action button").textContent = "✓ Your home is restored";
-    $("#finale-action button").disabled = true;
+  const finaleButton = $("#finale-action button");
+  if (finaleButton) {
+    const contributed = e.finale?.contributors?.includes(me.id);
+    if (contributed) finaleButton.textContent = "✓ Your home is restored";
+    finaleButton.disabled = !!e.paused || !!contributed;
   }
   if (focused && !modal.open) {
     const buttons = [...mission.querySelectorAll("button")];
@@ -1662,7 +1669,7 @@ function frame(now) {
         ? `${Math.floor(seconds / 60)
             .toString()
             .padStart(2, "0")}:${(seconds % 60).toString().padStart(2, "0")}`
-        : "LOBBY";
+        : e.phase === "closed" ? "ENDED" : "LOBBY";
   }
   requestAnimationFrame(frame);
 }
