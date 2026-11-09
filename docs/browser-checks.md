@@ -534,3 +534,24 @@ A final identity check navigated Safari to demo-2. Neighbor 2's setup again had 
 Artifacts: [actual countdown](../test-results/mystery-pointer-countdown.jpg), [wrong-answer rejection](../test-results/mystery-pointer-wrong-answer.jpg), [pointer-only solution](../test-results/mystery-pointer-solved.jpg), [clues and solution retained](../test-results/mystery-pointer-clues-persisted.jpg), and [fresh identity empty](../test-results/mystery-fresh-identity-empty.jpg).
 
 This supplies legitimate pointer acquisition and mystery evidence beyond the earlier synthetic preloaded-clue fixture. Keyboard acquisition/mystery remains pending. The full platform, novice, optional-activity, social, and safety gates remain separate; the completed 48-cell main/knowledge matrix is unchanged. Main runtime and the concurrent capacity run were not modified.
+
+
+## Isolated role guard and expired-sign-in recovery, 2026-11-09
+
+The root agent reviewed isolated candidate commits **`42523bb`** and **`7592d92`** from `/tmp/second-nature-trail-role-guard`, using native Safari for a player and native Chrome for the operator. The review environment retained Safari **27.2 (21625.2.8.18.4)** and Chrome **157.0.8103.51**. These candidates were not merged into the main runtime or the capacity build during this review. This section records browser evidence for the isolated fix, separate from the frozen `f1218bf` gameplay matrix.
+
+On `42523bb`, cross-role guards passed these bounded checks:
+
+- Safari's signed-in player attempted operator login and received the clear separate-browser/profile error. Returning to the player and choosing **Say hello** completed that practice action, demonstrating the original player remained usable.
+- Chrome's operator opened safe presentation without another login. The rendered audience view used friendly-robot/safe presentation and exposed no operator controls.
+- Navigating Chrome to player invitation demo-2 displayed role-conflict guidance on the invitation page, with **no takeover offer**. The existing operator then committed **Open lobby**, with reason “Verify operator retained after cross-role rejection”; the host showed owner operator-1 and the action log timestamp **17:58:14**.
+
+The initial expired-session recovery check on `42523bb` failed: after a clean stop and fresh in-memory server start, the old player showed RECONNECTING; **Resume here → Take over here** remained RECONNECTING rather than entering the intended sign-in-required state. The preserved `takeover-expired-before` artifact documents that failure. Source review identified a missing authorization probe on explicit takeover, corrected in `7592d92`; the earlier screenshot is not counted as a pass.
+
+For the `7592d92` retest, fresh in-memory candidate session **95250** on port 4175 accepted Safari demo-1, explicit robot setup, and showed CONNECTED. The reviewer cleanly stopped it and started another fresh in-memory server, session **89421**, on the same port. This deliberately expired all prior session tokens. It is a **synthetic authorization-expiry check, not a durability/restart-restoration test**.
+
+The old player showed RECONNECTING. **Resume here → Take over here** now opened **Player sign-in required**, captured and visually reviewed by the root agent. Closing that modal left the header at **SIGN-IN REQUIRED** with **Sign-in help**, and no Resume here action. Opening Meet guide and choosing Say hello returned to sign-in-required guidance without completing the practice action. **Open invitation entry** led to the actual homepage invitation form. Session 89421 was stopped normally afterward.
+
+Artifacts: [operator-login rejection from player profile](../test-results/profile-role-guard-host-rejected.jpg), [original player still usable](../test-results/profile-role-guard-player-preserved.jpg), [safe host presentation](../test-results/profile-role-guard-host-presentation.jpg), [player-login rejection from host profile](../test-results/profile-role-guard-player-rejected.jpg), [operator action retained](../test-results/profile-role-guard-host-preserved.jpg), [failed initial expired-session takeover](../test-results/profile-role-guard-takeover-expired-before.jpg), and [amended sign-in-required recovery](../test-results/profile-role-guard-signin-required.jpg).
+
+These are bounded native passes for cross-role rejection, preserved player/operator use, safe host display, and amended expired-sign-in recovery. They do not certify all authentication/network scenarios, the broader platform matrix, durability, or authenticated no-submit behavior while paused. The latter remains separate from the earlier pause view observed after the player's cookie had already been replaced. Main runtime and the concurrent capacity source were unchanged; the role-guard implementation remains isolated pending review and merge after capacity completion.
