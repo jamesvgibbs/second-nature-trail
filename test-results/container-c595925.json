@@ -1,0 +1,16 @@
+{
+  "build": "c595925",
+  "runtime": "Node24.20.0 pinned Docker image",
+  "network": "loopback127.0.0.1 only,HTTP,Secure cookies off for disposable local test",
+  "database": "Docker named volume,non-root process",
+  "checks": [
+    "health",
+    "JavaScript module MIME",
+    "separate operator logins",
+    "lobby and operational audit survived container removal and recreation",
+    "safe presentation",
+    "presentation forbidden from host state"
+  ],
+  "contentHash": "368f66fb87ee9d1690c61e1c0457abba7049bde20c0af2d466a634d0b953dd5f",
+  "productionDeployed": false
+}

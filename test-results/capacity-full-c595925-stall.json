@@ -1,0 +1,1583 @@
+{
+  "capturedAt": "2026-11-09T20:10:37.722285+00:00",
+  "phase": "brag",
+  "chapter": 1,
+  "completionCounts": [
+    100,
+    71,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "stalledPlayers": [
+    {
+      "id": "load-player-71",
+      "position": {
+        "x": 623.8876060459797,
+        "y": 541.6250894086784
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": "load-player-70",
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-72",
+      "position": {
+        "x": 623.8876060459797,
+        "y": 541.6250894086784
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-73",
+      "position": {
+        "x": 624.0018467737199,
+        "y": 541.5629034375679
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": "load-player-72",
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-74",
+      "position": {
+        "x": 624.0018467737199,
+        "y": 541.5629034375679
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-75",
+      "position": {
+        "x": 624.0018467737199,
+        "y": 541.5629034375679
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": "load-player-74",
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-76",
+      "position": {
+        "x": 624.0018467737199,
+        "y": 541.5629034375679
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-77",
+      "position": {
+        "x": 624.0018467737199,
+        "y": 541.5629034375679
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": "load-player-76",
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-78",
+      "position": {
+        "x": 624.0018467737199,
+        "y": 541.5629034375679
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-79",
+      "position": {
+        "x": 624.0018467737199,
+        "y": 541.5629034375679
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": "load-player-78",
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-80",
+      "position": {
+        "x": 623.8876060459797,
+        "y": 541.6250894086784
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-81",
+      "position": {
+        "x": 623.8876060459797,
+        "y": 541.6250894086784
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": "load-player-80",
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-82",
+      "position": {
+        "x": 624.0340399765436,
+        "y": 541.5367825347689
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-83",
+      "position": {
+        "x": 624.0340399765435,
+        "y": 541.5367825347689
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": "load-player-82",
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-84",
+      "position": {
+        "x": 624.0340399765435,
+        "y": 541.5367825347689
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-85",
+      "position": {
+        "x": 624.0340399765435,
+        "y": 541.5367825347689
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": "load-player-84",
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-86",
+      "position": {
+        "x": 624.0340399765435,
+        "y": 541.5367825347689
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-87",
+      "position": {
+        "x": 624.0340399765435,
+        "y": 541.5367825347689
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": "load-player-86",
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-88",
+      "position": {
+        "x": 623.8876060459797,
+        "y": 541.6250894086784
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-89",
+      "position": {
+        "x": 623.8876060459797,
+        "y": 541.6250894086784
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": "load-player-88",
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-90",
+      "position": {
+        "x": 623.8876060459797,
+        "y": 541.6250894086784
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-91",
+      "position": {
+        "x": 623.8876060459797,
+        "y": 541.6250894086784
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": "load-player-90",
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-92",
+      "position": {
+        "x": 623.8876060459797,
+        "y": 541.6250894086784
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-93",
+      "position": {
+        "x": 623.8876060459797,
+        "y": 541.6250894086784
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": "load-player-92",
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-94",
+      "position": {
+        "x": 624.1804739071072,
+        "y": 541.4484756608595
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-95",
+      "position": {
+        "x": 624.0340399765435,
+        "y": 541.536782534769
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": "load-player-94",
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-96",
+      "position": {
+        "x": 624.0340399765435,
+        "y": 541.536782534769
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-97",
+      "position": {
+        "x": 624.1483117200289,
+        "y": 541.4746480156232
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": "load-player-96",
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-98",
+      "position": {
+        "x": 624.1483117200289,
+        "y": 541.4746480156232
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "id": "load-player-99",
+      "position": {
+        "x": 624.148311720029,
+        "y": 541.4746480156231
+      },
+      "progress": {
+        "step": 3,
+        "score": 50,
+        "mistakes": 0,
+        "complete": false,
+        "timeMs": null,
+        "challenge": false,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": "load-player-98",
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 3,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    }
+  ]
+}

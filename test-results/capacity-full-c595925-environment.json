@@ -1,0 +1,44 @@
+{
+  "commit": "c595925589490865f65f98aaf5d6c93fbf7b3c65",
+  "capturedAt": "2026-11-09T19:57:27.395088+00:00",
+  "node": "v24.20.0",
+  "hardware": "Mac16,5 Apple M4 Max",
+  "memoryBytes": 68719476736,
+  "os": "macOS26.7.2 build25G332",
+  "network": "localhost; clients and server in same process",
+  "requestedPlayers": 100,
+  "operators": 2,
+  "presentationConnections": 1,
+  "joinWindowSeconds": 60,
+  "requestedGameSeconds": 3605,
+  "limitations": [
+    "Shared development computer, not isolated benchmark",
+    "Not agreed lowest-spec company laptop",
+    "Not representative company network",
+    "No browser rendering or human comprehension measured"
+  ],
+  "backgroundActivity": [
+    "Root paused builds and native browser checks during clean smoke and full run; ordinary user/system activity remains uncontrolled",
+    "Source ZIP packaging and fresh local20-person demo preview startup occurred during joining; Docker work completed before full run."
+  ],
+  "priorSmoke": {
+    "file": "load-c595925-ledger-clean.json",
+    "scoringInventorySamples": 600,
+    "p95Ms": 442.8269999999975,
+    "errors": 0,
+    "syntheticPriorActions": 10000
+  },
+  "earlierSameBuildSmoke": {
+    "file": "load-c595925-ledger.json",
+    "p95Ms": 596.6571249999979,
+    "result": "Failed provisional500ms target; Docker container checks overlapped, causal attribution not established"
+  },
+  "processId": 3262,
+  "sessionId": 99856,
+  "authoritativeGameStart": "2026-11-09T19:58:30Z",
+  "duringRunUiRevision": {
+    "commit": "fddf372",
+    "scope": "Only two client pre-request visual-safety assignments changed; backend/content/harness unchanged",
+    "qualification": "Full capacity run uses startup c595925 source hashes; replacement-mode UI fix needs separate rendered verification and new distribution package"
+  }
+}

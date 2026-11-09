@@ -1,0 +1,165 @@
+# Controls and insect-replacement verification matrix
+
+Inspection date: 2026-11-09. Baseline: backend/content revision `c595925`; client safety fix: `fddf372`, described below. This is a test plan and evidence ledger, not a completed acceptance report. Source inspection, pure helper tests, simulated clients, and live HTTP scenarios do not establish keyboard-only or pointer-only browser completion.
+
+The scope requires all eight main objectives and all sixteen knowledge encounters to be completed independently with each input method. **None of the final-revision main-objective rows or knowledge rows below has a complete two-method browser pass.** Earlier Safari observations cover specific interactions only. The final targeting and routing revisions supersede their earlier gameplay evidence. See [browser checks](browser-checks.md) for observations, fixture labels, browser version, and limitations; see [scope](scope.md) for the release requirements.
+
+Native browser input is currently contested. Safari repeatedly rejected actions as changed by the user; Chrome showed text the reviewer had not entered. No further UI actions are authorized by this document while that contention remains. All agent-owned port-4174 previews were stopped. The separate capacity run was not modified for this audit.
+
+## Repeatable run protocol
+
+1. Use an idle review computer and a dedicated browser profile. Record browser/version, OS, viewport, input method, source commit, and start time. Use a **fresh in-memory preview and identity for each chapter/method run** so a first answer is never confused with an unscored retry.
+2. From the project directory, run `node scripts/preview-chapter.mjs N` for chapter N. Open the printed private demo link on localhost port 4174. The helper labels earlier chapters unplayed and uses the normal chapter clock after an initial offset. It is not a full-event timing test. Stop only this owned preview after recording results; do not change the normal server or a capacity process.
+3. Complete setup with **Replace with friendly robots**. After entry, use only the assigned input method for the main objective, both encounters, help/close actions, and navigation. Restart a fresh preview if setup or tool delays consume the play window; do not quietly extend its clock and claim normal-duration completion.
+4. For **keyboard runs**, Tab/Shift+Tab reaches visible buttons; Enter activates them. Use arrows/WASD on the focused map and E nearby, or Tab/Enter on the objective button to invoke the same pathfinding as pointer play. In ordinary choices, Tab/Enter or number keys select; Tab/Enter confirms. In targeting, arrows or 1–3 select, Space confirms during the open signal. Escape closes menus. Do not click to recover lost focus: record a failure.
+5. For **pointer runs**, click the objective button or a map destination, click a choice and its confirmation, and use the visible × to close. Do not type shortcuts to recover a missing control. Routing uses node buttons, not dragging. The secret/mystery has clickable clue letters and edit controls.
+6. Complete both knowledge encounters through **Learning encounters → Encounter 1/2 → choice → Confirm answer** using the assigned method. Keyboard users Tab/Enter to each label; pointer users click it. Check the recorded first-answer status and explanation, close, and repeat for the other encounter. Do not use an unscored retry as first-answer evidence.
+7. Record actual score, objective count, first-answer results, visible focus, errors, time remaining, and refresh persistence. With the successful sequences below and no challenge/help/penalty, the expected score is **60 main + 20 knowledge = 80** for either method. Confirm this from the UI; it is an expectation, not an observed result. Compare equivalent outcomes, not human speed or tool latency.
+8. Capture screenshots or a screen recording of completion and selected controls where possible, without participant credentials. Any synthetic fixture must be named and excluded from legitimate gameplay evidence. Re-run a changed activity after source changes; keep old observations labeled by revision.
+
+## Eight main objectives
+
+`Pending` means no complete final-revision browser pass. “Earlier revision” is partial historical evidence, not a pass. K and P refer to the method procedures above.
+
+| ID / chapter | Exact successful activity sequence | Expected main result | Keyboard evidence | Pointer evidence |
+|---|---|---|---|---|
+| M1 · Move day mayhem | At Moving depot, choose the two-cable load, confirm; choose the protected scenic route, confirm. Travel to Paved detour, inspect/confirm; travel to Broken highway, deliver/confirm. Repeat three complete trips, reading each current stage before confirming. | 3/3 deliveries, useful cargo value 36, main score 60. | Pending. Attempted final matrix stopped before gameplay. | Pending. |
+| M2 · The great filter shortage | Visit six homes in the M2 checklist below. At every home, choose **Inspect this site**, confirm, read evidence, then select and confirm its specified decision. Continue using the next objective button/path. | 6/6 correct installations, main score 60. | Pending. | Pending. |
+| M3 · Attack of the clones | Visit six homes in M3 below; inspect and read each notice before confirming its verdict. Include both legitimate and suspicious notices; do not blanket-accuse. | 6/6 correct decisions, no false accusations, main score 60. | Pending. | Pending. |
+| M4 · RIP, my apartment | Visit six homes in M4 below; inspect the fictional situation, then confirm the indicated preparation/recovery choice. | 6/6 correct decisions, main score 60. | Pending. | Pending. |
+| M5 · Pest resistance | Visit Apartment block outbreak → Maple home outbreak → Elm home outbreak. At each site, resolve six visibly marked targets in distinct rounds. Each 9-second round begins with a 2-second preparation signal; select deliberately, wait for **Signal open**, then confirm. Selection resets next round. After six valid hits, travel to the next site. | 18 valid hits, 3/3 sites, no decoys, main score 60. | **Earlier revision only:** two of three targets used numeric selection + Space; Escape/E focus cycle observed. Final 18-hit/three-site activity and preparation signal pending. | **Earlier revision only:** one of three targets selected/confirmed by pointer and per-round disable observed. Final activity pending. |
+| M6 · Credit where it’s due | Use the main objective button to visit Trading post; choose **Pay 60; save 40** in cycle 1; when cycle 2 opens at chapter elapsed 45s, choose **Pay 50; save 80**; when cycle 3 opens at 90s, choose **Pay 50; save 110**. Each cycle's full payment must arrive before its 45-second deadline. Confirm early-submit controls remain disabled. | 3/3 on-time payments, retained fictional budget 110, main score 60. | Pending. | Pending. |
+| M7 · Rewards rebellion | Complete the six inspected jobs in M7 below; observe 2 earned tokens/job and 12 after job six. Travel to Night market, choose **Build a community garden · 4 tokens**, confirm the seventh main step. Open Rewards again and fund **Open a welcome station · 8 tokens**. Check the garden and station markers/outcomes and disabled duplicate/unaffordable projects. | 7/7 main steps, main score 60; earned 12, balance 0 after the optional second project. Redemption adds no score. | Pending; source/HTTP evidence only. | Pending; source/HTTP evidence only. |
+| M8 · Reconnect humanity | Visit Maple home network station, Cedar home network station, then Oak home network station. Build and confirm the three paths in M8 below; read required relays, broken links, and running cable cost before each submit. Travel between homes. | 3/3 valid homes, main score 60; costs within each budget. | **Earlier revision only:** Home B completed using Tab/Enter with restored node focus. Final 10-node constrained graph and spatial home visits pending. | **Earlier revision only:** Homes A/C completed by pointer. Final constrained graph and spatial home visits pending. |
+
+### M2–M4 and M7 site checklists
+
+Each row requires **inspection followed by the decision**, not just choosing an answer from elsewhere. Numbers identify the displayed choice in the inspected panel and are supplied for repeatability; the visible evidence remains the reference. Product wording remains subject to content-owner review.
+
+
+**M2 · The great filter shortage**
+
+| Stop | Site | Decision after inspection |
+|---|---|---|
+| 1 | Juniper home | 2. 16 × 20 |
+| 2 | Cedar home | 1. Toward the unit |
+| 3 | Willow home | 3. Install the matching clean filter |
+| 4 | Elm home | 1. 20 × 25, arrow toward unit |
+| 5 | Oak home | 2. Use one correctly sized filter as specified |
+| 6 | Maple home | 3. A clean replacement matching the inspected equipment label |
+
+**M3 · Attack of the clones**
+
+| Stop | Site | Decision after inspection |
+|---|---|---|
+| 1 | Cedar home | 2. Verify through a known official channel |
+| 2 | Willow home | 1. Legitimate channel; verify the request normally |
+| 3 | Elm home | 3. Stop and independently verify |
+| 4 | Oak home | 1. Verified notice; use the known portal to respond |
+| 5 | Maple home | 2. Treat it as suspicious; report through the known channel |
+| 6 | Juniper home | 3. Verified channel; confirm through the portal |
+
+**M4 · RIP, my apartment**
+
+| Stop | Site | Decision after inspection |
+|---|---|---|
+| 1 | Maple home | 1. An inventory and photos |
+| 2 | Juniper home | 2. Keep clear and contact the appropriate emergency support |
+| 3 | Cedar home | 3. Document damage and follow the policy process |
+| 4 | Willow home | 1. Confirm the area is safe and follow emergency guidance |
+| 5 | Elm home | 2. The inventory, photos, and requested records |
+| 6 | Oak home | 3. The actual terms and the documented loss |
+
+**M7 · Rewards rebellion**
+
+| Stop | Site | Decision after inspection |
+|---|---|---|
+| 1 | Elm home | 2. Cable |
+| 2 | Oak home | 1. Repair parts |
+| 3 | Maple home | 3. Food supplies |
+| 4 | Juniper home | 1. Use repair parts on the broken support |
+| 5 | Cedar home | 2. A cable for the labeled connection |
+| 6 | Willow home | 3. Deliver food, then read the fictional reward terms |
+
+### M8 exact constrained paths
+
+Activate the source already present in the path only once; append the following nodes after Exchange. The displayed node labels identify the corresponding IDs.
+
+| Home | Append these nodes, then Connect this route | Required relays | Expected cost / budget |
+|---|---|---|---|
+| A, Maple station | North junction → West relay → Bypass → Home A | West relay | 8 / 9 |
+| B, Cedar station | South junction → East relay → Neighborhood hub → Home B | East relay | 8 / 9 |
+| C, Oak station | South junction → North junction → West relay → Neighborhood hub → Home C | West relay and Neighborhood hub | 12 / 12 |
+
+Check that a route using a displayed broken link reports that link and fails without advancing; use a separate fresh negative-test identity so the main comparison above stays penalty-free. Reset path must return to Exchange. Keyboard focus must remain on the selected node after every redraw. Missing-relay and over-budget cases are additional negative checks, not substitutes for all three successful routes.
+
+### Additional control regressions
+
+- **Targeting automatic confirmation:** with the assigned input method, enable “Confirm my selected target automatically when the signal opens.” Select a visibly marked target during preparation. Verify exactly one attempt when the signal opens, no attempt without a new selection in the next round, no automatic aiming, and no submissions while paused. Disable it and confirm the manual control still works. Final browser evidence pending.
+- **Shared-state focus:** in a two-participant isolated event, focus the objective button for player A; have player B finish an objective. Verify player A retains the same semantic sidebar focus. Repeat while A has an open modal; that modal must keep focus. On an actual phase transition, the fallback should be the map. Source preservation exists; browser evidence pending.
+- **Remapping:** remap a gameplay key without duplicates, save, and verify the canvas hint, footer hint, Help text, and action use it. A conflicting mapping must be rejected. The full remapped-method matrix is pending.
+- **No input advantage:** compare recorded score/primary metrics for equivalent correct sequences. One round permits one target attempt; optional confirmation follows the same preparation boundary. Pointer navigation and keyboard objective buttons use the same route planner and published movement speed. These source/server properties do not prove real-device usability parity.
+
+## Sixteen knowledge encounters
+
+For every row, run the chapter preview separately under K and P, following step 6 of the protocol. Choose the listed answer, confirm once, observe **First answer: correct** with explanation and a +10 score change, then close with the assigned method. Existing generic quiz code and HTTP answer tests do not count as rendered completion of these sixteen encounters. All question wording below comes from the provisional current content file.
+
+| ID | Chapter / encounter prompt | Expected answer | Keyboard evidence | Pointer evidence |
+|---|---|---|---|---|
+| Q1.1 | 1. Before a move, what is the useful first step? | 1. Plan the essential services and supplies | Pending | Pending |
+| Q1.2 | 1. Does a resident benefits package mean every household has identical services? | 2. No; confirm the actual package | Pending | Pending |
+| Q2.1 | 2. What should a resident check before installing a filter? | 2. The required size and airflow direction | Pending | Pending |
+| Q2.2 | 2. Does having a delivery remove the need to replace the old filter? | 1. No; the replacement still needs installation | Pending | Pending |
+| Q3.1 | 3. What is a safe response to a suspected impersonation? | 2. Verify using a trusted contact method | Pending | Pending |
+| Q3.2 | 3. Can identity protection prevent every scam? | 3. No; residents still need safe habits | Pending | Pending |
+| Q4.1 | 4. Is every kind of loss automatically covered? | 1. No; coverage depends on policy terms | Pending | Pending |
+| Q4.2 | 4. What should a resident consult for actual coverage? | 2. The actual policy and provider | Pending | Pending |
+| Q5.1 | 5. What is useful when reporting a pest issue? | 1. A clear description and location | Pending | Pending |
+| Q5.2 | 5. Does a pest benefit mean every service is available everywhere? | 2. No; confirm the package and service terms | Pending | Pending |
+| Q6.1 | 6. Does trading supplies in this game improve real credit? | 2. No | Pending | Pending |
+| Q6.2 | 6. What should a resident check about a credit-building benefit? | 1. Its actual reporting terms and eligibility | Pending | Pending |
+| Q7.1 | 7. What should someone read before redeeming a reward? | 1. The eligibility and redemption terms | Pending | Pending |
+| Q7.2 | 7. Are game rewards real purchases or cash? | 2. No; these are fictional game rewards | Pending | Pending |
+| Q8.1 | 8. When choosing internet service, what should a resident confirm? | 1. Availability, setup steps, and actual terms | Pending | Pending |
+| Q8.2 | 8. What is the point of this neighborhood’s benefits? | 2. Help address everyday resident needs | Pending | Pending |
+
+## Insect-replacement surface inventory
+
+Static inspection covers [app.js](../public/app.js), [helpers.mjs](../public/helpers.mjs), [index.html](../public/index.html), and [style.css](../public/style.css). The only insect-specific drawing branch found is the marked-target branch in `drawTargets`, gated by `!safe`; its alternative draws an original robot using the same target ID, marker, selection, timing, and action handler. Other visual surfaces use generated DOM text, geometric canvas scenery, human avatars, and repair markers. No image/audio media files are loaded by the inspected client entry points. This inventory does **not** replace a visual and auditory sweep on supported browsers.
+
+| Surface | Static implementation inspected | Rendered / heard evidence | Remaining check |
+|---|---|---|---|
+| Landing / loading / unsupported-device screen | `safe` initializes true; landing calls the geometric `drawMap`; loading/error text and CSS contain no insect art. Device rejection precedes player entry. | Landing/setup browser entry was observed; a complete loading/error/phone rendering sweep was not. | Inspect slow load, error/retry, and real unsupported phone/tablet states before any choice. |
+| Setup and avatar/palette icons | Required visual radio group has no checked default. Avatars are human pixel drawings. Entering the world requires successful setup. The post-baseline patch prevents pre-ack insect enabling in this path. | Safari observed both choices initially unselected, human avatars, safe choice, and entry. Avatar change did not submit setup. | Retest post-patch failed/disconnected enable, and ensure no insect frame before successful choice. |
+| Tutorial and first-use overlay | Tutorial dialogs are text/buttons; central map/scenery are geometric. No tutorial insect drawing or separate media path. | First-use overlay rendered and dismissed using Tab/Enter with return to map focus. Full five-step tutorial safety sweep not recorded. | All tutorial steps, wrong practice answer, help, inventory, and overlay under both visual choices. |
+| Shared map, icons, shadows, decorations | `drawMap`, `drawAvatar`, `building`, `tree`, and `drawRepairs` render scenery, avatars, road debris, AI relay blocks, and repair/project markers. Shadows are simple rectangles. No insect branch. | Safari screenshots showed safe neighborhood, restoration stages, avatars, and finale repair marker. New rewards project markers are source-only. | Inspect all eight districts and all rewards project variants at normal and enlarged text sizes. |
+| Targeting enemies / silhouettes / marker | `drawTargets` uses the insect drawing only when `t.marked && !safe`; otherwise the same target is a robot. Selection, warning marker, ID, `expectedRound`, and server scoring are shared. | Earlier Safari revision showed robots and warning marker, safe mode through state updates, and pointer/numeric/Space actions. | Final three-site/18-hit panel, 2-second preparation, auto-confirm, target redraw/focus, and all round transitions need rendered safe-mode checks. |
+| Secrets / hidden previews | Secret panel displays escaped text and an inspect button; server clue response is text. No image/silhouette path. | Ordinary chapter-8 preview acquired the R clue at AI headquarters with pointer input. | Render all eight authored secret panels, including chapter 5, in replacement mode. |
+| Multi-chapter mystery | Clue slots, letter buttons, text input, edit buttons, and reveal feedback are text controls. No artwork or sound variant. | Safari completed the pointer-only answer in the explicitly labeled preloaded-clue fixture; normal incomplete-clue rejection was visible inside the dialog. | Complete legitimate clue acquisition and mystery separately with keyboard and pointer; no inference from preloaded clues. |
+| Brag breaks / next-chapter previews | `verifiedHighlightHTML`, `standingsHTML`, `awardsHTML`, and `nextChapterHTML` render escaped record text and chapter metadata. World stays in the ordinary safe scene. | Recorded chapter-8 brag highlight observed in earlier preview. Later restoration fixture rendered chapter-2 title/objective/location preview. | Sweep all eight breaks, especially the preview of Pest resistance and final-chapter-to-finale preview. |
+| Awards cards / final results | Awards are text/list rows and recorded names/metrics, with no insect drawing path. | Earlier brag award/highlight text observed; complete final awards display not recorded as a safety sweep. | All fifteen award categories and empty/unranked states; enlarged text and safe presentation. |
+| Finale / cutscene equivalent | Finale is the shared map with distinct geometric repair tiles and server-authored text. No video, separate cutscene asset, or insect branch. | Safari observed Restore a home, YOUR REPAIR tile, authored success ending, disabled completed button, and refresh persistence. | Alternate/fallback finale ending and final revised rewards decorations; keyboard-only contribution. |
+| Presentation | `presentation()` sets `safe = true`; state acceptance also forces safe for `isPresentation`. It has read-only world/mission views and no targeting activity controls. | Source inspected. No complete final-version presentation safety sweep recorded by this reviewer. | Dedicated presentation login, all phases, reconnect, and chapter-5 preview regardless of any player's preference. |
+| Settings: immediate replacement | Selecting replacement immediately sets `forceSafe`/`safe`, writes the persistent local override, and attempts server persistence. State acceptance gives `forceSafe` priority. Settings replaces the current activity dialog rather than leaving insect art in that dialog. | Safari selected replacement, closed without Save, refreshed, and observed replacement still selected. Earlier target redraws remained robots. | Final targeting panel + immediate toggle regression, including offline selection and any open menu/transition. |
+| Refresh / reconnect / takeover | `loadPlayer` derives safety before `game`; `accept` honors pending local replacement; SSE open retries replacement persistence. `readSafeOverride` defaults safely if storage access fails. | Safari refresh preserved replacement and progress. Three helper tests cover stored override, explicit clearing, and unavailable storage. | Actual network-loss/reconnect and explicit browser takeover with pending replacement; no single-frame exposure before/after reconnect. |
+| Audio / effects | `startAudio` uses an oscillator melody; `soundEffect` uses a short 660Hz triangle tone. No insect-specific or recorded sound asset, and no insect-dependent audio branch. Volume starts muted unless chosen. | Source inspection only; no listening-based acceptance evidence. | Listen to music/effects, success/error/targeting, secrets, all transitions and finale in replacement mode; verify mute and independent volumes. |
+
+### Post-c595925 safety fix and required regression
+
+The static audit found that Settings assigned `safe = false` **before** the explicit enable request succeeded. A failed/disconnected save could therefore leave local target rendering unsafe until another authoritative state arrived, even though the replacement override remained saved. The small client-only patch now allows pre-request assignment only to `safe = true`; both setup and settings enable insect rendering only after successful acknowledgment. Backend, content, server state, and the running capacity harness were unchanged.
+
+JavaScript syntax and the three existing safe-override helper tests passed after this patch. Those tests cover storage policy, **not** the complete asynchronous browser failure sequence. Required post-patch browser regression:
+
+1. Save replacement mode successfully and open a targeting site; verify robots.
+2. Disconnect only the isolated test browser from its test server. In Settings, choose insects and press Save. Expect reconnect/failure feedback and no committed preference change.
+3. Close Settings and reopen the cached target panel; verify robots before any SSE response. Refresh while offline if the browser retains the page; do not infer successful loading from cache availability.
+4. Reconnect. Verify replacement before the first restored gameplay frame and after authoritative state arrives.
+5. While connected, explicitly choose insects and Save successfully; only then may insect rendering appear. Immediately choose replacement again, close without Save, and verify robots, persistence after refresh, and persistence after takeover.
+
+This regression is **pending rendered proof**. The earlier successful replacement persistence test remains useful but does not certify the newly fixed failed-enable sequence.
+
+## Evidence boundaries and handoff
+
+Source implementation exists for next-chapter previews, first-use guidance, restoration visuals, reward redemption/project markers, constrained routing, targeting preparation/optional confirmation, and sidebar focus preservation. The [browser ledger](browser-checks.md) records which were actually rendered. The live HTTP scenarios and capacity run validate different layers; no result from them fills an unobserved keyboard/pointer cell here.
+
+To close a cell, append date, exact source revision, browser/version, method, observed completion/score, persistence outcome, and artifact reference. To close the insect inventory, record an actual surface sweep with sound enabled and disabled, reconnect/takeover, and the failed-enable regression. Leave unresolved cells pending; do not mark them passed because controls share code.

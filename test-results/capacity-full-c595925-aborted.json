@@ -1,0 +1,24 @@
+{
+  "status": "ABORTED: confirmed shared pathfinder defect; not capacity acceptance",
+  "stoppedAt": "2026-11-09T20:12:05.420102+00:00",
+  "commit": "c595925",
+  "uiOnlyRevisionDuringRun": "fddf372",
+  "completedChapters": [
+    100,
+    71,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "defect": "29 players stalled on chapter2step3 en route Willow to Elm. Whole-segment sampled visibility missed a corner crossed by incremental collision checks. Reproduces without SSE from896,364 toward610,550; stalls623.7469639124148,541.0596668261917.",
+  "evidence": [
+    "capacity-full-c595925-live.log",
+    "capacity-full-c595925-stall.json",
+    "capacity-full-c595925-environment.json"
+  ],
+  "reason": "Confirmed game navigation defect, not a performance-only failure",
+  "preservedDatabase": "/private/var/folders/tv/v_sfgxtn1wxc60czy1jq7sw00000gn/T/trail-load-9EZijT/event.sqlite"
+}

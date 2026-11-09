@@ -86,6 +86,18 @@ test("SIGKILL preserves confirmed task/inventory and restart cancels pending tra
       await stream.body.getReader().read();
     }
     const act = async (p, body) => {
+      if (body.type === "setup")
+        body = {
+          ...body,
+          settingsSequence: (p.settingsSequence =
+            (p.settingsSequence || 0) + 1),
+        };
+      if (body.type === "move")
+        body = {
+          ...body,
+          movementSequence: (p.movementSequence =
+            (p.movementSequence || 0) + 1),
+        };
       const response = await app.request(
         "/api/action",
         { requestId: `crash-action-${++actionSeq}`, ...body },

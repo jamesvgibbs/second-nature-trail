@@ -126,3 +126,109 @@ test("actual client traversal reaches every spatial route without cutting wall c
     assert.ok(Math.hypot(position.x - to.x, position.y - to.y) < 0.5);
   }
 });
+
+test("exact collision rejects the subpixel Night market crossing accepted by sampled visibility", () => {
+  const from = { x: 896, y: 364 },
+    unsafe = { x: 610, y: 550 };
+  const clipped = clipMove(from, unsafe);
+  assert.equal(clipped.y, 542);
+  assert.ok(clipped.x > 622 && clipped.x < 623);
+  assert.ok(isWalkable(clipped));
+  assert.notDeepEqual(clipped, unsafe);
+  const path = findPath(from, { x: 530, y: 650 });
+  assert.notDeepEqual(
+    path[0],
+    unsafe,
+    "Smoothing must reject the0.359-pixel interior crossing",
+  );
+  assertRoute(from, { x: 530, y: 650 });
+});
+test("exact collision preserves legal edges, corner tangency and the maximum safe boundary point", () => {
+  for (const [from, to] of [
+    [
+      { x: 610, y: 542 },
+      { x: 750, y: 542 },
+    ],
+    [
+      { x: 622, y: 550 },
+      { x: 622, y: 650 },
+    ],
+    [
+      { x: 610, y: 554 },
+      { x: 634, y: 530 },
+    ],
+  ]) {
+    assert.ok(isWalkable(from));
+    assert.ok(isWalkable(to));
+    assert.deepEqual(clipMove(from, to), to);
+  }
+  assert.deepEqual(clipMove({ x: 610, y: 530 }, { x: 634, y: 554 }), {
+    x: 622,
+    y: 542,
+  });
+  assert.deepEqual(clipMove({ x: 622, y: 542 }, { x: 634, y: 554 }), {
+    x: 622,
+    y: 542,
+  });
+  assert.deepEqual(clipMove({ x: 600, y: 500 }, { x: 2000, y: 500 }), {
+    x: 1170,
+    y: 500,
+  });
+  assert.deepEqual(clipMove({ x: 600, y: 500 }, { x: 600, y: 1000 }), {
+    x: 600,
+    y: 770,
+  });
+  assert.deepEqual(clipMove({ x: 600, y: 500 }, { x: NaN, y: 500 }), {
+    x: 600,
+    y: 500,
+  });
+});
+test("fractional valid starts around every door traverse every spatial site with varied step lengths", async () => {
+  const { waypointReached, stepToward } = await import("../public/world.mjs");
+  const { RULES } = await import("../content.mjs");
+  const starts = [
+    { x: 896, y: 364 },
+    { x: 623.8876060459797, y: 541.6250894086784 },
+    { x: 624.0018467737199, y: 541.5629034375679 },
+  ];
+  for (const [x, y] of DOORS)
+    for (let k = 0; k < 16; k++) {
+      const angle = (k * Math.PI) / 8,
+        r = [0.37, 24.71, 49.83, 64.19][k % 4];
+      const point = { x: x + Math.cos(angle) * r, y: y + Math.sin(angle) * r };
+      if (isWalkable(point)) starts.push(point);
+    }
+  let checked = 0;
+  for (const from of starts)
+    for (const to of ACTIVITY_STOPS) {
+      let position = { ...from };
+      const path = findPath(from, to);
+      assert.ok(path?.length, `Missing route from${JSON.stringify(from)}`);
+      let frame = 0;
+      while (path.length && frame++ < 2000) {
+        if (waypointReached(position, path[0])) {
+          path.shift();
+          continue;
+        }
+        const accepted = clipMove(
+          position,
+          stepToward(
+            position,
+            path[0],
+            RULES.moveSpeed,
+            [0.0031, 0.037, 0.11, 0.201, 0.999, 1.4][frame % 6],
+          ),
+        );
+        assert.ok(isWalkable(accepted));
+        assert.ok(
+          Math.hypot(accepted.x - position.x, accepted.y - position.y) > 1e-8,
+          `Stall from${JSON.stringify(from)} at${JSON.stringify(position)} toward${JSON.stringify(path[0])}`,
+        );
+        position = accepted;
+      }
+      assert.equal(path.length, 0);
+      assert.ok(Math.hypot(position.x - to.x, position.y - to.y) < 0.5);
+      checked++;
+    }
+  assert.equal(checked, 1170);
+});

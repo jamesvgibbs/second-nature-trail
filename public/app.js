@@ -1,3 +1,4 @@
+import { createProjection, reduceProjection } from "/projection.mjs";
 import { localFrameMeasurement } from "/performance.mjs";
 const measureFrame = localFrameMeasurement();
 import {
@@ -66,6 +67,17 @@ const cells = [
   [1, 2],
   [2, 2],
 ];
+let hostProjection = createProjection(),
+  hostGeneration = 0,
+  hostStream = null,
+  hostConnected = false;
+let projection = createProjection(),
+  streamGeneration = 0,
+  loadGeneration = 0,
+  movementSequence = 0,
+  settingsSequence = 0,
+  visualIntentGeneration = 0,
+  latestVisualIntentInsects = false;
 let state = null,
   connected = false,
   stream = null,
@@ -192,6 +204,20 @@ async function api(path, data) {
   return v;
 }
 async function act(type, fields = {}) {
+  const requestGeneration = streamGeneration;
+  const expectedChapter = fields.expectedChapter ?? state?.event?.chapter;
+  const requestPhase = state?.event?.phase;
+  const competitive = [
+    "task",
+    "challenge",
+    "quiz",
+    "secret",
+    "mystery",
+    "assist",
+    "tradeOffer",
+    "tradeConfirm",
+    "rewardRedeem",
+  ].includes(type);
   startAudio();
   if (!connected) {
     toast("Reconnecting. Your saved progress is safe; actions are paused.");
@@ -201,7 +227,7 @@ async function act(type, fields = {}) {
     const v = await api("/api/action", {
       type,
       requestId: crypto.randomUUID(),
-      expectedChapter: state?.event?.chapter,
+      expectedChapter,
       ...(type === "task"
         ? {
             expectedStep: state.me?.progress?.[state.event.chapter]?.step,
@@ -209,18 +235,25 @@ async function act(type, fields = {}) {
           }
         : {}),
       ...fields,
+      ...(type === "move" ? { movementSequence: ++movementSequence } : {}),
+      ...(type === "setup" ? { settingsSequence: ++settingsSequence } : {}),
     });
-    if (v.state) accept(v.state);
-    if (v.patch) accept({ ...state, ...v.patch });
-    if (v.position && state?.me) {
-      state.me.position = v.position;
-      const p = state.players?.find((p) => p.id === state.me.id);
-      if (p) p.position = v.position;
-    }
+    if (requestGeneration !== streamGeneration) return null;
+    const response = v.state || v.patch || v;
+    if (response.projectionEpoch !== projection.epoch) return null;
+    if (v.state) accept(v.state, "full");
+    if (v.patch) accept(v.patch, "patch");
+    if (v.position) accept(v, "move");
+    if (
+      competitive &&
+      (expectedChapter !== state?.event?.chapter ||
+        requestPhase !== state?.event?.phase)
+    )
+      return null;
     if (type !== "move" && type !== "tutorial") soundEffect();
     return v.result;
   } catch (e) {
-    toast(e.message);
+    if (requestGeneration === streamGeneration) toast(e.message);
     return null;
   }
 }
@@ -327,7 +360,15 @@ async function join(token, takeover = false) {
   }
 }
 async function loadPlayer() {
-  state = await api("/api/state");
+  const loading = ++loadGeneration,
+    generation = detachStream();
+  const snapshot = await api("/api/state");
+  if (loading !== loadGeneration || generation !== streamGeneration) return;
+  accept(snapshot, "full", true);
+  if (!state)
+    throw Error(
+      "The server did not provide an ordered game snapshot. Please reload.",
+    );
   safe = forceSafe || state.me?.insects !== true;
   prefs = { ...prefs, ...normalizedSettings(state.me?.settings) };
   keys = { ...defaultKeys, ...prefs.keys };
@@ -336,48 +377,72 @@ async function loadPlayer() {
   if (!state.me?.setup) setup();
   else game();
 }
+function detachStream() {
+  const previous = stream;
+  stream = null;
+  streamGeneration++;
+  connected = false;
+  previous?.close();
+  return streamGeneration;
+}
 async function connect(takeover = false) {
-  stream?.close();
+  const generation = detachStream();
   if (!isPresentation && !takeover) {
     try {
       const lease = await api(
         "/api/lease?client=" + encodeURIComponent(client),
       );
+      if (generation !== streamGeneration) return;
       if (lease.otherClient) {
         takenOver();
         return;
       }
-    } catch {}
+    } catch {
+      if (generation !== streamGeneration) return;
+    }
   }
   const url = isPresentation
     ? "/api/events?presentation=1"
     : `/api/events?client=${encodeURIComponent(client)}${takeover ? "&takeover=1" : ""}`;
-  stream = new EventSource(url);
-  stream.onopen = () => {
-    connected = true;
+  const source = new EventSource(url);
+  stream = source;
+  let bootstrapPending = true;
+  const current = () => generation === streamGeneration && stream === source;
+  source.onopen = () => {
+    if (!current()) return;
+    bootstrapPending = true;
+    connected = false;
     updateConnection();
-    if (forceSafe) persistReplacement();
   };
-  stream.onmessage = (e) => {
+  const receive = (event) => {
+    if (!current()) return;
     try {
-      accept(JSON.parse(e.data));
+      if (accept(JSON.parse(event.data), "full", bootstrapPending)) {
+        bootstrapPending = false;
+        const wasConnected = connected;
+        connected = true;
+        updateConnection();
+        if (!wasConnected && forceSafe) persistReplacement();
+      }
     } catch {}
   };
-  stream.addEventListener("state", (e) => {
-    try {
-      accept(JSON.parse(e.data));
-    } catch {}
+  source.onmessage = receive;
+  source.addEventListener("state", receive);
+  source.addEventListener("takeover", () => {
+    if (current()) takenOver();
   });
-  stream.addEventListener("takeover", () => takenOver());
-  stream.addEventListener("replaced", () => takenOver());
-  stream.onerror = () => {
+  source.addEventListener("replaced", () => {
+    if (current()) takenOver();
+  });
+  source.onerror = () => {
+    if (!current()) return;
     connected = false;
     updateConnection();
   };
 }
+
 function takenOver() {
-  connected = false;
-  stream?.close();
+  detachStream();
   updateConnection();
   open(
     "This session moved",
@@ -435,11 +500,16 @@ function setup() {
     `<main class="setup"><div class="eyebrow safe">YOUR NEIGHBORHOOD NEEDS YOU</div><h1>Make yourself at home.</h1><p class="intro">Hi, ${esc(state.me.name)}. Pick your look and how you’d like to play.</p><form id="setup-form"><div class="grid2"><section class="card"><h2>Choose your character</h2><div class="avatar-grid" id="avatars"></div><label>Pick a palette</label><div class="palette-grid" id="palettes"></div><p class="small muted">Same abilities. Same chances. Entirely your style.</p></section><section class="card"><h2>Show spiders and insects?</h2><p class="small">Choose before entering the world. Both versions play exactly the same.</p><label class="radio-choice"><input type="radio" name="insects" value="false" required> Replace with friendly robots</label><label class="radio-choice"><input type="radio" name="insects" value="true" required> Show spiders and insects</label><div id="setup-settings"></div></section></div><div class="row spread" style="margin-top:24px;color:var(--paper)"><span class="small">You can change these settings during play.</span><button class="primary">Enter Bragging Square →</button></div></form></main>`;
   avatarOptions();
   settingsFields($("#setup-settings"));
+  $("#setup-form")
+    .querySelectorAll('input[name="insects"]')
+    .forEach((input) => {
+      input.onchange = () => noteVisualIntent(input.value === "true", true);
+    });
   $("#setup-form").onsubmit = async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
     const insects = form.get("insects") === "true";
-    if (!insects) safe = true;
+    const intent = noteVisualIntent(insects);
     const settings = readSettings();
     const r = await act("setup", {
       character: chosen,
@@ -447,14 +517,7 @@ function setup() {
       insects,
       settings: serverSettings(settings),
     });
-    if (r !== null) {
-      forceSafe = !insects;
-      safe = !insects;
-      try {
-        writeSafeOverride(localStorage, !insects);
-      } catch {}
-      game();
-    }
+    if (r !== null && commitVisualIntent(intent, insects)) game();
   };
 }
 function avatarOptions() {
@@ -520,17 +583,24 @@ function readSettings() {
   startAudio();
   return prefs;
 }
-function accept(s) {
+function accept(s, kind = "full", allowEpoch = false) {
   if (s.state) s = s.state;
-  if (state?.serverTime > s.serverTime) return;
+  const next = reduceProjection(projection, s, { kind, allowEpoch });
+  if (next === projection) return false;
   const previous = state;
-  state = s;
+  const coreChanged =
+    next.epoch !== projection.epoch ||
+    next.coreVersion !== projection.coreVersion;
+  if (next.epoch !== projection.epoch) target = null;
+  projection = next;
+  state = next.state;
+  if (kind === "move") return true;
   if (state.me?.settings) {
     prefs = { ...prefs, ...normalizedSettings(state.me.settings) };
     keys = { ...defaultKeys, ...prefs.keys };
     updateControlHints();
   }
-  serverOffset = (state.serverTime || Date.now()) - Date.now();
+  if (coreChanged) serverOffset = (state.serverTime || Date.now()) - Date.now();
   safe = forceSafe || isPresentation || state.me?.insects !== true;
   const e = state.event || {};
   if (currentPhase !== e.phase || currentChapter !== e.chapter) {
@@ -586,6 +656,7 @@ function accept(s) {
     toast(
       "A neighbor offered a trade. Open Neighbors to review and confirm it.",
     );
+  return true;
 }
 function game() {
   app.innerHTML = `<main class="game ${isPresentation ? "presentation" : ""}">${topbar(`<div class="row"><span id="connection" class="pill"></span><div style="text-align:right"><div class="phase-label" id="phase-label"></div><div class="timer" id="timer">--:--</div></div></div>`)}<div class="game-main"><section class="world-wrap"><canvas class="world" id="world" width="1200" height="800" tabindex="0" role="application" aria-label="Shared neighborhood. Move with arrow keys or WASD, or click a destination. Press E to interact. Tab reaches all menus."></canvas><div class="map-label" id="map-label">BRAGGING SQUARE</div><div class="world-hint" id="world-hint">Click to walk · WASD / arrows to move · E to interact</div></section><aside class="mission" id="mission"></aside></div><footer class="game-footer"><div class="row" id="toolbar"></div><span class="small">One neighborhood. Everyone belongs.</span><span class="small" id="player-name"></span></footer></main>`;
@@ -1381,16 +1452,8 @@ function settings() {
   );
   settingsFields($("#settings-fields"));
   $("#safe-select").value = String(!safe);
-  $("#safe-select").onchange = () => {
-    if ($("#safe-select").value === "false") {
-      forceSafe = true;
-      safe = true;
-      try {
-        writeSafeOverride(localStorage, true);
-      } catch {}
-      persistReplacement();
-    }
-  };
+  $("#safe-select").onchange = () =>
+    noteVisualIntent($("#safe-select").value === "true", true);
   Object.entries(keys).forEach(([action, key]) => {
     const l = document.createElement("label");
     l.textContent = action;
@@ -1419,8 +1482,7 @@ function settings() {
           ]),
         );
         const insects = $("#safe-select").value === "true";
-        // Replacement is immediate; enabling imagery waits for a committed choice.
-        if (!insects) safe = true;
+        const intent = noteVisualIntent(insects);
         const settings = readSettings();
         const result = await act("setup", {
           character: state.me.character,
@@ -1428,12 +1490,7 @@ function settings() {
           insects,
           settings: serverSettings(settings),
         });
-        if (result !== null) {
-          forceSafe = !insects;
-          try {
-            writeSafeOverride(localStorage, !insects);
-          } catch {}
-          safe = !insects;
+        if (result !== null && commitVisualIntent(intent, insects)) {
           updateControlHints();
           close();
         }
@@ -1942,11 +1999,21 @@ function drawMap(ctx, live) {
   }
 }
 async function host() {
+  const generation = ++hostGeneration;
+  hostStream?.close();
+  hostStream = null;
+  hostConnected = false;
   try {
-    hostState = await api("/api/host/state");
+    const snapshot = await api("/api/host/state");
+    if (generation !== hostGeneration) return;
+    hostProjection = reduceProjection(hostProjection, snapshot, {
+      allowEpoch: true,
+    });
+    hostState = hostProjection.state;
     hostDashboard();
     startHostRefresh();
   } catch {
+    if (generation !== hostGeneration) return;
     app.innerHTML =
       topbar() +
       `<main class="phone-screen card"><div class="eyebrow">EVENT OPERATIONS</div><h1>Welcome, operator.</h1><p class="small">Use your private operator access token. Employee invitations do not grant host access.</p><form id="host-login"><label>Operator access token<input id="host-token" type="password" autocomplete="off" required></label><button class="primary">Open event controls</button></form></main>`;
@@ -1962,14 +2029,21 @@ async function host() {
   }
 }
 async function hostCommand(type, extra = {}) {
+  if (!hostConnected) {
+    toast("Operator view is reconnecting. Wait for current event state.");
+    return;
+  }
+  const generation = hostGeneration;
   try {
-    await api("/api/host/action", {
+    const response = await api("/api/host/action", {
       type,
       requestId: crypto.randomUUID(),
       reason: extra.reason || "Operator requested from control page",
       ...extra,
     });
-    hostState = await api("/api/host/state");
+    if (generation !== hostGeneration) return;
+    hostProjection = reduceProjection(hostProjection, response.state);
+    hostState = hostProjection.state;
     hostDashboard();
   } catch (e) {
     toast(e.message);
@@ -1982,7 +2056,9 @@ function hostDashboard() {
       ? raw.players
       : Object.values(raw.players || {});
   app.innerHTML =
-    topbar('<span class="pill">PRIVATE OPERATOR CONTROLS</span>') +
+    topbar(
+      '<span id="host-connection" class="pill">PRIVATE OPERATOR CONTROLS · CONNECTING</span>',
+    ) +
     `<main class="host-shell"><div class="eyebrow safe">LIVE OPERATIONS</div><h1>${esc(e.name || "Second Nature Trail")}</h1><div class="host-stats">${[
       ["Players", ps.length],
       ["Connected", (raw.connections || []).length],
@@ -2006,7 +2082,7 @@ function hostDashboard() {
       )
       .join(
         "",
-      )}</div><div class="host-grid"><section class="card"><span class="eyebrow">EVENT STATE</span><h2 id="host-phase" style="margin-top:14px">${esc(e.phase || "draft")} ${e.paused ? "· paused" : ""}</h2><p class="small">Chapter ${Number(e.chapter ?? -1) + 1} of 8. Control owner: ${esc(e.controlOwner || raw.controlOwner || "See operator log")}.</p><div class="host-actions" id="host-actions"></div><hr><form id="broadcast-form"><label>Message to all players<input id="broadcast" maxlength="200" required></label><button>Broadcast message</button></form></section><section class="card"><h2>Operator log</h2><div class="log" id="host-log">${
+      )}</div><div class="host-grid"><section class="card"><span class="eyebrow">EVENT STATE</span><h2 id="host-phase" style="margin-top:14px">${esc(e.phase || "draft")} ${e.paused ? "· paused" : ""}</h2><p id="host-context" class="small">Chapter ${Number(e.chapter ?? -1) + 1} of 8. Control owner: ${esc(e.controlOwner || raw.controlOwner || "See operator log")}.</p><div class="host-actions" id="host-actions"></div><hr><form id="broadcast-form"><label>Message to all players<input id="broadcast" maxlength="200" required></label><button>Broadcast message</button></form></section><section class="card"><h2>Operator log</h2><div class="log" id="host-log">${
       (raw.audit || raw.log || e.audit || [])
         .slice(-20)
         .reverse()
@@ -2033,6 +2109,9 @@ function hostDashboard() {
       btn(
         label,
         () => {
+          const raw = hostState.state || hostState;
+          const e = raw.event;
+          const ps = raw.players || [];
           open(
             label,
             `<p>${esc(e.name || "Second Nature Trail")} · ${ps.length} players · current phase ${esc(e.phase)}</p>${type === "shorten" ? `<label>Seconds remaining after this change<input id="host-seconds" type="number" min="1" step="1" max="${Math.max(1, Math.ceil((e.remainingMs || 0) / 1000))}" value="30" required></label>` : ""}${type === "advance" ? `<p class="notice">Ends this phase now. During a chapter, current results stay ranked and the chapter award settles. Use Skip chapter only for an unranked recovery.</p>` : ""}<label>Reason<input id="host-reason" value="${esc(label)}" required></label><div id="host-confirm"></div>`,
@@ -2088,16 +2167,27 @@ function hostDashboard() {
     }),
     btn("Refresh status", host),
   );
+  updateHostPlayers(ps);
+  updateHostLive();
+}
+function updateHostPlayers(ps) {
+  const liveIds = new Set(ps.map((p) => `host-player-${p.id}`));
+  for (const row of $("#host-players").children)
+    if (!liveIds.has(row.id)) row.remove();
   ps.forEach((p) => {
-    const d = document.createElement("div");
+    let d = document.getElementById(`host-player-${p.id}`);
+    if (d) {
+      if (d.querySelector("strong").textContent !== p.name)
+        d.querySelector("strong").textContent = p.name;
+      const label = d.querySelector(".host-player-status");
+      const text = hostPlayerStatus(p);
+      if (label.textContent !== text) label.textContent = text;
+      return;
+    }
+    d = document.createElement("div");
+    d.id = `host-player-${p.id}`;
     d.className = "player-item";
-    const connectionLabel =
-      p.connectionStatus === "connected"
-        ? "Connected"
-        : p.connectionStatus === "reconnecting"
-          ? "Reconnecting / offline"
-          : "Not joined";
-    d.innerHTML = `<strong>${esc(p.name)}</strong><span class="small">${connectionLabel} · ${p.ready ? "Ready" : p.setup ? "Practicing" : "Setup incomplete"}</span>`;
+    d.innerHTML = `<strong>${esc(p.name)}</strong><span class="small host-player-status">${hostPlayerStatus(p)}</span>`;
     d.append(
       btn("Rescue", () =>
         hostCommand("rescue", {
@@ -2109,6 +2199,15 @@ function hostDashboard() {
     );
     $("#host-players").append(d);
   });
+}
+function hostPlayerStatus(p) {
+  const connection =
+    p.connectionStatus === "connected"
+      ? "Connected"
+      : p.connectionStatus === "reconnecting"
+        ? "Reconnecting / offline"
+        : "Not joined";
+  return `${connection} · ${p.ready ? "Ready" : p.setup ? "Practicing" : "Setup incomplete"}`;
 }
 window.addEventListener("resize", () => {
   if (activeCanvas) windowCheck();
@@ -2708,46 +2807,83 @@ function tone(frequency, duration, gain, type = "square") {
 function soundEffect() {
   if (prefs.effects) tone(660, 0.08, effectsGain, "triangle");
 }
-let hostRefresh = null;
 function startHostRefresh() {
-  if (hostRefresh) return;
-  hostRefresh = setInterval(async () => {
-    if (!$("#host-phase")) return;
+  if (hostStream) return;
+  const generation = hostGeneration;
+  const source = new EventSource("/api/events?client=operator-view");
+  hostStream = source;
+  let bootstrap = true;
+  const current = () => generation === hostGeneration && source === hostStream;
+  source.onopen = () => {
+    if (current()) {
+      bootstrap = true;
+      hostConnected = false;
+      updateHostLive();
+    }
+  };
+  source.addEventListener("state", (event) => {
+    if (!current()) return;
     try {
-      const s = await api("/api/host/state");
-      hostState = s;
-      const raw = s.state || s,
-        e = raw.event || raw,
-        ps = Array.isArray(raw.players)
-          ? raw.players
-          : Object.values(raw.players || {});
-      $("#host-phase").textContent = e.phase + (e.paused ? " · paused" : "");
-      const values = {
-        Players: ps.length,
-        Connected: (raw.connections || []).length,
-        "Tutorial complete": ps.filter((p) =>
-          Array.isArray(p.tutorial)
-            ? p.tutorial.length >= 5
-            : Object.values(p.tutorial || {}).filter(Boolean).length >= 5,
-        ).length,
-        Ready: ps.filter((p) => p.ready).length,
-      };
-      document
-        .querySelectorAll("[data-host-stat]")
-        .forEach((n) => (n.textContent = values[n.dataset.hostStat]));
-      const log = $("#host-log");
-      if (log)
-        log.innerHTML =
-          (raw.audit || [])
-            .slice(-20)
-            .reverse()
-            .map(
-              (a) =>
-                `<div>${esc(new Date(a.at).toLocaleTimeString())} · ${esc(a.operatorId)} · ${esc(a.type)} · ${esc(a.reason)}</div>`,
-            )
-            .join("") || "No operator actions recorded yet.";
+      const next = reduceProjection(hostProjection, JSON.parse(event.data), {
+        allowEpoch: bootstrap,
+      });
+      if (next === hostProjection) return;
+      hostProjection = next;
+      hostState = next.state;
+      bootstrap = false;
+      hostConnected = true;
+      updateHostLive();
     } catch {}
-  }, 2000);
+  });
+  source.onerror = () => {
+    if (current()) {
+      hostConnected = false;
+      updateHostLive();
+    }
+  };
+}
+function updateHostLive() {
+  if (!hostState || !$("#host-phase")) return;
+  const raw = hostState.state || hostState,
+    e = raw.event,
+    ps = raw.players || [];
+  $("#host-phase").textContent = e.phase + (e.paused ? " · paused" : "");
+  $("#host-connection").textContent =
+    "PRIVATE OPERATOR CONTROLS · " +
+    (hostConnected ? "CONNECTED" : "RECONNECTING");
+  const context = $("#host-context");
+  if (context)
+    context.textContent = `Chapter ${Number(e.chapter ?? -1) + 1} of 8. Control owner: ${e.controlOwner || raw.controlOwner || "No operator action yet"}.`;
+  const values = {
+    Players: ps.length,
+    Connected: (raw.connections || []).length,
+    Reconnecting: ps.filter((p) => p.connectionStatus === "reconnecting")
+      .length,
+    "Tutorial complete": ps.filter((p) =>
+      Array.isArray(p.tutorial)
+        ? p.tutorial.length >= 5
+        : Object.values(p.tutorial || {}).filter(Boolean).length >= 5,
+    ).length,
+    Ready: ps.filter((p) => p.ready).length,
+  };
+  document.querySelectorAll("[data-host-stat]").forEach((n) => {
+    const text = String(values[n.dataset.hostStat]);
+    if (n.textContent !== text) n.textContent = text;
+  });
+  updateHostPlayers(ps);
+  const log = $("#host-log");
+  if (log) {
+    const html =
+      (raw.audit || [])
+        .slice(-20)
+        .reverse()
+        .map(
+          (a) =>
+            `<div>${esc(new Date(a.at).toLocaleTimeString())} · ${esc(a.operatorId)} · ${esc(a.type)} · ${esc(a.reason)}</div>`,
+        )
+        .join("") || "No operator actions recorded yet.";
+    if (log.innerHTML !== html) log.innerHTML = html;
+  }
 }
 function setDestination(x, y, arrival) {
   const p = state.me?.position;
@@ -2812,8 +2948,16 @@ setInterval(() => {
   }
 }, 250);
 async function presentation() {
+  const loading = ++loadGeneration,
+    generation = detachStream();
   try {
-    state = await api("/api/presentation");
+    const snapshot = await api("/api/presentation");
+    if (loading !== loadGeneration || generation !== streamGeneration) return;
+    accept(snapshot, "full", true);
+    if (!state)
+      throw Error(
+        "The server did not provide an ordered presentation snapshot.",
+      );
     safe = true;
     connect();
     game();
@@ -2902,8 +3046,35 @@ function verifiedHighlightHTML() {
   return `<section class="notice" aria-label="Recorded chapter highlight"><strong>Chapter prize: ${esc(award.name)}</strong><p class="small" style="margin:8px 0 0">Recorded result: ${award.metric} ${labels[chapter]}.${chapter === 5 ? ` Retained fictional budget: ${award.secondary}.` : ""}</p></section>`;
 }
 
+function noteVisualIntent(insects, persist = false) {
+  latestVisualIntentInsects = insects;
+  const generation = ++visualIntentGeneration;
+  if (!insects) {
+    forceSafe = true;
+    safe = true;
+    try {
+      writeSafeOverride(localStorage, true);
+    } catch {}
+    if (persist) persistReplacement();
+  }
+  return generation;
+}
+function commitVisualIntent(generation, insects) {
+  if (generation !== visualIntentGeneration) {
+    if (!latestVisualIntentInsects) persistReplacement();
+    return false;
+  }
+  forceSafe = !insects;
+  safe = !insects;
+  try {
+    writeSafeOverride(localStorage, !insects);
+  } catch {}
+  return true;
+}
+
 async function persistReplacement() {
   if (
+    latestVisualIntentInsects ||
     !forceSafe ||
     !connected ||
     !state?.me?.setup ||

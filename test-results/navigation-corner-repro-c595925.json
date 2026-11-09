@@ -1,0 +1,61 @@
+{
+  "observedAt": "2026-11-09T20:11:39.733Z",
+  "worldSha256": "34f973db8b5239387236c4381af94e19242de0f37a6431aeb0fae48f368163c3",
+  "method": "Pure shared navigation, no network, stale snapshots, or agents in loop",
+  "from": {
+    "x": 896,
+    "y": 364
+  },
+  "to": {
+    "x": 530,
+    "y": 650
+  },
+  "route": [
+    {
+      "x": 610,
+      "y": 550
+    },
+    {
+      "x": 590,
+      "y": 640
+    },
+    {
+      "x": 530,
+      "y": 650
+    }
+  ],
+  "entireFirstSegmentAccepted": {
+    "x": 610,
+    "y": 550
+  },
+  "speed": 190,
+  "elapsedSequence": [
+    0.065,
+    0.1,
+    0.175
+  ],
+  "stalled": {
+    "frame": 16,
+    "position": {
+      "x": 623.7469639124148,
+      "y": 541.0596668261917
+    },
+    "waypoint": {
+      "x": 610,
+      "y": 550
+    }
+  },
+  "obstacle": {
+    "name": "Night market expanded collision rectangle",
+    "left": 622,
+    "top": 542,
+    "right": 738,
+    "bottom": 638
+  },
+  "exactIntersection": {
+    "entryT": 0.956989247311828,
+    "exitT": 0.958041958041958,
+    "chordPixels": 0.3591456537226433
+  },
+  "expected": "First smoothed segment must not cross this obstacle; movement must reach destination without replanning."
+}

@@ -1,0 +1,7 @@
+{"at":"2026-11-09T19:57:26.154Z","phase":"draft","chapter":0,"chapterCompletionCounts":[0,0,0,0,0,0,0,0],"requests":3,"scoringSamples":0,"scoringP95Ms":null,"errors":{}}
+{"at":"2026-11-09T19:57:26.390Z","phase":"lobby","chapter":0,"chapterCompletionCounts":[0,0,0,0,0,0,0,0],"requests":5,"scoringSamples":0,"scoringP95Ms":null,"errors":{}}
+{"at":"2026-11-09T19:58:30.817Z","phase":"countdown","chapter":0,"chapterCompletionCounts":[0,0,0,0,0,0,0,0],"requests":1305,"scoringSamples":0,"scoringP95Ms":null,"errors":{}}
+{"at":"2026-11-09T19:58:40.870Z","phase":"chapter","chapter":0,"chapterCompletionCounts":[0,0,0,0,0,0,0,0],"requests":1305,"scoringSamples":0,"scoringP95Ms":null,"errors":{}}
+{"at":"2026-11-09T20:03:30.812Z","phase":"brag","chapter":0,"chapterCompletionCounts":[100,0,0,0,0,0,0,0],"requests":7347,"scoringSamples":1800,"scoringP95Ms":353.5383750000037,"errors":{}}
+{"at":"2026-11-09T20:05:30.714Z","phase":"chapter","chapter":1,"chapterCompletionCounts":[100,0,0,0,0,0,0,0],"requests":7347,"scoringSamples":1800,"scoringP95Ms":353.5383750000037,"errors":{}}
+{"at":"2026-11-09T20:10:30.714Z","phase":"brag","chapter":1,"chapterCompletionCounts":[100,71,0,0,0,0,0,0],"requests":74876,"scoringSamples":3269,"scoringP95Ms":347.3102090000175,"errors":{}}

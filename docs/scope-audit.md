@@ -1,6 +1,6 @@
 # Scope audit
 
-Updated 2026-11-09. This separates implemented behavior from release evidence. The authority remains [scope.md](scope.md); [acceptance.md](acceptance.md) records measured checks and unmet release gates. The latest full capacity attempt was stopped because functionality was still changing. It is not a completed hour-long acceptance run.
+Updated 2026-11-09. This separates implemented behavior from release evidence. The authority remains [scope.md](scope.md); [acceptance.md](acceptance.md) records measured checks and unmet release gates. The latest full capacity attempt was stopped for a confirmed shared navigation defect affecting 29 of 100 players in chapter 2. Exact continuous collision geometry and chained fractional-start regressions now pass; a targeted 100-player chapter 2 rerun completed every main objective. The final combined runtime still requires a new full run. It is not a completed hour-long acceptance run.
 
 ## Functional coverage
 
@@ -65,3 +65,9 @@ Implementation fixes above must pass their functional checks; browser evidence r
 Production deployment, content sign-off, real participant rehearsal, the supported-browser matrix, physical devices, lowest-spec rendering, and representative-network measurements remain separate required release gates.
 
 Browser evidence and its limits are recorded in [browser-checks.md](browser-checks.md). Earlier targeting/routing checks predate the final expanded mechanics. The latest all-chapter input matrix and host/presentation rendered checks remain incomplete because browser control could not proceed reliably alongside user activity; this is not a passing visual check. The optional `?measure=1` recorder has pure tests for visible-frame sampling and hidden/paused exclusion, but no actual hardware FPS measurement has been recorded.
+
+## Final combined protocol baseline
+
+The exact geometry repair, three-watermark projection reducer, monotonic movement requests, and transactionally persisted settings ordering now have 89 passing automated tests. The server refuses obsolete movement/settings writes; same-epoch older views cannot roll back later accepted core state or position, and a new server epoch is accepted through the active stream generation. A saved replacement preference survives an older delayed enable request and restart. The shared load client now exercises the same projection reducer and sequence contracts.
+
+These changes supersede the earlier Safari runtime baseline. Earlier screenshots still support their specifically observed layouts and controls, but do not verify the final ordering/reconnect/failed-enable sequences, the final expanded activities, or host/presentation live rendering. Those checks remain listed in [controls-matrix.md](controls-matrix.md) and [browser-checks.md](browser-checks.md). No complete frozen-source capacity run has passed yet.

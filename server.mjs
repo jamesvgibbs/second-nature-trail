@@ -83,6 +83,9 @@ export function createGameServer({
     db.exec(
       "PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL; CREATE TABLE IF NOT EXISTS game(id INTEGER PRIMARY KEY, state TEXT NOT NULL); CREATE TABLE IF NOT EXISTS invitations(hash TEXT PRIMARY KEY, player TEXT NOT NULL, name TEXT NOT NULL); CREATE TABLE IF NOT EXISTS sessions(hash TEXT PRIMARY KEY, player TEXT, role TEXT NOT NULL, created INTEGER NOT NULL);",
     );
+    db.exec(
+      "CREATE TABLE IF NOT EXISTS setup_cursors(player TEXT PRIMARY KEY, client TEXT NOT NULL, sequence INTEGER NOT NULL)",
+    );
     const saved = db.prepare("SELECT state FROM game WHERE id=1").get();
     const engine = new Engine(saved ? { state: JSON.parse(saved.state) } : {});
     const persist = () =>
@@ -140,7 +143,57 @@ export function createGameServer({
       closing = false;
     const streams = new Map(),
       leases = new Map(),
+      movementCursors = new Map(),
       rates = new Map();
+    const projectionEpoch = token();
+    let projectionVersion = 0;
+    const project = (value) => ({
+      ...value,
+      projectionEpoch,
+      projectionVersion: ++projectionVersion,
+    });
+    const presentationView = () => project(engine.presentation());
+    const configurePlayer = (player, client, action) => {
+      if (
+        !Number.isSafeInteger(action.settingsSequence) ||
+        action.settingsSequence < 1
+      )
+        throw Error("A positive settings sequence is required");
+      const prior = db
+        .prepare("SELECT client,sequence FROM setup_cursors WHERE player=?")
+        .get(player);
+      if (prior?.client === client && action.settingsSequence <= prior.sequence)
+        return { ok: true, ignored: true };
+      const result = engine.dispatch(player, action);
+      // Runs inside the scoring transaction, so failed persistence also rolls
+      // back this input cursor and leaves the same request retryable.
+      db.prepare(
+        "INSERT INTO setup_cursors VALUES(?,?,?) ON CONFLICT(player) DO UPDATE SET client=excluded.client,sequence=excluded.sequence",
+      ).run(player, client, action.settingsSequence);
+      return result;
+    };
+    const move = (player, client, action) => {
+      if (
+        !Number.isSafeInteger(action.movementSequence) ||
+        action.movementSequence < 1
+      )
+        throw Error("A positive movement sequence is required");
+      if (
+        typeof action.requestId !== "string" ||
+        !/^[\w-]{1,100}$/.test(action.requestId)
+      )
+        throw Error("Valid requestId required");
+      const prior = movementCursors.get(player);
+      if (prior?.client === client && action.movementSequence <= prior.sequence)
+        return { ok: true, ignored: true };
+      const result = engine.dispatch(player, action);
+      movementCursors.set(player, {
+        client,
+        sequence: action.movementSequence,
+      });
+      movementDirty = true;
+      return result;
+    };
     const pending = [];
     let flushTimer = null;
     const flush = () => {
@@ -226,7 +279,7 @@ export function createGameServer({
       res.end(JSON.stringify(value));
     };
     const stateFor = (s) => {
-      if (s.role !== "host") return engine.view(s.player);
+      if (s.role !== "host") return project(engine.view(s.player));
       const joined = new Set(
         db
           .prepare("SELECT player FROM sessions WHERE role='player'")
@@ -234,7 +287,7 @@ export function createGameServer({
           .map((row) => row.player),
       );
       const view = engine.hostView();
-      return {
+      return project({
         ...view,
         connections: [...leases.keys()],
         players: view.players.map((p) => ({
@@ -246,7 +299,7 @@ export function createGameServer({
               ? "reconnecting"
               : "not-joined",
         })),
-      };
+      });
     };
     const broadcast = () => {
       for (const [key, v] of streams) {
@@ -257,7 +310,7 @@ export function createGameServer({
             continue;
           }
           v.res.write(
-            `event: state\ndata: ${JSON.stringify(v.session ? stateFor(v.session) : engine.presentation())}\n\n`,
+            `event: state\ndata: ${JSON.stringify(v.session ? stateFor(v.session) : presentationView())}\n\n`,
           );
         } catch {
           streams.delete(key);
@@ -420,7 +473,7 @@ export function createGameServer({
             engine.setConnected?.([...leases.keys()]);
             const result =
               body.type === "move"
-                ? engine.dispatch(s.player, body)
+                ? move(s.player, lease.client, body)
                 : await enqueue(
                     () => {
                       engine.setConnected?.([...leases.keys()]);
@@ -434,17 +487,22 @@ export function createGameServer({
                           Error("Session moved before action committed"),
                           { status: 409 },
                         );
-                      return engine.dispatch(s.player, body);
+                      return body.type === "setup"
+                        ? configurePlayer(
+                            s.player,
+                            req.headers["x-trail-client"],
+                            body,
+                          )
+                        : engine.dispatch(s.player, body);
                     },
                     s.player + ":" + body.requestId,
                   );
-            if (body.type === "move") movementDirty = true;
             send(res, 200, {
               ok: true,
               result,
               ...(body.type === "move"
-                ? { position: engine.get(s.player).position }
-                : { patch: engine.actionView(s.player) }),
+                ? project({ position: engine.get(s.player).position })
+                : { patch: project(engine.actionView(s.player)) }),
             });
             return;
           }
@@ -497,7 +555,7 @@ export function createGameServer({
             throw Object.assign(Error("Presentation credential required"), {
               status: 403,
             });
-          send(res, 200, engine.presentation());
+          send(res, 200, presentationView());
           return;
         }
         if (url.pathname === "/api/events") {
@@ -540,7 +598,7 @@ export function createGameServer({
           });
           streams.set(id, { res, session: s });
           res.write(
-            `event: state\ndata: ${JSON.stringify(s ? stateFor(s) : engine.presentation())}\n\n`,
+            `event: state\ndata: ${JSON.stringify(s ? stateFor(s) : presentationView())}\n\n`,
           );
           req.on("close", () => {
             streams.delete(id);

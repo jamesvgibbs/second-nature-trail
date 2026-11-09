@@ -99,3 +99,27 @@ Pinned Node v24.20.0, localhost, three simulated players, explicitly shortened c
 - Routing: all three completed all three spatial stations using required relays, permitted edges, and cable budgets. Twenty-five scoring/inventory samples, p95 24.2 ms, no request errors. `test-results/routing-scenario.json`.
 
 These checks validate harness/server contracts and do not certify pointer/keyboard rendering, employee comprehension, balance, representative-network performance, or complete-event capacity.
+
+## Frozen v0.3.0 preflight
+
+Commit `c595925` passed 64 functional tests. Its first 100-player/10,000-synthetic-history smoke recorded scoring/inventory p95 596.7 ms across 600 samples, above the provisional 500 ms target, with no request errors. Docker container checks overlapped on the shared host; that overlap does not establish causation. A clean identical repeat with those checks stopped recorded p95 442.8 ms across 600 samples, fifty completed trades, and no request errors. Both reports are preserved as `test-results/load-c595925-ledger*.json`. The clean repeat passes only that shortened localhost check.
+
+The full real-time `c595925` run started with 100 players joining over sixty seconds, two operators, and a presentation connection. It has no synthetic history prefill. Its live log and environment frame are `test-results/capacity-full-c595925-live.log` and `test-results/capacity-full-c595925-environment.json`. It was subsequently stopped for the confirmed navigation defect below and is not a capacity pass.
+
+## Aborted v0.3.0 capacity run
+
+The `c595925` run completed chapter 1 for all 100 players but chapter 2 for only 71. Twenty-nine players stalled approaching Elm home. At the chapter 2 break it had 74,876 requests, 3,269 scoring/inventory samples, p95 347.3 ms, and no rejected requests. Successful HTTP responses therefore did not establish successful navigation.
+
+The shared planner sampled long segments every two pixels and missed a 0.359-pixel crossing of an expanded obstacle corner. Incremental movement correctly refused that route, producing a permanent stall. Starting from `(896,364)` toward the planner waypoint `(610,550)` reproduces the defect without network timing or SSE. Tests that began every route at an exact door center missed the real within 25-pixel stopping positions. A new regression chains actual arrival positions into later routes.
+
+The run was stopped after saving its log, sanitized stalled-player states, environment, and abort record under `test-results/capacity-full-c595925-*`. This is a game navigation failure requiring repair and a new capacity run. The later `fddf372` UI-only safe-preference fix did not change the tested backend/content/harness and did not cause this stall.
+
+## Continuous geometry repair checks
+
+The shared world module now uses exact segment/expanded-rectangle intersection for both visibility and movement, replacing two-pixel sampling. Geometry tests cover 1,170 fractional starts and varied frame intervals; the load regression uses actual within 25-pixel endpoints as the origin of subsequent routes.
+
+An explicit 100-player chapter 2 scenario started participants at deterministic valid fractional positions near six authored sites. All 100 completed all six work orders; no navigation stalls or request errors occurred. One thirty-second outage reconnected. Synthetic main completion p50/p95 were 81.4/81.5 seconds; scoring p95 was 440.2 ms. Separate concurrent three-player routing and targeting cross-checks also completed all objectives with no errors; targeting recorded 18 resolutions per player and included the same outage. These are shortened functional checks using the preceding transport contract, not a new complete capacity pass. Reports: `test-results/exact-geometry-*.json`.
+
+A separate transport-ordering repair adds projection epoch/version metadata and per-client movement sequence numbers. The load client shares the browser's projection reducer; its final combined runtime still requires the next frozen-source smoke and hour-long run.
+
+The final combined protocol baseline passes 89 automated tests, including exact geometry, stale projection/move handling, persistent settings-order protection across restart, and rollback-safe retry. Command output is `test-results/functional-exact-geometry-ordering.log`. This does not upgrade earlier rendered Safari evidence to the final source revision; the final compatibility/control matrix remains pending.

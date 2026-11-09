@@ -9,3 +9,11 @@ The non-root container started with a writable temporary database mount. HTTP ch
 Production still requires an approved host/domain, HTTPS, durable storage, operator credentials, read-only display credentials, roster import, backup/restore verification on that host, and a retention decision. The container's production default keeps Secure cookies enabled. The local HTTP check disabled that flag only in its disposable test container.
 
 A local container smoke check does not establish production network latency, production durability, or event readiness. Build the final reviewed source again before deploying, since browser-only fixes may follow this check.
+
+## Frozen build c595925
+
+Built `second-nature-trail:c595925` from the frozen source. Image manifest list: `sha256:30d11daae5aea3c9657d1319bdc1eee579c9682296e5088fa6fa8fb848eea60d`.
+
+The non-root container used a disposable Docker named volume. Opened the lobby through the primary operator, stopped and removed the container, recreated it with the same volume, and verified the lobby state and recorded operator action survived. The backup operator authenticated successfully. The separate presentation credential received safe state and was rejected from host state. Health and the optional frame-recorder module MIME type also passed.
+
+This check used only synthetic credentials and loopback HTTP. The container and test volume were removed afterward. The image remains available locally. Evidence: [container-c595925.json](../test-results/container-c595925.json). This does not establish durability or TLS behavior on an eventual production host.

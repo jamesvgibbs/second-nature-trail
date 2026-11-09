@@ -44,24 +44,84 @@ export function isWalkable({ x, y }) {
     )
   );
 }
-export function clipMove(from, to) {
-  if (!isWalkable(from)) return { ...from };
-  const distance = Math.hypot(to.x - from.x, to.y - from.y),
-    steps = Math.max(1, Math.ceil(distance / 2));
-  let result = { ...from };
-  for (let i = 1; i <= steps; i++) {
-    const next = {
-      x: from.x + ((to.x - from.x) * i) / steps,
-      y: from.y + ((to.y - from.y) * i) / steps,
-    };
-    if (!isWalkable(next)) break;
-    result = next;
+// Intersect the segment with each rectangle's OPEN interior. Walking along an
+// edge or touching a single corner is legal, matching isWalkable exactly.
+// Sampling is not sufficient: a valid-looking long segment can cross less than
+// a pixel of a corner and then become blocked when traversed in shorter pieces.
+function firstObstacleEntry(from, to, maxT = 1) {
+  const dx = to.x - from.x,
+    dy = to.y - from.y;
+  let first = null;
+  for (const r of OBSTACLES) {
+    const left = r.x - RADIUS,
+      right = r.x + r.width + RADIUS;
+    const top = r.y - RADIUS,
+      bottom = r.y + r.height + RADIUS;
+    if (
+      (dx === 0 && (from.x <= left || from.x >= right)) ||
+      (dy === 0 && (from.y <= top || from.y >= bottom))
+    )
+      continue;
+    const xEnter =
+      dx === 0
+        ? -Infinity
+        : Math.min((left - from.x) / dx, (right - from.x) / dx);
+    const xExit =
+      dx === 0
+        ? Infinity
+        : Math.max((left - from.x) / dx, (right - from.x) / dx);
+    const yEnter =
+      dy === 0
+        ? -Infinity
+        : Math.min((top - from.y) / dy, (bottom - from.y) / dy);
+    const yExit =
+      dy === 0
+        ? Infinity
+        : Math.max((top - from.y) / dy, (bottom - from.y) / dy);
+    const enter = Math.max(0, xEnter, yEnter),
+      exit = Math.min(maxT, xExit, yExit);
+    if (!(enter < exit) || (first && enter >= first.t)) continue;
+    first = { t: enter };
+    // Snap the entering coordinate to the exact legal boundary. This avoids
+    // rounding the returned point a fraction inside the wall on a later frame.
+    if (xEnter === enter) first.x = dx > 0 ? left : right;
+    if (yEnter === enter) first.y = dy > 0 ? top : bottom;
   }
-  return result;
+  return first;
+}
+export function clipMove(from, to) {
+  if (!isWalkable(from) || !Number.isFinite(to.x) || !Number.isFinite(to.y))
+    return { ...from };
+  const dx = to.x - from.x,
+    dy = to.y - from.y;
+  let limit = 1,
+    boundary = {};
+  for (const [axis, delta, min, max] of [
+    ["x", dx, 30, 1170],
+    ["y", dy, 30, 770],
+  ]) {
+    if (!delta) continue;
+    const edge = to[axis] < min ? min : to[axis] > max ? max : null;
+    if (edge === null) continue;
+    const t = (edge - from[axis]) / delta;
+    if (t < limit) {
+      limit = t;
+      boundary = { [axis]: edge };
+    } else if (t === limit) boundary[axis] = edge;
+  }
+  const hit = firstObstacleEntry(from, to, limit);
+  if (hit) {
+    const result = { x: from.x + dx * hit.t, y: from.y + dy * hit.t };
+    if (hit.x !== undefined) result.x = hit.x;
+    if (hit.y !== undefined) result.y = hit.y;
+    return result;
+  }
+  return limit === 1
+    ? { ...to }
+    : { x: from.x + dx * limit, y: from.y + dy * limit, ...boundary };
 }
 function visible(a, b) {
-  const c = clipMove(a, b);
-  return Math.hypot(c.x - b.x, c.y - b.y) < 0.01;
+  return isWalkable(a) && isWalkable(b) && firstObstacleEntry(a, b) === null;
 }
 export function findPath(from, to) {
   if (!isWalkable(from) || !isWalkable(to)) return null;

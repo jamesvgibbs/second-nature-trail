@@ -12,10 +12,11 @@ import {
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { createGameServer } from "../server.mjs";
-import { CHAPTERS, RULES } from "../content.mjs";
-import { findPath } from "../public/world.mjs";
+import { CHAPTERS, RULES, ACTIVITY_STOPS } from "../content.mjs";
+import { findPath, isWalkable } from "../public/world.mjs";
 import { nextWaypoint } from "./load-navigation.mjs";
 import { solveRoute } from "./load-routing.mjs";
+import { createProjection, reduceProjection } from "../public/projection.mjs";
 
 const sourceHashes = Object.fromEntries(
   [
@@ -26,6 +27,7 @@ const sourceHashes = Object.fromEntries(
     "public/app.js",
     "public/helpers.mjs",
     "public/performance.mjs",
+    "public/projection.mjs",
     "public/style.css",
     "scripts/load.mjs",
     "scripts/load-navigation.mjs",
@@ -41,6 +43,9 @@ const duration = Number(process.env.LOAD_SECONDS || 3605);
 const joinWindow = Number(process.env.LOAD_JOIN_SECONDS || 60);
 const count = Number(process.env.LOAD_PLAYERS || 100);
 const startChapter = Number(process.env.LOAD_START_CHAPTER || 0);
+const variedStarts = process.env.LOAD_VARIED_STARTS === "1";
+if (variedStarts && startChapter === 0)
+  throw Error("Varied starts are only allowed in explicit chapter scenarios");
 if (
   !Number.isFinite(duration) ||
   duration < 5 ||
@@ -87,6 +92,15 @@ let requests = 0,
 const tradeAttempts = new Set(),
   assistAttempts = new Set();
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+function project(c, incoming, kind, allowEpoch = false) {
+  c.projection = reduceProjection(
+    c.projection || createProjection(),
+    incoming,
+    { kind, allowEpoch },
+  );
+  c.state = c.projection.state;
+  return c.state;
+}
 async function request(path, body, cookie, client) {
   const begin = performance.now();
   const r = await fetch(origin + path, {
@@ -125,6 +139,9 @@ async function request(path, body, cookie, client) {
   return { r, value, cookie: r.headers.get("set-cookie")?.split(";")[0] };
 }
 async function stream(path, cookie, owner) {
+  const generation = owner
+    ? (owner.streamGeneration = (owner.streamGeneration || 0) + 1)
+    : 0;
   const controller = new AbortController();
   streams.push(controller);
   const response = await fetch(origin + path, {
@@ -135,6 +152,7 @@ async function stream(path, cookie, owner) {
   const reader = response.body.getReader(),
     decoder = new TextDecoder();
   let buffer = "";
+  let allowEpoch = true;
   const pump = (async () => {
     try {
       while (!stopping) {
@@ -147,8 +165,13 @@ async function stream(path, cookie, owner) {
           buffer = buffer.slice(end + 2);
           const data = event.split("\n").find((l) => l.startsWith("data: "));
           if (data) {
-            const state = JSON.parse(data.slice(6));
+            let state = JSON.parse(data.slice(6));
             if (owner) {
+              if (owner.streamGeneration !== generation) continue;
+              if (Number.isInteger(owner.n)) {
+                state = project(owner, state, "full", allowEpoch);
+                allowEpoch = false;
+              }
               owner.state = state;
               const phase = state.phase || state.event?.phase;
               if (phase !== owner.phase) {
@@ -202,6 +225,16 @@ async function stream(path, cookie, owner) {
   return { controller, pump };
 }
 async function act(c, action) {
+  if (action.type === "setup")
+    action = {
+      ...action,
+      settingsSequence: (c.settingsSequence = (c.settingsSequence || 0) + 1),
+    };
+  if (action.type === "move")
+    action = {
+      ...action,
+      movementSequence: (c.movementSequence = (c.movementSequence || 0) + 1),
+    };
   if (
     [
       "task",
@@ -233,10 +266,9 @@ async function act(c, action) {
     c.cookie,
     c.id,
   );
-  if (result.value.state) c.state = result.value.state;
-  if (result.value.patch) c.state = { ...c.state, ...result.value.patch };
-  if (result.value.position && c.state?.me)
-    c.state.me.position = result.value.position;
+  if (result.value.state) project(c, result.value.state, "full");
+  if (result.value.patch) project(c, result.value.patch, "patch");
+  if (result.value.position) project(c, result.value, "move");
   return result;
 }
 async function tickPlayer(c) {
@@ -391,6 +423,26 @@ const movementTimer = setInterval(() => {
       continue;
     }
     const waypoint = nextWaypoint(p, c.path || []) || d;
+    const positionKey = `${p.x},${p.y}`;
+    c.stillMoves =
+      positionKey === c.lastMovementPosition ? (c.stillMoves || 0) + 1 : 0;
+    c.lastMovementPosition = positionKey;
+    if (c.stillMoves === 50) {
+      const key = `navigation stalled: ${c.id}`;
+      errors[key] = (errors[key] || 0) + 1;
+      console.log(
+        JSON.stringify({
+          at: new Date().toISOString(),
+          navigationStall: {
+            player: c.id,
+            position: p,
+            waypoint,
+            destination: d,
+            path: c.path,
+          },
+        }),
+      );
+    }
     c.moving = true;
     act(c, { type: "move", x: waypoint.x, y: waypoint.y })
       .catch((e) => {
@@ -438,7 +490,7 @@ try {
     await Promise.all(
       clients.map(async (c) => {
         const r = await request("/api/state", undefined, c.cookie);
-        c.state = r.value;
+        project(c, r.value, "full");
       }),
     );
     if (clients.every((c) => c.state.me.ready)) break;
@@ -477,9 +529,43 @@ try {
         throw Error("Could not advance to requested smoke chapter");
     }
     eventStartedAt = app.engine.state.chapterOpenedAt;
+    if (variedStarts) {
+      // Explicit synthetic setup: deterministic fractional positions within25px
+      // of authored sites. This is not player-earned travel or a normal event.
+      for (const c of clients) {
+        const site = ACTIVITY_STOPS[c.n % ACTIVITY_STOPS.length];
+        const angle = c.n * 2.399963229728653;
+        let radius = 10 + (c.n % 15);
+        let position;
+        do {
+          position = {
+            x: site.x + Math.cos(angle) * radius,
+            y: site.y + Math.sin(angle) * radius,
+          };
+          radius--;
+        } while (!isWalkable(position) && radius > 0);
+        if (!isWalkable(position))
+          throw Error("Could not choose valid scenario start");
+        app.engine.get(c.state.me.id).position = position;
+      }
+      await request(
+        "/api/host/action",
+        {
+          type: "broadcast",
+          message: "SYNTHETIC SCENARIO: varied near-site start positions",
+          reason: "Record synthetic varied starts",
+          requestId: `load-${++seq}`,
+        },
+        hostOne.cookie,
+      );
+    }
     await Promise.all(
       clients.map(async (c) => {
-        c.state = (await request("/api/state", undefined, c.cookie)).value;
+        project(
+          c,
+          (await request("/api/state", undefined, c.cookie)).value,
+          "full",
+        );
       }),
     );
   }
@@ -582,6 +668,7 @@ try {
         : "SHORTENED SMOKE TEST, not release capacity acceptance",
     syntheticPriorActions: Number(process.env.LOAD_LEDGER_PREFILL || 0),
     startChapter,
+    syntheticVariedNearSiteStarts: variedStarts,
     rulesVersion: RULES.version,
     contentHash: app.engine.state.contentHash,
     sourceHashes,

@@ -9,8 +9,14 @@ async function start(options = {}) {
   const app = createGameServer({ dbPath: ":memory:", demo: true, ...options });
   await new Promise((resolve) => app.server.listen(0, "127.0.0.1", resolve));
   const base = `http://127.0.0.1:${app.server.address().port}`;
-  const request = async (path, body, cookie, headers = {}) =>
-    fetch(base + path, {
+  const settingsSequences = new Map();
+  const request = async (path, body, cookie, headers = {}) => {
+    if (body?.type === "setup" && body.settingsSequence === undefined) {
+      const sequence = (settingsSequences.get(cookie) || 0) + 1;
+      settingsSequences.set(cookie, sequence);
+      body = { ...body, settingsSequence: sequence };
+    }
+    return fetch(base + path, {
       method: body === undefined ? "GET" : "POST",
       headers: {
         ...(body === undefined ? {} : { "Content-Type": "application/json" }),
@@ -19,6 +25,7 @@ async function start(options = {}) {
       },
       body: body === undefined ? undefined : JSON.stringify(body),
     });
+  };
   const login = async (path, token) => {
     const r = await request(path, { token });
     assert.equal(r.status, 200, await r.clone().text());
@@ -308,6 +315,8 @@ test("invitation identity and committed state survive process reconstruction", a
       await app.request("/api/state", undefined, cookie)
     ).json();
     assert.deepEqual(after.me, before.me);
+    assert.notEqual(after.projectionEpoch, before.projectionEpoch);
+    assert.ok(Number.isSafeInteger(after.projectionVersion));
     const joinResponse = await app.request("/api/join", {
       token: secret,
       takeover: true,
@@ -502,4 +511,187 @@ test("production credentials separate two operators from the read-only display",
     presentationToken: p,
   });
   await app.close();
+});
+
+test("projection order survives equal clocks and stale movement cannot reverse authority across reconnect", async () => {
+  const app = await start();
+  const controllers = [];
+  let now = Date.now(),
+    request = 0;
+  app.engine.now = () => now;
+  try {
+    const host = await app.login("/api/host/login", "local-host-one");
+    await app.request(
+      "/api/host/action",
+      {
+        type: "lobby",
+        requestId: "order-lobby",
+        reason: "Projection ordering test",
+      },
+      host,
+    );
+    const cookie = await app.login("/api/join", "demo-1");
+    const stream = async (client, takeover = false) => {
+      const controller = new AbortController();
+      controllers.push(controller);
+      const response = await fetch(
+        app.base +
+          `/api/events?client=${client}${takeover ? "&takeover=1" : ""}`,
+        { headers: { Cookie: cookie }, signal: controller.signal },
+      );
+      assert.equal(response.status, 200);
+      const chunk = await response.body.getReader().read();
+      const state = JSON.parse(
+        new TextDecoder().decode(chunk.value).split("data: ")[1].split("\n")[0],
+      );
+      return { controller, state };
+    };
+    const post = async (action, client = "ordering") => {
+      const response = await app.request(
+        "/api/action",
+        { requestId: `order-${++request}`, ...action },
+        cookie,
+        { "x-trail-client": client },
+      );
+      assert.equal(response.status, 200, await response.clone().text());
+      return response.json();
+    };
+    const initial = await stream("ordering");
+    const setup = await post({
+      type: "setup",
+      character: 0,
+      palette: 0,
+      insects: false,
+    });
+    const full = await (
+      await app.request("/api/state", undefined, cookie)
+    ).json();
+    assert.equal(initial.state.serverTime, setup.patch.serverTime);
+    assert.equal(full.serverTime, setup.patch.serverTime);
+    assert.equal(initial.state.projectionEpoch, full.projectionEpoch);
+    assert.ok(initial.state.projectionVersion < setup.patch.projectionVersion);
+    assert.ok(setup.patch.projectionVersion < full.projectionVersion);
+    const origin = full.me.position;
+    now += 1000;
+    const first = await post({
+      type: "move",
+      x: origin.x + 10,
+      y: origin.y,
+      movementSequence: 2,
+    });
+    assert.equal(first.position.x, origin.x + 10);
+    assert.equal(first.projectionEpoch, full.projectionEpoch);
+    assert.ok(first.projectionVersion > full.projectionVersion);
+    now += 1000;
+    const stale = await post({
+      type: "move",
+      x: origin.x,
+      y: origin.y,
+      movementSequence: 1,
+    });
+    assert.equal(stale.result.ignored, true);
+    assert.deepEqual(stale.position, first.position);
+    initial.controller.abort();
+    await stream("ordering");
+    const afterReconnect = await post({
+      type: "move",
+      x: origin.x,
+      y: origin.y,
+      movementSequence: 2,
+    });
+    assert.equal(afterReconnect.result.ignored, true);
+    assert.deepEqual(afterReconnect.position, first.position);
+    const newer = await post({
+      type: "move",
+      x: origin.x + 20,
+      y: origin.y,
+      movementSequence: 3,
+    });
+    assert.equal(newer.position.x, origin.x + 20);
+    const malformed = await app.request(
+      "/api/action",
+      { type: "move", requestId: "no-move-sequence", x: origin.x, y: origin.y },
+      cookie,
+      { "x-trail-client": "ordering" },
+    );
+    assert.equal(malformed.status, 400);
+    await stream("new-client", true);
+    now += 1000;
+    const newClient = await post(
+      { type: "move", x: origin.x + 30, y: origin.y, movementSequence: 1 },
+      "new-client",
+    );
+    assert.equal(newClient.position.x, origin.x + 30);
+  } finally {
+    for (const controller of controllers) controller.abort();
+    await app.close();
+  }
+});
+
+test("older insect-enabling inputs cannot overwrite replacement, and failed commits preserve settings retries", async () => {
+  const directory = mkdtempSync(join(tmpdir(), "trail-settings-order-"));
+  const dbPath = join(directory, "event.sqlite");
+  let app = await start({ dbPath });
+  const controllers = [];
+  try {
+    const cookie = await app.login("/api/join", "demo-1");
+    const connect = async () => {
+      const controller = new AbortController();
+      controllers.push(controller);
+      const stream = await fetch(app.base + "/api/events?client=preferences", {
+        headers: { Cookie: cookie },
+        signal: controller.signal,
+      });
+      await stream.body.getReader().read();
+    };
+    const save = (sequence, insects) =>
+      app.request(
+        "/api/action",
+        {
+          type: "setup",
+          requestId: `settings-${sequence}`,
+          settingsSequence: sequence,
+          character: 0,
+          palette: 0,
+          insects,
+        },
+        cookie,
+        { "x-trail-client": "preferences" },
+      );
+    await connect();
+    assert.equal((await save(2, false)).status, 200);
+    assert.equal((await (await save(1, true)).json()).result.ignored, true);
+    assert.equal(app.engine.get("neighbor-1").insects, false);
+    for (const controller of controllers) controller.abort();
+    await app.close();
+    app = await start({ dbPath });
+    await connect();
+    assert.equal((await (await save(1, true)).json()).result.ignored, true);
+    assert.equal(app.engine.get("neighbor-1").insects, false);
+    app.db.exec(
+      "CREATE TRIGGER test_settings_failure BEFORE UPDATE ON game BEGIN SELECT RAISE(ABORT,'settings persistence failure'); END;",
+    );
+    assert.equal((await save(3, true)).status, 400);
+    assert.equal(
+      app.db
+        .prepare("SELECT sequence FROM setup_cursors WHERE player=?")
+        .get("neighbor-1").sequence,
+      2,
+    );
+    assert.equal(app.engine.get("neighbor-1").insects, false);
+    app.db.exec("DROP TRIGGER test_settings_failure");
+    assert.equal((await save(3, true)).status, 200);
+    assert.equal(app.engine.get("neighbor-1").insects, true);
+    assert.equal((await save(4, false)).status, 200);
+    assert.equal((await (await save(3, true)).json()).result.ignored, true);
+    assert.equal(
+      (await (await app.request("/api/state", undefined, cookie)).json()).me
+        .insects,
+      false,
+    );
+  } finally {
+    for (const controller of controllers) controller.abort();
+    await app.close();
+    rmSync(directory, { recursive: true, force: true });
+  }
 });

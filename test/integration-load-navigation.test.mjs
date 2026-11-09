@@ -43,3 +43,17 @@ test("load runner preserves corner waypoint until reached and recovers the recor
   travel({ x: 930, y: 150 }, home);
   travel({ x: 978.1698377950584, y: 356.1943584966395 }, home);
 });
+test("routes remain traversable from actual prior-door stopping positions", () => {
+  travel({ x: 896, y: 364 }, { x: 530, y: 650 });
+  // Navigation ends within25px, so subsequent routes must use that actual
+  // endpoint, not reset to an exact door center as isolated pair tests do.
+  for (const offset of Object.values(RULES.spatialOffsets)) {
+    let position = { x: 600, y: 380 };
+    for (let cycle = 0; cycle < 3; cycle++)
+      for (let step = 0; step < ACTIVITY_STOPS.length; step++)
+        position = travel(
+          position,
+          ACTIVITY_STOPS[(step + offset) % ACTIVITY_STOPS.length],
+        );
+  }
+});

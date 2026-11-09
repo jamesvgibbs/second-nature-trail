@@ -1,0 +1,139 @@
+{"at":"2026-11-09T20:20:42.794Z","phase":"draft","chapter":0,"chapterCompletionCounts":[0,0,0,0,0,0,0,0],"requests":3,"scoringSamples":0,"scoringP95Ms":null,"errors":{}}
+{"at":"2026-11-09T20:20:43.030Z","phase":"lobby","chapter":0,"chapterCompletionCounts":[0,0,0,0,0,0,0,0],"requests":5,"scoringSamples":0,"scoringP95Ms":null,"errors":{}}
+{"at":"2026-11-09T20:20:45.795Z","phase":"countdown","chapter":0,"chapterCompletionCounts":[0,0,0,0,0,0,0,0],"requests":44,"scoringSamples":0,"scoringP95Ms":null,"errors":{}}
+{"at":"2026-11-09T20:20:55.839Z","phase":"chapter","chapter":0,"chapterCompletionCounts":[0,0,0,0,0,0,0,0],"requests":44,"scoringSamples":0,"scoringP95Ms":null,"errors":{}}
+{
+  "label": "SHORTENED SMOKE TEST, not release capacity acceptance",
+  "syntheticPriorActions": 0,
+  "startChapter": 0,
+  "syntheticVariedNearSiteStarts": false,
+  "rulesVersion": "trail-0.3.0-draft",
+  "contentHash": "368f66fb87ee9d1690c61e1c0457abba7049bde20c0af2d466a634d0b953dd5f",
+  "sourceHashes": {
+    "server.mjs": "74da2a578a3b61f6c8834c3d2f35acaca6e5785da0f35cd41e26327df59bda4d",
+    "engine.mjs": "151d275c7de03c4eb23c97a45f51dd00148e84bc5dbe4866c97cd467ea2e294d",
+    "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+    "public/world.mjs": "d412a2dee8b4b1dc3779d1dabc46561383646ac63651dcf7cd30eeba8bd063a0",
+    "public/app.js": "1701e5672d502966cadd7e640887f4b6c5c9ee17da5f10a69af6298697b4bd07",
+    "public/helpers.mjs": "b9b7a13a5df95d718e851b8dc4a0c62e6c562941f00d63804b7f0b1b306b9443",
+    "public/performance.mjs": "090cdd66c6b421fa0265b76aad7fa59738486fcd498110d87c60303cf78d4898",
+    "public/projection.mjs": "d1deb08aa7cf5c4c69356efb3c7253a67e0a749bb77997ead8972b8e2383d8ed",
+    "public/style.css": "b3d09f56fd5470b177b4a76fb7d4d08de4b73f9816412b6adb3c4e8cd859a42e",
+    "scripts/load.mjs": "1adcf172f984f5f539f280f962fa8b430383fd92d017ded50f1bf2c2dd31aba8",
+    "scripts/load-navigation.mjs": "520f2128823f27adfbe41b394702d77682a69612114abb57c6520e378323b6e4",
+    "scripts/load-routing.mjs": "0b02bddb26279933f28ecf5eadedb8c15b9e9baa4f2672c1bc61175f5ca3e279"
+  },
+  "nodeVersion": "v24.20.0",
+  "platform": "darwin",
+  "memoryBytes": {
+    "rss": 126173184,
+    "heapTotal": 30883840,
+    "heapUsed": 15443424,
+    "external": 4949043,
+    "arrayBuffers": 885664
+  },
+  "startedAt": "2026-11-09T20:20:42.774Z",
+  "elapsedSeconds": 18.99,
+  "eventPlaySeconds": 16.15,
+  "finalPhase": "chapter",
+  "exportReconciles": null,
+  "awardCount": 0,
+  "distinctWinners": 0,
+  "requestedPlayers": 3,
+  "joinedPlayers": 3,
+  "actualJoinSpanSeconds": 1.01,
+  "chapterCompletionCounts": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "simulatedMainObjectiveTimesMs": [
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    }
+  ],
+  "rewardProjects": {
+    "garden": 0,
+    "welcome": 0,
+    "festival": 0
+  },
+  "targetResolutions": [
+    0,
+    0,
+    0
+  ],
+  "joinWindowSeconds": 1,
+  "network": "localhost; not the representative company network",
+  "requests": 109,
+  "confirmedActionSamples": 92,
+  "tradeCompletions": 1,
+  "reconnectsAfterThirtySecondOutage": 0,
+  "latencyMs": {
+    "p50": 9.489417000000685,
+    "p95": 19.163916999999856,
+    "p99": 41.843875000000025
+  },
+  "scoringInventorySamples": 10,
+  "scoringInventoryLatencyMs": {
+    "p50": 17.26958300000115,
+    "p95": 20.30316700000003,
+    "p99": 20.30316700000003
+  },
+  "clockTransitionSamples": 6,
+  "clockArrivalLagMs": {
+    "p95": 226,
+    "max": 226,
+    "withinOneSecond": 6
+  },
+  "movementProfile": "10 requests/second per player while traveling; at most one in-flight per player",
+  "errors": {},
+  "phaseSamples": "21 observations in /Users/jgibbs/Code/second-nature-trail/test-results/projection-contract-smoke.json",
+  "limitations": [
+    "No browser rendering measured",
+    "No human rehearsal",
+    "Inspect tradeCompletions and reconnectsAfterThirtySecondOutage to verify scenario coverage",
+    "Phase observations are raw arrival times; no one-second clock compliance claim"
+  ]
+}
