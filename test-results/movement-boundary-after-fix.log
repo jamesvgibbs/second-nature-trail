@@ -1,0 +1,11 @@
+✔ HTTP rejected move commits due award and trade cancellation before restart (140.510041ms)
+✔ move uses one captured clock when time crosses deadline inside dispatch (128.119459ms)
+✔ failed boundary persistence rolls back award and restores clock and movement retry (124.085042ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 441.818916

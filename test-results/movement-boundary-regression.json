@@ -1,0 +1,22 @@
+{
+  "capturedAt": "2026-11-09T21:54:15.211Z",
+  "nodeVersion": "v24.20.0",
+  "baselineCommit": "9252731",
+  "baselineServerHash": "d269f916dfd2f23e2be46dd7b125bf9520664357a49e88a496ad07cae6493620",
+  "fixedServerHash": "ad5074049a7af49d381eb64596305ae2206f1dfeaafa84c5425525b214a81cd7",
+  "engineHash": "4fde6096ce97d58f5f8d3e8257275aebadbb69a65db16a95b9e330122cbec442",
+  "testHash": "7958e13157aee7ae0f3b955ee936030b23a8d1a7c9cd402d42f43dd11a5fc0d6",
+  "baseline": {
+    "tests": 3,
+    "passed": 0,
+    "failed": 3,
+    "log": "movement-boundary-9252731-before-fix.log"
+  },
+  "fixed": {
+    "tests": 3,
+    "passed": 3,
+    "failed": 0,
+    "log": "movement-boundary-after-fix.log"
+  },
+  "scope": "Actual authenticated HTTP, SSE lease, fileSQLite, reopened database. Production250ms timer callback is manually scheduled to isolate request-boundary behavior; clock and completed objective are explicit fixtures. Not a real-time rehearsal."
+}
