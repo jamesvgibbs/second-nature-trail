@@ -111,6 +111,97 @@ test("player invitations never grant operator privileges; presentation has no se
   }
 });
 
+test("host session opens safe display without replacing host authentication", { timeout: 10000 }, async () => {
+  const app = await start();
+  const playerController = new AbortController();
+  const displayController = new AbortController();
+  const deadline = setTimeout(() => displayController.abort(), 5000);
+  const assertAudience = (view) => {
+    assert.equal(view.safeVisuals, true);
+    for (const key of ["audit", "controlOwner", "connections", "me", "rules", "contentHash"])
+      assert.equal(Object.hasOwn(view, key), false, `Audience must not receive ${key}`);
+    for (const player of view.players)
+      for (const key of ["setup", "ready", "tutorial", "connectionStatus", "inventory", "items", "progress", "settings", "insects"])
+        assert.equal(Object.hasOwn(player, key), false, `Audience player must not expose ${key}`);
+    const inspect = (value) => {
+      if (!value || typeof value !== "object") return;
+      for (const [key, child] of Object.entries(value)) {
+        assert.ok(!["answer", "answerKey", "questions", "task", "challenge", "secretHint", "clues"].includes(key), `Audience must not receive ${key}`);
+        inspect(child);
+      }
+    };
+    inspect(view);
+  };
+  try {
+    const host = await app.login("/api/host/login", "local-host-one");
+    // A separate player session makes the audience privacy assertions non-vacuous.
+    const player = await app.login("/api/join", "demo-1");
+    const playerStream = await fetch(app.base + "/api/events?client=audience-fixture", {
+      headers: { Cookie: player }, signal: playerController.signal,
+    });
+    assert.equal(playerStream.status, 200);
+    await playerStream.body.getReader().read();
+    const setup = await app.request("/api/action", {
+      type: "setup", requestId: "audience-fixture-setup", character: 0, palette: 0,
+      insects: true, settings: {},
+    }, player, { "x-trail-client": "audience-fixture" });
+    assert.equal(setup.status, 200, await setup.clone().text());
+
+    const display = await app.request("/api/presentation", undefined, host);
+    assert.equal(display.status, 200);
+    assert.equal(display.headers.get("set-cookie"), null);
+    const initial = await display.json();
+    assertAudience(initial);
+    assert.ok(initial.players.some((p) => p.id === "neighbor-1"));
+
+    const stream = await fetch(app.base + "/api/events?presentation=1", {
+      headers: { Cookie: host }, signal: displayController.signal,
+    });
+    assert.equal(stream.status, 200);
+    assert.equal(stream.headers.get("set-cookie"), null);
+    const reader = stream.body.getReader(), decoder = new TextDecoder();
+    let buffered = "";
+    const nextState = async () => {
+      for (;;) {
+        const boundary = buffered.indexOf("\n\n");
+        if (boundary >= 0) {
+          const event = buffered.slice(0, boundary);
+          buffered = buffered.slice(boundary + 2);
+          if (!event.startsWith("event: state\n")) continue;
+          return JSON.parse(event.split("\n").filter((line) => line.startsWith("data: ")).map((line) => line.slice(6)).join("\n"));
+        }
+        const chunk = await reader.read();
+        assert.equal(chunk.done, false, "Display stream ended before its state update");
+        buffered += decoder.decode(chunk.value, { stream: true });
+      }
+    };
+    const opening = await nextState();
+    assertAudience(opening);
+    assert.equal(opening.event.phase, "draft");
+    assert.ok(opening.players.some((p) => p.id === "neighbor-1"));
+
+    assert.equal((await app.request("/api/host/state", undefined, host)).status, 200);
+    const lobby = await app.request("/api/host/action", {
+      type: "lobby", requestId: "host-with-display-lobby", reason: "Verify shared host/display session",
+    }, host);
+    assert.equal(lobby.status, 200, await lobby.clone().text());
+    let updated;
+    do { updated = await nextState(); assertAudience(updated); }
+    while (updated.event.phase !== "lobby");
+    const stillHost = await app.request("/api/host/state", undefined, host);
+    assert.equal(stillHost.status, 200);
+    const privateState = await stillHost.json();
+    assert.equal(privateState.event.phase, "lobby");
+    assert.ok(privateState.audit.length > 0);
+    assert.ok(privateState.players.some((p) => Object.hasOwn(p, "connectionStatus")));
+  } finally {
+    clearTimeout(deadline);
+    displayController.abort();
+    playerController.abort();
+    await app.close();
+  }
+});
+
 test("explicit takeover revokes the old session and a player cannot act without its stream lease", async () => {
   const app = await start();
   const controllers = [];
