@@ -397,13 +397,13 @@ function detachStream() {
 }
 async function connect(takeover = false) {
   const generation = detachStream();
-  if (!isPresentation && !takeover) {
+  if (!isPresentation) {
     try {
       const lease = await api(
         "/api/lease?client=" + encodeURIComponent(client),
       );
       if (generation !== streamGeneration) return;
-      if (lease.otherClient) {
+      if (lease.otherClient && !takeover) {
         takenOver();
         return;
       }

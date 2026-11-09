@@ -25,3 +25,12 @@ Actual binary: `/Users/jgibbs/.nvm/versions/node/v24.20.0/bin/node`, verified `v
 - Server/client syntax and whitespace checks passed. No full suite, load test, or browser interaction was run for this patch during the capacity run.
 
 Native browser regression of the new guidance and sign-in-required UI remains pending. The previously observed pause state does not prove authenticated no-submit behavior while paused; that separate check needs independent player/operator profiles. Review and merge are deferred until the active capacity run finishes.
+
+
+## Native review follow-up: expired-session takeover
+
+The root agent's native review of `42523bb` verified player-to-host conflict guidance with a subsequent committed player emote, operator-to-player rejection without a takeover offer, and safe host presentation access followed by a committed host lobby action. These are bounded observed passes; the captures and full native ledger are maintained separately by the root agent.
+
+The same review exposed a recovery gap: restarting the isolated in-memory candidate server invalidated its cookies. The player showed RECONNECTING, and Resume here → Take over here remained there because `connect(true)` skipped the player authorization probe. That observation is a failed recovery check, not a sign-in-required pass.
+
+The follow-up probes player authorization for every connection attempt, including explicit takeover. A valid takeover ignores `otherClient` as intended, while 401 enters the existing SIGN-IN REQUIRED state before any new stream opens. Generation guards still discard stale probe completions. Added adapter regressions cover both expired-cookie takeover and authorized takeover with another client lease. Native retest of the amended candidate remains pending; the main/capacity build is unchanged.

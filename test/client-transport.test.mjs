@@ -331,3 +331,36 @@ test("cross-role join failure shows role guidance instead of invitation takeover
   assert.equal(shown, "Use a separate browser or profile");
   assert.equal(c.dialog, undefined, "Cross-role conflict must not offer invitation takeover");
 });
+
+
+test("expired player authorization stops explicit takeover before opening SSE", async () => {
+  const c = environment();
+  await c.connect();
+  const previous = c.stream;
+  previous.listeners.state({ data: JSON.stringify(snapshot(1)) });
+  c.api = async () => { throw Object.assign(Error("Expired session"), { status: 401 }); };
+  await c.connect(true);
+  assert.equal(previous.closed, true);
+  assert.equal(c.sources.length, 1, "No takeover stream may open with an expired cookie");
+  assert.equal(c.authorizationLost, true);
+  assert.equal(c.connected, false);
+  assert.ok(c.$("#connection").children.includes("SIGN-IN REQUIRED"));
+  assert.equal(c.dialog.title, "Player sign-in required");
+  previous.listeners.state({ data: JSON.stringify(snapshot(2)) });
+  assert.equal(c.connected, false);
+});
+
+test("authorized explicit takeover probes authentication and permits another client lease", async () => {
+  const c = environment();
+  const paths = [];
+  c.api = async (path) => { paths.push(path); return { otherClient: true }; };
+  await c.connect(true);
+  assert.equal(paths.length, 1);
+  assert.equal(paths[0], "/api/lease?client=tab");
+  assert.equal(c.sources.length, 1);
+  assert.equal(c.stream.url, "/api/events?client=tab&takeover=1");
+  assert.equal(c.connected, false, "Await the accepted current-stream snapshot");
+  c.stream.listeners.state({ data: JSON.stringify(snapshot(1)) });
+  assert.equal(c.connected, true);
+  assert.equal(c.authorizationLost, false);
+});
