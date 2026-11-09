@@ -1,5 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
+import { verifyResults } from "../scripts/verify-results.mjs";
 import { Engine } from "../engine.mjs";
 import { CHAPTERS, SPATIAL_CHAPTERS, RULES } from "../content.mjs";
 function fixture(n = 2) {
@@ -415,6 +417,27 @@ test("recorded complete run allocates fifteen distinct qualifying recipients", (
   assert(snapshot.actions.some((a) => a.type === "qualifyingTrade"));
   assert(snapshot.actions.some((a) => a.type === "assistCompleted"));
   assert(snapshot.players.every((p) => p.progress.every((r) => r.complete)));
+  const hash = (value) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
+  const journal = {
+    snapshot: structuredClone(f.e.state.snapshot),
+    snapshotHash: hash(f.e.state.snapshot),
+    requests: structuredClone(f.e.state.requests),
+    requestsHash: hash(f.e.state.requests),
+    snapshotAt: snapshot.at,
+    contentHash: snapshot.contentHash,
+    seed: snapshot.seed,
+    capturedAt: new Date(snapshot.at + 1).toISOString(),
+    phase: f.e.state.phase,
+  };
+  const independent = verifyResults(snapshot, { requireFifteen: true, journal });
+  assert.equal(independent.journalBound, true);
+  assert.equal(independent.rankingPass, true, JSON.stringify(independent.rankingErrors));
+  assert.equal(independent.inventoryReplayPass, true, JSON.stringify(independent.inventoryErrors));
+  assert.equal(independent.recordedOutcomeReplayPass, true, JSON.stringify(independent.actionErrors));
+  assert.equal(independent.fifteenQualifyingDistinctRecipients, true);
+  assert(!independent.evidenceGaps.some((gap) => gap.includes("mystery")));
+  assert(independent.evidenceGaps.some((gap) => gap.includes("later clock read")));
+  assert.equal(independent.fullActionReconciliationPass, false);
   const owners = new Map();
   for (const event of snapshot.actions) {
     if (event.type === "join")
