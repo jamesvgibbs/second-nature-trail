@@ -610,3 +610,39 @@ The operator then advanced with reason “Finish accelerated keyboard finale rev
 Artifacts: [harder challenge complete](../test-results/challenge8-keyboard-complete.jpg), [challenge retained after refresh](../test-results/challenge8-keyboard-persisted.jpg), [keyboard finale contribution](../test-results/finale-keyboard-contribution.jpg), [finale retained after refresh](../test-results/finale-keyboard-persisted.jpg), and [synthetic preview awards](../test-results/finale-keyboard-awards.jpg).
 
 These are bounded keyboard checks for chapter-8 harder-challenge gating/completion/idempotent feedback and finale contribution/persistence on frozen `f1218bf`. Other harder challenges and input methods, fallback finale behavior, full-event timing, prize immutability, platform/novice review, and other optional/social/safety gates remain separate. The completed 48-cell main/knowledge count is unchanged. The main checkout had meanwhile advanced to role-fix revision `c37f09a` with its reported test results; these frozen UI observations do not automatically certify that later runtime. No runtime code was changed for this review.
+
+
+## Fallback finale ending regression and native retest, 2026-11-09
+
+Source review confirmed that `engine.tick()` authors the unmet-target ending only when the finale transitions to awards. The earlier client rendered `event.finale.ending` only during the finale, then replaced it with a generic restored-neighborhood heading in awards/closed. Consequently the comic alternate ending never appeared. Client fix **`0991c0d`** renders the escaped authoritative ending above the unchanged award list in both results phases, with neutral heading **“The end of the trail.”** It changes no engine clock, contribution target, score, or award allocation. Focused tests execute the actual renderer with real engine success/fallback transitions, player/presentation projections, missing ending, and escaping cases.
+
+The root agent reproduced the missing ending on frozen **`f1218bf`**, chapter-8 waiting-preview session **65799**, with no main objectives or finale contributions. Host End scoring and Advance logged synthetic **19:06:40 / 19:06:55 EST**, reflecting the helper's 49-minute offset. Awards showed fifteen Unawarded rows and no ending. The baseline screenshot documents this failure; the server stopped normally.
+
+On fresh **`0991c0d`** preview session **9528**, setup explicitly chose robots. End scoring and Advance at synthetic **19:08:04 / 19:08:06 EST** produced the neutral heading and the exact authoritative fallback: **“The neighborhood is mostly online. The AI is still trying to reboot a toaster. Everyone gets home safely.”** Fifteen Unawarded rows remained. The root agent visually reviewed the fixed awards screenshot. Chrome **157.0.8103.51** opened the host's safe presentation and displayed the same fallback with **FRIENDLY ROBOT VISUALS** and no private operator controls. Host closure at synthetic **19:08:20 EST**, followed by Safari Cmd+R, retained the ending and awards. This server also stopped normally with exit code 0.
+
+The closed view still showed the misleading secondary timer label LOBBY at that revision, despite its CLOSED phase header. That separate cosmetic defect was corrected by the later display-context patch and tested below.
+
+Artifacts: [missing fallback before the fix](../test-results/finale-fallback-before.jpg), [fixed fallback in awards](../test-results/finale-fallback-fixed-awards.jpg), [fixed safe presentation](../test-results/finale-fallback-fixed-presentation.jpg), and [fallback retained in closed state](../test-results/finale-fallback-fixed-closed.jpg).
+
+## Paused phase context and success-ending native review, 2026-11-09
+
+The paused-context follow-up **`d4c25c2`** adds an allowlisted `event.pausedPhase` for display, preserving authoritative `phase: paused`. The renderer uses that display context to retain countdown/brag/finale panels; chapter and finale actions stay disabled while paused. Player and presentation projections retain the same public standings during a paused brag break. Closed events with no timer now show **ENDED**. No gameplay clock, scoring, or award state logic changed. Nine focused projection/renderer tests passed before native review. The patch was subsequently merged into main as **`6c5d511`**; the root's broader full-suite run was still pending when this ledger was prepared, so no result is claimed here.
+
+Native review used fresh **ordinary server session 9570 from the isolated `d4c25c2` branch**, with no clock offset, and separate Safari **27.2 (21625.2.8.18.4)** player / Chrome **157.0.8103.51** operator profiles. Setup chose robots by pointer; tutorial practice was intentionally unplayed. The operator's observed log times below are actual **EST**.
+
+| Host action / time | Observed player or presentation result |
+|---|---|
+| Open lobby 18:22:00; Start 18:22:02; Pause 18:22:04 | **PAUSED 00:09**, retaining the countdown panel. Cmd+R retained that panel and **00:09**. |
+| Resume 18:22:12 | **COUNTDOWN 00:08**, followed by chapter play at **04:50**. |
+| Advance 18:22:26; Pause brag 18:22:28 | **PAUSED 01:59**, Bragging rights, ten displayed zero-score standings rows, chapter-1 prize Unawarded, and chapter-2 preview. |
+| Open safe presentation during paused brag | Chrome displayed **PAUSED 01:59**, the same ten rows, friendly-robot footer, and no private operator controls. |
+| Resume 18:22:39; End scoring 18:22:40; Pause finale 18:22:42 | **PAUSED 03:59**, finale zero toward one repair, Restore disabled. Cmd+R retained zero, disabled Restore, and **03:59**. |
+| Resume 18:22:51 | Restore enabled at **03:58**. Native keyboard navigation from map focus to Restore, then Enter, produced success at **03:56**, disabled **Your home is restored**, and the repair-1 toast. |
+| Advance 18:23:00 | Awards displayed the authoritative success ending. |
+| Close 18:23:02 | **CLOSED / ENDED**, retaining the same success ending. |
+
+No main objective was completed and no points were earned. Early End scoring during chapter 1 yielded **eight Unawarded rows**—one chapter result plus seven whole-event categories—not the fifteen rows of a normally completed event. The root agent visually reviewed the paused-countdown screenshot; the other new states were reviewed through native accessibility observations and captured. The owned server stopped normally with exit code 0.
+
+Artifacts: [paused countdown retained](../test-results/paused-countdown-context.jpg), [paused brag context](../test-results/paused-brag-context.jpg), [paused brag safe presentation](../test-results/paused-brag-presentation.jpg), [paused finale and disabled Restore](../test-results/paused-finale-context.jpg), [success ending in results](../test-results/finale-success-results.jpg), and [closed ENDED label](../test-results/closed-ended-label.jpg).
+
+These are narrow native rendering, pause-context, reload, and contribution-availability checks. They do not establish authenticated no-submit behavior for targeting automatic confirmation while paused, full-event duration, fifteen distinct winners, prize immutability, or broad platform/novice acceptance. The completed 48-cell main/knowledge matrix retains its own frozen-source provenance; these later checks do not replace that matrix or retroactively certify every surface on `6c5d511`.
