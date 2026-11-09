@@ -12,6 +12,14 @@ DEMO=1 npm start
 
 Open http://localhost:4173/?invite=demo-1. There are twenty local test invitations, `demo-1` through `demo-20`. Open `/host` and use `local-host-one` or `local-host-two` for the two test operators. `/presentation` is the safe meeting display; its separate demo credential is `local-presentation`. These credentials are deliberately limited to demo mode. Never deploy with `DEMO=1`.
 
+To review one chapter after completing setup, start a waiting local preview:
+
+```sh
+node scripts/preview-chapter.mjs 6 --wait-for-start
+```
+
+Open the printed invitation, finish setup/practice, then press Enter in that terminal. The selected chapter starts once; earlier chapters remain visibly unplayed. Later chapters receive their full five-minute clock. Chapter 1 retains the normal countdown within its five-minute window. Without the flag, the existing immediate preview behavior is unchanged. This helper is not full-event timing evidence.
+
 ```sh
 npm test
 ```
