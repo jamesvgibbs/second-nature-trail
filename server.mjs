@@ -88,19 +88,20 @@ export function createGameServer({
     );
     const saved = db.prepare("SELECT state FROM game WHERE id=1").get();
     const engine = new Engine(saved ? { state: JSON.parse(saved.state) } : {});
-    const persist = () =>
+    const persist = (serialized = JSON.stringify(engine.state)) =>
       db
         .prepare(
           "INSERT INTO game VALUES(1,?) ON CONFLICT(id) DO UPDATE SET state=excluded.state",
         )
-        .run(JSON.stringify(engine.state));
+        .run(serialized);
     if (saved) persist();
     const mutate = (fn) => {
       const before = JSON.stringify(engine.state);
       db.exec("BEGIN IMMEDIATE");
       try {
         const result = fn();
-        if (JSON.stringify(engine.state) !== before) persist();
+        const after = JSON.stringify(engine.state);
+        if (after !== before) persist(after);
         db.exec("COMMIT");
         return result;
       } catch (e) {
@@ -645,7 +646,11 @@ export function createGameServer({
     const timer = setInterval(() => {
       try {
         engine.setConnected?.([...leases.keys()]);
-        mutate(() => engine.tick());
+        if (
+          engine.state.deadline !== null &&
+          engine.now() >= engine.state.deadline
+        )
+          mutate(() => engine.tick());
         if (movementDirty) {
           persist();
           movementDirty = false;
