@@ -151,12 +151,30 @@ test('consumed item IDs cannot be allocated again and altered scoring outcomes a
   const t=fixture();t.players[0].progress[0].score++;
   assert.equal(verifyResults(t).recordedOutcomeReplayPass,false);
 });
-test('completion log milliseconds later are bounded evidence, not false exact-time failure',()=>{
+test('legacy separate clock reads remain explicitly qualified instead of claiming exact timing',()=>{
   const s=fixture();
   s.actions.filter(a=>a.type==='delivery'&&a.step===3).forEach(a=>a.at++);
   const r=verifyResults(s);
   assert.equal(r.recordedOutcomeReplayPass,true);
   assert.equal(r.fullActionReconciliationPass,false);
   assert(r.objectiveTimeObservations.every(o=>o.logDelayMs===1));
-  assert(r.evidenceGaps.some(g=>g.includes('later clock read')));
+  assert(r.evidenceGaps.some(g=>g.includes('separate clock read')));
+});
+
+test('exact completion records remove legacy timing gap and reject duplicate or inconsistent durations',()=>{
+  const s=fixture();
+  for(const p of s.players)s.actions.push({type:'objectiveCompleted',playerId:p.id,chapter:0,at:100,completedAt:100,chapterOpenedAt:0,timeMs:100});
+  const r=verifyResults(s);
+  assert.equal(r.recordedOutcomeReplayPass,true,JSON.stringify(r.actionErrors));
+  assert.equal(r.fullActionReconciliationPass,true);
+  assert(r.objectiveTimeObservations.every(o=>o.source==='objectiveCompleted'));
+  const duplicate=structuredClone(s);duplicate.actions.push(structuredClone(duplicate.actions.at(-1)));
+  assert.equal(verifyResults(duplicate).recordedOutcomeReplayPass,false);
+  for(const [field,value]of[['timeMs',101],['completedAt',101],['chapterOpenedAt',-1],['at',101],['playerId','unknown']]){
+    const mutated=structuredClone(s);mutated.actions.at(-1)[field]=value;
+    assert.equal(verifyResults(mutated).recordedOutcomeReplayPass,false,field);
+  }
+  const paused=structuredClone(s);paused.audit.push({type:'pause'});
+  const completion=paused.actions.at(-1);completion.completedAt=completion.at=30100;completion.chapterOpenedAt=30000;
+  assert.equal(verifyResults(paused).fullActionReconciliationPass,true);
 });

@@ -177,7 +177,19 @@ export function verifyResults(snapshot, { requireFifteen = false, journal = null
   }
   const chapterOpenings = new Map(snapshot.actions.filter(a => a.type === 'phase' && a.phase === 'chapter').map(a => [a.chapter, a.boundary-(a.chapter === 0 ? rules.countdownMs : 0)]));
   const intervened = (snapshot.audit || []).some(a => ['pause','resume','advance','shorten','skip','endScoring'].includes(a.type));
-  if (intervened) gap('Objective times after operator recovery require a separate schedule reconstruction; time replay omitted.');
+  const completionRecords = new Map();
+  for (const record of snapshot.actions.filter(a => a.type === 'objectiveCompleted')) {
+    const key = `${record.playerId}:${record.chapter}`;
+    if (completionRecords.has(key)) actionErrors.push(`Duplicate exact objective completion: ${key}`);
+    completionRecords.set(key,record);
+    const player = players.find(p => p.id === record.playerId);
+    if (!player?.progress[record.chapter]?.complete) actionErrors.push(`Exact completion for unknown or incomplete objective: ${key}`);
+    if (![record.at,record.completedAt,record.chapterOpenedAt,record.timeMs].every(Number.isFinite)
+      || record.at !== record.completedAt || record.timeMs < 0
+      || record.completedAt > snapshot.at
+      || record.timeMs !== record.completedAt-record.chapterOpenedAt)
+      actionErrors.push(`Invalid exact objective completion: ${key}`);
+  }
   for (const p of players) {
     const mysteryEvents = snapshot.actions.filter(a => a.type === 'mystery' && a.playerId === p.id && a.correct);
     const mysteryRequests = accepted.filter(a => a.playerId === p.id && a.request.type === 'mystery' && a.request.expectedChapter === 7 && a.result?.correct === true && a.result?.ok === true);
@@ -205,13 +217,19 @@ export function verifyResults(snapshot, { requireFifteen = false, journal = null
       if (!same(actual.quiz.map(q => q?.correct ?? null),r.quiz)) actionErrors.push(`${p.id} chapter ${c}: quizzes differ from action replay`);
       if(c===4 && actual.targetHits!==r.hits) actionErrors.push(`${p.id}: target hits differ`);
       if(c===5 && actual.budget!==r.budget) actionErrors.push(`${p.id}: retained budget differs`);
-      if(r.complete && !intervened) {
-        if(!chapterOpenings.has(c)) gap('Chapter boundary records missing; objective times cannot all be replayed.');
+      if(r.complete) {
+        const exact=completionRecords.get(`${p.id}:${c}`);
+        if(exact) {
+          if(actual.timeMs!==exact.timeMs) actionErrors.push(`${p.id} chapter ${c}: frozen objective time differs from exact completion record`);
+          if(!intervened && c>0 && chapterOpenings.has(c) && exact.chapterOpenedAt!==chapterOpenings.get(c)) actionErrors.push(`${p.id} chapter ${c}: exact opening differs from normal chapter boundary`);
+          objectiveTimeObservations.push({playerId:p.id,chapter:c,source:'objectiveCompleted',frozenTimeMs:actual.timeMs,completedAt:exact.completedAt,chapterOpenedAt:exact.chapterOpenedAt,outcomeLoggedAt:r.at,logDelayMs:r.at-exact.completedAt});
+        } else if(intervened) gap('Legacy objective times after operator recovery require a separate schedule reconstruction; exact completion records are absent.');
+        else if(!chapterOpenings.has(c)) gap('Chapter boundary records missing; objective times cannot all be replayed.');
         else {
           const impliedCompletion=chapterOpenings.get(c)+actual.timeMs;
-          objectiveTimeObservations.push({playerId:p.id,chapter:c,frozenTimeMs:actual.timeMs,outcomeLoggedAt:r.at,impliedCompletionAt:impliedCompletion,logDelayMs:r.at-impliedCompletion});
-          if(!Number.isFinite(actual.timeMs) || actual.timeMs<0 || impliedCompletion>r.at) actionErrors.push(`${p.id} chapter ${c}: frozen objective completion is after its outcome record or invalid`);
-          gap('Objective completion time is stored in frozen progress, but outcome logs use a later clock read. Only upper-bound consistency is checked; exact objective-time action replay is unavailable.');
+          objectiveTimeObservations.push({playerId:p.id,chapter:c,source:'legacy frozen progress',frozenTimeMs:actual.timeMs,outcomeLoggedAt:r.at,impliedCompletionAt:impliedCompletion,logDelayMs:r.at-impliedCompletion});
+          if(!Number.isFinite(actual.timeMs) || actual.timeMs<0) actionErrors.push(`${p.id} chapter ${c}: invalid frozen objective time`);
+          gap('Legacy objective completion time is stored in frozen progress, but outcome logs use a separate clock read (before cargo completion, after other completions). Exact objective-time action replay is unavailable.');
         }
       }
     });

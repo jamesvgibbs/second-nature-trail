@@ -436,8 +436,10 @@ test("recorded complete run allocates fifteen distinct qualifying recipients", (
   assert.equal(independent.recordedOutcomeReplayPass, true, JSON.stringify(independent.actionErrors));
   assert.equal(independent.fifteenQualifyingDistinctRecipients, true);
   assert(!independent.evidenceGaps.some((gap) => gap.includes("mystery")));
-  assert(independent.evidenceGaps.some((gap) => gap.includes("later clock read")));
-  assert.equal(independent.fullActionReconciliationPass, false);
+  assert.equal(independent.evidenceGaps.length, 0, JSON.stringify(independent.evidenceGaps));
+  assert.equal(independent.fullActionReconciliationPass, true);
+  assert.equal(independent.objectiveTimeObservations.length, 24 * 8);
+  assert(independent.objectiveTimeObservations.every((r) => r.source === "objectiveCompleted"));
   const owners = new Map();
   for (const event of snapshot.actions) {
     if (event.type === "join")
@@ -705,4 +707,61 @@ test("restoration denominator is stable after event start regardless of connecte
   delivery(f);
   assert.equal(f.e.event().restoration.completed, 1);
   assert.equal(f.e.event().restoration.total, 24);
+});
+
+test("cargo completion records one exact clock reading across replay and frozen export", () => {
+  const f = fixture(), baseNow = f.e.now;
+  let reads = 0;
+  f.e.now = () => baseNow() + reads++;
+  delivery(f);
+  const record = f.e.state.actions.find((a) => a.type === "objectiveCompleted" && a.playerId === "p0");
+  assert(record);
+  assert.equal(record.chapter, 0);
+  assert.equal(record.at, record.completedAt);
+  assert.equal(record.timeMs, record.completedAt - record.chapterOpenedAt);
+  assert.equal(record.timeMs, f.e.get("p0").progress[0].timeMs);
+  const outcome = f.e.state.actions.filter((a) => a.type === "delivery").at(-1);
+  assert(record.completedAt > outcome.at, "cargo outcome is logged before the exact completion read");
+  const prior = Object.entries(f.e.state.requests).filter(([key, value]) => key.startsWith("p0:") && JSON.parse(value.fingerprint).type === "task").at(-1)[1];
+  f.e.dispatch("p0", JSON.parse(prior.fingerprint));
+  assert.equal(f.e.state.actions.filter((a) => a.type === "objectiveCompleted").length, 1);
+  f.host("endScoring");
+  const snapshot = f.e.exportResults();
+  const frozenRecord = snapshot.actions.find((a) => a.type === "objectiveCompleted");
+  assert.deepEqual(frozenRecord, record);
+  frozenRecord.timeMs = -1;
+  f.act("p0", "finale");
+  assert.equal(f.e.exportResults().actions.find((a) => a.type === "objectiveCompleted").timeMs, record.timeMs);
+});
+
+test("shared task completion records exact pause-adjusted time despite later outcome logging", () => {
+  const f = fixture();
+  f.advance(420000 - 10000);
+  const baseNow = f.e.now;
+  let reads = 0;
+  f.e.now = () => baseNow() + reads++;
+  for (let step = 0; step < 6; step++) {
+    if (step === 5) {
+      const beforePause = f.e.state.chapterOpenedAt;
+      f.host("pause");
+      f.advance(30000);
+      f.host("resume");
+      assert(f.e.state.chapterOpenedAt >= beforePause + 30000);
+    }
+    locate(f.e, "p0", f.e.view("p0").chapter.task.target);
+    f.act("p0", "task", { choice: 0 });
+    f.act("p0", "task", { choice: CHAPTERS[1].tasks[step].answer });
+  }
+  const record = f.e.state.actions.find((a) => a.type === "objectiveCompleted" && a.playerId === "p0");
+  const outcome = f.e.state.actions.filter((a) => a.type === "spatialTask").at(-1);
+  assert.equal(record.chapter, 1);
+  assert.equal(record.at, record.completedAt);
+  assert.equal(record.chapterOpenedAt, f.e.state.chapterOpenedAt);
+  assert.equal(record.timeMs, record.completedAt - record.chapterOpenedAt);
+  assert.equal(record.timeMs, f.e.get("p0").progress[1].timeMs);
+  assert(record.timeMs < 1000, "thirty paused seconds do not enter objective time");
+  assert(outcome.at > record.completedAt, "spatial outcome uses a later clock read");
+  const prior = Object.entries(f.e.state.requests).filter(([key, value]) => key.startsWith("p0:") && JSON.parse(value.fingerprint).type === "task").at(-1)[1];
+  f.e.dispatch("p0", JSON.parse(prior.fingerprint));
+  assert.equal(f.e.state.actions.filter((a) => a.type === "objectiveCompleted").length, 1);
 });

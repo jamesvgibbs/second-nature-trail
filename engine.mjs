@@ -903,7 +903,16 @@ export class Engine {
     r.score += points;
     if (r.step === this.taskCount(c)) {
       r.complete = true;
-      r.timeMs = this.now() - this.state.chapterOpenedAt;
+      const completedAt = this.now();
+      r.timeMs = completedAt - this.state.chapterOpenedAt;
+      this.log("objectiveCompleted", {
+        at: completedAt,
+        playerId: p.id,
+        chapter: c,
+        completedAt,
+        chapterOpenedAt: this.state.chapterOpenedAt,
+        timeMs: r.timeMs,
+      });
       this.state.contributions[c]++;
       if (r.pendingAssist) {
         const h = this.get(r.pendingAssist),
@@ -1149,7 +1158,16 @@ export class Engine {
       r.delivery = { stage: "load", loaded: null, route: null, visited: false };
       if (r.step === this.taskCount(c)) {
         r.complete = true;
-        r.timeMs = this.now() - this.state.chapterOpenedAt;
+        const completedAt = this.now();
+        r.timeMs = completedAt - this.state.chapterOpenedAt;
+        this.log("objectiveCompleted", {
+          at: completedAt,
+          playerId: p.id,
+          chapter: c,
+          completedAt,
+          chapterOpenedAt: this.state.chapterOpenedAt,
+          timeMs: r.timeMs,
+        });
         this.state.contributions[0]++;
         if (r.pendingAssist) {
           const h = this.get(r.pendingAssist),
