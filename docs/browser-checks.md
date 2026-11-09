@@ -340,4 +340,34 @@ The player automatically walked to Night market. Selecting the community garden 
 
 No gameplay error or penalty was observed. Artifacts: [chapter 7 pointer main completion](../test-results/chapter7-pointer-complete.jpg), [reward redemption and disabled controls](../test-results/chapter7-pointer-rewards.jpg), and [learning completion retained after refresh](../test-results/chapter7-pointer-learning-persisted.jpg).
 
-This closes **M7 pointer**, **Q7.1 pointer**, and **Q7.2 pointer**, bringing the matrix to **33 of 48** cells. Chapter 7 keyboard completion and input-method comparison remain pending. These observations apply to the frozen review source and do not establish human timing, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
+This closes **M7 pointer**, **Q7.1 pointer**, and **Q7.2 pointer**, bringing the matrix to **33 of 48** cells. At the end of this pointer run, chapter 7 keyboard completion and input-method comparison remained pending; the later keyboard result is recorded below. These observations apply to the frozen review source and do not establish human timing, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
+
+
+## Chapter 7 keyboard-only, final revision, 2026-11-09
+
+The root agent completed this automated native Safari check from the detached review checkout **`/tmp/second-nature-trail-browser-f1218bf`**, frozen at **`f1218bf`**, retaining runtime **`10a674c`**, UI **`f012152`**, and the waiting preview helper. It used verified NVM **Node v24.20.0** and Safari **27.2 (21625.2.8.18.4)**. The outer window was **1447×889**; the CSS viewport was not measured.
+
+Fresh in-memory session **3745** used chapter 7 with `--wait-for-start`, beginning the normal full **300-second** window after setup. Both visual-choice radios were initially unselected; setup explicitly chose friendly robots by pointer and retained the default Keyboard preference. The first chapter observation showed **04:56**. **All gameplay after entry used keyboard input**, beginning with Tab, Tab, Enter from the page to activate the objective. The owned preview was stopped with Ctrl+C and exited with code 0.
+
+Each job was inspected and confirmed, its visible work order read, then its decision selected and confirmed.
+
+| Job / selected choice | Observed score / earned tokens | Chapter time remaining |
+|---|---|---|
+| Elm: Cable (choice 2) | 10 / 2 | 04:23 |
+| Oak: Repair parts (choice 1) | 20 / 4 | 04:10 |
+| Maple: Food (choice 3) | 30 / 6 | 03:53 |
+| Juniper: Support with repair parts (choice 1) | 40 / 8 | 03:40 |
+| Cedar: Cable (choice 2) | 50 / 10 | 03:25 |
+| Willow: Food and terms (choice 3) | 60 / 12; objective 6 of 7 | 02:46 |
+
+One native-input interruption occurred at Willow after choice 3 was selected but before confirmation. A fresh accessibility observation and screenshot inspected the unchanged state without acting; Tab then verified Confirm focus, and Enter succeeded. Recovery required no pointer gameplay.
+
+At Night market, selecting the community garden (choice 1, cost 4) produced **score 60 / 7 of 7 / balance 8** at **02:34**, recorded in the completion screenshot. From map focus, six Tab presses reached Rewards; focus was verified before Enter. The garden and 12-token celebration were disabled. Tab skipped the disabled garden and reached the 8-token welcome station; Enter redeemed it, producing **balance 0 / earned 12**, both funded projects checked and disabled, and celebration still disabled. The rewards screenshot records this state. Escape closed the panel at **02:16**, showing score 60, progress 7 of 7, and both funded-project texts.
+
+- Q7.1: eligibility and redemption terms (choice 1), first answer correct; score **70** at **02:03**.
+- Q7.2: fictional game rewards (choice 2), first answer correct; score **80** at **01:53**.
+- Cmd+R at **01:48** retained score **80**, progress **7 of 7**, zero balance, and both funded-project texts. Three Tab presses and Enter reopened Learning encounters; both completion checkmarks were observed.
+
+No gameplay error or penalty was observed. Artifacts: [chapter 7 keyboard main completion](../test-results/chapter7-keyboard-complete.jpg), [reward redemption and disabled controls](../test-results/chapter7-keyboard-rewards.jpg), and [learning completion retained after refresh](../test-results/chapter7-keyboard-learning-persisted.jpg).
+
+This closes **M7 keyboard**, **Q7.1 keyboard**, and **Q7.2 keyboard**, bringing the matrix to **36 of 48** cells. Chapters **2, 3, 4, 6, 7, and 8** now have both-method evidence; chapters **1 and 5** remain pending. Chapter 7's separate runs produced the same completed jobs, garden and welcome station, zero remaining balance, both first-correct answers, and persisted **80 points / 7 of 7 / both learning checkmarks**. This is observed outcome equivalence on the frozen source, not a human timing or usability claim, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
