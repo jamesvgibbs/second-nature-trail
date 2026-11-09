@@ -394,4 +394,28 @@ Before trip 2, the visible inventory showed **one carried cable / reserve six**;
 
 Artifacts: [chapter 1 pointer completion](../test-results/chapter1-pointer-complete.jpg) and [learning completion retained after refresh](../test-results/chapter1-pointer-learning-persisted.jpg).
 
-This closes **M1 pointer**, **Q1.1 pointer**, and **Q1.2 pointer**, bringing the matrix to **39 of 48** cells. Chapter 1 keyboard and chapter 5 both methods remain pending. These observations apply to the frozen review source and do not establish human timing, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
+This closes **M1 pointer**, **Q1.1 pointer**, and **Q1.2 pointer**, bringing the matrix to **39 of 48** cells. At the end of this pointer run, chapter 1 keyboard and chapter 5 both methods remained pending; the later chapter-1 keyboard result is recorded below. These observations apply to the frozen review source and do not establish human timing, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
+
+
+## Chapter 1 keyboard-only, final revision, 2026-11-09
+
+The root agent completed this automated native Safari check from the detached review checkout **`/tmp/second-nature-trail-browser-f1218bf`**, frozen at **`f1218bf`**, retaining runtime **`10a674c`**, UI **`f012152`**, and the waiting preview helper. It used verified NVM **Node v24.20.0** and Safari **27.2 (21625.2.8.18.4)**. The outer window was **1447×889**; the CSS viewport was not measured.
+
+Fresh in-memory session **96864** used the waiting chapter-1 preview. Both visual-choice radios were initially unselected; setup explicitly chose friendly robots with pointer input and left Keyboard as the default. The normal **300 seconds included the 10-second countdown**, leaving **290 seconds of chapter play**; the first observed play state showed **04:47**. **All gameplay after entry used the keyboard**, beginning with Tab, Tab, Enter from the page to activate the objective. The owned preview was stopped with Ctrl+C and exited with code 0.
+
+Each of three complete trips selected the connection kit (choice 3: two cables, four slots, useful value 12), the protected paved route (choice 1), checkpoint inspection (choice 1), and delivery (choice 1), traveling between the required sites. Selections used Tab/Enter and confirmation focus was verified before activation.
+
+| Observed milestone | Score / progress | Chapter time remaining |
+|---|---|---|
+| Delivery 1 | 20 / 1 of 3 | 04:09 |
+| Delivery 2 | 40 / 2 of 3 | 03:40 |
+| Delivery 3 | 60 / 3 of 3 | 03:11 |
+| Q1.1: Plan the essential services and supplies (choice 1), first answer correct | 70 | 03:00 |
+| Q1.2: No; confirm the actual package (choice 2), first answer correct | 80 | 02:45 |
+| Cmd+R, then three Tab presses and Enter to reopen Learning encounters | 80 / 3 of 3; both completion checkmarks retained | Refresh at 02:42 |
+
+Before trip 2, the visible inventory showed **one carried cable / reserve six**; before trip 3, **zero carried cables / reserve five**, matching the pointer run. Total useful cargo value 36 is inferred from three protected loads valued at 12 each; it was not independently displayed after completion. No gameplay error, penalty, native-input interruption, or pointer gameplay occurred.
+
+Artifacts: [chapter 1 keyboard completion](../test-results/chapter1-keyboard-complete.jpg) and [learning completion retained after refresh](../test-results/chapter1-keyboard-learning-persisted.jpg).
+
+This closes **M1 keyboard**, **Q1.1 keyboard**, and **Q1.2 keyboard**, bringing the matrix to **42 of 48** cells. Only chapter **5** remains pending for both methods. The separate chapter-1 runs completed identical delivery choices, recorded both knowledge answers correctly on the first attempt, and retained **80 points / 3 of 3 / both learning checkmarks** after refresh. This is observed outcome equivalence on the frozen source, not a human timing or usability claim, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
