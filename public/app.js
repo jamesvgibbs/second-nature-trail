@@ -80,6 +80,7 @@ let projection = createProjection(),
   latestVisualIntentInsects = false;
 let state = null,
   connected = false,
+  authorizationLost = false,
   stream = null,
   target = null,
   lastMove = 0,
@@ -200,6 +201,7 @@ async function api(path, data) {
   if (!r.ok)
     throw Object.assign(Error(v.error || v.message || "Please try again."), {
       status: r.status,
+      code: v.code,
     });
   return v;
 }
@@ -220,6 +222,10 @@ async function act(type, fields = {}) {
   ].includes(type);
   startAudio();
   if (!connected) {
+    if (authorizationLost) {
+      showSignInRequired();
+      return null;
+    }
     toast("Reconnecting. Your saved progress is safe; actions are paused.");
     return null;
   }
@@ -253,7 +259,10 @@ async function act(type, fields = {}) {
     if (type !== "move" && type !== "tutorial") soundEffect();
     return v.result;
   } catch (e) {
-    if (requestGeneration === streamGeneration) toast(e.message);
+    if (requestGeneration === streamGeneration) {
+      if (e.status === 401) loseAuthorization();
+      else toast(e.message);
+    }
     return null;
   }
 }
@@ -340,7 +349,7 @@ async function join(token, takeover = false) {
     history.replaceState({}, "", location.pathname);
     await loadPlayer();
   } catch (e) {
-    if (e.status === 409) {
+    if (e.status === 409 && e.code !== "PROFILE_ROLE_CONFLICT") {
       open(
         "Continue in this browser?",
         `<p>This invitation is already open elsewhere. Taking over disconnects the other play session and restores your saved progress here.</p><div id="takeover" class="row"></div>`,
@@ -369,6 +378,7 @@ async function loadPlayer() {
     throw Error(
       "The server did not provide an ordered game snapshot. Please reload.",
     );
+  authorizationLost = false;
   safe = forceSafe || state.me?.insects !== true;
   prefs = { ...prefs, ...normalizedSettings(state.me?.settings) };
   keys = { ...defaultKeys, ...prefs.keys };
@@ -397,8 +407,12 @@ async function connect(takeover = false) {
         takenOver();
         return;
       }
-    } catch {
+    } catch (e) {
       if (generation !== streamGeneration) return;
+      if (e.status === 401) {
+        loseAuthorization();
+        return;
+      }
     }
   }
   const url = isPresentation
@@ -441,6 +455,29 @@ async function connect(takeover = false) {
   };
 }
 
+function loseAuthorization() {
+  authorizationLost = true;
+  detachStream();
+  target = null;
+  routePath = [];
+  selection = null;
+  presentedTarget = null;
+  autoTargetEnabled = false;
+  autoTargetRound = null;
+  targetRequestPending = false;
+  panel = "";
+  updateConnection();
+  showSignInRequired();
+}
+function showSignInRequired() {
+  open(
+    "Player sign-in required",
+    '<p>This browser profile no longer has your player sign-in. Gameplay is stopped; your committed progress is saved.</p><p>Use your player invitation to sign in again. Keep operator controls and separately signed-in displays in a different browser or profile; another tab shares the same sign-in.</p><div id="sign-in-recovery"></div>',
+  );
+  $("#sign-in-recovery").append(
+    btn("Open invitation entry", () => location.assign("/"), "primary"),
+  );
+}
 function takenOver() {
   detachStream();
   updateConnection();
@@ -467,9 +504,13 @@ function updateConnection() {
     dot.className = "dot " + (connected ? "" : "offline");
     el.append(
       dot,
-      document.createTextNode(connected ? "CONNECTED" : "RECONNECTING"),
+      document.createTextNode(
+        authorizationLost ? "SIGN-IN REQUIRED" : connected ? "CONNECTED" : "RECONNECTING",
+      ),
     );
-    if (!connected && !isPresentation)
+    if (authorizationLost) {
+      el.append(btn("Sign-in help", showSignInRequired, "quiet"));
+    } else if (!connected && !isPresentation)
       el.append(
         btn(
           "Resume here",

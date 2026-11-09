@@ -277,6 +277,19 @@ export function createGameServer({
         ? db.prepare("SELECT * FROM sessions WHERE hash=?").get(hash(c))
         : null;
     };
+    const requireCompatibleLogin = (req, role) => {
+      const current = session(req);
+      if (!current || current.role === role) return;
+      const labels = {
+        player: "a player",
+        host: "an operator",
+        presentation: "a display",
+      };
+      throw Object.assign(
+        Error(`This browser profile is signed in as ${labels[current.role]}. Use a separate browser or profile for this sign-in. Another tab shares the same sign-in.`),
+        { status: 409, code: "PROFILE_ROLE_CONFLICT" },
+      );
+    };
     const requireSession = (req, role) => {
       const s = session(req);
       if (!s || (role && s.role !== role))
@@ -383,6 +396,7 @@ export function createGameServer({
               .get(hash(body.token));
             if (!invite)
               throw Object.assign(Error("Invalid invitation"), { status: 401 });
+            requireCompatibleLogin(req, "player");
             const old = session(req),
               existing = db
                 .prepare(
@@ -434,6 +448,7 @@ export function createGameServer({
               throw Object.assign(Error("Invalid presentation credential"), {
                 status: 401,
               });
+            requireCompatibleLogin(req, "presentation");
             const secret = token();
             db.prepare("INSERT INTO sessions VALUES(?,?,?,?)").run(
               hash(secret),
@@ -461,6 +476,7 @@ export function createGameServer({
               throw Object.assign(Error("Invalid operator credential"), {
                 status: 401,
               });
+            requireCompatibleLogin(req, "host");
             const secret = token();
             db.prepare("INSERT INTO sessions VALUES(?,?,?,?)").run(
               hash(secret),
@@ -653,7 +669,11 @@ export function createGameServer({
         });
         res.end(readFileSync(full));
       } catch (e) {
-        if (!res.headersSent) send(res, e.status || 400, { error: e.message });
+        if (!res.headersSent)
+          send(res, e.status || 400, {
+            error: e.message,
+            ...(e.code ? { code: e.code } : {}),
+          });
         else res.end();
       }
     });

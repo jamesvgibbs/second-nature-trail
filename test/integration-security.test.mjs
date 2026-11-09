@@ -786,3 +786,58 @@ test("older insect-enabling inputs cannot overwrite replacement, and failed comm
     rmSync(directory, { recursive: true, force: true });
   }
 });
+
+test("cross-role login preserves the original cookie, authority, and live player lease", { timeout: 10000 }, async () => {
+  const roles = [
+    { role: "player", path: "/api/join", token: "demo-1", state: "/api/state" },
+    { role: "host", path: "/api/host/login", token: "local-host-one", state: "/api/host/state" },
+    { role: "presentation", path: "/api/presentation/login", token: "local-presentation", state: "/api/presentation" },
+  ];
+  for (const original of roles) {
+    const app = await start();
+    const controller = new AbortController();
+    try {
+      const cookie = await app.login(original.path, original.token);
+      if (original.role === "player") {
+        const stream = await fetch(app.base + "/api/events?client=role-guard", {
+          headers: { Cookie: cookie }, signal: controller.signal,
+        });
+        assert.equal(stream.status, 200);
+        await stream.body.getReader().read();
+      }
+      for (const other of roles.filter((r) => r.role !== original.role)) {
+        const denied = await app.request(other.path, { token: other.token }, cookie);
+        assert.equal(denied.status, 409, `${original.role} -> ${other.role}`);
+        assert.equal(denied.headers.get("set-cookie"), null);
+        const failure = await denied.json();
+        assert.match(failure.error, /separate browser or profile/);
+        assert.equal(failure.code, "PROFILE_ROLE_CONFLICT");
+        assert.equal((await app.request(original.state, undefined, cookie)).status, 200);
+      }
+      if (original.role === "player") {
+        const setup = await app.request("/api/action", {
+          type: "setup", requestId: "role-guard-setup", character: 0, palette: 0,
+          insects: false, settings: {},
+        }, cookie, { "x-trail-client": "role-guard" });
+        assert.equal(setup.status, 200, await setup.clone().text());
+        assert.equal((await app.request("/api/host/state", undefined, cookie)).status, 401);
+      } else if (original.role === "host") {
+        const lobby = await app.request("/api/host/action", {
+          type: "lobby", requestId: "role-guard-lobby", reason: "Verify preserved operator session",
+        }, cookie);
+        assert.equal(lobby.status, 200);
+        assert.equal((await app.request("/api/state", undefined, cookie)).status, 401);
+      } else {
+        assert.equal((await app.request("/api/host/state", undefined, cookie)).status, 401);
+        assert.equal((await app.request("/api/state", undefined, cookie)).status, 401);
+      }
+      const relogin = await app.request(original.path, { token: original.token }, cookie);
+      assert.equal(relogin.status, 200, `${original.role} same-role login must remain allowed`);
+      const refreshedCookie = relogin.headers.get("set-cookie").split(";")[0];
+      assert.equal((await app.request(original.state, undefined, refreshedCookie)).status, 200);
+    } finally {
+      controller.abort();
+      await app.close();
+    }
+  }
+});
