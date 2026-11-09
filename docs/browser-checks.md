@@ -497,3 +497,40 @@ Text-size checks followed:
 Artifacts: [remapped Help with initial ZASD bindings](../test-results/settings-remapped-help.jpg), [all eight remapped bindings retained](../test-results/settings-all-bindings-persisted.jpg), [Large text](../test-results/settings-large-text.jpg), and [Extra large actions reachable](../test-results/settings-extra-large-actions.jpg).
 
 Reduced motion remained checked, friendly robots remained selected, and audio stayed at zero throughout. Those unchanged settings do **not** constitute reduced-motion toggle, audio, or visual-preference race tests. These are narrow remapping, validation, hint consistency, layout, and persistence observations on the frozen Safari baseline, not a whole Settings pass or full remapped activity/platform matrix. No conclusion about novice usability or later runtime revisions follows from this check.
+
+
+## Ordinary-server pointer secrets and mystery, 2026-11-09
+
+The root agent reviewed an ordinary in-memory DEMO server from frozen **`f1218bf`**, on port 4174, owned session **93278**. This run used **no chapter-preview helper, clock offset, or preloaded clues**. Safari **27.2 (21625.2.8.18.4)** held player demo-1; a separate native Chrome **157.0.8103.51** profile held operator `local-host-one`. Chrome's version was read from its installed version metadata. Separate browser profiles avoided the known shared-cookie role conflict. This was an accelerated optional-content review: the operator used fourteen explicit Advance actions, never Skip, to move through seven chapter/brag pairs. There were no pauses. It is not normal-duration, main-objective, or prize evidence.
+
+The player explicitly chose friendly robots and pointer preference, completed all five practice steps through the UI, and became ready. The host showed **1 connected / 1 tutorial complete / 1 ready**. At the recorded host time **17:49:40**, Open lobby used reason “Eight-secret pointer UI rehearsal.” Start at **17:50:58** used reason “Check countdown cancellation before mystery rehearsal”; Cancel countdown at **17:51:06** returned to the lobby. Start at **17:51:16** used reason “Begin pointer secret acquisition.” Safari visibly displayed **COUNTDOWN 00:10** and text explaining its inclusion in the first five minutes; the countdown artifact captures this actual UI. Chapter 1 was then observed at **04:49**. These observations establish rendered start/cancel/start behavior, separately from the earlier chapter-1 helper runs that jumped over the countdown.
+
+All gameplay after entry used pointer input. In each chapter, the player clicked **Look for secret**, walked to its location, and clicked **Inspect**. Opening Mystery after acquisition showed the accumulated letters. Main progress and score remained visibly zero throughout.
+
+| Chapter | Acquired clue / accumulated letters | Chapter time remaining | Operator advance from chapter / from brag |
+|---|---|---|---|
+| 1 | N / N | 04:37 | 17:52:11 / 17:52:17 |
+| 2 | E / NE | 04:50 | 17:52:35 / 17:52:37 |
+| 3 | I / NEI | 04:49 | 17:52:55 / 17:52:57 |
+| 4 | G / NEIG | 04:48 | 17:53:42 / 17:53:44 |
+| 5 | H / NEIGH | 04:40 | 17:54:16 / 17:54:18 |
+| 6 | B / NEIGHB | 04:47 | 17:54:37 / 17:54:38 |
+| 7 | O / NEIGHBO | 04:46 | 17:54:59 / 17:55:00 |
+| 8 | R / NEIGHBOR | 04:51 | No further advance |
+
+Each operator advance supplied the explicit UI reason “Accelerated pointer mystery review after chapter N phase,” substituting the current chapter number. Times above are the recorded review timestamps; no timezone was captured in this ledger. Only the first player's brag screen was inspected; host brag states were verified at each transition, so this run does not claim all player brag previews were rendered and reviewed.
+
+Additional checks:
+
+- In chapter 1, **Add N → Reveal** rejected the attempt with **“Find all eight clues first.”** N remained in the input and focus stayed in the dialog. Backspace emptied it; adding N then Clear also emptied it.
+- In chapter 4, reopening the discovered clue and inspecting again retained only one G and score zero.
+- The chapter-5 HQ panel included “robots welcome.” The screenshot was visually reviewed by the root agent and showed safe text without insect imagery. No inventory-before/after audit was performed, so unchanged resources are not claimed as a rendered result.
+- With all eight clues, clicking Add N eight times then Reveal produced **“That message does not fit the clues yet.”** The input retained `NNNNNNNN` and focus stayed in the dialog.
+- Clear followed by the eight clue buttons **N, E, I, G, H, B, O, R**, then Reveal, produced **✓ Mystery solved** at **04:36** and the toast **“The AI forgot its most important variable: a neighbor.”** No typing was needed.
+- Pointer reload at **04:31** retained **✓ Clue discovered**, **✓ Mystery solved**, score zero, and main progress zero. Clicking the solved action reopened all eight letters; the persistence artifact shows the letters with solved status behind the dialog.
+
+A final identity check navigated Safari to demo-2. Neighbor 2's setup again had both visual-choice radios initially unselected; the reviewer chose robots and entered ongoing chapter 8 at **04:04**. Its score and main progress were zero. Mystery showed **eight underscores**, no clue-letter buttons, and **“Discovered letters will appear here as you find chapter secrets.”** The fresh identity therefore did not inherit Neighbor 1's clues. The owned server was stopped normally with exit code 0.
+
+Artifacts: [actual countdown](../test-results/mystery-pointer-countdown.jpg), [wrong-answer rejection](../test-results/mystery-pointer-wrong-answer.jpg), [pointer-only solution](../test-results/mystery-pointer-solved.jpg), [clues and solution retained](../test-results/mystery-pointer-clues-persisted.jpg), and [fresh identity empty](../test-results/mystery-fresh-identity-empty.jpg).
+
+This supplies legitimate pointer acquisition and mystery evidence beyond the earlier synthetic preloaded-clue fixture. Keyboard acquisition/mystery remains pending. The full platform, novice, optional-activity, social, and safety gates remain separate; the completed 48-cell main/knowledge matrix is unchanged. Main runtime and the concurrent capacity run were not modified.
