@@ -187,7 +187,23 @@ export function createGameServer({
       const prior = movementCursors.get(player);
       if (prior?.client === client && action.movementSequence <= prior.sequence)
         return { ok: true, ignored: true };
-      const result = engine.dispatch(player, action);
+      // A due phase transition must commit even if the move is then rejected
+      // because play is frozen. Share one authoritative time with dispatch so
+      // its internal tick cannot cross a new boundary after the durable check.
+      const clock = engine.now,
+        actionTime = clock.call(engine);
+      let result;
+      engine.now = () => actionTime;
+      try {
+        if (
+          engine.state.deadline !== null &&
+          actionTime >= engine.state.deadline
+        )
+          mutate(() => engine.tick());
+        result = engine.dispatch(player, action);
+      } finally {
+        engine.now = clock;
+      }
       movementCursors.set(player, {
         client,
         sequence: action.movementSequence,
