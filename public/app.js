@@ -782,7 +782,11 @@ function renderMission() {
     html += `<span class="chapter-count">THE NEIGHBORHOOD FINALE</span><h2>Bring the<br>lights home.</h2><p>One last repair. One home at a time. Every neighbor gets a turn.</p><div class="progress-track"><div class="progress-fill" style="width:${Math.min(100, (100 * (e.finale?.contributors?.length || 0)) / (e.finale?.target || 1))}%"></div></div>${e.finale?.ending ? `<div class="notice" role="status">${esc(e.finale.ending)}</div>` : `<p class="small">${e.finale?.contributors?.length || 0} neighbors have contributed toward ${e.finale?.target || 1} repairs.</p>`}<p class="small">Award results are locked. This moment belongs to everyone.</p><div id="finale-action"></div>`;
   } else if (["awards", "closed"].includes(e.phase)) {
     html +=
-      '<span class="chapter-count">HUMANS: STILL PRETTY GOOD</span><h2>A neighborhood<br>restored.</h2><p>For the fixers, the thinkers, and the people who stopped to help.</p>' +
+      '<span class="chapter-count">HUMANS: STILL PRETTY GOOD</span><h2>The end of<br>the trail.</h2>' +
+      (e.finale?.ending
+        ? `<div class="notice" role="status">${esc(e.finale.ending)}</div>`
+        : "") +
+      '<p>For the fixers, the thinkers, and the people who stopped to help.</p>' +
       awardsHTML();
   } else {
     html += `<span class="chapter-count">CHAPTER ${Number(e.chapter) + 1} / 08 ${e.ranked?.[e.chapter] === false ? "· UNRANKED" : ""}</span><h2>${esc(ch?.title || districts[e.chapter]?.[0] || "The adventure")}</h2><p>${esc(ch?.objective || "Help your neighbors restore the district.")}</p>`;
