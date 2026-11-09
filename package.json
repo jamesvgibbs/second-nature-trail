@@ -1,0 +1,15 @@
+{
+  "name": "second-nature-trail",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0 <25"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs",
+    "test": "node --test test/*.test.mjs",
+    "roster": "node scripts/roster.mjs"
+  }
+}

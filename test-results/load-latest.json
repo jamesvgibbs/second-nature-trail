@@ -1,0 +1,277 @@
+{
+  "label": "SHORTENED SMOKE TEST, not release capacity acceptance",
+  "startedAt": "2026-11-09T18:47:36.901Z",
+  "elapsedSeconds": 25.916,
+  "requestedPlayers": 10,
+  "joinedPlayers": 10,
+  "joinWindowSeconds": 5,
+  "network": "localhost; not the representative company network",
+  "requests": 104,
+  "confirmedActionSamples": 90,
+  "latencyMs": {
+    "p50": 23.819417000000612,
+    "p95": 54.11879200000021,
+    "p99": 59.07341700000052
+  },
+  "errors": {},
+  "phaseSamples": [
+    {
+      "client": "operator-one",
+      "phase": "draft",
+      "receivedAt": 1794250056917,
+      "serverTime": 1794250056916
+    },
+    {
+      "client": "operator-two",
+      "phase": "draft",
+      "receivedAt": 1794250056918,
+      "serverTime": 1794250056917
+    },
+    {
+      "client": "presentation",
+      "phase": "draft",
+      "receivedAt": 1794250056919,
+      "serverTime": 1794250056918
+    },
+    {
+      "client": "operator-one",
+      "phase": "lobby",
+      "receivedAt": 1794250056922,
+      "serverTime": 1794250056920
+    },
+    {
+      "client": "operator-two",
+      "phase": "lobby",
+      "receivedAt": 1794250056922,
+      "serverTime": 1794250056920
+    },
+    {
+      "client": "presentation",
+      "phase": "lobby",
+      "receivedAt": 1794250056922,
+      "serverTime": 1794250056920
+    },
+    {
+      "client": "load-player-0",
+      "phase": "lobby",
+      "receivedAt": 1794250056924,
+      "serverTime": 1794250056923
+    },
+    {
+      "client": "load-player-1",
+      "phase": "lobby",
+      "receivedAt": 1794250057666,
+      "serverTime": 1794250057662
+    },
+    {
+      "client": "load-player-2",
+      "phase": "lobby",
+      "receivedAt": 1794250058157,
+      "serverTime": 1794250058157
+    },
+    {
+      "client": "load-player-3",
+      "phase": "lobby",
+      "receivedAt": 1794250058675,
+      "serverTime": 1794250058674
+    },
+    {
+      "client": "load-player-4",
+      "phase": "lobby",
+      "receivedAt": 1794250059174,
+      "serverTime": 1794250059172
+    },
+    {
+      "client": "load-player-5",
+      "phase": "lobby",
+      "receivedAt": 1794250059936,
+      "serverTime": 1794250059934
+    },
+    {
+      "client": "load-player-6",
+      "phase": "lobby",
+      "receivedAt": 1794250060426,
+      "serverTime": 1794250060425
+    },
+    {
+      "client": "load-player-7",
+      "phase": "lobby",
+      "receivedAt": 1794250060914,
+      "serverTime": 1794250060913
+    },
+    {
+      "client": "load-player-8",
+      "phase": "lobby",
+      "receivedAt": 1794250061437,
+      "serverTime": 1794250061436
+    },
+    {
+      "client": "load-player-9",
+      "phase": "lobby",
+      "receivedAt": 1794250061954,
+      "serverTime": 1794250061951
+    },
+    {
+      "client": "operator-one",
+      "phase": "countdown",
+      "receivedAt": 1794250062678,
+      "serverTime": 1794250062676
+    },
+    {
+      "client": "operator-two",
+      "phase": "countdown",
+      "receivedAt": 1794250062678,
+      "serverTime": 1794250062677
+    },
+    {
+      "client": "presentation",
+      "phase": "countdown",
+      "receivedAt": 1794250062678,
+      "serverTime": 1794250062677
+    },
+    {
+      "client": "load-player-0",
+      "phase": "countdown",
+      "receivedAt": 1794250062678,
+      "serverTime": 1794250062677
+    },
+    {
+      "client": "load-player-1",
+      "phase": "countdown",
+      "receivedAt": 1794250062678,
+      "serverTime": 1794250062677
+    },
+    {
+      "client": "load-player-2",
+      "phase": "countdown",
+      "receivedAt": 1794250062678,
+      "serverTime": 1794250062677
+    },
+    {
+      "client": "load-player-3",
+      "phase": "countdown",
+      "receivedAt": 1794250062678,
+      "serverTime": 1794250062677
+    },
+    {
+      "client": "load-player-4",
+      "phase": "countdown",
+      "receivedAt": 1794250062678,
+      "serverTime": 1794250062677
+    },
+    {
+      "client": "load-player-5",
+      "phase": "countdown",
+      "receivedAt": 1794250062678,
+      "serverTime": 1794250062677
+    },
+    {
+      "client": "load-player-6",
+      "phase": "countdown",
+      "receivedAt": 1794250062678,
+      "serverTime": 1794250062677
+    },
+    {
+      "client": "load-player-7",
+      "phase": "countdown",
+      "receivedAt": 1794250062678,
+      "serverTime": 1794250062677
+    },
+    {
+      "client": "load-player-8",
+      "phase": "countdown",
+      "receivedAt": 1794250062678,
+      "serverTime": 1794250062677
+    },
+    {
+      "client": "load-player-9",
+      "phase": "countdown",
+      "receivedAt": 1794250062678,
+      "serverTime": 1794250062677
+    },
+    {
+      "client": "operator-one",
+      "phase": "chapter",
+      "receivedAt": 1794250072729,
+      "serverTime": 1794250072723
+    },
+    {
+      "client": "operator-two",
+      "phase": "chapter",
+      "receivedAt": 1794250072729,
+      "serverTime": 1794250072724
+    },
+    {
+      "client": "presentation",
+      "phase": "chapter",
+      "receivedAt": 1794250072730,
+      "serverTime": 1794250072724
+    },
+    {
+      "client": "load-player-0",
+      "phase": "chapter",
+      "receivedAt": 1794250072730,
+      "serverTime": 1794250072724
+    },
+    {
+      "client": "load-player-1",
+      "phase": "chapter",
+      "receivedAt": 1794250072730,
+      "serverTime": 1794250072725
+    },
+    {
+      "client": "load-player-2",
+      "phase": "chapter",
+      "receivedAt": 1794250072730,
+      "serverTime": 1794250072725
+    },
+    {
+      "client": "load-player-3",
+      "phase": "chapter",
+      "receivedAt": 1794250072731,
+      "serverTime": 1794250072725
+    },
+    {
+      "client": "load-player-4",
+      "phase": "chapter",
+      "receivedAt": 1794250072731,
+      "serverTime": 1794250072726
+    },
+    {
+      "client": "load-player-5",
+      "phase": "chapter",
+      "receivedAt": 1794250072731,
+      "serverTime": 1794250072726
+    },
+    {
+      "client": "load-player-6",
+      "phase": "chapter",
+      "receivedAt": 1794250072731,
+      "serverTime": 1794250072726
+    },
+    {
+      "client": "load-player-7",
+      "phase": "chapter",
+      "receivedAt": 1794250072732,
+      "serverTime": 1794250072726
+    },
+    {
+      "client": "load-player-8",
+      "phase": "chapter",
+      "receivedAt": 1794250072732,
+      "serverTime": 1794250072727
+    },
+    {
+      "client": "load-player-9",
+      "phase": "chapter",
+      "receivedAt": 1794250072732,
+      "serverTime": 1794250072727
+    }
+  ],
+  "limitations": [
+    "No browser rendering measured",
+    "No human rehearsal",
+    "Scenario coverage must include validated trades and thirty-second reconnects before acceptance",
+    "Phase observations are raw arrival times; no one-second clock compliance claim"
+  ]
+}

@@ -1,0 +1,2441 @@
+{
+  "label": "SHORTENED SMOKE TEST, not release capacity acceptance",
+  "nodeVersion": "v24.20.0",
+  "platform": "darwin",
+  "memoryBytes": {
+    "rss": 483835904,
+    "heapTotal": 194822144,
+    "heapUsed": 74249824,
+    "external": 42114797,
+    "arrayBuffers": 37992410
+  },
+  "startedAt": "2026-11-09T18:56:55.064Z",
+  "elapsedSeconds": 47.514,
+  "eventPlaySeconds": 36.989,
+  "finalPhase": "chapter",
+  "exportReconciles": null,
+  "awardCount": 0,
+  "distinctWinners": 0,
+  "requestedPlayers": 100,
+  "joinedPlayers": 100,
+  "joinWindowSeconds": 5,
+  "network": "localhost; not the representative company network",
+  "requests": 3996,
+  "confirmedActionSamples": 3592,
+  "tradeCompletions": 50,
+  "reconnectsAfterThirtySecondOutage": 0,
+  "latencyMs": {
+    "p50": 15.361375000000407,
+    "p95": 521.090584000005,
+    "p99": 646.9994169999991
+  },
+  "scoringInventorySamples": 600,
+  "scoringInventoryLatencyMs": {
+    "p50": 369.55079099999784,
+    "p95": 646.0390829999997,
+    "p99": 706.312833
+  },
+  "movementProfile": "10 requests/second per player while traveling; at most one in-flight per player",
+  "errors": {},
+  "phaseSamples": [
+    {
+      "client": "operator-one",
+      "phase": "draft",
+      "receivedAt": 1794250615079,
+      "serverTime": 1794250615078,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "operator-two",
+      "phase": "draft",
+      "receivedAt": 1794250615080,
+      "serverTime": 1794250615080,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "presentation",
+      "phase": "draft",
+      "receivedAt": 1794250615082,
+      "serverTime": 1794250615081,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-0",
+      "phase": "lobby",
+      "receivedAt": 1794250615097,
+      "serverTime": 1794250615096,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-1",
+      "phase": "lobby",
+      "receivedAt": 1794250615151,
+      "serverTime": 1794250615151,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-2",
+      "phase": "lobby",
+      "receivedAt": 1794250615198,
+      "serverTime": 1794250615197,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-3",
+      "phase": "lobby",
+      "receivedAt": 1794250615249,
+      "serverTime": 1794250615248,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-4",
+      "phase": "lobby",
+      "receivedAt": 1794250615301,
+      "serverTime": 1794250615300,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "operator-one",
+      "phase": "lobby",
+      "receivedAt": 1794250615314,
+      "serverTime": 1794250615312,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "operator-two",
+      "phase": "lobby",
+      "receivedAt": 1794250615314,
+      "serverTime": 1794250615312,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "presentation",
+      "phase": "lobby",
+      "receivedAt": 1794250615314,
+      "serverTime": 1794250615313,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-5",
+      "phase": "lobby",
+      "receivedAt": 1794250615355,
+      "serverTime": 1794250615354,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-6",
+      "phase": "lobby",
+      "receivedAt": 1794250615414,
+      "serverTime": 1794250615413,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-7",
+      "phase": "lobby",
+      "receivedAt": 1794250615454,
+      "serverTime": 1794250615453,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-8",
+      "phase": "lobby",
+      "receivedAt": 1794250615505,
+      "serverTime": 1794250615504,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-9",
+      "phase": "lobby",
+      "receivedAt": 1794250615573,
+      "serverTime": 1794250615571,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-10",
+      "phase": "lobby",
+      "receivedAt": 1794250615614,
+      "serverTime": 1794250615613,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-11",
+      "phase": "lobby",
+      "receivedAt": 1794250615661,
+      "serverTime": 1794250615659,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-12",
+      "phase": "lobby",
+      "receivedAt": 1794250615713,
+      "serverTime": 1794250615712,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-13",
+      "phase": "lobby",
+      "receivedAt": 1794250615763,
+      "serverTime": 1794250615761,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-14",
+      "phase": "lobby",
+      "receivedAt": 1794250615807,
+      "serverTime": 1794250615806,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-15",
+      "phase": "lobby",
+      "receivedAt": 1794250615872,
+      "serverTime": 1794250615867,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-16",
+      "phase": "lobby",
+      "receivedAt": 1794250615913,
+      "serverTime": 1794250615913,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-17",
+      "phase": "lobby",
+      "receivedAt": 1794250615978,
+      "serverTime": 1794250615973,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-18",
+      "phase": "lobby",
+      "receivedAt": 1794250616013,
+      "serverTime": 1794250616012,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-19",
+      "phase": "lobby",
+      "receivedAt": 1794250616089,
+      "serverTime": 1794250616088,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-20",
+      "phase": "lobby",
+      "receivedAt": 1794250616113,
+      "serverTime": 1794250616113,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-21",
+      "phase": "lobby",
+      "receivedAt": 1794250616174,
+      "serverTime": 1794250616173,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-22",
+      "phase": "lobby",
+      "receivedAt": 1794250616209,
+      "serverTime": 1794250616208,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-23",
+      "phase": "lobby",
+      "receivedAt": 1794250616266,
+      "serverTime": 1794250616265,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-24",
+      "phase": "lobby",
+      "receivedAt": 1794250616340,
+      "serverTime": 1794250616339,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-25",
+      "phase": "lobby",
+      "receivedAt": 1794250616364,
+      "serverTime": 1794250616363,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-26",
+      "phase": "lobby",
+      "receivedAt": 1794250616421,
+      "serverTime": 1794250616420,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-27",
+      "phase": "lobby",
+      "receivedAt": 1794250616475,
+      "serverTime": 1794250616474,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-28",
+      "phase": "lobby",
+      "receivedAt": 1794250616518,
+      "serverTime": 1794250616518,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-29",
+      "phase": "lobby",
+      "receivedAt": 1794250616585,
+      "serverTime": 1794250616584,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-30",
+      "phase": "lobby",
+      "receivedAt": 1794250616616,
+      "serverTime": 1794250616615,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-31",
+      "phase": "lobby",
+      "receivedAt": 1794250616678,
+      "serverTime": 1794250616677,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-32",
+      "phase": "lobby",
+      "receivedAt": 1794250616724,
+      "serverTime": 1794250616722,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-33",
+      "phase": "lobby",
+      "receivedAt": 1794250616780,
+      "serverTime": 1794250616778,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-34",
+      "phase": "lobby",
+      "receivedAt": 1794250616848,
+      "serverTime": 1794250616847,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-35",
+      "phase": "lobby",
+      "receivedAt": 1794250616866,
+      "serverTime": 1794250616866,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-36",
+      "phase": "lobby",
+      "receivedAt": 1794250616924,
+      "serverTime": 1794250616924,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-37",
+      "phase": "lobby",
+      "receivedAt": 1794250616982,
+      "serverTime": 1794250616980,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-38",
+      "phase": "lobby",
+      "receivedAt": 1794250617033,
+      "serverTime": 1794250617031,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-39",
+      "phase": "lobby",
+      "receivedAt": 1794250617102,
+      "serverTime": 1794250617101,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-40",
+      "phase": "lobby",
+      "receivedAt": 1794250617121,
+      "serverTime": 1794250617120,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-41",
+      "phase": "lobby",
+      "receivedAt": 1794250617177,
+      "serverTime": 1794250617175,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-42",
+      "phase": "lobby",
+      "receivedAt": 1794250617240,
+      "serverTime": 1794250617239,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-43",
+      "phase": "lobby",
+      "receivedAt": 1794250617282,
+      "serverTime": 1794250617281,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-44",
+      "phase": "lobby",
+      "receivedAt": 1794250617362,
+      "serverTime": 1794250617362,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-45",
+      "phase": "lobby",
+      "receivedAt": 1794250617372,
+      "serverTime": 1794250617371,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-46",
+      "phase": "lobby",
+      "receivedAt": 1794250617426,
+      "serverTime": 1794250617425,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-47",
+      "phase": "lobby",
+      "receivedAt": 1794250617486,
+      "serverTime": 1794250617484,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-48",
+      "phase": "lobby",
+      "receivedAt": 1794250617542,
+      "serverTime": 1794250617541,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-49",
+      "phase": "lobby",
+      "receivedAt": 1794250617609,
+      "serverTime": 1794250617608,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-50",
+      "phase": "lobby",
+      "receivedAt": 1794250617626,
+      "serverTime": 1794250617625,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-51",
+      "phase": "lobby",
+      "receivedAt": 1794250617674,
+      "serverTime": 1794250617674,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-52",
+      "phase": "lobby",
+      "receivedAt": 1794250617736,
+      "serverTime": 1794250617734,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-53",
+      "phase": "lobby",
+      "receivedAt": 1794250617787,
+      "serverTime": 1794250617786,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-54",
+      "phase": "lobby",
+      "receivedAt": 1794250617866,
+      "serverTime": 1794250617865,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-55",
+      "phase": "lobby",
+      "receivedAt": 1794250617876,
+      "serverTime": 1794250617876,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-56",
+      "phase": "lobby",
+      "receivedAt": 1794250617930,
+      "serverTime": 1794250617929,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-57",
+      "phase": "lobby",
+      "receivedAt": 1794250617992,
+      "serverTime": 1794250617991,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-58",
+      "phase": "lobby",
+      "receivedAt": 1794250618052,
+      "serverTime": 1794250618049,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-59",
+      "phase": "lobby",
+      "receivedAt": 1794250618133,
+      "serverTime": 1794250618129,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-60",
+      "phase": "lobby",
+      "receivedAt": 1794250618136,
+      "serverTime": 1794250618135,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-61",
+      "phase": "lobby",
+      "receivedAt": 1794250618182,
+      "serverTime": 1794250618181,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-62",
+      "phase": "lobby",
+      "receivedAt": 1794250618234,
+      "serverTime": 1794250618234,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-63",
+      "phase": "lobby",
+      "receivedAt": 1794250618293,
+      "serverTime": 1794250618291,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-64",
+      "phase": "lobby",
+      "receivedAt": 1794250618383,
+      "serverTime": 1794250618378,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-65",
+      "phase": "lobby",
+      "receivedAt": 1794250618387,
+      "serverTime": 1794250618386,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-66",
+      "phase": "lobby",
+      "receivedAt": 1794250618435,
+      "serverTime": 1794250618434,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-67",
+      "phase": "lobby",
+      "receivedAt": 1794250618485,
+      "serverTime": 1794250618485,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-68",
+      "phase": "lobby",
+      "receivedAt": 1794250618540,
+      "serverTime": 1794250618539,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-69",
+      "phase": "lobby",
+      "receivedAt": 1794250618587,
+      "serverTime": 1794250618586,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-70",
+      "phase": "lobby",
+      "receivedAt": 1794250618636,
+      "serverTime": 1794250618635,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-71",
+      "phase": "lobby",
+      "receivedAt": 1794250618687,
+      "serverTime": 1794250618686,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-72",
+      "phase": "lobby",
+      "receivedAt": 1794250618741,
+      "serverTime": 1794250618740,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-73",
+      "phase": "lobby",
+      "receivedAt": 1794250618792,
+      "serverTime": 1794250618792,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-74",
+      "phase": "lobby",
+      "receivedAt": 1794250618890,
+      "serverTime": 1794250618886,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-75",
+      "phase": "lobby",
+      "receivedAt": 1794250618895,
+      "serverTime": 1794250618894,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-76",
+      "phase": "lobby",
+      "receivedAt": 1794250618940,
+      "serverTime": 1794250618940,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-77",
+      "phase": "lobby",
+      "receivedAt": 1794250618995,
+      "serverTime": 1794250618994,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-78",
+      "phase": "lobby",
+      "receivedAt": 1794250619046,
+      "serverTime": 1794250619045,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-79",
+      "phase": "lobby",
+      "receivedAt": 1794250619092,
+      "serverTime": 1794250619091,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-80",
+      "phase": "lobby",
+      "receivedAt": 1794250619141,
+      "serverTime": 1794250619141,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-81",
+      "phase": "lobby",
+      "receivedAt": 1794250619192,
+      "serverTime": 1794250619192,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-82",
+      "phase": "lobby",
+      "receivedAt": 1794250619245,
+      "serverTime": 1794250619244,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-83",
+      "phase": "lobby",
+      "receivedAt": 1794250619297,
+      "serverTime": 1794250619296,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-84",
+      "phase": "lobby",
+      "receivedAt": 1794250619404,
+      "serverTime": 1794250619398,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-85",
+      "phase": "lobby",
+      "receivedAt": 1794250619408,
+      "serverTime": 1794250619407,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-86",
+      "phase": "lobby",
+      "receivedAt": 1794250619444,
+      "serverTime": 1794250619444,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-87",
+      "phase": "lobby",
+      "receivedAt": 1794250619499,
+      "serverTime": 1794250619498,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-88",
+      "phase": "lobby",
+      "receivedAt": 1794250619551,
+      "serverTime": 1794250619550,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-89",
+      "phase": "lobby",
+      "receivedAt": 1794250619652,
+      "serverTime": 1794250619648,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-90",
+      "phase": "lobby",
+      "receivedAt": 1794250619657,
+      "serverTime": 1794250619657,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-91",
+      "phase": "lobby",
+      "receivedAt": 1794250619697,
+      "serverTime": 1794250619696,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-92",
+      "phase": "lobby",
+      "receivedAt": 1794250619749,
+      "serverTime": 1794250619748,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-93",
+      "phase": "lobby",
+      "receivedAt": 1794250619804,
+      "serverTime": 1794250619803,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-94",
+      "phase": "lobby",
+      "receivedAt": 1794250619912,
+      "serverTime": 1794250619908,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-95",
+      "phase": "lobby",
+      "receivedAt": 1794250619915,
+      "serverTime": 1794250619914,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-96",
+      "phase": "lobby",
+      "receivedAt": 1794250619949,
+      "serverTime": 1794250619949,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-97",
+      "phase": "lobby",
+      "receivedAt": 1794250620001,
+      "serverTime": 1794250620001,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-98",
+      "phase": "lobby",
+      "receivedAt": 1794250620054,
+      "serverTime": 1794250620053,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-99",
+      "phase": "lobby",
+      "receivedAt": 1794250620168,
+      "serverTime": 1794250620163,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "operator-one",
+      "phase": "countdown",
+      "receivedAt": 1794250625775,
+      "serverTime": 1794250625715,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "operator-two",
+      "phase": "countdown",
+      "receivedAt": 1794250625775,
+      "serverTime": 1794250625716,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "presentation",
+      "phase": "countdown",
+      "receivedAt": 1794250625775,
+      "serverTime": 1794250625716,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-0",
+      "phase": "countdown",
+      "receivedAt": 1794250625775,
+      "serverTime": 1794250625717,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-1",
+      "phase": "countdown",
+      "receivedAt": 1794250625776,
+      "serverTime": 1794250625718,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-2",
+      "phase": "countdown",
+      "receivedAt": 1794250625776,
+      "serverTime": 1794250625719,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-3",
+      "phase": "countdown",
+      "receivedAt": 1794250625776,
+      "serverTime": 1794250625719,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-4",
+      "phase": "countdown",
+      "receivedAt": 1794250625776,
+      "serverTime": 1794250625720,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-5",
+      "phase": "countdown",
+      "receivedAt": 1794250625776,
+      "serverTime": 1794250625721,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-6",
+      "phase": "countdown",
+      "receivedAt": 1794250625776,
+      "serverTime": 1794250625721,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-7",
+      "phase": "countdown",
+      "receivedAt": 1794250625776,
+      "serverTime": 1794250625722,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-8",
+      "phase": "countdown",
+      "receivedAt": 1794250625776,
+      "serverTime": 1794250625723,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-9",
+      "phase": "countdown",
+      "receivedAt": 1794250625777,
+      "serverTime": 1794250625723,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-10",
+      "phase": "countdown",
+      "receivedAt": 1794250625777,
+      "serverTime": 1794250625724,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-11",
+      "phase": "countdown",
+      "receivedAt": 1794250625777,
+      "serverTime": 1794250625725,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-12",
+      "phase": "countdown",
+      "receivedAt": 1794250625777,
+      "serverTime": 1794250625725,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-13",
+      "phase": "countdown",
+      "receivedAt": 1794250625777,
+      "serverTime": 1794250625726,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-14",
+      "phase": "countdown",
+      "receivedAt": 1794250625777,
+      "serverTime": 1794250625727,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-15",
+      "phase": "countdown",
+      "receivedAt": 1794250625777,
+      "serverTime": 1794250625727,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-16",
+      "phase": "countdown",
+      "receivedAt": 1794250625777,
+      "serverTime": 1794250625728,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-17",
+      "phase": "countdown",
+      "receivedAt": 1794250625777,
+      "serverTime": 1794250625728,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-18",
+      "phase": "countdown",
+      "receivedAt": 1794250625778,
+      "serverTime": 1794250625729,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-19",
+      "phase": "countdown",
+      "receivedAt": 1794250625778,
+      "serverTime": 1794250625730,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-20",
+      "phase": "countdown",
+      "receivedAt": 1794250625778,
+      "serverTime": 1794250625730,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-21",
+      "phase": "countdown",
+      "receivedAt": 1794250625778,
+      "serverTime": 1794250625731,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-22",
+      "phase": "countdown",
+      "receivedAt": 1794250625778,
+      "serverTime": 1794250625731,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-23",
+      "phase": "countdown",
+      "receivedAt": 1794250625778,
+      "serverTime": 1794250625732,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-24",
+      "phase": "countdown",
+      "receivedAt": 1794250625778,
+      "serverTime": 1794250625733,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-25",
+      "phase": "countdown",
+      "receivedAt": 1794250625778,
+      "serverTime": 1794250625733,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-26",
+      "phase": "countdown",
+      "receivedAt": 1794250625779,
+      "serverTime": 1794250625734,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-27",
+      "phase": "countdown",
+      "receivedAt": 1794250625779,
+      "serverTime": 1794250625734,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-28",
+      "phase": "countdown",
+      "receivedAt": 1794250625779,
+      "serverTime": 1794250625735,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-29",
+      "phase": "countdown",
+      "receivedAt": 1794250625779,
+      "serverTime": 1794250625735,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-30",
+      "phase": "countdown",
+      "receivedAt": 1794250625779,
+      "serverTime": 1794250625736,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-31",
+      "phase": "countdown",
+      "receivedAt": 1794250625779,
+      "serverTime": 1794250625736,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-32",
+      "phase": "countdown",
+      "receivedAt": 1794250625779,
+      "serverTime": 1794250625737,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-33",
+      "phase": "countdown",
+      "receivedAt": 1794250625779,
+      "serverTime": 1794250625738,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-34",
+      "phase": "countdown",
+      "receivedAt": 1794250625779,
+      "serverTime": 1794250625738,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-35",
+      "phase": "countdown",
+      "receivedAt": 1794250625779,
+      "serverTime": 1794250625739,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-36",
+      "phase": "countdown",
+      "receivedAt": 1794250625780,
+      "serverTime": 1794250625739,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-37",
+      "phase": "countdown",
+      "receivedAt": 1794250625780,
+      "serverTime": 1794250625740,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-38",
+      "phase": "countdown",
+      "receivedAt": 1794250625780,
+      "serverTime": 1794250625740,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-39",
+      "phase": "countdown",
+      "receivedAt": 1794250625780,
+      "serverTime": 1794250625741,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-40",
+      "phase": "countdown",
+      "receivedAt": 1794250625780,
+      "serverTime": 1794250625741,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-41",
+      "phase": "countdown",
+      "receivedAt": 1794250625780,
+      "serverTime": 1794250625742,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-42",
+      "phase": "countdown",
+      "receivedAt": 1794250625780,
+      "serverTime": 1794250625742,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-43",
+      "phase": "countdown",
+      "receivedAt": 1794250625780,
+      "serverTime": 1794250625743,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-44",
+      "phase": "countdown",
+      "receivedAt": 1794250625781,
+      "serverTime": 1794250625743,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-45",
+      "phase": "countdown",
+      "receivedAt": 1794250625781,
+      "serverTime": 1794250625744,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-46",
+      "phase": "countdown",
+      "receivedAt": 1794250625781,
+      "serverTime": 1794250625744,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-47",
+      "phase": "countdown",
+      "receivedAt": 1794250625781,
+      "serverTime": 1794250625745,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-48",
+      "phase": "countdown",
+      "receivedAt": 1794250625781,
+      "serverTime": 1794250625746,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-49",
+      "phase": "countdown",
+      "receivedAt": 1794250625781,
+      "serverTime": 1794250625746,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-50",
+      "phase": "countdown",
+      "receivedAt": 1794250625781,
+      "serverTime": 1794250625747,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-51",
+      "phase": "countdown",
+      "receivedAt": 1794250625781,
+      "serverTime": 1794250625747,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-52",
+      "phase": "countdown",
+      "receivedAt": 1794250625782,
+      "serverTime": 1794250625748,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-53",
+      "phase": "countdown",
+      "receivedAt": 1794250625782,
+      "serverTime": 1794250625748,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-54",
+      "phase": "countdown",
+      "receivedAt": 1794250625782,
+      "serverTime": 1794250625749,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-55",
+      "phase": "countdown",
+      "receivedAt": 1794250625782,
+      "serverTime": 1794250625749,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-56",
+      "phase": "countdown",
+      "receivedAt": 1794250625782,
+      "serverTime": 1794250625749,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-57",
+      "phase": "countdown",
+      "receivedAt": 1794250625782,
+      "serverTime": 1794250625750,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-58",
+      "phase": "countdown",
+      "receivedAt": 1794250625782,
+      "serverTime": 1794250625750,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-59",
+      "phase": "countdown",
+      "receivedAt": 1794250625782,
+      "serverTime": 1794250625751,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-60",
+      "phase": "countdown",
+      "receivedAt": 1794250625782,
+      "serverTime": 1794250625751,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-61",
+      "phase": "countdown",
+      "receivedAt": 1794250625783,
+      "serverTime": 1794250625752,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-62",
+      "phase": "countdown",
+      "receivedAt": 1794250625783,
+      "serverTime": 1794250625752,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-63",
+      "phase": "countdown",
+      "receivedAt": 1794250625783,
+      "serverTime": 1794250625753,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-64",
+      "phase": "countdown",
+      "receivedAt": 1794250625783,
+      "serverTime": 1794250625753,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-65",
+      "phase": "countdown",
+      "receivedAt": 1794250625783,
+      "serverTime": 1794250625754,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-66",
+      "phase": "countdown",
+      "receivedAt": 1794250625783,
+      "serverTime": 1794250625754,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-67",
+      "phase": "countdown",
+      "receivedAt": 1794250625783,
+      "serverTime": 1794250625755,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-68",
+      "phase": "countdown",
+      "receivedAt": 1794250625783,
+      "serverTime": 1794250625755,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-69",
+      "phase": "countdown",
+      "receivedAt": 1794250625784,
+      "serverTime": 1794250625755,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-70",
+      "phase": "countdown",
+      "receivedAt": 1794250625784,
+      "serverTime": 1794250625756,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-71",
+      "phase": "countdown",
+      "receivedAt": 1794250625784,
+      "serverTime": 1794250625756,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-72",
+      "phase": "countdown",
+      "receivedAt": 1794250625784,
+      "serverTime": 1794250625757,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-73",
+      "phase": "countdown",
+      "receivedAt": 1794250625784,
+      "serverTime": 1794250625757,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-74",
+      "phase": "countdown",
+      "receivedAt": 1794250625784,
+      "serverTime": 1794250625758,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-75",
+      "phase": "countdown",
+      "receivedAt": 1794250625784,
+      "serverTime": 1794250625758,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-76",
+      "phase": "countdown",
+      "receivedAt": 1794250625784,
+      "serverTime": 1794250625758,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-77",
+      "phase": "countdown",
+      "receivedAt": 1794250625785,
+      "serverTime": 1794250625759,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-78",
+      "phase": "countdown",
+      "receivedAt": 1794250625785,
+      "serverTime": 1794250625759,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-79",
+      "phase": "countdown",
+      "receivedAt": 1794250625785,
+      "serverTime": 1794250625760,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-80",
+      "phase": "countdown",
+      "receivedAt": 1794250625785,
+      "serverTime": 1794250625760,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-81",
+      "phase": "countdown",
+      "receivedAt": 1794250625785,
+      "serverTime": 1794250625761,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-82",
+      "phase": "countdown",
+      "receivedAt": 1794250625785,
+      "serverTime": 1794250625761,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-83",
+      "phase": "countdown",
+      "receivedAt": 1794250625785,
+      "serverTime": 1794250625761,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-84",
+      "phase": "countdown",
+      "receivedAt": 1794250625785,
+      "serverTime": 1794250625762,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-85",
+      "phase": "countdown",
+      "receivedAt": 1794250625785,
+      "serverTime": 1794250625762,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-86",
+      "phase": "countdown",
+      "receivedAt": 1794250625785,
+      "serverTime": 1794250625763,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-87",
+      "phase": "countdown",
+      "receivedAt": 1794250625786,
+      "serverTime": 1794250625763,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-88",
+      "phase": "countdown",
+      "receivedAt": 1794250625786,
+      "serverTime": 1794250625763,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-89",
+      "phase": "countdown",
+      "receivedAt": 1794250625786,
+      "serverTime": 1794250625764,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-90",
+      "phase": "countdown",
+      "receivedAt": 1794250625786,
+      "serverTime": 1794250625764,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-91",
+      "phase": "countdown",
+      "receivedAt": 1794250625786,
+      "serverTime": 1794250625765,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-92",
+      "phase": "countdown",
+      "receivedAt": 1794250625786,
+      "serverTime": 1794250625765,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-93",
+      "phase": "countdown",
+      "receivedAt": 1794250625786,
+      "serverTime": 1794250625766,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-94",
+      "phase": "countdown",
+      "receivedAt": 1794250625786,
+      "serverTime": 1794250625767,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-95",
+      "phase": "countdown",
+      "receivedAt": 1794250625786,
+      "serverTime": 1794250625767,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-96",
+      "phase": "countdown",
+      "receivedAt": 1794250625786,
+      "serverTime": 1794250625768,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-97",
+      "phase": "countdown",
+      "receivedAt": 1794250625787,
+      "serverTime": 1794250625768,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-98",
+      "phase": "countdown",
+      "receivedAt": 1794250625787,
+      "serverTime": 1794250625769,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-99",
+      "phase": "countdown",
+      "receivedAt": 1794250625787,
+      "serverTime": 1794250625769,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "operator-one",
+      "phase": "chapter",
+      "receivedAt": 1794250635813,
+      "serverTime": 1794250635761,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 230
+    },
+    {
+      "client": "operator-two",
+      "phase": "chapter",
+      "receivedAt": 1794250635813,
+      "serverTime": 1794250635761,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 230
+    },
+    {
+      "client": "presentation",
+      "phase": "chapter",
+      "receivedAt": 1794250635813,
+      "serverTime": 1794250635762,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 230
+    },
+    {
+      "client": "load-player-0",
+      "phase": "chapter",
+      "receivedAt": 1794250635813,
+      "serverTime": 1794250635762,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 230
+    },
+    {
+      "client": "load-player-1",
+      "phase": "chapter",
+      "receivedAt": 1794250635813,
+      "serverTime": 1794250635763,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 230
+    },
+    {
+      "client": "load-player-2",
+      "phase": "chapter",
+      "receivedAt": 1794250635814,
+      "serverTime": 1794250635763,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 231
+    },
+    {
+      "client": "load-player-3",
+      "phase": "chapter",
+      "receivedAt": 1794250635814,
+      "serverTime": 1794250635763,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 231
+    },
+    {
+      "client": "load-player-4",
+      "phase": "chapter",
+      "receivedAt": 1794250635814,
+      "serverTime": 1794250635764,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 231
+    },
+    {
+      "client": "load-player-5",
+      "phase": "chapter",
+      "receivedAt": 1794250635814,
+      "serverTime": 1794250635764,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 231
+    },
+    {
+      "client": "load-player-6",
+      "phase": "chapter",
+      "receivedAt": 1794250635814,
+      "serverTime": 1794250635765,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 231
+    },
+    {
+      "client": "load-player-7",
+      "phase": "chapter",
+      "receivedAt": 1794250635814,
+      "serverTime": 1794250635765,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 231
+    },
+    {
+      "client": "load-player-8",
+      "phase": "chapter",
+      "receivedAt": 1794250635814,
+      "serverTime": 1794250635766,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 231
+    },
+    {
+      "client": "load-player-9",
+      "phase": "chapter",
+      "receivedAt": 1794250635814,
+      "serverTime": 1794250635766,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 231
+    },
+    {
+      "client": "load-player-10",
+      "phase": "chapter",
+      "receivedAt": 1794250635814,
+      "serverTime": 1794250635767,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 231
+    },
+    {
+      "client": "load-player-11",
+      "phase": "chapter",
+      "receivedAt": 1794250635815,
+      "serverTime": 1794250635767,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 232
+    },
+    {
+      "client": "load-player-12",
+      "phase": "chapter",
+      "receivedAt": 1794250635815,
+      "serverTime": 1794250635768,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 232
+    },
+    {
+      "client": "load-player-13",
+      "phase": "chapter",
+      "receivedAt": 1794250635815,
+      "serverTime": 1794250635768,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 232
+    },
+    {
+      "client": "load-player-14",
+      "phase": "chapter",
+      "receivedAt": 1794250635815,
+      "serverTime": 1794250635768,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 232
+    },
+    {
+      "client": "load-player-15",
+      "phase": "chapter",
+      "receivedAt": 1794250635815,
+      "serverTime": 1794250635769,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 232
+    },
+    {
+      "client": "load-player-16",
+      "phase": "chapter",
+      "receivedAt": 1794250635815,
+      "serverTime": 1794250635769,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 232
+    },
+    {
+      "client": "load-player-17",
+      "phase": "chapter",
+      "receivedAt": 1794250635815,
+      "serverTime": 1794250635770,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 232
+    },
+    {
+      "client": "load-player-18",
+      "phase": "chapter",
+      "receivedAt": 1794250635815,
+      "serverTime": 1794250635770,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 232
+    },
+    {
+      "client": "load-player-19",
+      "phase": "chapter",
+      "receivedAt": 1794250635815,
+      "serverTime": 1794250635771,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 232
+    },
+    {
+      "client": "load-player-20",
+      "phase": "chapter",
+      "receivedAt": 1794250635816,
+      "serverTime": 1794250635771,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 233
+    },
+    {
+      "client": "load-player-21",
+      "phase": "chapter",
+      "receivedAt": 1794250635816,
+      "serverTime": 1794250635772,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 233
+    },
+    {
+      "client": "load-player-22",
+      "phase": "chapter",
+      "receivedAt": 1794250635816,
+      "serverTime": 1794250635772,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 233
+    },
+    {
+      "client": "load-player-23",
+      "phase": "chapter",
+      "receivedAt": 1794250635816,
+      "serverTime": 1794250635772,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 233
+    },
+    {
+      "client": "load-player-24",
+      "phase": "chapter",
+      "receivedAt": 1794250635816,
+      "serverTime": 1794250635773,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 233
+    },
+    {
+      "client": "load-player-25",
+      "phase": "chapter",
+      "receivedAt": 1794250635816,
+      "serverTime": 1794250635773,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 233
+    },
+    {
+      "client": "load-player-26",
+      "phase": "chapter",
+      "receivedAt": 1794250635816,
+      "serverTime": 1794250635774,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 233
+    },
+    {
+      "client": "load-player-27",
+      "phase": "chapter",
+      "receivedAt": 1794250635816,
+      "serverTime": 1794250635774,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 233
+    },
+    {
+      "client": "load-player-28",
+      "phase": "chapter",
+      "receivedAt": 1794250635816,
+      "serverTime": 1794250635775,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 233
+    },
+    {
+      "client": "load-player-29",
+      "phase": "chapter",
+      "receivedAt": 1794250635817,
+      "serverTime": 1794250635775,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 234
+    },
+    {
+      "client": "load-player-30",
+      "phase": "chapter",
+      "receivedAt": 1794250635817,
+      "serverTime": 1794250635776,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 234
+    },
+    {
+      "client": "load-player-31",
+      "phase": "chapter",
+      "receivedAt": 1794250635817,
+      "serverTime": 1794250635776,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 234
+    },
+    {
+      "client": "load-player-32",
+      "phase": "chapter",
+      "receivedAt": 1794250635817,
+      "serverTime": 1794250635776,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 234
+    },
+    {
+      "client": "load-player-33",
+      "phase": "chapter",
+      "receivedAt": 1794250635817,
+      "serverTime": 1794250635777,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 234
+    },
+    {
+      "client": "load-player-34",
+      "phase": "chapter",
+      "receivedAt": 1794250635817,
+      "serverTime": 1794250635777,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 234
+    },
+    {
+      "client": "load-player-35",
+      "phase": "chapter",
+      "receivedAt": 1794250635817,
+      "serverTime": 1794250635778,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 234
+    },
+    {
+      "client": "load-player-36",
+      "phase": "chapter",
+      "receivedAt": 1794250635817,
+      "serverTime": 1794250635778,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 234
+    },
+    {
+      "client": "load-player-37",
+      "phase": "chapter",
+      "receivedAt": 1794250635817,
+      "serverTime": 1794250635779,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 234
+    },
+    {
+      "client": "load-player-38",
+      "phase": "chapter",
+      "receivedAt": 1794250635818,
+      "serverTime": 1794250635779,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 235
+    },
+    {
+      "client": "load-player-39",
+      "phase": "chapter",
+      "receivedAt": 1794250635818,
+      "serverTime": 1794250635779,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 235
+    },
+    {
+      "client": "load-player-40",
+      "phase": "chapter",
+      "receivedAt": 1794250635818,
+      "serverTime": 1794250635780,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 235
+    },
+    {
+      "client": "load-player-41",
+      "phase": "chapter",
+      "receivedAt": 1794250635818,
+      "serverTime": 1794250635780,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 235
+    },
+    {
+      "client": "load-player-42",
+      "phase": "chapter",
+      "receivedAt": 1794250635818,
+      "serverTime": 1794250635781,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 235
+    },
+    {
+      "client": "load-player-43",
+      "phase": "chapter",
+      "receivedAt": 1794250635818,
+      "serverTime": 1794250635781,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 235
+    },
+    {
+      "client": "load-player-44",
+      "phase": "chapter",
+      "receivedAt": 1794250635818,
+      "serverTime": 1794250635782,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 235
+    },
+    {
+      "client": "load-player-45",
+      "phase": "chapter",
+      "receivedAt": 1794250635818,
+      "serverTime": 1794250635782,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 235
+    },
+    {
+      "client": "load-player-46",
+      "phase": "chapter",
+      "receivedAt": 1794250635819,
+      "serverTime": 1794250635783,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 236
+    },
+    {
+      "client": "load-player-47",
+      "phase": "chapter",
+      "receivedAt": 1794250635819,
+      "serverTime": 1794250635783,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 236
+    },
+    {
+      "client": "load-player-48",
+      "phase": "chapter",
+      "receivedAt": 1794250635819,
+      "serverTime": 1794250635783,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 236
+    },
+    {
+      "client": "load-player-49",
+      "phase": "chapter",
+      "receivedAt": 1794250635819,
+      "serverTime": 1794250635784,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 236
+    },
+    {
+      "client": "load-player-50",
+      "phase": "chapter",
+      "receivedAt": 1794250635819,
+      "serverTime": 1794250635784,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 236
+    },
+    {
+      "client": "load-player-51",
+      "phase": "chapter",
+      "receivedAt": 1794250635819,
+      "serverTime": 1794250635785,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 236
+    },
+    {
+      "client": "load-player-52",
+      "phase": "chapter",
+      "receivedAt": 1794250635819,
+      "serverTime": 1794250635785,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 236
+    },
+    {
+      "client": "load-player-53",
+      "phase": "chapter",
+      "receivedAt": 1794250635819,
+      "serverTime": 1794250635786,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 236
+    },
+    {
+      "client": "load-player-54",
+      "phase": "chapter",
+      "receivedAt": 1794250635819,
+      "serverTime": 1794250635786,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 236
+    },
+    {
+      "client": "load-player-55",
+      "phase": "chapter",
+      "receivedAt": 1794250635820,
+      "serverTime": 1794250635786,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 237
+    },
+    {
+      "client": "load-player-56",
+      "phase": "chapter",
+      "receivedAt": 1794250635820,
+      "serverTime": 1794250635787,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 237
+    },
+    {
+      "client": "load-player-57",
+      "phase": "chapter",
+      "receivedAt": 1794250635820,
+      "serverTime": 1794250635787,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 237
+    },
+    {
+      "client": "load-player-58",
+      "phase": "chapter",
+      "receivedAt": 1794250635820,
+      "serverTime": 1794250635788,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 237
+    },
+    {
+      "client": "load-player-59",
+      "phase": "chapter",
+      "receivedAt": 1794250635820,
+      "serverTime": 1794250635788,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 237
+    },
+    {
+      "client": "load-player-60",
+      "phase": "chapter",
+      "receivedAt": 1794250635820,
+      "serverTime": 1794250635789,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 237
+    },
+    {
+      "client": "load-player-61",
+      "phase": "chapter",
+      "receivedAt": 1794250635820,
+      "serverTime": 1794250635789,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 237
+    },
+    {
+      "client": "load-player-62",
+      "phase": "chapter",
+      "receivedAt": 1794250635820,
+      "serverTime": 1794250635790,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 237
+    },
+    {
+      "client": "load-player-63",
+      "phase": "chapter",
+      "receivedAt": 1794250635820,
+      "serverTime": 1794250635790,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 237
+    },
+    {
+      "client": "load-player-64",
+      "phase": "chapter",
+      "receivedAt": 1794250635821,
+      "serverTime": 1794250635791,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 238
+    },
+    {
+      "client": "load-player-65",
+      "phase": "chapter",
+      "receivedAt": 1794250635821,
+      "serverTime": 1794250635791,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 238
+    },
+    {
+      "client": "load-player-66",
+      "phase": "chapter",
+      "receivedAt": 1794250635821,
+      "serverTime": 1794250635791,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 238
+    },
+    {
+      "client": "load-player-67",
+      "phase": "chapter",
+      "receivedAt": 1794250635821,
+      "serverTime": 1794250635792,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 238
+    },
+    {
+      "client": "load-player-68",
+      "phase": "chapter",
+      "receivedAt": 1794250635821,
+      "serverTime": 1794250635792,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 238
+    },
+    {
+      "client": "load-player-69",
+      "phase": "chapter",
+      "receivedAt": 1794250635821,
+      "serverTime": 1794250635793,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 238
+    },
+    {
+      "client": "load-player-70",
+      "phase": "chapter",
+      "receivedAt": 1794250635821,
+      "serverTime": 1794250635793,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 238
+    },
+    {
+      "client": "load-player-71",
+      "phase": "chapter",
+      "receivedAt": 1794250635821,
+      "serverTime": 1794250635794,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 238
+    },
+    {
+      "client": "load-player-72",
+      "phase": "chapter",
+      "receivedAt": 1794250635821,
+      "serverTime": 1794250635794,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 238
+    },
+    {
+      "client": "load-player-73",
+      "phase": "chapter",
+      "receivedAt": 1794250635822,
+      "serverTime": 1794250635795,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 239
+    },
+    {
+      "client": "load-player-74",
+      "phase": "chapter",
+      "receivedAt": 1794250635822,
+      "serverTime": 1794250635795,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 239
+    },
+    {
+      "client": "load-player-75",
+      "phase": "chapter",
+      "receivedAt": 1794250635822,
+      "serverTime": 1794250635795,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 239
+    },
+    {
+      "client": "load-player-76",
+      "phase": "chapter",
+      "receivedAt": 1794250635822,
+      "serverTime": 1794250635796,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 239
+    },
+    {
+      "client": "load-player-77",
+      "phase": "chapter",
+      "receivedAt": 1794250635822,
+      "serverTime": 1794250635796,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 239
+    },
+    {
+      "client": "load-player-78",
+      "phase": "chapter",
+      "receivedAt": 1794250635822,
+      "serverTime": 1794250635797,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 239
+    },
+    {
+      "client": "load-player-79",
+      "phase": "chapter",
+      "receivedAt": 1794250635822,
+      "serverTime": 1794250635797,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 239
+    },
+    {
+      "client": "load-player-80",
+      "phase": "chapter",
+      "receivedAt": 1794250635822,
+      "serverTime": 1794250635798,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 239
+    },
+    {
+      "client": "load-player-81",
+      "phase": "chapter",
+      "receivedAt": 1794250635822,
+      "serverTime": 1794250635798,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 239
+    },
+    {
+      "client": "load-player-82",
+      "phase": "chapter",
+      "receivedAt": 1794250635823,
+      "serverTime": 1794250635799,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 240
+    },
+    {
+      "client": "load-player-83",
+      "phase": "chapter",
+      "receivedAt": 1794250635823,
+      "serverTime": 1794250635799,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 240
+    },
+    {
+      "client": "load-player-84",
+      "phase": "chapter",
+      "receivedAt": 1794250635823,
+      "serverTime": 1794250635799,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 240
+    },
+    {
+      "client": "load-player-85",
+      "phase": "chapter",
+      "receivedAt": 1794250635823,
+      "serverTime": 1794250635800,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 240
+    },
+    {
+      "client": "load-player-86",
+      "phase": "chapter",
+      "receivedAt": 1794250635823,
+      "serverTime": 1794250635800,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 240
+    },
+    {
+      "client": "load-player-87",
+      "phase": "chapter",
+      "receivedAt": 1794250635823,
+      "serverTime": 1794250635801,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 240
+    },
+    {
+      "client": "load-player-88",
+      "phase": "chapter",
+      "receivedAt": 1794250635823,
+      "serverTime": 1794250635801,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 240
+    },
+    {
+      "client": "load-player-89",
+      "phase": "chapter",
+      "receivedAt": 1794250635823,
+      "serverTime": 1794250635802,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 240
+    },
+    {
+      "client": "load-player-90",
+      "phase": "chapter",
+      "receivedAt": 1794250635824,
+      "serverTime": 1794250635802,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 241
+    },
+    {
+      "client": "load-player-91",
+      "phase": "chapter",
+      "receivedAt": 1794250635824,
+      "serverTime": 1794250635802,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 241
+    },
+    {
+      "client": "load-player-92",
+      "phase": "chapter",
+      "receivedAt": 1794250635824,
+      "serverTime": 1794250635803,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 241
+    },
+    {
+      "client": "load-player-93",
+      "phase": "chapter",
+      "receivedAt": 1794250635824,
+      "serverTime": 1794250635803,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 241
+    },
+    {
+      "client": "load-player-94",
+      "phase": "chapter",
+      "receivedAt": 1794250635824,
+      "serverTime": 1794250635804,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 241
+    },
+    {
+      "client": "load-player-95",
+      "phase": "chapter",
+      "receivedAt": 1794250635824,
+      "serverTime": 1794250635804,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 241
+    },
+    {
+      "client": "load-player-96",
+      "phase": "chapter",
+      "receivedAt": 1794250635824,
+      "serverTime": 1794250635805,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 241
+    },
+    {
+      "client": "load-player-97",
+      "phase": "chapter",
+      "receivedAt": 1794250635824,
+      "serverTime": 1794250635805,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 241
+    },
+    {
+      "client": "load-player-98",
+      "phase": "chapter",
+      "receivedAt": 1794250635824,
+      "serverTime": 1794250635806,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 241
+    },
+    {
+      "client": "load-player-99",
+      "phase": "chapter",
+      "receivedAt": 1794250635825,
+      "serverTime": 1794250635807,
+      "previousDeadline": 1794250635583,
+      "arrivalLagMs": 242
+    }
+  ],
+  "limitations": [
+    "No browser rendering measured",
+    "No human rehearsal",
+    "Inspect tradeCompletions and reconnectsAfterThirtySecondOutage to verify scenario coverage",
+    "Phase observations are raw arrival times; no one-second clock compliance claim"
+  ]
+}

@@ -1,0 +1,7 @@
+node_modules/
+data/
+.env
+*.sqlite*
+reports/private/
+
+test-results/*.cpuprofile
