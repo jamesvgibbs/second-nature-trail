@@ -1,0 +1,21 @@
+{
+  "build": "10a674c",
+  "at": "2026-11-09T20:30:48.807575+00:00",
+  "image": "second-nature-trail:10a674c",
+  "contentHash": "368f66fb87ee9d1690c61e1c0457abba7049bde20c0af2d466a634d0b953dd5f",
+  "checks": [
+    "non-root production-mode startup",
+    "offline synthetic invitation creation",
+    "ordered SSE metadata",
+    "projection module MIME",
+    "newer replacement ignores obsolete enable",
+    "lobby/player/preferences cursor persist across container recreation",
+    "new projection epoch after restart",
+    "backup operator login",
+    "safe read-only display",
+    "display cannot access host"
+  ],
+  "network": "loopback HTTP,Secure cookie flag disabled only for disposable test",
+  "storage": "disposable Docker named volume",
+  "productionDeployed": false
+}

@@ -1,0 +1,40 @@
+{
+  "commit": "10a674c866089e1a80fd08ad089492b099a66664",
+  "capturedAt": "2026-11-09T20:32:04.628003+00:00",
+  "node": "v24.20.0",
+  "hardware": "Mac16,5 Apple M4 Max",
+  "memoryBytes": 68719476736,
+  "os": "macOS26.7.2 build25G332",
+  "network": "localhost; clients and server in same process",
+  "requestedPlayers": 100,
+  "operators": 2,
+  "presentationConnections": 1,
+  "joinWindowSeconds": 60,
+  "requestedGameSeconds": 3605,
+  "limitations": [
+    "Shared development computer, not isolated benchmark",
+    "Not agreed lowest-spec company laptop",
+    "Not representative company network",
+    "No browser rendering or human comprehension measured"
+  ],
+  "backgroundActivity": [
+    "Final Docker image/container checks completed and stopped before both preflight and fullrun",
+    "Root plans only lightweight documentation/monitoring during play; ordinary user/system activity remains uncontrolled",
+    "Root attempted brief native Safari pointer onboarding on isolated4174 preview, stopped after user-input interruption; no chapter gameplay pass claimed."
+  ],
+  "priorSmoke": {
+    "file": "load-10a674c-ledger.json",
+    "scoringInventorySamples": 600,
+    "p95Ms": 393.51066600000195,
+    "errors": 0,
+    "syntheticPriorActions": 10000
+  },
+  "fullRunSyntheticPriorActions": 0,
+  "processId": 27558,
+  "sessionId": 17672,
+  "duringRunUiRevision": {
+    "commit": "f012152",
+    "scope": "User-requested homepage fit/layout changes; backend/content/harness unchanged",
+    "qualification": "Capacity startup hashes remain10a674c. Homepage rendered checks are separate evidence."
+  }
+}

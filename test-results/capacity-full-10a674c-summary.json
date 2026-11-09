@@ -1,0 +1,52 @@
+{
+  "sourceCommit": "10a674c",
+  "gameSeconds": 3608.182,
+  "totalSeconds": 3672.481,
+  "players": 100,
+  "joinSpanSeconds": 60.007,
+  "finalPhase": "awards",
+  "chapterCompletions": [
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+  ],
+  "requests": 75987,
+  "scoringSamples": 12452,
+  "scoringLatencyMs": {
+    "p50": 312.89641700009815,
+    "p95": 506.9468330000527,
+    "p99": 1097.716957999859
+  },
+  "scoring500msTargetPass": false,
+  "errors": {},
+  "completedTrades": 84,
+  "outageReconnects": 1,
+  "awards": 15,
+  "distinctWinners": 15,
+  "rankingPass": true,
+  "inventoryReplayPass": true,
+  "recordedOutcomeReplayPass": true,
+  "fullActionReconciliationPass": false,
+  "journalBound": true,
+  "evidenceGaps": [
+    "Objective completion time is stored in frozen progress, but outcome logs use a later clock read. Only upper-bound consistency is checked; exact objective-time action replay is unavailable."
+  ],
+  "evidenceLimits": [
+    "Outcome replay uses recorded server correctness; it does not independently prove authored-answer correctness, physical proximity, browser behavior, or human acceptance."
+  ],
+  "phases": {
+    "pass": true,
+    "connections": 103,
+    "timedBoundariesPerConnection": 18,
+    "observations": 1854,
+    "maxLagMs": 372,
+    "negativeLags": 0,
+    "errors": []
+  },
+  "releaseApproved": false
+}

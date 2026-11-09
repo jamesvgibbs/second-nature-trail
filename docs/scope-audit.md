@@ -1,13 +1,13 @@
 # Scope audit
 
-Updated 2026-11-09. This separates implemented behavior from release evidence. The authority remains [scope.md](scope.md); [acceptance.md](acceptance.md) records measured checks and unmet release gates. The latest full capacity attempt was stopped for a confirmed shared navigation defect affecting 29 of 100 players in chapter 2. Exact continuous collision geometry and chained fractional-start regressions now pass; a targeted 100-player chapter 2 rerun completed every main objective. The final combined runtime still requires a new full run. It is not a completed hour-long acceptance run.
+Updated 2026-11-09. This separates implemented behavior from release evidence. The authority remains [scope.md](scope.md); [acceptance.md](acceptance.md) records measured checks and unmet release gates. The frozen `10a674c` runtime completed a full 100-player hour through all eight chapters and awards. Every main objective completed for every participant, and independent ranking/inventory/recorded-outcome checks passed. Scoring latency p95 was 506.95 ms, missing the 500 ms target; exact completion-time provenance and required human/browser/production evidence remain incomplete. This is not release approval.
 
 ## Functional coverage
 
 | Requirement | Implementation or evidence | Remaining work |
 | --- | --- | --- |
 | One shared neighborhood, eight districts, two locations each | Shared authoritative engine; public world geometry; world tests align all sixteen doors to content | Human visual review |
-| 100 players, two operators, one presentation | Server capacity bound; load harness opens all 103 connections; separate operator/display roles | Complete frozen-source 60-minute capacity run |
+| 100 players, two operators, one presentation | Server capacity bound; load harness opens all 103 connections; separate operator/display roles | Full localhost hour completed; improve latency and verify representative deployment |
 | Private roster invitations, persistent identity | Offline roster import, hashed invitation/session storage, explicit takeover, one active play lease | Choose real roster/delivery method and production identity arrangement |
 | Device/capability checks before setup | Guarded storage/rendering/connection checks; device policy tests; exact mobile warning and copy action | Physical iOS/Android/tablet/touchscreen-laptop checks; iPad fine-primary-pointer policy covered by synthetic signal regression |
 | Twelve characters and palettes | Original canvas avatars and setup choices; same server ability rules | Final brand/art review |
@@ -31,11 +31,11 @@ Updated 2026-11-09. This separates implemented behavior from release evidence. T
 | Emotes/help/assists | Six presets; actual unfinished help request and confirmed task completion; one scored pair per chapter | Social/balance rehearsal |
 | Atomic item barter | Both confirm current version; inventory mutation invalidates stale offer; transfer/capacity/provenance validation | Full event trading exercise and adversarial rehearsal |
 | Master trader anti-collusion | Recipient must consume supplied item in required task; distinct recipients; circular/re-traded supply cannot multiply credit | Recorded final qualifying winners in full run |
-| Fifteen distinct prizes | Chronological chapter allocation, fixed whole-event order, qualification thresholds, published ties/fallbacks; virtual-clock 24-player run verifies 15 distinct recipients | Real-time normal run with matching results export |
-| Immutable pre-finale results | Frozen snapshot and seeded draw records; finale separate contribution meter | Export reconciliation in complete capacity/rehearsal run |
+| Fifteen distinct prizes | Chronological chapter allocation, fixed whole-event order, qualification thresholds, published ties/fallbacks; virtual-clock 24-player run verifies 15 distinct recipients | Full normal run produced 15 qualifying distinct recipients; independent conditional allocation passed; human balance remains |
+| Immutable pre-finale results | Frozen snapshot and seeded draw records; finale separate contribution meter | Independent rankings/inventory/recorded outcomes passed; exact completion-time provenance and human rehearsal remain |
 | Cooperative finale | Each connected player can contribute; visible individual repair markers, threshold and timed alternate ending | Four-minute audience clarity rehearsal |
 | Committed-state durability | SQLite transactions; mixed-validity batch and persistence-failure rollback tests; actual SIGKILL/restart test | Production volume/backup/restore verification |
-| Disconnect and recovery | Session/lease enforcement; reconnect state; pending-trade cancellation on disconnect/restart; thirty-second simulated outage | Full frozen-source capacity run and human recovery rehearsal |
+| Disconnect and recovery | Session/lease enforcement; reconnect state; pending-trade cancellation on disconnect/restart; thirty-second simulated outage | Full localhost scenario completed with planned outage/reconnect; human recovery rehearsal remains |
 | Original assets and exclusions | Authored pixel geometry/characters/music/dialogue; no public chat, PvP, real financial transactions, or generative dialogue service | Final content/license review |
 
 ## Findings and fixes before the next freeze
@@ -70,4 +70,4 @@ Browser evidence and its limits are recorded in [browser-checks.md](browser-chec
 
 The exact geometry repair, three-watermark projection reducer, monotonic movement requests, and transactionally persisted settings ordering now have 89 passing automated tests. The server refuses obsolete movement/settings writes; same-epoch older views cannot roll back later accepted core state or position, and a new server epoch is accepted through the active stream generation. A saved replacement preference survives an older delayed enable request and restart. The shared load client now exercises the same projection reducer and sequence contracts.
 
-These changes supersede the earlier Safari runtime baseline. Earlier screenshots still support their specifically observed layouts and controls, but do not verify the final ordering/reconnect/failed-enable sequences, the final expanded activities, or host/presentation live rendering. Those checks remain listed in [controls-matrix.md](controls-matrix.md) and [browser-checks.md](browser-checks.md). No complete frozen-source capacity run has passed yet.
+These changes supersede the earlier Safari runtime baseline. Earlier screenshots still support their specifically observed layouts and controls, but do not verify the final ordering/reconnect/failed-enable sequences, the final expanded activities, or host/presentation live rendering. Those checks remain listed in [controls-matrix.md](controls-matrix.md) and [browser-checks.md](browser-checks.md). The complete localhost scenario finished; its 506.95 ms scoring p95 misses the 500 ms target, so release capacity has not passed.

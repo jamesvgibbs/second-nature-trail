@@ -7,11 +7,11 @@ Status: not release-approved. Updated 2026-11-09. This checklist records evidenc
 | Scope requirement | Evidence needed | Current status |
 | --- | --- | --- |
 | Ready within three minutes | Ten representative employees, at least nine successful unassisted; start/end times | Pending human test |
-| 100-player capacity | Full 60-minute active run, 100 joins over 60 seconds, two operators, presentation, trades, submissions, reconnects | Pending measured run |
+| 100-player capacity | Full 60-minute active run, 100 joins over 60 seconds, two operators, presentation, trades, submissions, reconnects | Completed full localhost scenario; latency target missed; representative network still pending |
 | Meeting operation | Full 95-minute dress rehearsal, attendee/input-method record, host commentary, awards | Pending human rehearsal |
 | Rendering | Lowest-spec agreed laptop and browser; >=30 FPS for 95% of measured play | Hardware baseline and measurement pending |
-| Action latency | Representative network profile; p95 confirmed inventory/scoring <=500 ms; sampling method | Network profile and measurement pending |
-| Clock | Phase transitions within one second of server under agreed network | Pending measurement |
+| Action latency | Representative network profile; p95 confirmed inventory/scoring <=500 ms; sampling method | Localhost scoring p95 506.95 ms exceeds 500 ms; representative network pending |
+| Clock | Phase transitions within one second of server under agreed network | Localhost 103×18 transitions verified, max 372 ms; representative network pending |
 | Browser support | Current and previous Chrome, Edge, Firefox, Safari, exact versions and OS | Pending matrix |
 | Recovery | Refresh, duplicate requests, two tabs/takeover, host loss, 30-second player outage, server restart | Automated coverage in progress; rehearsal pending |
 | Controls | All main objectives/learning keyboard-only and pointer-only, comparable attainable scores | Pending complete interaction checks |
@@ -120,6 +120,18 @@ The shared world module now uses exact segment/expanded-rectangle intersection f
 
 An explicit 100-player chapter 2 scenario started participants at deterministic valid fractional positions near six authored sites. All 100 completed all six work orders; no navigation stalls or request errors occurred. One thirty-second outage reconnected. Synthetic main completion p50/p95 were 81.4/81.5 seconds; scoring p95 was 440.2 ms. Separate concurrent three-player routing and targeting cross-checks also completed all objectives with no errors; targeting recorded 18 resolutions per player and included the same outage. These are shortened functional checks using the preceding transport contract, not a new complete capacity pass. Reports: `test-results/exact-geometry-*.json`.
 
-A separate transport-ordering repair adds projection epoch/version metadata and per-client movement sequence numbers. The load client shares the browser's projection reducer; its final combined runtime still requires the next frozen-source smoke and hour-long run.
+A separate transport-ordering repair adds projection epoch/version metadata and per-client movement sequence numbers. The load client shares the browser's projection reducer; its final combined runtime was subsequently exercised in the full run below.
 
 The final combined protocol baseline passes 89 automated tests, including exact geometry, stale projection/move handling, persistent settings-order protection across restart, and rollback-safe retry. Command output is `test-results/functional-exact-geometry-ordering.log`. This does not upgrade earlier rendered Safari evidence to the final source revision; the final compatibility/control matrix remains pending.
+
+## Completed final-runtime capacity run
+
+Frozen commit `10a674c` includes exact continuous geometry and the final movement/projection/settings ordering contracts. Its clean 100-player preflight with 10,000 explicitly synthetic prior actions recorded 600 scoring/inventory samples, p95 393.5 ms, fifty trades, and zero errors. Report: `test-results/load-10a674c-ledger.json`.
+
+The normal-schedule run finished at awards after 3,608.182 real game seconds (3,672.481 total seconds). All 100 participants joined over 60.007 seconds and completed every chapter, with two operator streams and one presentation. It recorded 75,987 requests, 84 completed trades, one planned outage/reconnect, and zero request errors or detected navigation stalls. No synthetic history was prefilled. Source/runtime hashes were captured at startup; homepage-only revisions during the run are qualified in the environment sidecar.
+
+The result is **functional scenario completion, not a passing release-capacity result**. Across 12,452 scoring/inventory samples, p50 was 312.90 ms, p95 **506.95 ms**, and p99 1,097.72 ms. The 500 ms target was missed. These are the original harness's computed percentiles; individual timing samples were not exported, so an independent raw-series recomputation is unavailable. Clients/server shared a development machine over localhost, with light documented Safari activity, rather than the agreed production hardware/network.
+
+Independent post-run verification passed prize allocation/qualification/tie draws, final inventory replay, and recorded-outcome replay against the hash-bound accepted-request journal. All 15 recipients were distinct and qualified. All 103 connections reached all 18 timed boundaries: 1,854 observations, maximum 372 ms receipt lag, no negative or missing observations. This is Node SSE receipt evidence, not browser painting or representative-network timing.
+
+Exact completion-time provenance remains incomplete because the objective completion and its outcome log use separate clock reads. The verifier checks upper-bound consistency and reports `fullActionReconciliationPass: false`; recorded server correctness is not independent content approval, physical-proximity proof, or human acceptance. Reports are [summary](../test-results/capacity-full-10a674c-summary.json), [raw load report](../test-results/capacity-full-10a674c.json), [results export](../test-results/capacity-full-10a674c.export.json), [independent verification](../test-results/capacity-full-10a674c-qa-verification.json), and [bound journal](../test-results/capacity-full-10a674c-journal.json).
