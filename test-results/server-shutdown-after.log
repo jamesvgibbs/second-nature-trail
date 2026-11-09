@@ -1,0 +1,11 @@
+✔ shutdown bounds idle/partial sockets, shares completion, closes SSE and preserves committed score on disk (1077.408333ms)
+✔ shutdown also terminates a partial request whose body never arrives (1014.353417ms)
+✔ shutdown flushes an already queued command durably before its HTTP success (1058.434208ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3201.2935

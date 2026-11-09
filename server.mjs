@@ -358,8 +358,15 @@ export function createGameServer({
         throw Object.assign(Error("Invalid JSON"), { status: 400 });
       }
     };
+    const ensureOpen = () => {
+      if (closing)
+        throw Object.assign(Error("Server is shutting down; reconnect shortly."), {
+          status: 503,
+        });
+    };
     const server = http.createServer(async (req, res) => {
       try {
+        ensureOpen();
         res.setHeader("X-Content-Type-Options", "nosniff");
         res.setHeader("Referrer-Policy", "no-referrer");
         res.setHeader(
@@ -386,6 +393,7 @@ export function createGameServer({
           if (bucket.n > 35)
             throw Object.assign(Error("Please slow down"), { status: 429 });
           const body = await json(req);
+          ensureOpen();
           if (url.pathname === "/api/join") {
             if (typeof body.token !== "string")
               throw Object.assign(Error("Invitation required"), {
@@ -695,23 +703,32 @@ export function createGameServer({
       }
     }, 250);
     timer.unref();
-    const close = async () => {
-      if (closing) return;
-      closing = true;
-      clearInterval(timer);
-      if (flushTimer) {
-        clearTimeout(flushTimer);
-        flush();
-      }
-      for (const v of streams.values()) v.res.end();
-      await new Promise((r) => server.close(r));
-      try {
-        mutate(() => engine.cancelTrades());
-        persist();
-      } finally {
-        db.close();
-        releaseLock();
-      }
+    let closePromise;
+    const close = () => {
+      if (closePromise) return closePromise;
+      closePromise = (async () => {
+        closing = true;
+        clearInterval(timer);
+        if (flushTimer) {
+          clearTimeout(flushTimer);
+          flush();
+        }
+        for (const v of streams.values()) v.res.end();
+        // A partial request or a newly opened TCP socket can otherwise keep
+        // server.close pending beyond the container's termination grace period.
+        // Accepted commands were synchronously flushed above; new work is gated.
+        const drain = setTimeout(() => server.closeAllConnections(), 1000);
+        try {
+          await new Promise((r) => server.close(r));
+          mutate(() => engine.cancelTrades());
+          persist();
+        } finally {
+          clearTimeout(drain);
+          db.close();
+          releaseLock();
+        }
+      })();
+      return closePromise;
     };
     return { server, engine, db, addInvitation, close };
   } catch (e) {
