@@ -225,10 +225,29 @@ export function createGameServer({
       });
       res.end(JSON.stringify(value));
     };
-    const stateFor = (s) =>
-      s.role === "host"
-        ? { ...engine.hostView(), connections: [...leases.keys()] }
-        : engine.view(s.player);
+    const stateFor = (s) => {
+      if (s.role !== "host") return engine.view(s.player);
+      const joined = new Set(
+        db
+          .prepare("SELECT player FROM sessions WHERE role='player'")
+          .all()
+          .map((row) => row.player),
+      );
+      const view = engine.hostView();
+      return {
+        ...view,
+        connections: [...leases.keys()],
+        players: view.players.map((p) => ({
+          ...p,
+          connected: leases.has(p.id),
+          connectionStatus: leases.has(p.id)
+            ? "connected"
+            : joined.has(p.id)
+              ? "reconnecting"
+              : "not-joined",
+        })),
+      };
+    };
     const broadcast = () => {
       for (const [key, v] of streams) {
         try {

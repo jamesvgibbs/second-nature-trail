@@ -15,6 +15,7 @@ import { createGameServer } from "../server.mjs";
 import { CHAPTERS, RULES } from "../content.mjs";
 import { findPath } from "../public/world.mjs";
 import { nextWaypoint } from "./load-navigation.mjs";
+import { solveRoute } from "./load-routing.mjs";
 
 const sourceHashes = Object.fromEntries(
   [
@@ -24,9 +25,11 @@ const sourceHashes = Object.fromEntries(
     "public/world.mjs",
     "public/app.js",
     "public/helpers.mjs",
+    "public/performance.mjs",
     "public/style.css",
     "scripts/load.mjs",
     "scripts/load-navigation.mjs",
+    "scripts/load-routing.mjs",
   ].map((path) => [
     path,
     createHash("sha256")
@@ -37,13 +40,17 @@ const sourceHashes = Object.fromEntries(
 const duration = Number(process.env.LOAD_SECONDS || 3605);
 const joinWindow = Number(process.env.LOAD_JOIN_SECONDS || 60);
 const count = Number(process.env.LOAD_PLAYERS || 100);
+const startChapter = Number(process.env.LOAD_START_CHAPTER || 0);
 if (
   !Number.isFinite(duration) ||
   duration < 5 ||
   !Number.isFinite(joinWindow) ||
   joinWindow < 0 ||
   count < 2 ||
-  count > 100
+  count > 100 ||
+  !Number.isInteger(startChapter) ||
+  startChapter < 0 ||
+  startChapter > 7
 )
   throw Error("Invalid load configuration");
 const dir = mkdtempSync(join(tmpdir(), "trail-load-"));
@@ -106,6 +113,7 @@ async function request(path, body, cookie, client) {
         "challenge",
         "secret",
         "mystery",
+        "rewardRedeem",
       ].includes(body.type)
     )
       scoringSamples.push(elapsed);
@@ -163,6 +171,13 @@ async function stream(path, cookie, owner) {
                       at: new Date().toISOString(),
                       phase,
                       chapter: state.event?.chapter,
+                      chapterCompletionCounts: Array.from(
+                        { length: 8 },
+                        (_, i) =>
+                          Object.values(app.engine.state.players).filter(
+                            (p) => p.progress[i].complete,
+                          ).length,
+                      ),
                       requests,
                       scoringSamples: scoringSamples.length,
                       scoringP95Ms: scoringSamples.length
@@ -197,6 +212,7 @@ async function act(c, action) {
       "assist",
       "tradeOffer",
       "tradeConfirm",
+      "rewardRedeem",
     ].includes(action.type)
   )
     action = { ...action, expectedChapter: c.state.event.chapter };
@@ -281,32 +297,18 @@ async function tickPlayer(c) {
       }
       c.destination = null;
       if (chapterIndex === 7) {
-        const queue = [[publicTask.source]];
-        let path;
-        while (queue.length) {
-          const candidate = queue.shift(),
-            last = candidate.at(-1);
-          if (last === publicTask.destination) {
-            path = candidate;
-            break;
-          }
-          for (const edge of publicTask.edges) {
-            const next =
-              edge[0] === last ? edge[1] : edge[1] === last ? edge[0] : null;
-            if (
-              !next ||
-              candidate.includes(next) ||
-              publicTask.blockedEdges.some(
-                (b) => b.includes(last) && b.includes(next),
-              )
-            )
-              continue;
-            queue.push([...candidate, next]);
-          }
-        }
-        if (path) await act(c, { type: "task", path });
+        const path = solveRoute(publicTask);
+        if (!path)
+          throw Error(
+            `No public constrained route for step ${publicTask.step}`,
+          );
+        await act(c, { type: "task", path });
       } else if (chapterIndex === 4) {
-        if (!publicTask.actedThisRound)
+        if (
+          !publicTask.actedThisRound &&
+          Date.now() >= publicTask.actionAllowedAt &&
+          Date.now() + 500 < publicTask.nextRoundAt
+        )
           await act(c, {
             type: "task",
             choice: publicTask.targets.findIndex((t) => t.marked),
@@ -320,9 +322,11 @@ async function tickPlayer(c) {
               : 0
             : chapterIndex === 5
               ? 0
-              : publicTask.stage === "inspect"
-                ? 0
-                : chapter.tasks[progress.step].answer;
+              : publicTask.stage === "redeem"
+                ? c.n % RULES.rewards.projects.length
+                : publicTask.stage === "inspect"
+                  ? 0
+                  : chapter.tasks[progress.step].answer;
         if (chapterIndex === 0 && publicTask.stage === "load") {
           const possible = (i) =>
             Object.entries(RULES.cargoPlans[i]).every(
@@ -457,6 +461,28 @@ try {
     hostOne.cookie,
   );
   eventStartedAt = app.engine.state.chapterOpenedAt;
+  if (startChapter > 0) {
+    // Development-only scenario selection, never normal event timing evidence.
+    for (let phase = 0; phase < 1 + startChapter * 2; phase++) {
+      const advance = await request(
+        "/api/host/action",
+        {
+          type: "advance",
+          reason: "Explicit shortened chapter scenario",
+          requestId: `load-${++seq}`,
+        },
+        hostOne.cookie,
+      );
+      if (!advance.r.ok)
+        throw Error("Could not advance to requested smoke chapter");
+    }
+    eventStartedAt = app.engine.state.chapterOpenedAt;
+    await Promise.all(
+      clients.map(async (c) => {
+        c.state = (await request("/api/state", undefined, c.cookie)).value;
+      }),
+    );
+  }
   while (Date.now() - eventStartedAt < duration * 1000) {
     const elapsed = Date.now() - started;
     const outage = clients[0];
@@ -550,10 +576,12 @@ try {
       eventStartedAt &&
       Date.now() - eventStartedAt >= 3600000 &&
       count === 100 &&
-      joinWindow === 60
+      joinWindow === 60 &&
+      startChapter === 0
         ? "capacity duration exercised; inspect scenario coverage"
         : "SHORTENED SMOKE TEST, not release capacity acceptance",
     syntheticPriorActions: Number(process.env.LOAD_LEDGER_PREFILL || 0),
+    startChapter,
     rulesVersion: RULES.version,
     contentHash: app.engine.state.contentHash,
     sourceHashes,
@@ -584,6 +612,22 @@ try {
         Object.values(app.engine.state.players).filter(
           (p) => p.progress[i].complete,
         ).length,
+    ),
+    simulatedMainObjectiveTimesMs: Array.from({ length: 8 }, (_, i) => {
+      const values = Object.values(app.engine.state.players)
+        .map((p) => p.progress[i])
+        .filter((p) => p.complete)
+        .map((p) => p.timeMs)
+        .sort((a, b) => a - b);
+      return {
+        samples: values.length,
+        p50: values.length ? values[Math.floor(values.length * 0.5)] : null,
+        p95: values.length ? values[Math.floor(values.length * 0.95)] : null,
+      };
+    }),
+    rewardProjects: app.engine.state.rewardProjects,
+    targetResolutions: Object.values(app.engine.state.players).map(
+      (p) => p.progress[4].targetHits,
     ),
     joinWindowSeconds: joinWindow,
     network: "localhost; not the representative company network",

@@ -1,0 +1,27 @@
+{
+  "status": "superseded before completion; not a performance failure",
+  "sourceCommit": "da5cf29",
+  "stoppedAt": "2026-11-09T19:35:51.416908+00:00",
+  "nodeVersion": "v24.20.0",
+  "phase": "chapter",
+  "chapterIndex": 2,
+  "chapterCompletionCounts": [
+    100,
+    100,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "completedTrades": 84,
+  "acceptedActionLogEntries": 5238,
+  "reason": "Scope audit requires a real Rewards earn/use decision and explicit host phase-shortening recovery. Parent stopped this run before spending the remaining time on superseded functionality.",
+  "lastCompletedPhaseEvidence": "Chapter2 completed for all100 players; cumulative scoring/inventory p95339.6ms across3501samples, zeroerrors. See live log for later observations.",
+  "limitations": [
+    "Not a completed60-minute capacity test",
+    "No final15-winner or export reconciliation claim",
+    "No representative-network or lowest-spec hardware claim"
+  ]
+}

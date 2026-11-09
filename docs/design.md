@@ -59,14 +59,14 @@ Each card has a main task, optional harder challenge, two learning encounters, c
 
 | Chapter | Main interaction | Optional challenge direction | Learning subject |
 | --- | --- | --- | --- |
-| Move day mayhem | Choose useful cargo and a route | Deliver a difficult mixed load | Moving support and limits |
-| The great filter shortage | Match filter to destination | Resolve a constrained delivery order | Filter fit and replacement |
+| Move day mayhem | Choose useful cargo and a route | Choose a feasible bridge-capacity plan | Moving support and limits |
+| The great filter shortage | Match filter to destination | Resolve swapped labels using measurements | Filter fit and replacement |
 | Attack of the clones | Inspect clues and classify messages | Distinguish a convincing impostor | Identity protection and verification |
-| RIP, my apartment | Prepare, then recover from a fictional disaster | Recover within a tighter supply budget | Insurance scope and claims process |
-| Pest resistance | Resolve valid timed targets; leave decoys | Handle an authored harder wave | Reporting and treatment expectations |
+| RIP, my apartment | Prepare, then recover from a fictional disaster | Interpret fictional exclusion/deductible terms | Insurance scope and claims process |
+| Pest resistance | Resolve eighteen timed targets at three sites; leave decoys | Identify the solid target from an authored clue | Reporting and treatment expectations |
 | Credit where it's due | Plan simulated payments | Preserve budget through added expenses | Reporting and fictional credit model |
-| Rewards rebellion | Complete unique challenges | Combine reward choices efficiently | Earning and using rewards |
-| Reconnect humanity | Route connections to homes | Connect homes with fewer links | Internet setup and support |
+| Rewards rebellion | Inspect six unique jobs, earn tokens, and fund a neighborhood project | Evaluate expiration before using a reward | Earning and using rewards |
+| Reconnect humanity | Visit three homes and build routes within relay/cost constraints | Identify a loop-free shared-relay plan | Internet setup and support |
 
 Inventory has a fixed slot limit and published item values. Essential personal supplies prevent starvation. Barter requires both parties to confirm the current offer, and server commit is atomic. A changed inventory invalidates stale confirmation. Credits in the payment simulation cannot be traded. All prices, caps, penalties, primary and secondary metrics must be sourced from the versioned `content.mjs` ruleset rather than copied into independent UI constants.
 

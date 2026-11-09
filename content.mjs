@@ -1,6 +1,6 @@
 // Server-only authored content. Public projections deliberately omit answer keys.
 export const RULES = Object.freeze({
-  version: "trail-0.2.0-draft",
+  version: "trail-0.3.0-draft",
   contentApproved: false,
   chapterMs: 300000,
   breakMs: 120000,
@@ -10,15 +10,105 @@ export const RULES = Object.freeze({
   capacity: 100,
   storageLimit: 12,
   moveSpeed: 190,
+  tradeMaxQuantity: 3,
+  assistDistance: 180,
+  interactionDistance: 110,
+  siteDistance: 65,
+  finaleParticipationRatio: 0.6,
+  spatialOffsets: { 1: 1, 2: 2, 3: 0, 6: 4 },
+  targetPattern: [1, 0, 2],
+  targetLabels: ["Target A", "Target B", "Target C"],
+  deliveryCheckpoints: {
+    scenic: { name: "Paved detour", x: 230, y: 60 },
+    shortcut: { name: "Rubble shortcut", x: 230, y: 160 },
+  },
+  budgetIncompletePayment: 20,
+  rewards: {
+    perJob: 2,
+    projects: [
+      {
+        id: "garden",
+        label: "Build a community garden",
+        cost: 4,
+        outcome: "Your reward planted a garden bed for the neighborhood.",
+      },
+      {
+        id: "welcome",
+        label: "Open a welcome station",
+        cost: 8,
+        outcome: "Your reward stocked a welcome station for new neighbors.",
+      },
+      {
+        id: "festival",
+        label: "Host a neighborhood celebration",
+        cost: 12,
+        outcome: "Your reward brought a celebration stage to Bragging Square.",
+      },
+    ],
+  },
+  routing: {
+    source: "exchange",
+    destinations: ["home-a", "home-b", "home-c"],
+    maxNodes: 10,
+    sites: [
+      { name: "Maple home network station", x: 160, y: 160 },
+      { name: "Cedar home network station", x: 930, y: 150 },
+      { name: "Oak home network station", x: 160, y: 630 },
+    ],
+    nodes: [
+      { id: "exchange", label: "Exchange", x: 0, y: 1 },
+      { id: "north", label: "North junction", x: 1, y: 0 },
+      { id: "south", label: "South junction", x: 1, y: 2 },
+      { id: "relay-west", label: "West relay", x: 2, y: 0 },
+      { id: "relay-east", label: "East relay", x: 2, y: 2 },
+      { id: "hub", label: "Neighborhood hub", x: 3, y: 1 },
+      { id: "bypass", label: "Bypass", x: 3, y: 0 },
+      { id: "home-a", label: "Home A", x: 4, y: 0 },
+      { id: "home-b", label: "Home B", x: 4, y: 1 },
+      { id: "home-c", label: "Home C", x: 4, y: 2 },
+    ],
+    edgeCosts: [
+      { from: "exchange", to: "north", cost: 2 },
+      { from: "exchange", to: "south", cost: 2 },
+      { from: "north", to: "relay-west", cost: 2 },
+      { from: "south", to: "relay-east", cost: 2 },
+      { from: "relay-west", to: "hub", cost: 2 },
+      { from: "relay-east", to: "hub", cost: 2 },
+      { from: "relay-west", to: "bypass", cost: 1 },
+      { from: "bypass", to: "home-a", cost: 3 },
+      { from: "hub", to: "home-a", cost: 2 },
+      { from: "hub", to: "home-b", cost: 2 },
+      { from: "hub", to: "home-c", cost: 2 },
+      { from: "relay-east", to: "home-c", cost: 4 },
+      { from: "north", to: "south", cost: 4 },
+      { from: "bypass", to: "hub", cost: 3 },
+      { from: "relay-east", to: "bypass", cost: 5 },
+    ],
+    blockedVariants: [
+      [["hub", "home-a"]],
+      [["relay-west", "hub"]],
+      [["exchange", "north"]],
+    ],
+    requiredNodes: [["relay-west"], ["relay-east"], ["relay-west", "hub"]],
+    budgets: [9, 9, 12],
+  },
   taskCooldownMs: 3000,
   spatialTaskCount: 6,
   spatialTaskPoints: 10,
   targetRoundMs: 9000,
+  targetTelegraphMs: 2000,
+  targetHitsPerSite: 6,
+  targetSites: [
+    { name: "Apartment block outbreak", x: 920, y: 370 },
+    { name: "Maple home outbreak", x: 160, y: 160 },
+    { name: "Elm home outbreak", x: 530, y: 650 },
+  ],
   deliveryDamage: 2,
   cargoSlots: 4,
   cargoWeights: { parts: 2, food: 1, cable: 2 },
   reservePerChapter: 6,
   cargoPlans: [{ parts: 2 }, { parts: 1, food: 2 }, { cable: 2 }],
+  cargoPlanLabels: ["Repair kit", "Essentials", "Connection kit"],
   budgetCycleMs: 45000,
   chapterMaxima: [95, 95, 95, 95, 95, 95, 95, 95],
   budgetIncomes: [100, 90, 80],
@@ -353,7 +443,7 @@ export const CHAPTERS = [
   {
     title: "Pest resistance",
     objective:
-      "Resolve three marked outbreaks. Use the same deliberate target selection with keyboard or pointer.",
+      "Visit three outbreak sites and resolve six marked targets at each. Read the warning signal, select deliberately, and leave friendly targets alone.",
     locations: [
       { name: "Apartment block", x: 920, y: 370 },
       { name: "Pest-control HQ", x: 1070, y: 370 },
@@ -646,7 +736,7 @@ export const CHAPTERS = [
 export function publicChapter(index, progress) {
   const c = CHAPTERS[index];
   if (!c) return null;
-  const strip = ({ answer, item, explanation, ...v }) => v;
+  const strip = ({ answer, item, explanation, falseAccusations, ...v }) => v;
   return {
     index,
     title: c.title,
@@ -856,3 +946,29 @@ CHAPTERS[6].tasks.forEach(
       "Work order SHIFT-6: the final volunteer team needs food. Fictional reward terms: one claim per completed unique job; no real purchases.",
     ][i]),
 );
+
+// Server-only classification metadata. Never expose before a scored decision.
+CHAPTERS[2].tasks.forEach(
+  (t, i) => (t.falseAccusations = [[], [1], [], [1], [], [0, 1]][i]),
+);
+CHAPTERS[0].objective =
+  "Pack a four-slot delivery cart from your twelve-item storage. Complete three deliveries, choosing between protected cargo and the shorter damaged route.";
+CHAPTERS[1].objective =
+  "Inspect six homes, match each replacement to its equipment, and restore airflow.";
+CHAPTERS[2].objective =
+  "Investigate evidence at six homes. Identify impersonation attempts without falsely accusing legitimate neighbors.";
+CHAPTERS[6].objective =
+  "Complete six distinct resident jobs, earn fictional reward tokens, then decide how to use them for neighborhood projects.";
+CHAPTERS[6].tasks.push({
+  kind: "rewards",
+  prompt: "Use your earned fictional rewards for a neighborhood project.",
+  options: RULES.rewards.projects.map((p) => p.label),
+  item: null,
+  answer: null,
+});
+
+export const MYSTERY = {
+  answer: "NEIGHBOR",
+  requiredClues: 8,
+  successLine: "The AI forgot its most important variable: a neighbor.",
+};

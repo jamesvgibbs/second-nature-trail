@@ -127,3 +127,24 @@ test("text size and sound settings survive the client/server conversion and key 
   assert.equal(isValidKeyMap({ up: " ", down: "s" }), false);
   assert.equal(isValidKeyMap({ up: "w", down: "s" }), true);
 });
+
+test("desktop-UA iPad remains unsupported when a trackpad is the primary pointer", () => {
+  assert.equal(
+    classifyDevice({
+      userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15)",
+      maxTouchPoints: 5,
+      coarsePointer: false,
+      anyCoarsePointer: true,
+    }),
+    "unsupported-mobile",
+  );
+  assert.equal(
+    classifyDevice({
+      userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+      maxTouchPoints: 10,
+      coarsePointer: false,
+      anyCoarsePointer: true,
+    }),
+    "desktop",
+  );
+});

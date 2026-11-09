@@ -1,3 +1,5 @@
+import { localFrameMeasurement } from "/performance.mjs";
+const measureFrame = localFrameMeasurement();
 import {
   DOORS,
   OBSTACLES,
@@ -15,6 +17,8 @@ import {
   isValidKeyMap,
   readSafeOverride,
   writeSafeOverride,
+  restorationProgress,
+  routeSummary,
 } from "/helpers.mjs";
 const $ = (s) => document.querySelector(s),
   app = $("#app"),
@@ -89,7 +93,10 @@ const normalizedSettings = clientPreferences,
 let forceSafe = false,
   routePath = [],
   tutorialMovePending = false,
-  presentedTarget = null;
+  presentedTarget = null,
+  autoTargetEnabled = false,
+  autoTargetRound = null,
+  targetRequestPending = false;
 try {
   forceSafe = readSafeOverride(localStorage);
 } catch {
@@ -246,6 +253,7 @@ function capabilities() {
       userAgent: navigator.userAgent,
       maxTouchPoints: navigator.maxTouchPoints,
       coarsePointer: matchMedia("(pointer: coarse)").matches,
+      anyCoarsePointer: matchMedia("(any-pointer: coarse)").matches,
       mobileHint: navigator.userAgentData?.mobile === true,
     }) === "unsupported-mobile"
   ) {
@@ -612,8 +620,32 @@ function game() {
   updateControlHints();
   windowCheck();
   requestAnimationFrame(frame);
+  firstUseControls();
+}
+function firstUseControls() {
+  if (isPresentation || !state.me || state.me.tutorial?.length >= 5) return;
+  const key = "trail-controls-seen:" + state.me.id;
+  try {
+    if (localStorage.getItem(key) === "1") return;
+    localStorage.setItem(key, "1");
+  } catch {}
+  panel = "controls-intro";
+  open(
+    "Your first steps on the trail",
+    `<p>Explore together at your own pace. Every action works with a keyboard or a mouse / trackpad.</p><table class="compact-table"><tr><th>Action</th><th>Keyboard</th><th>Pointer</th></tr><tr><td>Walk</td><td>${esc(movementKeys())} or arrow keys while the map is focused</td><td>Click a destination on the map</td></tr><tr><td>Visit an objective</td><td>Tab to its button, then Enter; ${esc(keyLabel("interact"))} interacts nearby</td><td>Click the objective button</td></tr><tr><td>Choose an action</td><td>Tab and Enter, or a numbered choice</td><td>Click a choice, then Confirm</td></tr><tr><td>Close a menu</td><td>Escape</td><td>Click ×</td></tr></table><p class="notice">${["draft", "lobby"].includes(state.event.phase) ? "Start with the five practice steps in the sidebar." : "Follow the current chapter in the sidebar."} Help (${esc(keyLabel("help"))}) stays available throughout the game. Settings changes controls, text size, sound, and visuals.</p><div id="intro-start"></div>`,
+  );
+  $("#intro-start").append(btn("Let’s explore", close, "primary"));
 }
 function renderMission() {
+  const mission = $("#mission");
+  const focused = mission.contains(document.activeElement)
+    ? document.activeElement
+    : null;
+  const focusedText = focused?.textContent;
+  const focusedIndex = focused
+    ? [...mission.querySelectorAll("button")].indexOf(focused)
+    : -1;
+  const previousPhase = mission.dataset.phase;
   const e = state.event || {},
     me = state.me || {},
     ch = state.chapter,
@@ -647,13 +679,15 @@ function renderMission() {
         '<div class="phase-banner"><strong>Bragging rights.</strong><p class="small" style="margin:8px 0 0">Supplies and scoring are frozen. Tell us how you did it.</p></div>' +
         verifiedHighlightHTML() +
         standingsHTML() +
-        awardsHTML();
+        awardsHTML() +
+        nextChapterHTML();
     } else if (!isPresentation) {
       html += `<div class="stat-row"><span>Your chapter score</span><strong>${progress?.score || 0}</strong></div><div class="stat-row"><span>Objective progress</span><strong>${progress?.step || 0} / ${ch?.taskCount || ch?.task?.totalSteps || 3}</strong></div><div class="progress-track"><div class="progress-fill" style="width:${progress?.complete ? 100 : Math.min(100, (100 * (progress?.step || 0)) / (ch?.taskCount || ch?.task?.totalSteps || 3))}%"></div></div><div id="chapter-actions"></div>`;
     }
     html += "<hr><h3>Neighborhood restoration</h3>" + contributionsHTML();
   }
   $("#mission").innerHTML = html;
+  mission.dataset.phase = `${e.phase}:${e.chapter}`;
   $("#map-label").textContent = (ch?.title || "Bragging Square").toUpperCase();
   if ($("#tutorial-actions")) renderTutorial();
   if ($("#chapter-actions")) {
@@ -683,6 +717,12 @@ function renderMission() {
         mystery,
       ),
     );
+    if (ch?.rewardShop)
+      n.append(
+        btn("Rewards: " + ch.rewardShop.balance + " tokens", () =>
+          travel(1, "rewards"),
+        ),
+      );
     if (e.paused) {
       n.querySelectorAll("button").forEach((b) => (b.disabled = true));
       n.prepend(
@@ -712,15 +752,74 @@ function renderMission() {
     $("#finale-action button").textContent = "✓ Your home is restored";
     $("#finale-action button").disabled = true;
   }
+  if (focused && !modal.open) {
+    const buttons = [...mission.querySelectorAll("button")];
+    const replacement =
+      previousPhase === mission.dataset.phase
+        ? buttons.find((b) => b.textContent === focusedText && !b.disabled) ||
+          buttons[focusedIndex]
+        : null;
+    (replacement && !replacement.disabled ? replacement : activeCanvas)?.focus({
+      preventScroll: true,
+    });
+  }
+}
+function nextChapterHTML() {
+  const next = state.world?.find((c) => c.index === state.event.chapter + 1);
+  if (!next)
+    return `<section class="notice"><span class="eyebrow">UP NEXT · THE FINALE</span><h3>Bring the lights home</h3><p class="small">Scoring is finished. Every neighbor can restore a home together before the awards.</p></section>`;
+  return `<section class="notice"><span class="eyebrow">UP NEXT · CHAPTER ${next.index + 1}</span><h3>${esc(next.title)}</h3>${next.objective ? `<p class="small">${esc(next.objective)}</p>` : ""}<p class="small">Start at ${esc(next.locations[0].name)}. Then explore ${esc(next.locations[1].name)} for a challenge and a hidden clue. The next chapter opens when this break ends.</p></section>`;
+}
+function rewardsShop() {
+  const chapterIndex = state.event.chapter;
+  const shop = state.chapter?.rewardShop;
+  if (!shop) return;
+  panel = "activity";
+  open(
+    "Turn rewards into a neighborhood repair",
+    `<p class="notice">${shop.balance} tokens available · ${shop.earned} earned from completed jobs</p><p class="small">Finish all six jobs to use reward tokens. Tokens cannot be traded. Choose a different project for each redemption. These repairs do not add award points.</p><div class="choice-list" id="reward-projects"></div>`,
+  );
+  for (const [i, project] of shop.options.entries()) {
+    const used = shop.uses.includes(project.id);
+    const b = btn(
+      `${used ? "✓ " : ""}${project.label} · ${project.cost} tokens — ${project.outcome}`,
+      async () => {
+        const r = await act("rewardRedeem", {
+          choice: i,
+          expectedChapter: chapterIndex,
+        });
+        if (r !== null) {
+          rewardsShop();
+          toast(r.message || project.outcome);
+        }
+      },
+    );
+    b.disabled =
+      used ||
+      shop.balance < project.cost ||
+      state.me.progress[chapterIndex].step < state.rules.spatialTaskCount;
+    $("#reward-projects").append(b);
+  }
 }
 function contributionsHTML() {
   const c = state.event?.contributions || [];
-  return districts
-    .map(
-      (d, i) =>
-        `<div class="stat-row"><span>${i + 1}. ${esc(d[1])}</span><strong>${typeof c[i] === "object" ? c[i]?.count || 0 : c[i] || 0}</strong></div>`,
-    )
-    .join("");
+  const restoration = restorationProgress(state.event);
+  return (
+    `<p class="small">${restoration.completed} completed objectives · AI control ${100 - restoration.percent}%</p><div class="progress-track" aria-label="Neighborhood restored ${restoration.percent}%"><div class="progress-fill" style="width:${restoration.percent}%"></div></div><p class="small muted">Completed objectives remove AI beacons and clear debris along the roads. Road centers remain open to everyone.</p>` +
+    districts
+      .map(
+        (d, i) =>
+          `<div class="stat-row"><span>${i + 1}. ${esc(d[1])}</span><strong>${typeof c[i] === "object" ? c[i]?.count || 0 : c[i] || 0}</strong></div>`,
+      )
+      .join("") +
+    (state.rules?.rewards?.projects || [])
+      .filter((p) => state.event.rewardProjects?.[p.id])
+      .map(
+        (p) =>
+          `<p class="small">${esc(p.label)}: ${state.event.rewardProjects[p.id]} funded</p>`,
+      )
+      .join("")
+  );
 }
 function awardsHTML() {
   const a = state.event?.awards || state.awards || [];
@@ -852,6 +951,10 @@ function travel(index, kind) {
   activeCanvas.focus();
 }
 function showActivity(kind) {
+  if (kind === "rewards") {
+    rewardsShop();
+    return;
+  }
   const chapterIndex = state.event.chapter;
   if (kind === "secret") {
     panel = "secret";
@@ -902,7 +1005,7 @@ function showActivity(kind) {
     kind === "challenge"
       ? "A little extra trouble"
       : task.target?.name || c.locations[0].name,
-    `${task.kind === "budget" ? `<div class="notice">Fictional cycle ${(prog?.step || 0) + 1} of 3<br>Income ${task.income} + retained ${task.retained} = ${task.budget}<br>Payment due: ${task.due}. This budget cannot be traded.<br><span id="budget-clock"></span></div>` : ""}${
+    `${task.kind === "rewards" ? `<div class="notice">${c.rewardShop?.balance || 0} reward tokens available · ${c.rewardShop?.earned || 0} earned. Choose a neighborhood repair to finish your main objective. Tokens are nontradable; repairs add no award points.</div>` : ""}${task.kind === "budget" ? `<div class="notice">Fictional cycle ${(prog?.step || 0) + 1} of 3<br>Income ${task.income} + retained ${task.retained} = ${task.budget}<br>Payment due: ${task.due}. This budget cannot be traded.<br><span id="budget-clock"></span></div>` : ""}${
       chapterIndex === 0 && task.kind === "delivery"
         ? `<div class="notice">Cart: ${Object.entries(state.me.inventory)
             .map(([k, v]) => `${v} ${k}`)
@@ -1181,6 +1284,10 @@ function map() {
       },
       i === state.event.chapter ? "primary" : "",
     );
+    const places = document.createElement("span");
+    places.className = "map-places";
+    places.textContent = `${d[1]} · ${d[2]}`;
+    b.append(places);
     $("#map-districts").append(b);
   });
 }
@@ -1399,6 +1506,7 @@ modal.addEventListener("keydown", (e) => {
 });
 function frame(now) {
   if (!activeCanvas?.isConnected) return;
+  measureFrame(now, state?.event?.phase);
   drawMap(activeCtx, true);
   if (target && connected && !modal.open && !isPresentation) {
     const p = state.me.position;
@@ -1608,12 +1716,37 @@ function drawMap(ctx, live) {
     rect(ctx, 390, y, 2, 14, "#e3d8b4");
     rect(ctx, 805, y, 2, 14, "#e3d8b4");
   }
-  const contributions = state?.event?.contributions || [];
+  const restoration = restorationProgress(state?.event);
+  const roadSections = [
+    [80, 251],
+    [490, 251],
+    [900, 251],
+    [80, 511],
+    [900, 511],
+    [80, 550],
+    [490, 550],
+    [900, 550],
+  ];
+  roadSections.forEach(([x, y], i) => {
+    const cleared = Math.floor(restoration.districts[i] * 4);
+    for (let j = 0; j < 4; j++) {
+      const bx = x + j * 49;
+      if (j < cleared) {
+        rect(ctx, bx, y, 31, 4, "#709989");
+      } else {
+        // Decorative shoulder debris leaves the traversable road center open.
+        rect(ctx, bx, y - 2, 19, 7, "#756c65");
+        rect(ctx, bx + 10, y - 6, 14, 8, "#989083");
+        rect(ctx, bx + 5, y - 3, 4, 3, "#dfb67f");
+      }
+    }
+  });
   cells.forEach(([col, row], i) => {
     const x = col * 415 + 34,
       y = row * 260 + 35,
       active = live && state?.event?.chapter === i;
-    const lit = Number(contributions[i] || 0) > 0;
+    const districtRestored = restoration.districts[i];
+    const lit = districtRestored > 0;
     rect(ctx, x - 10, y - 16, 305, 205, active ? "#a7bd7e" : "#8eac79");
     const a = DOORS[i * 2],
       b = DOORS[i * 2 + 1];
@@ -1639,6 +1772,29 @@ function drawMap(ctx, live) {
     );
     rect(ctx, a[0] - 6, a[1] - 20, 12, 35, "#d9ccaa");
     rect(ctx, b[0] - 6, b[1] - 20, 12, 35, "#d9ccaa");
+    // Original AI relay: its four control lights switch off as this district repairs.
+    const relayX = x + 137,
+      relayY = y + 100;
+    rect(ctx, relayX, relayY, 23, 30, "#294450");
+    rect(ctx, relayX + 9, relayY - 9, 5, 10, "#53646a");
+    const activeLights = 4 - Math.floor(districtRestored * 4);
+    for (let n = 0; n < 4; n++)
+      rect(
+        ctx,
+        relayX + 4 + (n % 2) * 9,
+        relayY + 5 + Math.floor(n / 2) * 10,
+        6,
+        6,
+        n < activeLights ? "#e88960" : "#79b8af",
+      );
+    ctx.font = "9px monospace";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#233e3b";
+    ctx.fillText(
+      activeLights ? "AI RELAY" : "NEIGHBOR LINK",
+      relayX + 11,
+      relayY + 42,
+    );
     tree(ctx, x + 137, y + 145, i % 2);
     tree(ctx, x + 276, y + 22);
     tree(ctx, x - 5, y + 148);
@@ -1679,7 +1835,38 @@ function drawMap(ctx, live) {
   ctx.fillText("BRAGGING SQUARE", 600, 470);
   ctx.font = "10px monospace";
   ctx.fillText("PLEASE DO NOT FEED THE ALGORITHM", 600, 337);
+  const projects = state?.event?.rewardProjects || {};
+  if (projects.garden) {
+    rect(ctx, 470, 378, 48, 30, "#78583e");
+    for (let n = 0; n < 6; n++) {
+      const x = 476 + (n % 3) * 14,
+        y = 382 + Math.floor(n / 3) * 13;
+      rect(ctx, x, y + 3, 3, 8, "#477050");
+      rect(ctx, x - 3, y, 9, 5, "#b7d57b");
+    }
+  }
+  if (projects.welcome) {
+    rect(ctx, 679, 375, 44, 30, "#b5d88e");
+    rect(ctx, 675, 371, 52, 8, "#e88960");
+    ctx.fillStyle = "#233e3b";
+    ctx.font = "bold 10px monospace";
+    ctx.textAlign = "center";
+    ctx.fillText("HELLO", 701, 395);
+  }
+  if (projects.festival) {
+    rect(ctx, 575, 424, 53, 15, "#af8960");
+    for (let n = 0; n < 5; n++) rect(ctx, 577 + n * 10, 418, 6, 6, palette[n]);
+  }
   if (live) {
+    rect(ctx, 444, 481, 310, 20, "#294450");
+    ctx.fillStyle = "#f7f2df";
+    ctx.font = "bold 11px monospace";
+    ctx.textAlign = "center";
+    ctx.fillText(
+      `AI CONTROL ${100 - restoration.percent}% · ${restoration.completed} REPAIRS`,
+      600,
+      495,
+    );
     drawRepairs(ctx);
     const loc = [
       state?.chapter?.task?.target || state?.chapter?.locations?.[0],
@@ -1799,6 +1986,10 @@ function hostDashboard() {
       ["Players", ps.length],
       ["Connected", (raw.connections || []).length],
       [
+        "Reconnecting",
+        ps.filter((p) => p.connectionStatus === "reconnecting").length,
+      ],
+      [
         "Tutorial complete",
         ps.filter((p) =>
           Array.isArray(p.tutorial)
@@ -1830,6 +2021,8 @@ function hostDashboard() {
     ["Cancel countdown", "cancelStart"],
     ["Pause", "pause"],
     ["Resume", "resume"],
+    ["Shorten current phase", "shorten"],
+    ["Advance to next phase", "advance"],
     ["Skip chapter", "skip"],
     ["End scoring", "endScoring"],
     ["Close event", "close"],
@@ -1841,7 +2034,7 @@ function hostDashboard() {
         () => {
           open(
             label,
-            `<p>${esc(e.name || "Second Nature Trail")} · ${ps.length} players · current phase ${esc(e.phase)}</p><label>Reason<input id="host-reason" value="${esc(label)}" required></label><div id="host-confirm"></div>`,
+            `<p>${esc(e.name || "Second Nature Trail")} · ${ps.length} players · current phase ${esc(e.phase)}</p>${type === "shorten" ? `<label>Seconds remaining after this change<input id="host-seconds" type="number" min="1" step="1" max="${Math.max(1, Math.ceil((e.remainingMs || 0) / 1000))}" value="30" required></label>` : ""}${type === "advance" ? `<p class="notice">Ends this phase now. During a chapter, current results stay ranked and the chapter award settles. Use Skip chapter only for an unranked recovery.</p>` : ""}<label>Reason<input id="host-reason" value="${esc(label)}" required></label><div id="host-confirm"></div>`,
           );
           $("#host-confirm").append(
             btn(
@@ -1849,8 +2042,20 @@ function hostDashboard() {
               () => {
                 const reason = $("#host-reason").value;
                 if (!reason.trim()) return;
+                const seconds =
+                  type === "shorten"
+                    ? Number($("#host-seconds").value)
+                    : undefined;
+                if (
+                  type === "shorten" &&
+                  (!Number.isInteger(seconds) || seconds < 1)
+                )
+                  return;
                 close();
-                hostCommand(type, { reason });
+                hostCommand(type, {
+                  reason,
+                  ...(seconds === undefined ? {} : { seconds }),
+                });
               },
               type === "skip" || type === "endScoring" ? "danger" : "primary",
             ),
@@ -1871,6 +2076,12 @@ function hostDashboard() {
   link.textContent = "Open safe presentation";
   $("#host-links").append(
     link,
+    btn("Review frozen content and rules", () => {
+      open(
+        "Event content and scoring",
+        `<p class="notice">${raw.rules?.contentApproved ? "Content marked approved in the frozen ruleset." : "Draft content: SN owner approval is still required before release."}</p><p class="small">Content fingerprint: <code style="overflow-wrap:anywhere">${esc(raw.contentHash || "Unavailable")}</code></p>${rulesHTML(raw)}`,
+      );
+    }),
     btn("Export results", () => {
       location.href = "/api/host/export";
     }),
@@ -1879,7 +2090,13 @@ function hostDashboard() {
   ps.forEach((p) => {
     const d = document.createElement("div");
     d.className = "player-item";
-    d.innerHTML = `<strong>${esc(p.name)}</strong><span class="small">${p.ready ? "Ready" : p.setup ? "Practicing" : "Setting up"}</span>`;
+    const connectionLabel =
+      p.connectionStatus === "connected"
+        ? "Connected"
+        : p.connectionStatus === "reconnecting"
+          ? "Reconnecting / offline"
+          : "Not joined";
+    d.innerHTML = `<strong>${esc(p.name)}</strong><span class="small">${connectionLabel} · ${p.ready ? "Ready" : p.setup ? "Practicing" : "Setup incomplete"}</span>`;
     d.append(
       btn("Rescue", () =>
         hostCommand("rescue", {
@@ -1935,8 +2152,8 @@ function standingsHTML() {
     '</ol><p class="small muted">Ranking uses recorded chapter performance. Prize eligibility is separate.</p>'
   );
 }
-function rulesHTML() {
-  const r = state.rules;
+function rulesHTML(context = state) {
+  const r = context.rules;
   if (!r) return "<p>The event rules are still loading.</p>";
   const list = (values, suffix = "") =>
     Object.entries(values || {})
@@ -1955,7 +2172,7 @@ function rulesHTML() {
       : maxima
           .map(
             (value, index) =>
-              `${state.world?.[index]?.title || `Chapter ${index + 1}`}: ${value}`,
+              `${context.world?.[index]?.title || `Chapter ${index + 1}`}: ${value}`,
           )
           .join("; ");
   const groups = [
@@ -1991,12 +2208,20 @@ function rulesHTML() {
           `${r.spatialTaskCount} inspected sites × ${r.spatialTaskPoints} points for each correct decision. Inspection itself earns no points. Applies to filters, identity, insurance, and rewards.`,
         ],
         [
+          "Rewards projects",
+          `${r.rewards.perJob} nontradable tokens per completed rewards job. After all ${r.spatialTaskCount} jobs, redeem at least one project to complete the objective; the redemption adds no score. Each project can be funded once per player: ${r.rewards.projects.map((p) => `${p.label}, ${p.cost} tokens`).join("; ")}. Remaining tokens may fund another affordable project.`,
+        ],
+        [
           "Cargo delivery",
           `Each delivery earns round(useful cargo value ÷ ${maxLoadValue} × ${r.taskPoints}) points, at most ${r.taskPoints}. The shortcut reduces every delivered item's value by ${r.deliveryDamage}, with a minimum item value of zero.`,
         ],
         [
-          "Targeting and routing",
-          `${r.taskPoints} points per valid target resolved or valid home connection.`,
+          "Targeting",
+          `${r.targetHitsPerSite} valid hits complete a site and earn ${r.taskPoints} points; three sites total. Partial sites add no main score. Every valid hit adds one to the ranking metric; each decoy subtracts one.`,
+        ],
+        [
+          "Routing",
+          `${r.taskPoints} points per valid home connection. A route must include its required relays, avoid broken links, and stay within the displayed cable budget.`,
         ],
         [
           "Fictional payments",
@@ -2004,7 +2229,7 @@ function rulesHTML() {
         ],
         [
           "Mistakes",
-          `Wrong site decisions, decoy hits, invalid routes, and wrong harder-challenge answers subtract ${r.mistakePenalty} chapter points, with a zero-point floor. Wrong site, target, or route decisions also subtract one from that chapter's primary ranking metric.`,
+          `Wrong site decisions, decoy hits, invalid routes, and wrong harder-challenge answers subtract ${r.mistakePenalty} chapter points, with a zero-point floor. Wrong filter, insurance, rewards, target, or route decisions also subtract one from that chapter's primary ranking metric. In identity checks, only an actual false accusation subtracts from the primary metric; other incorrect decisions still lose chapter points.`,
         ],
         [
           "Harder challenge",
@@ -2024,7 +2249,7 @@ function rulesHTML() {
         ],
         [
           "Current objective",
-          `${state.chapter?.title || "Current chapter"}: ${state.chapter?.taskCount ?? "loading"} main-objective steps.`,
+          `${context.chapter?.title || "Current chapter"}: ${context.chapter?.taskCount ?? "loading"} main-objective steps.`,
         ],
       ],
     ],
@@ -2037,7 +2262,7 @@ function rulesHTML() {
         ],
         [
           "Target rounds",
-          `One attempt per ${r.targetRoundMs / 1000}-second round. Faster clicking earns no additional attempts.`,
+          `One attempt per ${r.targetRoundMs / 1000}-second round, starting with a ${r.targetTelegraphMs / 1000}-second preparation signal. Optional automatic confirmation submits only the target you selected, with the same timing and limits.`,
         ],
         [
           "Payment cycles",
@@ -2089,19 +2314,26 @@ function targeting(task) {
   panel = "targeting";
   open(
     "Outbreak response",
-    `<div class="eyebrow">TARGET SELECTION MODE · ARROWS SELECT · SPACE ACTS</div><h3 style="margin-top:16px">${esc(task.prompt || "Resolve the marked outbreak. Leave friendly neighbors alone.")}</h3><p class="small">One deliberate action per round. No rapid clicking. Your choice of visuals does not change the targets.</p><div class="row spread"><span id="round-label" class="badge">Round ${Number(task.round) + 1}</span><span id="round-timer" class="small"></span></div><div id="targets" class="target-grid" style="margin:18px 0"></div><div id="target-confirm"></div><p id="target-status" class="notice"></p>`,
+    `<div class="eyebrow">TARGET SELECTION MODE · ARROWS SELECT · SPACE ACTS</div><h3 style="margin-top:16px">${esc(task.prompt || "Resolve the marked outbreak. Leave friendly neighbors alone.")}</h3><p class="small">One deliberate action per round. No rapid clicking. Your choice of visuals does not change the targets.</p><div class="row spread"><span id="round-label" class="badge">Round ${Number(task.round) + 1}</span><span id="round-timer" class="small"></span></div><div id="targets" class="target-grid" style="margin:18px 0"></div><p id="site-progress" class="notice"></p><label class="row"><input id="auto-target" type="checkbox">Confirm my selected target automatically when the signal opens</label><div id="target-confirm"></div><p id="target-status" class="notice"></p>`,
   );
   selection = null;
   drawTargets(task);
   $("#target-confirm").append(
     btn("Resolve selected target", resolveTarget, "primary"),
   );
-  $("#target-confirm button").disabled = !!task.actedThisRound;
+  $("#auto-target").checked = autoTargetEnabled;
+  $("#auto-target").onchange = (e) => {
+    autoTargetEnabled = e.target.checked;
+  };
+  updateTargetStatus(task);
 }
 function drawTargets(task) {
   presentedTarget = { ...task, chapter: state.event.chapter };
   const holder = $("#targets");
   if (!holder) return;
+  const focusedTarget = holder.contains(document.activeElement)
+    ? document.activeElement.closest("button")?.dataset.targetId
+    : undefined;
   holder.replaceChildren();
   (task.targets || []).forEach((t, i) => {
     const b = btn(
@@ -2118,6 +2350,7 @@ function drawTargets(task) {
       `${t.label}${t.marked ? " · warning marker" : ""}`,
     );
     b.setAttribute("aria-pressed", String(selection === t.id));
+    b.dataset.targetId = String(t.id);
     const c = document.createElement("canvas");
     c.width = 88;
     c.height = 80;
@@ -2157,20 +2390,52 @@ function drawTargets(task) {
     b.append(c, document.createTextNode(`${i + 1}. ${t.label}`));
     holder.append(b);
   });
-  $("#target-status").textContent = task.actedThisRound
-    ? "Your action is recorded. The next round opens automatically."
-    : "";
+  if (focusedTarget !== undefined)
+    [...holder.children]
+      .find((b) => b.dataset.targetId === focusedTarget)
+      ?.focus({ preventScroll: true });
+  updateTargetStatus(task);
+}
+function updateTargetStatus(task) {
+  const preparing = Date.now() + serverOffset < (task.actionAllowedAt || 0);
+  if ($("#site-progress"))
+    $("#site-progress").textContent =
+      `${task.target?.name || "Current site"} · ${task.siteHits || 0} / ${task.hitsRequired || 1} outbreaks resolved here`;
+  if ($("#target-status"))
+    $("#target-status").textContent = state.event.paused
+      ? "Play is paused."
+      : task.actedThisRound
+        ? "Your action is recorded. The next round opens automatically."
+        : preparing
+          ? "Prepare: inspect the warning marker and select a target. The action signal opens shortly."
+          : "Signal open: resolve your selected target.";
   $("#target-confirm button")?.toggleAttribute(
     "disabled",
-    !!task.actedThisRound,
+    !!task.actedThisRound ||
+      preparing ||
+      targetRequestPending ||
+      state.event.paused,
   );
 }
+
 async function resolveTarget() {
+  if (
+    targetRequestPending ||
+    state.event.paused ||
+    state.chapter.task.actedThisRound
+  )
+    return;
+  if (Date.now() + serverOffset < (state.chapter.task.actionAllowedAt || 0)) {
+    toast("Select a target now; wait for the action signal to confirm.");
+    return;
+  }
   if (selection === null) {
     toast("Select a target first.");
     return;
   }
   const shown = presentedTarget;
+  targetRequestPending = true;
+  autoTargetRound = `${shown.chapter}:${shown.step}:${shown.round}`;
   const r = await act("task", {
     choice: selection,
     expectedChapter: shown.chapter,
@@ -2178,10 +2443,14 @@ async function resolveTarget() {
     expectedStage: shown.stage || null,
     expectedRound: shown.round,
   });
+  targetRequestPending = false;
   if (r !== null) {
     if (state.me.progress[state.event.chapter].complete) {
       close();
       toast("All outbreaks resolved.");
+    } else if (state.chapter.task.step !== shown.step) {
+      close();
+      travel(0, "activity");
     } else {
       toast(
         r.correct
@@ -2198,7 +2467,7 @@ function routing(task) {
   routePath = [task.source];
   open(
     "Reconnect a home",
-    `<div class="eyebrow">ROUTE PLANNING · NO DRAGGING REQUIRED</div><h3 style="margin-top:16px">Connect ${esc(task.destination)} to the exchange.</h3><p class="small">Build a path by selecting connected nodes. Broken links cannot carry the signal. Start at the exchange and finish at the home.</p><canvas id="routing-canvas" width="540" height="250" style="width:100%;border:2px solid var(--ink);background:#dce6cf" aria-label="Network diagram; the same connections are described by the node buttons below"></canvas><p class="small">Broken links: ${(task.blockedEdges || []).map((e) => e.map(esc).join(" ↔ ")).join("; ") || "None"}. Dashed lines show these breaks.</p><div id="route-nodes" class="choice-list"></div><p id="route-path" class="notice"></p><div class="row" id="route-actions"></div>`,
+    `<div class="notice">Required relays: ${(task.requiredNodes || []).map(esc).join(", ") || "None"}. Cable budget: ${task.budget ?? "unlimited"} units.</div><div class="eyebrow">ROUTE PLANNING · NO DRAGGING REQUIRED</div><h3 style="margin-top:16px">Connect ${esc(task.destination)} to the exchange.</h3><p class="small">Build a path by selecting connected nodes. Broken links cannot carry the signal. Start at the exchange and finish at the home.</p><canvas id="routing-canvas" width="540" height="250" style="width:100%;border:2px solid var(--ink);background:#dce6cf" aria-label="Network diagram; the same connections are described by the node buttons below"></canvas><p class="small">Broken links: ${(task.blockedEdges || []).map((e) => e.map(esc).join(" ↔ ")).join("; ") || "None"}. Dashed lines show these breaks.</p><div id="route-nodes" class="choice-list"></div><p id="route-path" class="notice"></p><div class="row" id="route-actions"></div>`,
   );
   drawRouting(task);
   $("#route-actions").append(
@@ -2215,6 +2484,12 @@ function routing(task) {
           if (state.me.progress[state.event.chapter].complete) {
             close();
             toast("Every home is connected.");
+          } else if (
+            state.chapter.task.target &&
+            state.chapter.task.step !== task.step
+          ) {
+            close();
+            travel(0, "activity");
           } else routing(state.chapter.task);
         }
       },
@@ -2279,7 +2554,9 @@ function drawRouting(task) {
     ctx.fillStyle = "#142b35";
     ctx.fillText(n.label || n.id, p.x, p.y + 29);
   });
-  $("#route-path").textContent = routePath.join(" → ");
+  const summary = routeSummary(task, routePath);
+  $("#route-path").textContent =
+    `${routePath.join(" → ")} · Cost ${summary.cost} / ${task.budget ?? "unlimited"}${summary.invalid ? " · Contains a missing or broken link" : ""}${summary.missing.length ? " · Still needs " + summary.missing.join(", ") : " · Required relays included"}`;
   const list = $("#route-nodes");
   list.replaceChildren();
   nodes.forEach((n) => {
@@ -2289,6 +2566,12 @@ function drawRouting(task) {
         const other = e.find((id) => id !== n.id);
         return (
           other +
+          " (cost " +
+          (task.edgeCosts?.find(
+            (c) =>
+              [c.from, c.to].includes(n.id) && [c.from, c.to].includes(other),
+          )?.cost ?? 0) +
+          ")" +
           ((task.blockedEdges || []).some(
             (b) => b.includes(n.id) && b.includes(other),
           )
@@ -2350,6 +2633,17 @@ setInterval(() => {
       drawTargets(task);
       label.textContent = `Round ${Number(task.round) + 1}`;
     }
+    updateTargetStatus(task);
+    if (
+      autoTargetEnabled &&
+      selection !== null &&
+      !task.actedThisRound &&
+      !targetRequestPending &&
+      !state.event.paused &&
+      Date.now() + serverOffset >= (task.actionAllowedAt || 0) &&
+      autoTargetRound !== `${state.event.chapter}:${task.step}:${task.round}`
+    )
+      resolveTarget();
     if ($("#round-timer"))
       $("#round-timer").textContent =
         `Next round in ${Math.max(0, Math.ceil((task.nextRoundAt - Date.now() - serverOffset) / 1000))}s`;

@@ -2,9 +2,9 @@
 
 Status: draft, awaiting SN content-owner approval. Generated from server-only content; do not distribute this answer key to players before the event.
 
-Rules version: trail-0.2.0-draft
+Rules version: trail-0.3.0-draft
 
-Review reference SHA-256: `6a5e02c5d595d4c8c18f8dd35b8da00540413ab59f65b87aa8038307db9b4995`
+Review reference SHA-256: `b03472f213a4afe92f7c326e3286206e29ef1e9f101b897aec677d3ba6251f03`
 
 Approver: pending. Approval date: pending. Event/build: pending.
 
@@ -14,7 +14,7 @@ All sixteen questions below are required first-submission scored encounters. Opt
 
 ## 1. Move day mayhem
 
-Chapter objective: Load a twelve-slot cart and deliver three useful supplies. The scenic route protects cargo; shortcuts can damage it.
+Chapter objective: Pack a four-slot delivery cart from your twelve-item storage. Complete three deliveries, choosing between protected cargo and the shorter damaged route.
 
 ### Question 1
 
@@ -48,7 +48,7 @@ Reviewer notes:
 
 ## 2. The great filter shortage
 
-Chapter objective: Match three filters to their labeled vents and restore airflow.
+Chapter objective: Inspect six homes, match each replacement to its equipment, and restore airflow.
 
 ### Question 3
 
@@ -82,7 +82,7 @@ Reviewer notes:
 
 ## 3. Attack of the clones
 
-Chapter objective: Investigate three messages without accusing legitimate neighbors.
+Chapter objective: Investigate evidence at six homes. Identify impersonation attempts without falsely accusing legitimate neighbors.
 
 ### Question 5
 
@@ -150,7 +150,7 @@ Reviewer notes:
 
 ## 5. Pest resistance
 
-Chapter objective: Resolve three marked outbreaks. Use the same deliberate target selection with keyboard or pointer.
+Chapter objective: Visit three outbreak sites and resolve six marked targets at each. Read the warning signal, select deliberately, and leave friendly targets alone.
 
 ### Question 9
 
@@ -218,7 +218,7 @@ Reviewer notes:
 
 ## 7. Rewards rebellion
 
-Chapter objective: Complete three distinct resident challenges and choose useful rewards.
+Chapter objective: Complete six distinct resident jobs, earn fictional reward tokens, then decide how to use them for neighborhood projects.
 
 ### Question 13
 

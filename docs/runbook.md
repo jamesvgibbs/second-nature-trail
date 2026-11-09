@@ -65,3 +65,15 @@ node scripts/backup.mjs data/event.sqlite /approved/private/location/event-backu
 For a restore rehearsal, stop the event server, preserve its existing files, and select the backup through a new `DB_PATH`. Start with the same frozen source/content version and verify progress before reopening access. A backup restore during competition requires an explicit explanation of any rollback to earlier scores.
 
 After final export, stop the event service. Keep its database and backups only for the agreed retention period. Any later event should use a fresh database and new operator/display credentials. Changing environment tokens alone does not revoke existing session cookies stored in the old event database.
+
+## Shorten and advance recovery
+
+The normal schedule remains eight five-minute chapters, eight two-minute breaks, and a four-minute finale. Use these controls only for an explicit recovery decision, with a recorded reason:
+
+- **Shorten phase:** set a smaller positive number of seconds remaining. It cannot extend the phase. If paused, it changes the saved remaining time and stays paused until Resume.
+- **Advance phase:** end the current phase immediately. Advancing a chapter preserves its ranked status, settles accepted actions, allocates its prize, and enters bragging. Advancing a brag break starts the next chapter. Advancing the last break freezes awards and enters the finale. Advancing the finale shows awards; advancing awards closes the event. If paused, Advance ends the saved phase and leaves pause.
+- **Skip chapter:** use this for a broken, unfair chapter. It removes that chapter from rankings and disables its prize. Skipping during an existing brag break preserves the remaining break time instead of restarting two minutes.
+
+Shortening or advancing the opening countdown changes when play becomes available inside the first five-minute window; it does not add another five-minute window. Never use Advance as a substitute for Skip when the chapter's results are invalid. Tell participants which recovery was chosen and whether their chapter still counts.
+
+Rewards rebellion now requires six unique jobs and at least one fictional reward redemption at the Night market. Every job earns two nontradable tokens. Players can fund a garden for four, a welcome station for eight, or a celebration for twelve; each project can be funded once per player. Every initial choice completes the same main objective with the same attainable score. Players may spend any remainder during that chapter; project choices do not change award scores, inventory values, or the frozen finale snapshot.

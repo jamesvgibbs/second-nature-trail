@@ -26,7 +26,7 @@ Status: not release-approved. Updated 2026-11-09. This checklist records evidenc
 
 ## Recorded development runs
 
-- `node --test test/integration-security.test.mjs`: seven passing tests on 2026-11-09. Covers role separation, invitation takeover/session revocation, client lease requirement, request origin/type/size, restart identity, single database owner, roster freeze, mixed valid/invalid queued actions, and rollback/retry after simulated persistence failure. Re-run with pinned Node v24.20.0 also passed. This is transport coverage, not full game acceptance.
+- `node --test test/integration-security.test.mjs`: nine passing tests on 2026-11-09. Covers role separation, invitation takeover/session revocation, client lease requirement, request origin/type/size, restart identity, single database owner, roster freeze, mixed valid/invalid queued actions, and rollback/retry after simulated persistence failure. Re-run with pinned Node v24.20.0 also passed. This is transport coverage, not full game acceptance.
 - Ten-player localhost smoke: 25.9 seconds, 90 confirmed actions, p95 54.1 ms, no errors. Early engine iteration; not capacity evidence.
 - One-hundred-player localhost smoke: 36.6 seconds with joins over five seconds, 1,973 requests, 576 confirmed actions, 21 completed trades, p95 3,570 ms. Forty-eight event streams terminated and 1,293 subsequent actions failed lease checks. **Failed performance/reliability development run.** Synchronous full-state fanout on each action was identified for repair. This run did not exercise a full event or the representative network. Raw report: `test-results/load-100-smoke.json`.
 
@@ -74,7 +74,7 @@ The `ee0857d` capacity run uses a Mac16,5 with an Apple M4 Max, 64 GiB RAM, macO
 
 ## Balance review still required
 
-The current main-objective structures differ in length. Moving uses three cargo trips with packing, route choice, checkpoints, and delivery. Filters, clones, insurance, and rewards each use six locations with inspection and a decision or delivery. Pest targeting currently requires three correct timed rounds, payment planning spans three server-timed cycles, and internet restoration uses three routing puzzles. The targeting and routing objectives may still finish well under the proposed three-minute main-objective target for experienced players. Do not treat matching chapter counts or passing the virtual event test as evidence of that balance target. Record novice and experienced completion times, then adjust activity depth and difficulty before release.
+The current main-objective structures differ in length. Moving uses three cargo trips with packing, route choice, checkpoints, and delivery. Filters, clones, insurance, and rewards each use six locations with inspection and a decision or delivery. Pest targeting now requires eighteen correct timed rounds at three spatial sites, payment planning spans three server-timed cycles, and internet restoration uses three spatial routing puzzles with required relays and cost limits. A mechanical targeting simulation at 190 pixels/second completes in 155 seconds without reading or errors. Human completion time remains unmeasured. Do not treat matching chapter counts or passing the virtual event test as evidence of that balance target. Record novice and experienced completion times, then adjust activity depth and difficulty before release.
 
 Browser evidence so far: native Safari manually rendered setup with neither visual preference preselected; replacement mode was selected; keyboard movement, guide interaction, practice collection, practice answer, help request, and ready status were completed. The initial delivery flow was exercised through loading, route choice, and travel to the checkpoint. This was an agent-operated check on the development machine, not the required ten-employee joining test or all-input-method rehearsal.
 
@@ -83,3 +83,19 @@ Browser evidence so far: native Safari manually rendered setup with neither visu
 The full run from `ee0857d` was stopped in chapter 2. Chapter 1 completed for all 100 players; its cumulative scoring/inventory p95 was 333.7 ms over 1,800 samples with no request errors. In chapter 2, the simulator skipped intermediate path corners at eight pixels and stalled at Willow home. This was a harness defect; the browser already used a half-pixel threshold. A regression starting at the recorded fractional positions then exposed a separate shared pathfinder defect: the first route segment could cross a corner because reconstruction omitted the rounded starting node. Both defects were fixed, and the harness now shares browser waypoint logic. Tests simulate actual movement/collision along all thirty distinct spatial-site routes and both recorded stall origins.
 
 The aborted attempt is not full capacity evidence. Its log, partial-state report, and environment record remain under `test-results/capacity-full-ee0857d-*`. A new frozen-source full run is required.
+
+## Superseded second capacity attempt
+
+The `da5cf29` run completed chapters 1 and 2 for all 100 simulated players, including every six-site work order in chapter 2. At its chapter-2 break it recorded 18,104 requests, 3,501 scoring/inventory samples, scoring p95 339.6 ms, and zero request errors. It was deliberately stopped while additional required functionality was being added: earned Rewards spending, host phase shortening, and fuller targeting/routing objectives. This was an incomplete and superseded run, not a performance failure and not full-hour acceptance. Evidence remains in `test-results/capacity-full-da5cf29-*`.
+
+The next frozen run must use the expanded activities and reach all eight chapters, the finale, and fifteen distinct qualifying awards. `LOAD_START_CHAPTER=1` through `7` is a development-only harness option that advances past earlier chapters to validate later contracts; any such run is explicitly labeled a shortened scenario and cannot satisfy normal event timing.
+
+## Expanded activity contract checks
+
+Pinned Node v24.20.0, localhost, three simulated players, explicitly shortened chapter-start scenarios (not normal event timing):
+
+- Rewards: all three completed six jobs plus redemption; garden, welcome station, and celebration were each selected once. One thirty-second outage reconnected. Fifty-five scoring/inventory samples, p95 33.3 ms, no request errors. `test-results/rewards-scenario.json`.
+- Targeting: all three completed eighteen valid resolutions across three spatial sites within the 196.95-second scenario, including one thirty-second outage and reconnect. Seventy scoring/inventory samples, p95 30.0 ms, no request errors. `test-results/targeting-scenario.json`.
+- Routing: all three completed all three spatial stations using required relays, permitted edges, and cable budgets. Twenty-five scoring/inventory samples, p95 24.2 ms, no request errors. `test-results/routing-scenario.json`.
+
+These checks validate harness/server contracts and do not certify pointer/keyboard rendering, employee comprehension, balance, representative-network performance, or complete-event capacity.

@@ -5,6 +5,7 @@ import {
   publicChapter,
   SPATIAL_CHAPTERS,
   ACTIVITY_STOPS,
+  MYSTERY,
 } from "./content.mjs";
 import { clipMove } from "./public/world.mjs";
 export const CONTENT_HASH = createHash("sha256")
@@ -14,6 +15,7 @@ export const CONTENT_HASH = createHash("sha256")
       chapters: CHAPTERS,
       stops: ACTIVITY_STOPS,
       spatialChapters: SPATIAL_CHAPTERS,
+      mystery: MYSTERY,
     }),
   )
   .digest("hex");
@@ -35,8 +37,14 @@ const progress = () => ({
   lastTaskAt: null,
   budget: 0,
   primary: 0,
+  falseAccusations: 0,
+  rewardBalance: 0,
+  rewardEarned: 0,
+  rewardUses: [],
   inspected: false,
   targetRound: null,
+  siteHits: 0,
+  targetHits: 0,
   cycles: [],
   delivery: { stage: "load", loaded: null, route: null, visited: false },
   reserve: Object.fromEntries(
@@ -79,6 +87,10 @@ export class Engine {
       players: {},
       trades: {},
       awards: [],
+      participantCount: null,
+      rewardProjects: Object.fromEntries(
+        RULES.rewards.projects.map((p) => [p.id, 0]),
+      ),
       contributions: Array(8).fill(0),
       audit: [],
       actions: [],
@@ -182,7 +194,8 @@ export class Engine {
   near(p, which = 0) {
     const target = CHAPTERS[this.state.chapter].locations[which];
     assert(
-      Math.hypot(p.position.x - target.x, p.position.y - target.y) <= 110,
+      Math.hypot(p.position.x - target.x, p.position.y - target.y) <=
+        RULES.interactionDistance,
       `Move closer to ${target.name}`,
     );
   }
@@ -254,6 +267,7 @@ export class Engine {
           "assist",
           "tradeOffer",
           "tradeConfirm",
+          "rewardRedeem",
         ].includes(a.type)
       )
         assert(
@@ -395,60 +409,12 @@ export class Engine {
           if (c === 5) return this.budget(p, a);
           if (c === 7) return this.routing(p, a);
           if (SPATIAL_CHAPTERS.includes(c)) return this.spatial(p, a);
-          this.near(p);
-          assert(!r.complete, "Main objective already complete");
-          assert(
-            r.lastTaskAt === null ||
-              this.now() - r.lastTaskAt >= RULES.taskCooldownMs,
-            "Take a moment before the next action",
-          );
-          const t = CHAPTERS[c].tasks[r.step];
-          this.choice(a.choice, t);
-          r.lastTaskAt = this.now();
-          if (a.choice !== t.answer) {
-            r.mistakes++;
-            r.primary -= 1;
-            r.score = Math.max(0, r.score - RULES.mistakePenalty);
-            this.log("taskMistake", { playerId: id, chapter: c, step: r.step });
-            return {
-              ok: true,
-              correct: false,
-              message: "That route did not work. Read the clues and try again.",
-            };
-          }
-          this.consume(p, t.item);
-          r.step++;
-          r.primary += c === 3 ? 20 : 1;
-          r.score += RULES.taskPoints;
-          if (c === 5) r.budget += [40, 40, 30][r.step - 1];
-          if (r.step === 3) {
-            r.complete = true;
-            r.timeMs = this.now() - s.chapterOpenedAt;
-            s.contributions[c]++;
-            if (r.pendingAssist) {
-              const helper = this.get(r.pendingAssist);
-              const hr = helper.progress[c];
-              if (!hr.assists.includes(id) && !r.assists.includes(helper.id)) {
-                if (hr.assists.length === 0) hr.score += RULES.assistPoints;
-                hr.assists.push(id);
-                this.log("assistCompleted", {
-                  playerId: helper.id,
-                  target: id,
-                  chapter: c,
-                });
-              }
-              r.pendingAssist = null;
-              p.help = null;
-            }
-          }
-          this.log("task", {
-            playerId: id,
-            chapter: c,
-            step: r.step,
-            score: r.score,
-          });
-          return { ok: true, correct: true, complete: r.complete };
+          throw new Error("No main activity is configured for this chapter");
         }
+        case "rewardRedeem":
+          this.playable(p);
+          return this.rewardRedeem(p, a);
+
         case "challenge": {
           this.playable(p);
           this.near(p, 1);
@@ -505,13 +471,16 @@ export class Engine {
         case "mystery":
           this.playable(p);
           assert(typeof a.answer === "string", "Enter the mystery word");
-          assert(p.clues.length === 8, "Find all eight clues first");
-          if (a.answer.trim().toUpperCase() === "NEIGHBOR") {
+          assert(
+            p.clues.length === MYSTERY.requiredClues,
+            "Find all eight clues first",
+          );
+          if (a.answer.trim().toUpperCase() === MYSTERY.answer) {
             p.mystery = true;
             return {
               ok: true,
               correct: true,
-              message: "The AI forgot its most important variable: a neighbor.",
+              message: MYSTERY.successLine,
             };
           }
           return { ok: true, correct: false };
@@ -544,7 +513,7 @@ export class Engine {
             Math.hypot(
               target.position.x - p.position.x,
               target.position.y - p.position.y,
-            ) < 180,
+            ) < RULES.assistDistance,
             "Move closer to your neighbor",
           );
           tr.pendingAssist = id;
@@ -656,9 +625,34 @@ export class Engine {
   chapterView(p) {
     const c = publicChapter(this.state.chapter, p.progress[this.state.chapter]);
     const r = p.progress[this.state.chapter];
+    if (this.state.chapter === 6) {
+      c.rewardShop = {
+        balance: r.rewardBalance,
+        earned: r.rewardEarned,
+        uses: r.rewardUses,
+        options: RULES.rewards.projects,
+      };
+      if (!r.complete && r.step === RULES.spatialTaskCount) {
+        c.task = {
+          kind: "rewards",
+          stage: "redeem",
+          step: r.step,
+          totalSteps: this.taskCount(6),
+          target: c.locations[1],
+          prompt:
+            "Spend earned fictional rewards on a neighborhood project. Every choice completes the objective with the same attainable score.",
+          options: RULES.rewards.projects.map(
+            (x) => `${x.label} · ${x.cost} tokens`,
+          ),
+          balance: r.rewardBalance,
+          earned: r.rewardEarned,
+        };
+        return c;
+      }
+    }
     if (SPATIAL_CHAPTERS.includes(this.state.chapter) && !r.complete) {
       const t = CHAPTERS[this.state.chapter].tasks[r.step],
-        offset = { 1: 1, 2: 2, 3: 0, 6: 4 }[this.state.chapter],
+        offset = RULES.spatialOffsets[this.state.chapter],
         target = ACTIVITY_STOPS[(r.step + offset) % ACTIVITY_STOPS.length];
       c.task = {
         ...c.task,
@@ -685,15 +679,23 @@ export class Engine {
               RULES.targetRoundMs,
           ),
         ),
-        marked = [1, 0, 2][round % 3];
+        marked = RULES.targetPattern[round % RULES.targetPattern.length];
       c.task = {
         kind: "targeting",
         prompt:
-          "Select the marked outbreak. One deliberate action per round; three resolutions restore this block.",
-        options: ["Target A", "Target B", "Target C"],
-        targets: [0, 1, 2].map((id) => ({
+          "Read the warning signal, then resolve the marked outbreak. Six resolutions clear this site; visit all three sites.",
+        target: RULES.targetSites[r.step],
+        siteHits: r.siteHits,
+        hitsRequired: RULES.targetHitsPerSite,
+        totalResolved: r.targetHits,
+        actionAllowedAt:
+          this.state.chapterOpenedAt +
+          round * RULES.targetRoundMs +
+          RULES.targetTelegraphMs,
+        options: RULES.targetLabels,
+        targets: RULES.targetLabels.map((_, id) => ({
           id,
-          label: ["Target A", "Target B", "Target C"][id],
+          label: RULES.targetLabels[id],
           marked: id === marked,
         })),
         round,
@@ -709,32 +711,15 @@ export class Engine {
         kind: "routing",
         prompt:
           "Build a working route from the exchange to the highlighted home. Avoid the broken connection.",
-        source: "exchange",
-        destination: ["home-a", "home-b", "home-c"][r.step],
-        nodes: [
-          { id: "exchange", label: "Exchange", x: 0, y: 1 },
-          { id: "relay-n", label: "North relay", x: 1, y: 0 },
-          { id: "relay-s", label: "South relay", x: 1, y: 2 },
-          { id: "hub", label: "Neighborhood hub", x: 2, y: 1 },
-          { id: "home-a", label: "Home A", x: 3, y: 0 },
-          { id: "home-b", label: "Home B", x: 3, y: 1 },
-          { id: "home-c", label: "Home C", x: 3, y: 2 },
-        ],
-        edges: [
-          ["exchange", "relay-n"],
-          ["exchange", "relay-s"],
-          ["relay-n", "hub"],
-          ["relay-s", "hub"],
-          ["relay-n", "home-a"],
-          ["hub", "home-a"],
-          ["hub", "home-b"],
-          ["hub", "home-c"],
-        ],
-        blockedEdges: [
-          [["relay-n", "home-a"]],
-          [["relay-n", "hub"]],
-          [["relay-s", "hub"]],
-        ][r.step],
+        source: RULES.routing.source,
+        destination: RULES.routing.destinations[r.step],
+        nodes: RULES.routing.nodes,
+        target: RULES.routing.sites[r.step],
+        edges: RULES.routing.edgeCosts.map((e) => [e.from, e.to]),
+        edgeCosts: RULES.routing.edgeCosts,
+        requiredNodes: RULES.routing.requiredNodes[r.step],
+        budget: RULES.routing.budgets[r.step],
+        blockedEdges: RULES.routing.blockedVariants[r.step],
         step: r.step,
       };
       return c;
@@ -755,8 +740,8 @@ export class Engine {
         retained: r.budget,
         options: [
           `Pay ${due}; save ${budget - due}`,
-          `Pay ${due}; buy an optional decoration for 20`,
-          `Spend ${budget - 20} first; pay the remaining 20`,
+          `Pay ${due}; buy an optional decoration for ${RULES.optionalExpense}`,
+          `Spend ${budget - RULES.budgetIncompletePayment} first; pay the remaining ${RULES.budgetIncompletePayment}`,
         ],
         step: r.step,
       };
@@ -768,28 +753,27 @@ export class Engine {
       d.stage === "deliver"
         ? c.locations[1]
         : d.stage === "travel"
-          ? {
-              name: d.route === "scenic" ? "Paved detour" : "Rubble shortcut",
-              x: 230,
-              y: d.route === "scenic" ? 60 : 160,
-            }
+          ? RULES.deliveryCheckpoints[d.route]
           : c.locations[0];
     const prompts = {
       load: {
         prompt:
           "Pack a four-slot delivery cart. Choose a load that fits your supplies. Storage remains limited to twelve tradable items.",
-        options: [
-          "Repair kit: 2 parts · 4 slots · value 10",
-          "Essentials: 1 part + 2 food · 4 slots · value 11",
-          "Connection kit: 2 cables · 4 slots · value 12",
-        ],
+        options: RULES.cargoPlans.map(
+          (plan, i) =>
+            `${RULES.cargoPlanLabels[i]}: ${Object.entries(plan)
+              .map(([kind, qty]) => `${qty} ${kind}`)
+              .join(
+                " + ",
+              )} · ${Object.entries(plan).reduce((n, [kind, qty]) => n + RULES.cargoWeights[kind] * qty, 0)} slots · value ${Object.entries(plan).reduce((n, [kind, qty]) => n + RULES.values[kind] * qty, 0)}`,
+        ),
       },
       route: {
         prompt:
           "Choose your route. Travel to its checkpoint before delivering.",
         options: [
           "Paved detour · protects cargo",
-          "Rubble shortcut · loses 2 cargo value",
+          `Rubble shortcut · loses ${RULES.deliveryDamage} value per item`,
         ],
       },
       travel: {
@@ -820,10 +804,12 @@ export class Engine {
     const task = this.chapterView(p).task;
     assert(
       Math.hypot(p.position.x - task.target.x, p.position.y - task.target.y) <=
-        65,
+        RULES.siteDistance,
       `Move closer to ${task.target.name}`,
     );
     this.choice(a.choice, task);
+    if (c === 6 && r.step === RULES.spatialTaskCount)
+      return this.rewardRedeem(p, a);
     if (!r.inspected) {
       r.inspected = true;
       this.log("inspection", {
@@ -840,10 +826,23 @@ export class Engine {
       this.consume(p, authored.item);
       r.primary += c === 3 ? RULES.spatialTaskPoints : 1;
       r.inspected = false;
+      if (c === 6) {
+        r.rewardBalance += RULES.rewards.perJob;
+        r.rewardEarned += RULES.rewards.perJob;
+        this.log("rewardEarned", {
+          playerId: p.id,
+          chapter: c,
+          job: r.step,
+          tokens: RULES.rewards.perJob,
+        });
+      }
       this.finishTask(p, RULES.spatialTaskPoints);
     } else {
       r.mistakes++;
-      r.primary -= 1;
+      const falseAccusation =
+        c === 2 && authored.falseAccusations.includes(a.choice);
+      if (falseAccusation) r.falseAccusations++;
+      if (c !== 2 || falseAccusation) r.primary -= 1;
       r.score = Math.max(0, r.score - RULES.mistakePenalty);
     }
     this.log("spatialTask", {
@@ -854,6 +853,48 @@ export class Engine {
       score: r.score,
     });
     return { ok: true, correct, complete: r.complete };
+  }
+  rewardRedeem(p, a) {
+    assert(
+      this.state.chapter === 6,
+      "Rewards can only be used during Rewards rebellion",
+    );
+    const r = p.progress[6];
+    assert(
+      r.step >= RULES.spatialTaskCount,
+      "Finish the six jobs before using rewards",
+    );
+    this.near(p, 1);
+    assert(
+      Number.isInteger(a.choice) &&
+        a.choice >= 0 &&
+        a.choice < RULES.rewards.projects.length,
+      "Choose a reward project",
+    );
+    const project = RULES.rewards.projects[a.choice];
+    assert(
+      !r.rewardUses.includes(project.id),
+      "You already funded this project",
+    );
+    assert(r.rewardBalance >= project.cost, "Not enough earned rewards");
+    r.rewardBalance -= project.cost;
+    r.rewardUses.push(project.id);
+    this.state.rewardProjects[project.id]++;
+    this.log("rewardRedeemed", {
+      playerId: p.id,
+      chapter: 6,
+      project: project.id,
+      cost: project.cost,
+      remaining: r.rewardBalance,
+    });
+    if (!r.complete) this.finishTask(p, 0);
+    return {
+      ok: true,
+      correct: true,
+      complete: r.complete,
+      message: project.outcome,
+      balance: r.rewardBalance,
+    };
   }
   finishTask(p, points) {
     const c = this.state.chapter,
@@ -882,11 +923,19 @@ export class Engine {
     }
   }
   targeting(p, a) {
-    this.near(p);
     const r = p.progress[4];
     assert(!r.complete, "Main objective already complete");
     const t = this.chapterView(p).task;
+    assert(
+      Math.hypot(p.position.x - t.target.x, p.position.y - t.target.y) <=
+        RULES.siteDistance,
+      `Move closer to ${t.target.name}`,
+    );
     this.choice(a.choice, t);
+    assert(
+      this.now() >= t.actionAllowedAt,
+      "Read the warning signal; this round opens shortly",
+    );
     assert(
       a.expectedRound === t.round,
       "The target round changed; select a current target",
@@ -898,9 +947,14 @@ export class Engine {
     r.targetRound = t.round;
     const correct = t.targets[a.choice].marked;
     if (correct) {
-      this.consume(p, "parts");
       r.primary++;
-      this.finishTask(p, RULES.taskPoints);
+      r.siteHits++;
+      r.targetHits++;
+      if (r.siteHits === RULES.targetHitsPerSite) {
+        this.consume(p, "parts");
+        r.siteHits = 0;
+        this.finishTask(p, RULES.taskPoints);
+      }
     } else {
       r.mistakes++;
       r.primary -= 1;
@@ -921,21 +975,36 @@ export class Engine {
     };
   }
   routing(p, a) {
-    this.near(p);
     const r = p.progress[7];
     assert(!r.complete, "Main objective already complete");
     const t = this.chapterView(p).task;
     assert(
+      Math.hypot(p.position.x - t.target.x, p.position.y - t.target.y) <=
+        RULES.siteDistance,
+      `Move closer to ${t.target.name}`,
+    );
+    assert(
       Array.isArray(a.path) &&
         a.path.length >= 2 &&
-        a.path.length <= 7 &&
+        a.path.length <= RULES.routing.maxNodes &&
         a.path.every((x) => typeof x === "string"),
-      "Choose a route with two to seven nodes",
+      `Choose a route with two to ${RULES.routing.maxNodes} nodes`,
     );
     assert(new Set(a.path).size === a.path.length, "A route cannot loop");
     const match = (edge, a, b) =>
       (edge[0] === a && edge[1] === b) || (edge[1] === a && edge[0] === b);
+    const cost = a.path
+      .slice(1)
+      .reduce(
+        (sum, v, i) =>
+          sum +
+          (t.edgeCosts.find((e) => match([e.from, e.to], a.path[i], v))?.cost ??
+            Infinity),
+        0,
+      );
     const correct =
+      t.requiredNodes.every((node) => a.path.includes(node)) &&
+      cost <= t.budget &&
       a.path[0] === t.source &&
       a.path.at(-1) === t.destination &&
       a.path
@@ -967,8 +1036,13 @@ export class Engine {
       this.now() >= t.opensAt,
       "The next payment cycle has not opened yet",
     );
-    const payment = a.choice === 2 ? 20 : t.due,
-      expense = a.choice === 1 ? 20 : a.choice === 2 ? t.budget - 20 : 0,
+    const payment = a.choice === 2 ? RULES.budgetIncompletePayment : t.due,
+      expense =
+        a.choice === 1
+          ? RULES.optionalExpense
+          : a.choice === 2
+            ? t.budget - RULES.budgetIncompletePayment
+            : 0,
       retained = t.budget - payment - expense;
     assert(retained >= 0, "This plan exceeds the budget");
     const onTime = payment >= t.due && this.now() < t.dueAt;
@@ -1012,7 +1086,7 @@ export class Engine {
     this.choice(a.choice, task);
     assert(
       Math.hypot(p.position.x - task.target.x, p.position.y - task.target.y) <
-        65,
+        RULES.siteDistance,
       `Move closer to ${task.target.name}`,
     );
     if (d.stage === "load") {
@@ -1051,7 +1125,18 @@ export class Engine {
           );
       }
       r.primary += value;
-      r.score += Math.round((value / 12) * RULES.taskPoints);
+      r.score += Math.round(
+        (value /
+          Math.max(
+            ...RULES.cargoPlans.map((plan) =>
+              Object.entries(plan).reduce(
+                (n, [kind, qty]) => n + RULES.values[kind] * qty,
+                0,
+              ),
+            ),
+          )) *
+          RULES.taskPoints,
+      );
       r.step++;
       this.log("delivery", {
         playerId: p.id,
@@ -1097,7 +1182,7 @@ export class Engine {
         keys.includes(v.item) &&
         Number.isInteger(v.qty) &&
         v.qty >= 1 &&
-        v.qty <= 3,
+        v.qty <= RULES.tradeMaxQuantity,
       "Invalid trade quantity",
     );
   }
@@ -1145,6 +1230,7 @@ export class Engine {
           if (s.phase === "countdown") break;
           assert(s.phase === "lobby", "Event already started");
           s.phase = "countdown";
+          s.participantCount = Object.keys(s.players).length;
           s.chapter = 0;
           s.chapterOpenedAt = this.now();
           s.deadline = this.now() + RULES.countdownMs;
@@ -1182,12 +1268,59 @@ export class Engine {
             ["countdown", "chapter", "brag"].includes(phase),
             "No chapter to skip",
           );
+          const breakRemaining =
+            phase === "brag"
+              ? s.phase === "paused"
+                ? s.pause.remainingMs
+                : Math.max(0, s.deadline - this.now())
+              : RULES.breakMs;
           s.ranked[s.chapter] = false;
           s.awards = s.awards.filter((x) => x.chapter !== s.chapter);
           s.pause = null;
           s.phase = "brag";
-          s.deadline = this.now() + RULES.breakMs;
+          s.deadline = this.now() + breakRemaining;
           this.cancelTrades();
+          break;
+        }
+        case "shorten": {
+          const paused = s.phase === "paused",
+            phase = paused ? s.pause.phase : s.phase;
+          assert(
+            ["countdown", "chapter", "brag", "finale", "awards"].includes(
+              phase,
+            ),
+            "This phase has no running clock",
+          );
+          const remaining = paused
+            ? s.pause.remainingMs
+            : Math.max(0, s.deadline - this.now());
+          assert(
+            Number.isInteger(a.seconds) &&
+              a.seconds >= 1 &&
+              a.seconds * 1000 < remaining,
+            "Choose a shorter positive remaining time in seconds",
+          );
+          if (paused) s.pause.remainingMs = a.seconds * 1000;
+          else s.deadline = this.now() + a.seconds * 1000;
+          break;
+        }
+        case "advance": {
+          const paused = s.phase === "paused",
+            phase = paused ? s.pause.phase : s.phase;
+          assert(
+            ["countdown", "chapter", "brag", "finale", "awards"].includes(
+              phase,
+            ),
+            "This phase cannot advance",
+          );
+          if (paused) {
+            if (["countdown", "chapter"].includes(phase))
+              s.chapterOpenedAt += this.now() - s.pause.at;
+            s.phase = phase;
+            s.pause = null;
+          }
+          s.deadline = this.now();
+          this.tick();
           break;
         }
         case "rescue": {
@@ -1231,6 +1364,7 @@ export class Engine {
         type: a.type,
         reason: a.reason,
         ...(a.type === "broadcast" ? { message: a.message } : {}),
+        ...(a.type === "shorten" ? { seconds: a.seconds } : {}),
       });
       if (!hadSnapshot && s.snapshot) s.snapshot.audit = copy(s.audit);
       return { ok: true };
@@ -1448,7 +1582,7 @@ export class Engine {
         rows.filter(
           (p) =>
             p.setup && (this.connected === null || this.connected.has(p.id)),
-        ).length * 0.6,
+        ).length * RULES.finaleParticipationRatio,
       ),
     );
   }
@@ -1468,6 +1602,15 @@ export class Engine {
       paused: s.phase === "paused",
       ranked: s.ranked,
       contributions: s.contributions,
+      restoration: {
+        perDistrict:
+          s.participantCount || Math.max(1, Object.keys(s.players).length),
+        completed: s.contributions.reduce((a, n) => a + n, 0),
+        total:
+          (s.participantCount || Math.max(1, Object.keys(s.players).length)) *
+          CHAPTERS.length,
+      },
+      rewardProjects: s.rewardProjects,
       awards: s.awards,
       broadcast: s.broadcast,
       finale: s.finale,
@@ -1523,6 +1666,7 @@ export class Engine {
       world: CHAPTERS.map((c, index) => ({
         index,
         title: c.title,
+        objective: c.objective,
         locations: c.locations,
       })),
       trades: Object.values(this.state.trades).filter(
@@ -1582,6 +1726,7 @@ export class Engine {
       world: CHAPTERS.map((c, index) => ({
         index,
         title: c.title,
+        objective: c.objective,
         locations: c.locations,
       })),
     });
@@ -1589,6 +1734,12 @@ export class Engine {
   hostView() {
     return {
       ...this.presentation(),
+      contentHash: this.state.contentHash,
+      chapter: {
+        index: this.state.chapter,
+        title: CHAPTERS[this.state.chapter].title,
+        taskCount: CHAPTERS[this.state.chapter].tasks.length,
+      },
       controlOwner: this.state.controlOwner,
       audit: copy(this.state.audit),
       players: Object.values(this.state.players).map((p) => ({
@@ -1605,6 +1756,9 @@ export class Engine {
   }
   exportResults() {
     assert(this.state.snapshot, "Results are not frozen yet");
-    return copy(this.state.snapshot);
+    return {
+      ...copy(this.state.snapshot),
+      operationalAudit: copy(this.state.audit),
+    };
   }
 }

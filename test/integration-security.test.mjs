@@ -168,6 +168,51 @@ test("explicit takeover revokes the old session and a player cannot act without 
   }
 });
 
+test("operators can distinguish unjoined, connected, and reconnecting participants", async () => {
+  const app = await start();
+  const controller = new AbortController();
+  try {
+    const host = await app.login("/api/host/login", "local-host-one");
+    const status = async () =>
+      (
+        await (await app.request("/api/host/state", undefined, host)).json()
+      ).players.find((p) => p.id === "neighbor-1");
+    assert.equal((await status()).connectionStatus, "not-joined");
+    const player = await app.login("/api/join", "demo-1");
+    assert.equal((await status()).connectionStatus, "reconnecting");
+    const stream = await fetch(app.base + "/api/events?client=status-test", {
+      headers: { Cookie: player },
+      signal: controller.signal,
+    });
+    const reader = stream.body.getReader();
+    await reader.read();
+    assert.equal((await status()).connectionStatus, "connected");
+    controller.abort();
+    let state;
+    for (let i = 0; i < 40; i++) {
+      state = await status();
+      if (state.connectionStatus === "reconnecting") break;
+      await new Promise((resolve) => setTimeout(resolve, 25));
+    }
+    assert.equal(state.connectionStatus, "reconnecting");
+    assert.equal(state.connected, false);
+    const audience = await app.login(
+      "/api/presentation/login",
+      "local-presentation",
+    );
+    assert.ok(
+      !(
+        await (
+          await app.request("/api/presentation", undefined, audience)
+        ).text()
+      ).includes("connectionStatus"),
+    );
+  } finally {
+    controller.abort();
+    await app.close();
+  }
+});
+
 test("mutation endpoints reject cross-origin, non-JSON, and oversized requests", async () => {
   const app = await start();
   try {

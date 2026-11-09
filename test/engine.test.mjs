@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { Engine } from "../engine.mjs";
-import { CHAPTERS, SPATIAL_CHAPTERS } from "../content.mjs";
+import { CHAPTERS, SPATIAL_CHAPTERS, RULES } from "../content.mjs";
 function fixture(n = 2) {
   let time = 1000000,
     i = 0;
@@ -222,42 +222,82 @@ test("assists need real unfinished request and credit once after completion", ()
   assert.equal(f.e.metrics(f.e.get("p0")).assists, 1);
   assert.throws(() => f.act("p0", "assist", { target: "p1" }), /unfinished/);
 });
-test("target rounds accept one deliberate attempt and reject rapid retries", () => {
+test("target sites require eighteen deliberate signals; rapid and telegraph attempts cannot count", () => {
   const f = fixture();
   f.advance(4 * 420000 - 10000);
-  assert.equal(f.e.state.chapter, 4);
-  locate(f.e, "p0", CHAPTERS[4].locations[0]);
-  for (let n = 0; n < 3; n++) {
-    const t = f.e.view("p0").chapter.task;
+  let t = f.e.view("p0").chapter.task;
+  locate(f.e, "p0", t.target);
+  assert.throws(
+    () => f.act("p0", "task", { choice: t.targets.find((x) => x.marked).id }),
+    /warning/,
+  );
+  f.advance(RULES.targetTelegraphMs);
+  for (let hit = 0; hit < 18; hit++) {
+    t = f.e.view("p0").chapter.task;
+    locate(f.e, "p0", t.target);
     const choice = t.targets.find((x) => x.marked).id;
     f.act("p0", "task", { choice });
-    if (n < 2) {
-      assert.throws(() => f.act("p0", "task", { choice }), /round/);
-      f.advance(9000);
+    if (hit < 17) {
+      assert.throws(() => f.act("p0", "task", { choice }), /round|closer/);
+      f.advance(RULES.targetRoundMs);
     }
   }
-  assert.equal(f.e.get("p0").progress[4].primary, 3);
-  assert.equal(f.e.get("p0").progress[4].complete, true);
+  const r = f.e.get("p0").progress[4];
+  assert.equal(r.primary, 18);
+  assert.equal(r.score, 60);
+  assert.equal(r.step, 3);
+  assert(r.complete);
+  assert(r.timeMs >= 155000);
 });
-test("routing rejects blocked connections and loops then completes valid graph paths", () => {
+function solveRoute(t) {
+  const queue = [[t.source]];
+  while (queue.length) {
+    const path = queue.shift(),
+      at = path.at(-1);
+    const cost = path
+      .slice(1)
+      .reduce(
+        (n, v, i) =>
+          n +
+          t.edgeCosts.find(
+            (e) =>
+              (e.from === path[i] && e.to === v) ||
+              (e.to === path[i] && e.from === v),
+          ).cost,
+        0,
+      );
+    if (cost > t.budget) continue;
+    if (at === t.destination && t.requiredNodes.every((n) => path.includes(n)))
+      return path;
+    if (path.length >= RULES.routing.maxNodes) continue;
+    for (const [a, b] of t.edges) {
+      const next = a === at ? b : b === at ? a : null;
+      if (
+        next &&
+        !path.includes(next) &&
+        !t.blockedEdges.some((e) => e.includes(at) && e.includes(next))
+      )
+        queue.push([...path, next]);
+    }
+  }
+  throw Error("No valid route");
+}
+test("routing enforces physical stations, required relays, broken edges and cost budget", () => {
   const f = fixture();
   f.advance(7 * 420000 - 10000);
-  locate(f.e, "p0", CHAPTERS[7].locations[0]);
-  const bad = f.act("p0", "task", { path: ["exchange", "relay-n", "home-a"] });
-  assert.equal(bad.correct, false);
-  assert.throws(
-    () =>
+  for (let step = 0; step < 3; step++) {
+    const t = f.e.view("p0").chapter.task;
+    assert.throws(() => f.act("p0", "task", { path: solveRoute(t) }), /closer/);
+    locate(f.e, "p0", t.target);
+    assert.equal(
       f.act("p0", "task", {
-        path: ["exchange", "relay-n", "exchange", "home-a"],
-      }),
-    /loop/,
-  );
-  for (const path of [
-    ["exchange", "relay-s", "hub", "home-a"],
-    ["exchange", "relay-s", "hub", "home-b"],
-    ["exchange", "relay-n", "hub", "home-c"],
-  ])
+        path: ["exchange", "south", "relay-east", "home-c"],
+      }).correct,
+      false,
+    );
+    const path = solveRoute(t);
     assert(f.act("p0", "task", { path }).correct);
+  }
   assert(f.e.get("p0").progress[7].complete);
 });
 test("budget model carries actual retained budget and excludes optional overspend", () => {
@@ -317,26 +357,34 @@ test("recorded complete run allocates fifteen distinct qualifying recipients", (
         f.act(`p${n + 1}`, "tradeConfirm", { tradeId });
       }
     }
+    if (c === 4) {
+      f.advance(RULES.targetTelegraphMs);
+      for (let hit = 0; hit < 18; hit++) {
+        for (let n = 0; n < 24; n++) {
+          const id = `p${n}`,
+            t = f.e.view(id).chapter.task;
+          locate(f.e, id, t.target);
+          f.act(id, "task", { choice: t.targets.find((x) => x.marked).id });
+        }
+        if (hit < 17) f.advance(RULES.targetRoundMs);
+      }
+    }
     for (let step = 0; step < CHAPTERS[c].tasks.length; step++) {
       for (let n = 0; n < 24; n++) {
         const id = `p${n}`;
         if (c === 0) {
           if (step === 0) delivery(f, id);
         } else if (c === 4) {
-          const task = f.e.view(id).chapter.task;
-          f.act(id, "task", { choice: task.targets.find((x) => x.marked).id });
+          // All timed rounds were exercised above at the same shared clock.
         } else if (c === 7) {
-          f.act(id, "task", {
-            path: [
-              ["exchange", "relay-s", "hub", "home-a"],
-              ["exchange", "relay-s", "hub", "home-b"],
-              ["exchange", "relay-n", "hub", "home-c"],
-            ][step],
-          });
+          const t = f.e.view(id).chapter.task;
+          locate(f.e, id, t.target);
+          f.act(id, "task", { path: solveRoute(t) });
         } else if (SPATIAL_CHAPTERS.includes(c)) {
           locate(f.e, id, f.e.view(id).chapter.task.target);
           f.act(id, "task", { choice: 0 });
-          f.act(id, "task", { choice: CHAPTERS[c].tasks[step].answer });
+          if (!(c === 6 && step === 6))
+            f.act(id, "task", { choice: CHAPTERS[c].tasks[step].answer });
         } else
           f.act(id, "task", {
             choice: c === 5 ? 0 : CHAPTERS[c].tasks[step].answer,
@@ -478,7 +526,7 @@ test("delayed chapter, task stage and targeting round actions cannot score curre
     /chapter changed/,
   );
   assert.equal(f.e.get("p0").progress[1].quiz[0], null);
-  f.advance(3 * 420000);
+  f.advance(3 * 420000 + RULES.targetTelegraphMs);
   locate(f.e, "p0", CHAPTERS[4].locations[0]);
   assert.throws(
     () => f.act("p0", "task", { choice: 0, expectedRound: -1 }),
@@ -517,18 +565,121 @@ test("expanded spatial activity requires arrival and inspection before each of s
   assert.equal(f.e.view("p0").chapter.task, null);
   assert.equal(f.e.view("p0").chapter.taskCount, 6);
 });
-test("a false accusation reduces the clone chapter metric without recording a completion", () => {
+test("false accusations reduce clone primary; unsafe mistakes still lose score but are not mislabeled", () => {
   const f = fixture();
   f.advance(2 * 420000 - 10000);
   locate(f.e, "p0", f.e.view("p0").chapter.task.target);
   f.act("p0", "task", { choice: 0 });
-  const q = CHAPTERS[2].tasks[0];
-  f.act("p0", "task", { choice: (q.answer + 1) % 3 });
+  f.act("p0", "task", { choice: 0 });
   const r = f.e.get("p0").progress[2];
-  assert.equal(r.primary, -1);
-  assert.equal(r.step, 0);
-  assert.equal(r.mistakes, 1);
-  f.act("p0", "task", { choice: q.answer });
   assert.equal(r.primary, 0);
+  assert.equal(r.falseAccusations, 0);
+  f.act("p0", "task", { choice: 1 });
+  locate(f.e, "p0", f.e.view("p0").chapter.task.target);
+  f.act("p0", "task", { choice: 0 });
+  f.act("p0", "task", { choice: 1 });
+  assert.equal(r.primary, 0);
+  assert.equal(r.falseAccusations, 1);
   assert.equal(r.step, 1);
+  assert(!JSON.stringify(f.e.view("p0").chapter).includes("falseAccusations"));
+});
+function earnRewards(f, id = "p0") {
+  for (let step = 0; step < 6; step++) {
+    locate(f.e, id, f.e.view(id).chapter.task.target);
+    f.act(id, "task", { choice: 0 });
+    f.act(id, "task", { choice: CHAPTERS[6].tasks[step].answer });
+  }
+  locate(f.e, id, CHAPTERS[6].locations[1]);
+}
+test("rewards earn once per unique job; spending changes authored projects without changing attainable scores", () => {
+  const f = fixture();
+  f.advance(6 * 420000 - 10000);
+  earnRewards(f);
+  earnRewards(f, "p1");
+  const r = f.e.get("p0").progress[6];
+  assert.equal(r.rewardEarned, 12);
+  assert.equal(r.rewardBalance, 12);
+  assert.equal(r.complete, false);
+  assert.equal(r.score, 60);
+  assert.equal(f.e.view("p0").chapter.task.stage, "redeem");
+  f.act("p0", "task", { choice: 0 });
+  assert(r.complete);
+  assert.equal(r.rewardBalance, 8);
+  assert.equal(f.e.state.rewardProjects.garden, 1);
+  assert.throws(() => f.act("p0", "rewardRedeem", { choice: 0 }), /already/);
+  f.act("p0", "rewardRedeem", { choice: 1 });
+  assert.equal(r.rewardBalance, 0);
+  assert.deepEqual(r.rewardUses, ["garden", "welcome"]);
+  assert.equal(r.score, 60);
+  f.act("p1", "task", { choice: 2 });
+  assert.equal(f.e.get("p1").progress[6].score, 60);
+  assert.equal(f.e.get("p1").progress[6].primary, r.primary);
+  assert.equal(f.e.state.contributions[6], 2);
+  f.host("endScoring");
+  const saved = f.e.exportResults();
+  assert.throws(() => f.act("p0", "rewardRedeem", { choice: 2 }), /closed/);
+  assert.deepEqual(f.e.exportResults(), saved);
+});
+test("host shortening cannot extend time and records exact recovery action", () => {
+  const f = fixture();
+  const original = f.e.event().remainingMs;
+  assert.throws(
+    () => f.host("shorten", { seconds: Math.ceil(original / 1000) }),
+    /shorter/,
+  );
+  f.host("shorten", { seconds: 15 });
+  assert.equal(f.e.event().remainingMs, 15000);
+  assert.equal(f.e.state.audit.at(-1).seconds, 15);
+  f.advance(15000);
+  assert.equal(f.e.state.phase, "brag");
+  f.host("pause");
+  f.host("shorten", { seconds: 10 });
+  assert.equal(f.e.state.pause.remainingMs, 10000);
+  f.host("resume");
+  f.advance(10000);
+  assert.equal(f.e.state.phase, "chapter");
+  assert.equal(f.e.state.chapter, 1);
+});
+test("advance preserves ranked scoring and can recover from paused breaks through immutable finale", () => {
+  const f = fixture();
+  delivery(f);
+  f.host("advance");
+  assert.equal(f.e.state.phase, "brag");
+  assert.equal(f.e.state.awards[0].playerId, "p0");
+  assert.equal(f.e.state.ranked[0], true);
+  f.host("pause");
+  f.host("advance");
+  assert.equal(f.e.state.phase, "chapter");
+  assert.equal(f.e.state.chapter, 1);
+  f.host("endScoring");
+  const frozen = f.e.exportResults();
+  f.host("advance");
+  assert.equal(f.e.state.phase, "awards");
+  assert.deepEqual(f.e.exportResults().awards, frozen.awards);
+  assert.deepEqual(f.e.exportResults().players, frozen.players);
+  assert(
+    f.e.exportResults().operationalAudit.length >
+      frozen.operationalAudit.length,
+  );
+  f.host("advance");
+  assert.equal(f.e.state.phase, "closed");
+  assert.throws(() => f.host("advance"), /cannot advance/);
+});
+test("skip during brag preserves remaining break instead of adding time", () => {
+  const f = fixture();
+  f.advance(290000);
+  f.advance(90000);
+  assert.equal(f.e.event().remainingMs, 30000);
+  f.host("skip");
+  assert.equal(f.e.event().remainingMs, 30000);
+  assert.equal(f.e.state.ranked[0], false);
+});
+test("restoration denominator is stable after event start regardless of connected population", () => {
+  const f = fixture(3);
+  assert.equal(f.e.event().restoration.perDistrict, 3);
+  f.e.setConnected(["p0"]);
+  assert.equal(f.e.event().restoration.perDistrict, 3);
+  delivery(f);
+  assert.equal(f.e.event().restoration.completed, 1);
+  assert.equal(f.e.event().restoration.total, 24);
 });

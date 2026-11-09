@@ -1,0 +1,205 @@
+{
+  "label": "SHORTENED SMOKE TEST, not release capacity acceptance",
+  "syntheticPriorActions": 0,
+  "startChapter": 4,
+  "rulesVersion": "trail-0.3.0-draft",
+  "contentHash": "368f66fb87ee9d1690c61e1c0457abba7049bde20c0af2d466a634d0b953dd5f",
+  "sourceHashes": {
+    "server.mjs": "078a53f64aa90c3fac42839d8a74b225cfa386be254aa7d642649f02091d18e7",
+    "engine.mjs": "24ade4636752b1dfbfea26b8b493d8482bc1988bf0436e3f91958216c499a651",
+    "content.mjs": "e204d6842bf96d4a4251e0fb9e8ee08e84e3c76a22ae8e92f72492c8e38af4d3",
+    "public/world.mjs": "34f973db8b5239387236c4381af94e19242de0f37a6431aeb0fae48f368163c3",
+    "public/app.js": "7cbfb40d7c3503ff634b3a0781d07fe919e49c14f3ce5fa52917159d6c638a20",
+    "public/helpers.mjs": "78f821762ff92a216b54f2d44b095b1677ac6098fe17a3ecaef41f518ad3b4ce",
+    "public/style.css": "6c27afc30986b174d54fe020ab823bb58f4b07fea359236a9982f04d32d65ea1",
+    "scripts/load.mjs": "175fda261bbf88468dc73582331480520ab77cd8e11f31bf2bf546a7e179930a",
+    "scripts/load-navigation.mjs": "520f2128823f27adfbe41b394702d77682a69612114abb57c6520e378323b6e4",
+    "scripts/load-routing.mjs": "26d1f00de90bea802a89cbaeaf313fb303a06c1e83f8bf6816382f9473ae2fc2"
+  },
+  "nodeVersion": "v24.20.0",
+  "platform": "darwin",
+  "memoryBytes": {
+    "rss": 127762432,
+    "heapTotal": 32718848,
+    "heapUsed": 16627416,
+    "external": 4985399,
+    "arrayBuffers": 922020
+  },
+  "startedAt": "2026-11-09T19:50:41.793Z",
+  "elapsedSeconds": 199.891,
+  "eventPlaySeconds": 196.95,
+  "finalPhase": "chapter",
+  "exportReconciles": null,
+  "awardCount": 0,
+  "distinctWinners": 0,
+  "requestedPlayers": 3,
+  "joinedPlayers": 3,
+  "actualJoinSpanSeconds": 1.008,
+  "chapterCompletionCounts": [
+    0,
+    0,
+    0,
+    0,
+    3,
+    0,
+    0,
+    0
+  ],
+  "rewardProjects": {
+    "garden": 0,
+    "welcome": 0,
+    "festival": 0
+  },
+  "targetResolutions": [
+    18,
+    18,
+    18
+  ],
+  "joinWindowSeconds": 1,
+  "network": "localhost; not the representative company network",
+  "requests": 391,
+  "confirmedActionSamples": 362,
+  "tradeCompletions": 1,
+  "reconnectsAfterThirtySecondOutage": 1,
+  "latencyMs": {
+    "p50": 6.727291999995941,
+    "p95": 25.15191699998104,
+    "p99": 30.024457999999868
+  },
+  "scoringInventorySamples": 70,
+  "scoringInventoryLatencyMs": {
+    "p50": 18.791291999994428,
+    "p95": 30.024457999999868,
+    "p99": 35.338916999986395
+  },
+  "clockTransitionSamples": 0,
+  "clockArrivalLagMs": {
+    "p95": null,
+    "max": null,
+    "withinOneSecond": 0
+  },
+  "movementProfile": "10 requests/second per player while traveling; at most one in-flight per player",
+  "errors": {},
+  "phaseSamples": [
+    {
+      "client": "operator-one",
+      "phase": "draft",
+      "receivedAt": 1794253841810,
+      "serverTime": 1794253841809,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "operator-two",
+      "phase": "draft",
+      "receivedAt": 1794253841812,
+      "serverTime": 1794253841811,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "presentation",
+      "phase": "draft",
+      "receivedAt": 1794253841815,
+      "serverTime": 1794253841814,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-0",
+      "phase": "lobby",
+      "receivedAt": 1794253841830,
+      "serverTime": 1794253841829,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "operator-one",
+      "phase": "lobby",
+      "receivedAt": 1794253842042,
+      "serverTime": 1794253842041,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "operator-two",
+      "phase": "lobby",
+      "receivedAt": 1794253842042,
+      "serverTime": 1794253842041,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "presentation",
+      "phase": "lobby",
+      "receivedAt": 1794253842042,
+      "serverTime": 1794253842041,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-1",
+      "phase": "lobby",
+      "receivedAt": 1794253842340,
+      "serverTime": 1794253842339,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-2",
+      "phase": "lobby",
+      "receivedAt": 1794253842840,
+      "serverTime": 1794253842837,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "operator-one",
+      "phase": "chapter",
+      "receivedAt": 1794253844814,
+      "serverTime": 1794253844803,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "operator-two",
+      "phase": "chapter",
+      "receivedAt": 1794253844814,
+      "serverTime": 1794253844809,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "presentation",
+      "phase": "chapter",
+      "receivedAt": 1794253844814,
+      "serverTime": 1794253844810,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-0",
+      "phase": "chapter",
+      "receivedAt": 1794253844814,
+      "serverTime": 1794253844810,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-1",
+      "phase": "chapter",
+      "receivedAt": 1794253844814,
+      "serverTime": 1794253844811,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    },
+    {
+      "client": "load-player-2",
+      "phase": "chapter",
+      "receivedAt": 1794253844814,
+      "serverTime": 1794253844811,
+      "previousDeadline": null,
+      "arrivalLagMs": null
+    }
+  ],
+  "limitations": [
+    "No browser rendering measured",
+    "No human rehearsal",
+    "Inspect tradeCompletions and reconnectsAfterThirtySecondOutage to verify scenario coverage",
+    "Phase observations are raw arrival times; no one-second clock compliance claim"
+  ]
+}

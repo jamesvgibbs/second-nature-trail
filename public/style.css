@@ -2,7 +2,7 @@
   --ink: #142b35;
   --navy: #102631;
   --paper: #f7f2df;
-  --muted: #637572;
+  --muted: #52615d;
   --mint: #b9e5a5;
   --orange: #ed825e;
   --line: #cdd2bc;
@@ -582,7 +582,7 @@ dialog h2 {
   font-size: 0.8rem;
 }
 .leaderboard .rank {
-  color: #63805d;
+  color: #4d6548;
   width: 20px;
 }
 .leaderboard .score {
@@ -654,6 +654,22 @@ dialog h2 {
 .presentation .mission h2 {
   font-size: 2.4rem;
 }
+.presentation .mission .small,
+.presentation .mission .muted,
+.presentation .mission .standings,
+.presentation .mission .eyebrow,
+.presentation .mission p,
+.presentation .mission li,
+.presentation .mission .award,
+.presentation .mission .chapter-count {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.presentation .game-footer .small,
+.presentation .world-hint,
+.presentation .map-label {
+  font-size: 0.9rem;
+}
 .phone-screen {
   max-width: 650px;
   margin: 10vh auto;
@@ -705,6 +721,10 @@ dialog h2 {
   gap: 10px;
 }
 .chapter-map button {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  line-height: 1.4;
   font-size: 0.75rem;
   text-align: left;
   justify-content: flex-start;
@@ -824,4 +844,11 @@ dialog h2 {
 #activity-prompt:focus {
   outline: 2px solid #6b8a54;
   outline-offset: 6px;
+}
+
+.map-places {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.85rem;
+  font-weight: normal;
 }
