@@ -75,3 +75,67 @@ Jim requested a homepage that fits without a scrollbar. The invitation screen no
 Verified through native Safari on the current local preview: at a 1035×708 outer window (approximately 1035×656 page area), the complete invitation form and all three footer sections are visible and the accessibility tree has no scrollbar. The same check passed at a 1625×988 outer window. Two browser zoom-in steps add a scrollbar; scrolling reaches the form and complete footer. Zoom and window size were restored. Exact CSS viewport dimensions were not measured. This is homepage evidence only, not the full browser/device or gameplay matrix.
 
 Screenshots: [before](../test-results/homepage-before-compact.png), [compact after](../test-results/homepage-after-compact.png), [enlarged content reachable](../test-results/homepage-enlarged-reachable.png), [desktop after](../test-results/homepage-after-desktop.png). These homepage-only changes follow the 10a674c frozen backend used by the concurrent capacity run; that run does not exercise the homepage rendering.
+
+
+## Chapter 8 pointer-only, final revision, 2026-11-09
+
+The root agent completed this automated native Safari check on source **`81953ca`**, with runtime **`10a674c`** and homepage/UI revision **`f012152`**. The fresh in-memory `scripts/preview-chapter.mjs 8` server used the verified NVM **Node v24.20.0** binary. Safari was **27.2 (21625.2.8.18.4)**, confirmed from its version metadata. The screenshot's outer window measured **1379×851**; the CSS viewport was not measured. This chapter preview skipped earlier chapters through its labeled initial clock offset. The immediate helper began chapter 8 **10 seconds into its phase**, leaving **290 seconds before tool/setup delays**; the chapter clock then ran without extension. Its owned session 42646 was stopped after the check.
+
+Setup explicitly selected **Replace with friendly robots**. The control-preference setting remained **Keyboard**, but every gameplay interaction after entry used pointer/AX clicks only. The preference label does not classify the test: the actual inputs do. The review resumed from fresh native state and scrolled the offscreen Enter button into view before entry; there was no further interruption. Earlier interrupted attempts remain historical and are not counted as passes.
+
+- Visited and completed all three current spatial network stations. The routes used costs **8/9**, **8/9**, and **12/12**, including each required relay and avoiding broken links.
+- Observed objective progress **3/3** and main score **60**, with **02:49** remaining on the chapter clock. The clock time consumed includes the initial 10-second preview offset as well as setup.
+- Opened Q8.1, clicked choice 1, and confirmed the first answer. It was recorded correct and the score increased to **70**.
+- Opened Q8.2, clicked choice 2, and confirmed the first answer. It was recorded correct and the score increased to **80**, with **02:10** remaining.
+- Clicked the browser reload control. Score **80** and objective progress **3/3** persisted. Reopened Learning encounters by pointer and observed both completion checkmarks after the refresh.
+- No error or penalty was observed during this run.
+
+Artifacts: [chapter 8 pointer completion](../test-results/chapter8-pointer-complete.jpg) and [learning completion retained after refresh](../test-results/chapter8-pointer-learning-persisted.jpg).
+
+This closes only the **M8 pointer**, **Q8.1 pointer**, and **Q8.2 pointer** cells in [the controls matrix](controls-matrix.md). This pointer run alone establishes neither keyboard completion nor input-method comparison, representative human timing, a full browser/device matrix, the failed-enable/network-outage regressions, or final host/presentation rendering. The earlier Safari evidence likewise does not certify the later ordering and settings-race revisions or the other expanded activities.
+
+
+## Chapter 8 keyboard-only, final revision, 2026-11-09
+
+The root agent completed a separate automated native Safari run on **`81953ca`**, runtime **`10a674c`**, UI **`f012152`**, using the actual NVM **Node v24.20.0** binary and Safari **27.2 (21625.2.8.18.4)**. The outer window remained **1379×851**; CSS viewport dimensions were not measured. This was a fresh in-memory `scripts/preview-chapter.mjs 8` preview, owned session **30493**. Prior preview **65990** elapsed during a context interruption before any gameplay; it was stopped cleanly and contributes no completion evidence.
+
+Setup used pointer input to choose friendly robots. **After Enter, all gameplay used only Tab, Shift+Tab, Return, and Escape; browser refresh used Cmd+R.** No pointer input was used for gameplay. The chapter clock was never paused or extended. The immediate helper's initial offset began chapter 8 **10 seconds into its phase**, so **290 seconds**, rather than a fresh 300 seconds, were available before tool/setup delays.
+
+| Observed action | Result | Chapter time remaining |
+|---|---|---|
+| Home A, valid route costing 8 of 9 | Score 20 | 04:11 |
+| Home B, valid route costing 8 of 9 | Score 40 | 03:48 |
+| Home C, valid route costing 12 of 12 | Score 60; objective 3/3 | 03:03 |
+| Q8.1, choice 1, first answer correct | Score 70 | 02:45 |
+| Q8.2, choice 2, first answer correct | Score 80 | 02:27 |
+| Cmd+R, then keyboard reopening of Learning encounters | Score 80, objective 3/3, both completion checkmarks retained | Refresh at 02:24 |
+
+Selected-node focus was restored after node-button redraws, with a visible outline. There was one native-input interruption before the first Home C node. A fresh accessibility observation showed the unchanged panel with Close focused; the reviewer inspected a screenshot and the subsequent Tab succeeded. This did not require pointer gameplay. No gameplay error or penalty was observed.
+
+Artifacts: [chapter 8 keyboard completion](../test-results/chapter8-keyboard-complete.jpg) and [keyboard learning completion retained after refresh](../test-results/chapter8-keyboard-learning-persisted.jpg).
+
+This closes **M8 keyboard**, **Q8.1 keyboard**, and **Q8.2 keyboard**. Together with the separate pointer run above, chapter 8 has observed equivalent outcomes: the same three valid routes, both first answers correct, score **80**, and progress/checkmarks retained after refresh. The timestamps describe these automated runs; they do not establish human performance or a speed advantage for either input method. At the end of that run, the other seven chapters, other browsers/devices, human rehearsal, final host/presentation rendering, and the outstanding safety/network regressions remained pending. Later chapter evidence is recorded separately below.
+
+
+## Chapter 6 pointer-only, final revision, 2026-11-09
+
+The root agent completed this automated native Safari run on **`81953ca`**, runtime **`10a674c`**, UI **`f012152`**, with verified NVM **Node v24.20.0**, Safari **27.2 (21625.2.8.18.4)**, and the same **1379×851** outer window. CSS viewport dimensions were not measured. It used fresh in-memory chapter-6 preview session **59336**. The immediate helper began chapter 6 **10 seconds into its phase**, leaving **290 seconds before tool/setup delays**, and then ran the normal unextended chapter clock. Every interaction after entry, including browser reload, used pointer clicks. No gameplay error, penalty, or native-input interruption was observed.
+
+- Entered with **04:37** left on the normal chapter clock. On arrival, cycle 1 had **13 seconds** until its deadline. Selected **Pay 60; save 40** with 10 seconds remaining, then confirmed with 7 seconds remaining.
+- Cycle 2 displayed **income 90 + retained 40 = 130** and initially opened in 7 seconds. Selected **Pay 50; save 80**; Confirm was disabled while 4 seconds remained before opening. Once open, the panel displayed 43 seconds until due and the payment was confirmed.
+- Cycle 3 displayed **income 80 + retained 80 = 160**, with 38 seconds before opening and Confirm disabled. This early-payment state was captured in a screenshot. Closed the panel and observed **score 40 / progress 2 of 3** at **04:04**.
+- Q6.1: selected **No**, confirmed the first answer as correct, and observed score **50** at **03:45**.
+- Q6.2: selected **Its actual reporting terms and eligibility**, confirmed the first answer as correct, and observed score **60** at **03:26**.
+- Reopened cycle 3 with 37 seconds until due, selected **Pay 50; save 110**, and confirmed. Observed **score 80 / progress 3 of 3** at **03:14**. The final action explicitly selected saving 110; the completed screen did **not** independently display the final retained balance, so that balance is not claimed as a separately rendered observation.
+- Clicked browser reload at **03:02**. Score **80**, progress **3 of 3**, and both learning completion checkmarks persisted; the Learning dialog was reopened by pointer to verify them.
+
+Artifacts: [cycle-3 early payment disabled](../test-results/chapter6-pointer-early-payment-disabled.jpg), [chapter 6 pointer completion](../test-results/chapter6-pointer-complete.jpg), and [learning completion retained after refresh](../test-results/chapter6-pointer-learning-persisted.jpg).
+
+This closes only **M6 pointer**, **Q6.1 pointer**, and **Q6.2 pointer**. Chapter 6 keyboard completion and input-method comparison remain pending. The observed timing describes this automated preview; it is not evidence of representative human performance, the complete browser/device matrix, or the outstanding safety/network regressions.
+
+
+## Chapter 6 keyboard attempt excluded, 2026-11-09
+
+Fresh preview **22315** was stopped without a payment or knowledge encounter being attempted. Setup and travel consumed a reported 32 seconds while the preview clock was already running; on arrival, the first payment deadline had elapsed. This immediate preview also began chapter 6 ten seconds into the phase. The attempt is excluded from completion evidence and does not establish an input-method failure: normal event setup precedes competitive play.
+
+The next keyboard check is planned to use the optional preview `--wait-for-start` mode being added to the helper: finish setup first, then explicitly start the selected chapter at its proper opening with the normal 300-second window. This is a visible fixture-start boundary, not a hidden clock extension. No existing run was altered. The chapter-6 pointer pass on `81953ca` remains valid in its shorter, unextended preview window; M6/Q6.1/Q6.2 keyboard cells remain pending.
