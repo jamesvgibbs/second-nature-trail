@@ -313,3 +313,31 @@ Two native-input interruptions occurred at Willow. During inspection, the select
 Artifacts: [chapter 4 keyboard completion](../test-results/chapter4-keyboard-complete.jpg) and [learning completion retained after refresh](../test-results/chapter4-keyboard-learning-persisted.jpg).
 
 This closes **M4 keyboard**, **Q4.1 keyboard**, and **Q4.2 keyboard**, bringing the matrix to **30 of 48** cells. The separate keyboard and pointer runs completed the same six inspected decisions, answered both encounters correctly on the first attempt, and retained **80 points / 6 of 6 / both learning checkmarks** after refresh. These are identical observed outcomes on the frozen source, not a human timing or usability claim, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
+
+
+## Chapter 7 pointer-only, final revision, 2026-11-09
+
+The root agent completed this automated native Safari check from the detached review checkout **`/tmp/second-nature-trail-browser-f1218bf`**, frozen at **`f1218bf`**, retaining runtime **`10a674c`**, UI **`f012152`**, and the waiting preview helper. It used verified NVM **Node v24.20.0** and Safari **27.2 (21625.2.8.18.4)**. The outer window had been resized to **1447×889**, as observed in the setup screenshot; the CSS viewport was not measured.
+
+Fresh in-memory preview session **79849** used chapter 7 with `--wait-for-start`, beginning the normal full **300-second** window after setup. The first chapter observation showed **04:57**. Before entry, native input was interrupted on the first robot-choice click. A fresh accessibility observation and screenshot verified unchanged radios, after which selecting friendly robots and entering succeeded. Keyboard remained the preference, but **all gameplay after entry, including reload, used pointer input**. No gameplay interruption occurred. The owned preview was stopped with Ctrl+C and exited with code 0.
+
+Each of the six jobs required inspection and confirmation, reading the visible work order, and selecting and confirming the decision.
+
+| Job / selected decision | Observed score / earned tokens | Chapter time remaining |
+|---|---|---|
+| Elm: Cable (choice 2) | 10 / 2 | 04:39 |
+| Oak: Repair parts (choice 1) | 20 / 4 | 04:26 |
+| Maple: Food (choice 3) | 30 / 6 | 04:10 |
+| Juniper: Support with repair parts (choice 1) | 40 / 8 | 03:57 |
+| Cedar: Cable (choice 2) | 50 / 10 | 03:43 |
+| Willow: Food and terms (choice 3) | 60 / 12; objective 6 of 7 | 03:27 |
+
+The player automatically walked to Night market. Selecting the community garden (choice 1, cost 4) completed the main objective at **03:19**: **score 60 / 7 of 7 / balance 8**. The completion screenshot records this state. Opening Rewards showed the garden already funded and disabled, and the 12-token celebration unaffordable. Clicking the 8-token welcome station produced **balance 0 / earned 12**, with both funded projects checked and disabled and celebration still disabled. The rewards screenshot records those controls. Closing the panel at **02:56** showed score 60, progress 7 of 7, zero balance, and both funded-project texts.
+
+- Q7.1: eligibility and redemption terms (choice 1), first answer correct; score **70** at **02:46**.
+- Q7.2: fictional game rewards (choice 2), first answer correct; score **80** at **02:35**.
+- Clicked browser reload at **02:31**: score **80**, progress **7 of 7**, zero balance, and both funded-project texts persisted. Reopened Learning encounters by pointer and verified both completion checkmarks.
+
+No gameplay error or penalty was observed. Artifacts: [chapter 7 pointer main completion](../test-results/chapter7-pointer-complete.jpg), [reward redemption and disabled controls](../test-results/chapter7-pointer-rewards.jpg), and [learning completion retained after refresh](../test-results/chapter7-pointer-learning-persisted.jpg).
+
+This closes **M7 pointer**, **Q7.1 pointer**, and **Q7.2 pointer**, bringing the matrix to **33 of 48** cells. Chapter 7 keyboard completion and input-method comparison remain pending. These observations apply to the frozen review source and do not establish human timing, certification of later runtime changes, or completion of the remaining browser/device and safety/network checks.
