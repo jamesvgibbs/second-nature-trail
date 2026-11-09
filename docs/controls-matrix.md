@@ -4,7 +4,7 @@ Inspection date: 2026-11-09. Baseline: backend/content revision `c595925`; clien
 
 The scope requires all eight main objectives and all sixteen knowledge encounters to be completed independently with each input method. **None of the final-revision main-objective rows or knowledge rows below has a complete two-method browser pass.** Earlier Safari observations cover specific interactions only. The final targeting and routing revisions supersede their earlier gameplay evidence. See [browser checks](browser-checks.md) for observations, fixture labels, browser version, and limitations; see [scope](scope.md) for the release requirements.
 
-Native browser input is currently contested. Safari repeatedly rejected actions as changed by the user; Chrome showed text the reviewer had not entered. No further UI actions are authorized by this document while that contention remains. All agent-owned port-4174 previews were stopped. The separate capacity run was not modified for this audit.
+Native browser input has been intermittent. The invitation homepage was successfully checked in Safari after revision `f012152`, including compact/desktop fit and enlarged-page reachability. A fresh chapter-one pointer check then reached setup with both visual choices initially unselected, selected replacement mode and Mouse / trackpad, but the Enter action was interrupted by a user-change notification and a changed window size. It did not reach gameplay or establish any completed matrix row. That isolated port-4174 preview was stopped. Resume gameplay checks when the review window is available; the separate capacity run and port-4173 user preview were not modified.
 
 ## Repeatable run protocol
 
