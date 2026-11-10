@@ -24,7 +24,7 @@ function fixture(chapter = 0) {
     after(node) { if (node.id) ids.set('#' + node.id, node); }
     set innerHTML(html) {
       this.html = html; this.children = [];
-      for (const key of ['#task-choices', '#quiz-confirm', '#learning-list', '#dialog-feedback', '#selection-status']) ids.delete(key);
+      for (const key of ['#task-choices', '#quiz-confirm', '#learning-list', '#dialog-feedback', '#selection-status', '#quiz-next']) ids.delete(key);
       for (const match of html.matchAll(/id="([^"]+)"/g)) ids.set('#' + match[1], new Element());
     }
     get innerHTML() { return this.html; }
@@ -66,7 +66,7 @@ test('all sixteen first-correct answers earn published points and retain real mo
       await f.answer(index, CHAPTERS[chapter].questions[index].answer);
       assert.equal(f.engine.get('neighbor').progress[chapter].score, (index + 1) * RULES.quizPoints);
       assert.match(f.feedback(), new RegExp(`Correct\\. ${RULES.quizPoints} points earned\\. First answer recorded`));
-      assert.match(f.body.innerHTML, new RegExp(`First answer: correct\\. ${RULES.quizPoints} points earned`));
+      assert.match(f.body.innerHTML, new RegExp(`✓ Correct</h3><p><strong>${RULES.quizPoints} points earned`));
       assert.equal(f.engine.get('neighbor').progress[chapter].step, 0);
     }
     f.context.learning();
@@ -80,9 +80,17 @@ test('wrong first answer followed by correct retry remains zero and explains bot
   await f.answer(1, 0);
   assert.match(f.feedback(), /Not quite\. 0 points earned\. First answer recorded/);
   assert.match(f.body.innerHTML, /First answer: incorrect\. 0 points earned/);
-  await f.answer(1, q.answer);
+  f.context.quiz(1);
+  f.ids.get('#task-choices').children[q.answer].onclick();
+  const pending = f.ids.get('#quiz-confirm').children[0].onclick();
+  f.context.selection = 0; // A later UI selection must not replace the submitted practice answer.
+  await pending;
   assert.match(f.feedback(), /Correct\. Unscored retry\. Your first answer and its points are unchanged/);
-  assert.match(f.body.innerHTML, /First answer: incorrect\. 0 points earned/);
+  assert.match(f.body.innerHTML, /Correct practice answer/);
+  assert.match(f.body.innerHTML, /0 points earned/);
+  assert.ok(f.body.innerHTML.includes(q.options[q.answer]));
+  assert.equal(f.ids.has('#task-choices'), false);
+  assert.equal(f.ids.has('#quiz-confirm'), false);
   assert.equal(f.engine.get('neighbor').progress[0].score, 0);
   assert.equal(f.engine.get('neighbor').progress[0].quiz[1].choice, 0);
   f.context.learning();
@@ -105,14 +113,26 @@ test('selection is reset per encounter and an old chapter confirmation cannot sc
   assert.equal(f.engine.get('neighbor').progress[1].quiz[1], null);
 });
 
-test('repeated correct and later incorrect retries preserve the first correct credit without awarding more', async () => {
-  const f = fixture(), q = CHAPTERS[0].questions[0];
-  await f.answer(0, q.answer);
-  await f.answer(0, q.answer);
-  assert.equal(f.engine.get('neighbor').progress[0].score, RULES.quizPoints);
-  assert.match(f.feedback(), /Correct\. Unscored retry/);
-  await f.answer(0, 1);
-  assert.equal(f.engine.get('neighbor').progress[0].score, RULES.quizPoints);
-  assert.match(f.feedback(), /Not quite\. Unscored retry/);
-  assert.match(f.body.innerHTML, new RegExp(`First answer: correct\\. ${RULES.quizPoints} points earned`));
+test('earned encounters stay complete on review with focused Next then Back actions and no answering controls', async () => {
+  const f = fixture();
+  await f.answer(0, CHAPTERS[0].questions[0].answer);
+  assert.equal(f.ids.has('#task-choices'), false);
+  assert.equal(f.ids.has('#quiz-confirm'), false);
+  let next = f.ids.get('#quiz-next').children[0];
+  assert.equal(next.textContent, 'Next encounter');
+  assert.equal(f.context.document.activeElement, next);
+  next.onclick();
+  assert.ok(f.body.innerHTML.includes(CHAPTERS[0].questions[1].prompt));
+  f.ids.get('#task-choices').children[CHAPTERS[0].questions[1].answer].onclick();
+  await f.ids.get('#quiz-confirm').children[0].onclick();
+  next = f.ids.get('#quiz-next').children[0];
+  assert.equal(next.textContent, 'Back to encounters');
+  assert.equal(f.context.document.activeElement, next);
+  next.onclick();
+  f.ids.get('#learning-list').children[0].onclick();
+  assert.match(f.body.innerHTML, /This encounter is complete/);
+  assert.ok(f.body.innerHTML.includes(CHAPTERS[0].questions[0].options[0]));
+  assert.equal(f.ids.has('#task-choices'), false);
+  assert.equal(f.ids.get('#quiz-next').children[0].textContent, 'Back to encounters');
+  assert.equal(f.engine.get('neighbor').progress[0].score, 2 * RULES.quizPoints);
 });

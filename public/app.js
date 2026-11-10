@@ -1239,11 +1239,30 @@ function learning() {
     );
   });
 }
-function quiz(index) {
+function quiz(index, result = null) {
   const chapterIndex = state.event.chapter;
   const q = state.chapter.questions[index],
     a = state.me.progress?.[state.event.chapter]?.quiz?.[index];
   panel = "quiz";
+  if (a?.correct || result?.correct) {
+    const earned = a?.correct ? state.rules.quizPoints : 0;
+    const answerChoice = a?.correct ? a.choice : result.choice;
+    const next = state.chapter.questions.findIndex(
+      (_, i) => i !== index && !state.me.progress?.[chapterIndex]?.quiz?.[i],
+    );
+    open(
+      `Human intelligence · ${index + 1} of 2`,
+      `<h3>${a?.correct ? "✓ Correct" : "✓ Correct practice answer"}</h3><p><strong>${earned} points earned.</strong>${a?.correct ? " This encounter is complete." : " Your first answer was incorrect; this practice retry adds no points."}</p><p>${esc(q.prompt)}</p><p class="notice">Your correct answer: ${esc(q.options[answerChoice])}</p><p>${esc(a?.explanation || result.explanation)}</p><p class="small">Learning points add to your chapter score; objective progress tracks the main task.</p><div id="quiz-next"></div>`,
+    );
+    const nextButton = btn(
+      next >= 0 ? "Next encounter" : "Back to encounters",
+      () => next >= 0 ? quiz(next) : learning(),
+      "primary",
+    );
+    $("#quiz-next").append(nextButton);
+    nextButton.focus({ preventScroll: true });
+    return;
+  }
   open(
     `Human intelligence · ${index + 1} of 2`,
     `<h3>${esc(q.prompt)}</h3>${a ? `<div class="notice">First answer: ${a.correct ? "correct" : "incorrect"}. ${a.correct ? state.rules.quizPoints : 0} points earned. ${esc(a.explanation)}</div><p class="small">Retries do not change these points. Learning points add to your chapter score; objective progress tracks the main task.</p>` : '<p class="small muted">Your first confirmed answer counts. Take a moment.</p>'}<div class="choice-list" id="task-choices"></div><div id="quiz-confirm"></div>`,
@@ -1260,13 +1279,14 @@ function quiz(index) {
           toast("Choose an answer first.");
           return;
         }
+        const choice = selection;
         const r = await act("quiz", {
           index,
-          choice: selection,
+          choice,
           expectedChapter: chapterIndex,
         });
         if (r !== null) {
-          quiz(index);
+          quiz(index, { ...r, choice });
           if (r.explanation)
             toast(
               `${r.correct ? "Correct." : "Not quite."} ${r.first ? `${r.correct ? state.rules.quizPoints : 0} points earned. First answer recorded.` : "Unscored retry. Your first answer and its points are unchanged."} ${r.explanation}`,
