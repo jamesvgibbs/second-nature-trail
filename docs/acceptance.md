@@ -1,6 +1,6 @@
 # Release evidence
 
-Status: not release-approved. Updated 2026-11-09. This checklist records evidence; the presence of code is not a passing test. Automated tests cannot replace employee rehearsals, content approval, or hardware/browser measurements.
+Status: not release-approved. Updated 2026-11-10. This checklist records evidence; the presence of code is not a passing test. Automated tests cannot replace employee rehearsals, content approval, or hardware/browser measurements.
 
 ## Build and real-testing sequence
 
@@ -10,7 +10,7 @@ Hosting details are needed when publishing the game. Review of the drafted benef
 
 ## Current verified build
 
-Source package `a5cf0b9` contains runtime `9939a98`. The combined Node 24.20.0 suite passed **143 tests**, with no failures or skips: [test output](../test-results/full-suite-9939a98-runtime.log). The exact runtime image passed a three-second graceful-stop limit, same-volume recreation, and backup restoration into a fresh volume: [container evidence](../test-results/container-9939a98.json), [deployment details](deployment-check.md).
+Runtime **`1154c82`** includes live Neighbors controls and explicit map chapter status. The combined Node 24.20.0 suite passed **152 tests**, with no failures or skips: [test output](../test-results/full-suite-1154c82-runtime.log). Its exact-source image passed production startup and byte-for-byte checks of all seven packaged and served public assets: [packaging evidence](../test-results/container-1154c82-static.json). The backend and Dockerfile hashes remain identical to `9939a98`, whose image passed a three-second graceful-stop limit, same-volume recreation, and backup restoration into a fresh volume: [durability evidence](../test-results/container-9939a98.json), [deployment details](deployment-check.md). These are distinct checks with their original source revisions preserved.
 
 The full 100-player performance and award evidence remains tied to **`d042570`**, before the later sign-in, finale display, paused display, and shutdown fixes. The controls ledger likewise retains each reviewed source/browser boundary. A passing current test suite does not silently recertify those earlier rendered or load measurements.
 
