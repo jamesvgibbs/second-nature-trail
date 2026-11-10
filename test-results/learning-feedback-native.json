@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-10",
+  "beforeRevision": "1154c82",
+  "afterRevision": "de34ca7",
+  "browser": "Safari 27.2 on macOS",
+  "environment": "Isolated loopback chapter1 previews; normal quiz actions, preview-helper initial clock offset; user4175 only read for diagnosis/static verification",
+  "before": "Correct first submission immediately redrew the dialog and removed its result message; no explicit point credit appeared.",
+  "after": [
+    "Correct first answer displays persistent Correct. 10 points earned.",
+    "Encounter list displays Correct \u00b7 10 points.",
+    "Chapter score shows10; main objective progress stays0/3.",
+    "Second encounter deliberately wrong first answer displays0 points.",
+    "Correct retry displays Correct. Unscored retry. Your first answer and its points are unchanged.",
+    "Refresh preserves total10 points."
+  ],
+  "screenshots": [
+    "learning-feedback-before.png",
+    "learning-credit-after.png",
+    "learning-retry-after.png"
+  ],
+  "liveClient": "Verified served app.js matches fixed source; no user progress/scoring changed or server restart."
+}
