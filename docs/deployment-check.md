@@ -1,8 +1,16 @@
 # Deployment check
 
-Date: 2026-11-09. Local container validation only; no production service was created or published.
+Updated: 2026-11-10. Local container validation only; no production service was created or published.
 
-## Current packaged runtime: 9939a98
+## Current packaged runtime: 1154c82
+
+Built from a clean Git archive of **1154c82**, including the live Neighbors controls and explicit map chapter status. Image: `second-nature-trail:1154c82`; image ID `sha256:bee6775e837553304cce79762f52a8c73437ec1a964d39870543e86355d33972`.
+
+The targeted production-mode check passed non-root Node 24 startup and health. All seven public assets matched the exact commit both inside the image and when served over HTTP; JavaScript and module MIME types passed. The server, engine, content, checkpoint helper and Dockerfile hashes still exactly match the durability-tested revision 9939a98. Default Secure-cookie configuration remained enabled; this check required no logins or gameplay. Its disposable loopback container and volume were removed, while the local image remains available.
+
+Evidence: [packaging report](../test-results/container-1154c82-static.json), [smoke log](../test-results/container-1154c82-static.log), [build log](../test-results/container-1154c82-static-build.log). Repeat with `node scripts/smoke-container-static.mjs <full Git commit>` using Node 24 and Docker. The combined suite at this source passed 152 tests with zero failures or skips in 3.49 seconds: [full suite](../test-results/full-suite-1154c82-runtime.log). This targeted check does not repeat the capacity or backup/restore runs below. Their original source revisions remain authoritative.
+
+## Durability-tested runtime: 9939a98
 
 Built from a clean Git archive of **9939a98**, including role isolation, finale endings, paused display context, and bounded shutdown. The image is `second-nature-trail:9939a98`, image ID `sha256:e5336274d412c78bd55d1b3e92426db0d0534a326aba7644a37569ced3ee4be6`. It uses the pinned official Node 24.20.0 Debian slim base `sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e` and runs as non-root UID 1000.
 

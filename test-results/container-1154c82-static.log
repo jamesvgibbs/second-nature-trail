@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "image": "second-nature-trail:1154c82",
+  "imageId": "sha256:bee6775e837553304cce79762f52a8c73437ec1a964d39870543e86355d33972",
+  "servedAssetCount": 7,
+  "report": "/Users/jgibbs/Code/second-nature-trail/test-results/container-1154c82-static.json"
+}

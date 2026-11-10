@@ -1,0 +1,109 @@
+{
+  "sourceCommit": "1154c82be718d7d7c3153e4700ae9294423db6dc",
+  "image": "second-nature-trail:1154c82",
+  "startedAt": "2026-11-10T14:43:17.684Z",
+  "scope": "production startup and exact packaged/served asset bytes only",
+  "productionDeployed": false,
+  "network": "disposable loopback HTTP, default Secure cookie configuration retained",
+  "checks": [
+    "non-root production startup and exact image runtime/static hashes",
+    "every tracked public asset served byte-for-byte with JavaScript module MIME types"
+  ],
+  "sourceHashes": {
+    "server.mjs": "3e0006a03cf775cf6fd6e0dd9847185a146c45d0e1fa1ba9c8cf52183d36df4f",
+    "engine.mjs": "f12ed35ca76a1746924efb60633daea4028f75ed418c31af85885a784e61c213",
+    "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+    "command-checkpoint.mjs": "1f3df952d81bae0148e9f6f7840ea2117577cfc1ae66b48de941af869fc471e7",
+    "Dockerfile": "a34eef0517f7f154d6bc27ba51946214dfd0ec35b5473dfaf41cdf9df8ab9e52",
+    "public/app.js": "097ceb149d3dd5956ad4965f0367e33f9de7ca81458e874f615209770dd18ad1",
+    "public/helpers.mjs": "8aaafb2ece299ce54821745a0a2be07c754793c9229f3166092d05771718249a",
+    "public/index.html": "d1ec19805d30903b41253a794bcd85533bf85dd9b8dd51e2567b542ee66189f0",
+    "public/performance.mjs": "090cdd66c6b421fa0265b76aad7fa59738486fcd498110d87c60303cf78d4898",
+    "public/projection.mjs": "90b19560a0e02a7b9d19d69e567d2ef332526f351b2370040a5d7e60a47d6b79",
+    "public/style.css": "02b44b30cf3ca76ec55df81443513596e1ac423918d654ea4677bb1ab3ee0566",
+    "public/world.mjs": "d412a2dee8b4b1dc3779d1dabc46561383646ac63651dcf7cd30eeba8bd063a0"
+  },
+  "servedAssets": [
+    {
+      "path": "public/app.js",
+      "route": "/app.js",
+      "sha256": "097ceb149d3dd5956ad4965f0367e33f9de7ca81458e874f615209770dd18ad1",
+      "contentType": "text/javascript"
+    },
+    {
+      "path": "public/helpers.mjs",
+      "route": "/helpers.mjs",
+      "sha256": "8aaafb2ece299ce54821745a0a2be07c754793c9229f3166092d05771718249a",
+      "contentType": "text/javascript"
+    },
+    {
+      "path": "public/index.html",
+      "route": "/",
+      "sha256": "d1ec19805d30903b41253a794bcd85533bf85dd9b8dd51e2567b542ee66189f0",
+      "contentType": "text/html"
+    },
+    {
+      "path": "public/performance.mjs",
+      "route": "/performance.mjs",
+      "sha256": "090cdd66c6b421fa0265b76aad7fa59738486fcd498110d87c60303cf78d4898",
+      "contentType": "text/javascript"
+    },
+    {
+      "path": "public/projection.mjs",
+      "route": "/projection.mjs",
+      "sha256": "90b19560a0e02a7b9d19d69e567d2ef332526f351b2370040a5d7e60a47d6b79",
+      "contentType": "text/javascript"
+    },
+    {
+      "path": "public/style.css",
+      "route": "/style.css",
+      "sha256": "02b44b30cf3ca76ec55df81443513596e1ac423918d654ea4677bb1ab3ee0566",
+      "contentType": "text/css"
+    },
+    {
+      "path": "public/world.mjs",
+      "route": "/world.mjs",
+      "sha256": "d412a2dee8b4b1dc3779d1dabc46561383646ac63651dcf7cd30eeba8bd063a0",
+      "contentType": "text/javascript"
+    }
+  ],
+  "cleanup": [
+    {
+      "container": "trail-package-1154c82-76578",
+      "removed": true
+    },
+    {
+      "volume": "trail-package-1154c82-76578-data",
+      "removed": true
+    }
+  ],
+  "backendMatchesDurabilityRevision": {
+    "server.mjs": true,
+    "engine.mjs": true,
+    "content.mjs": true,
+    "command-checkpoint.mjs": true,
+    "Dockerfile": true
+  },
+  "imageId": "sha256:bee6775e837553304cce79762f52a8c73437ec1a964d39870543e86355d33972",
+  "imageUser": "node",
+  "health": {
+    "ok": true
+  },
+  "loopbackOrigin": "http://127.0.0.1:52007",
+  "stop": {
+    "Status": "exited",
+    "Running": false,
+    "Paused": false,
+    "Restarting": false,
+    "OOMKilled": false,
+    "Dead": false,
+    "Pid": 0,
+    "ExitCode": 0,
+    "Error": "",
+    "StartedAt": "2026-11-10T14:43:19.573453125Z",
+    "FinishedAt": "2026-11-10T14:43:19.892410792Z"
+  },
+  "passed": true,
+  "containerLogs": "Second Nature Trail: http://localhost:4173\n",
+  "finishedAt": "2026-11-10T14:43:20.127Z"
+}
