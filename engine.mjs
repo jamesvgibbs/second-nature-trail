@@ -376,7 +376,7 @@ export class Engine {
         case "move": {
           assert(p.setup, "Finish setup");
           assert(
-            ["lobby", "chapter", "finale"].includes(s.phase),
+            ["draft", "lobby", "chapter", "finale"].includes(s.phase),
             "Movement is frozen",
           );
           assert(

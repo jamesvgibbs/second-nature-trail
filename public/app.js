@@ -737,6 +737,13 @@ function game() {
   windowCheck();
   requestAnimationFrame(frame);
   firstUseControls();
+  const focused = document.activeElement;
+  const editing =
+    focused?.isConnected &&
+    (["INPUT", "TEXTAREA", "SELECT"].includes(focused.tagName) ||
+      focused.isContentEditable);
+  if (!isPresentation && !modal.open && !editing)
+    activeCanvas.focus({ preventScroll: true });
 }
 function firstUseControls() {
   if (isPresentation || !state.me || state.me.tutorial?.length >= 5) return;
@@ -1642,7 +1649,7 @@ function frame(now) {
     const p = state.me.position;
     const frozen =
       state.event.paused ||
-      !["lobby", "chapter", "finale"].includes(state.event.phase);
+      !["draft", "lobby", "chapter", "finale"].includes(state.event.phase);
     if (frozen) target = null;
     else if (now - lastMove > 100) {
       const elapsed = Math.min(0.25, (now - lastMove) / 1000);
