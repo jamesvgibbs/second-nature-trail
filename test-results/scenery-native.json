@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-10",
+  "sourceCommit": "8db6f3da16b26b579cbe04295f0df38fb75d4f58",
+  "browser": "Native Safari 27.2 on macOS",
+  "environment": "Isolated in-memory chapter preview on localhost:4177. Clock offset fixture; chapter advanced normally to 5 during review. No user game mutations.",
+  "windowSizes": [
+    {
+      "width": 1447,
+      "height": 889
+    },
+    {
+      "width": 1059,
+      "height": 799
+    }
+  ],
+  "sizeUnits": "Outer native window pixels, not CSS viewport dimensions",
+  "verified": [
+    "All eight districts reviewed visually; trees clear homes, roofs, doors and entrance paths",
+    "All eight AI BEACON plaques visible without scenery covering lettering",
+    "Chapter badge and control hint below map, clear of buildings",
+    "Plaza trees in planter beds clear fountain, benches and signs"
+  ],
+  "automated": {
+    "tests": 169,
+    "passed": 169,
+    "failed": 0,
+    "skipped": 0,
+    "runtime": "Node v24.20.0",
+    "durationMs": 3462.581,
+    "log": "full-suite-8db6f3d-runtime.log",
+    "sceneryCoverage": "Four actual-render tests cover all eight districts, 16 buildings/entrances/roads, all 100 repair highlights, restored/unrestored labels, five lamp stages and plaza projects."
+  },
+  "screenshots": [
+    "scenery-desktop-after.png",
+    "scenery-compact-after.png"
+  ],
+  "liveAssets": "scenery-live-assets.json",
+  "scope": "Visual repair only. Gameplay coordinates, collision, scoring and user database unchanged."
+}

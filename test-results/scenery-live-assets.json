@@ -1,0 +1,23 @@
+[
+  {
+    "asset": "app.js",
+    "status": 200,
+    "contentType": "text/javascript",
+    "matchesSource": true,
+    "sha256": "1e57377bfe5ea784f50e2a591980d01c5aff8d9fa069b3d6140fac916407a2d2"
+  },
+  {
+    "asset": "style.css",
+    "status": 200,
+    "contentType": "text/css",
+    "matchesSource": true,
+    "sha256": "5f39c6b06290a2e706ba054c8be29537de3ec9d695526c5f4cac59fc8be69e89"
+  },
+  {
+    "asset": "scenery.mjs",
+    "status": 200,
+    "contentType": "text/javascript",
+    "matchesSource": true,
+    "sha256": "2c3d99d2270994da1428d69039a05e3c40a085c25f6c6356b60d99af95c5c880"
+  }
+]
