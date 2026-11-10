@@ -1287,7 +1287,7 @@ function quiz(index, result = null) {
         });
         if (r !== null) {
           quiz(index, { ...r, choice });
-          if (r.explanation)
+          if (!r.correct && r.explanation)
             toast(
               `${r.correct ? "Correct." : "Not quite."} ${r.first ? `${r.correct ? state.rules.quizPoints : 0} points earned. First answer recorded.` : "Unscored retry. Your first answer and its points are unchanged."} ${r.explanation}`,
             );

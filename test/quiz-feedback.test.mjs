@@ -59,13 +59,13 @@ function fixture(chapter = 0) {
   };
 }
 
-test('all sixteen first-correct answers earn published points and retain real modal feedback and list credit', async () => {
+test('all sixteen first-correct answers show one completed result and retain list credit', async () => {
   for (let chapter = 0; chapter < CHAPTERS.length; chapter++) {
     const f = fixture(chapter);
     for (let index = 0; index < 2; index++) {
       await f.answer(index, CHAPTERS[chapter].questions[index].answer);
       assert.equal(f.engine.get('neighbor').progress[chapter].score, (index + 1) * RULES.quizPoints);
-      assert.match(f.feedback(), new RegExp(`Correct\\. ${RULES.quizPoints} points earned\\. First answer recorded`));
+      assert.equal(f.feedback(), undefined, 'completed result replaces redundant success feedback');
       assert.match(f.body.innerHTML, new RegExp(`✓ Correct</h3><p><strong>${RULES.quizPoints} points earned`));
       assert.equal(f.engine.get('neighbor').progress[chapter].step, 0);
     }
@@ -85,7 +85,7 @@ test('wrong first answer followed by correct retry remains zero and explains bot
   const pending = f.ids.get('#quiz-confirm').children[0].onclick();
   f.context.selection = 0; // A later UI selection must not replace the submitted practice answer.
   await pending;
-  assert.match(f.feedback(), /Correct\. Unscored retry\. Your first answer and its points are unchanged/);
+  assert.equal(f.feedback(), undefined, 'practice completion needs no duplicate success feedback');
   assert.match(f.body.innerHTML, /Correct practice answer/);
   assert.match(f.body.innerHTML, /0 points earned/);
   assert.ok(f.body.innerHTML.includes(q.options[q.answer]));
