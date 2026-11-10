@@ -2,6 +2,12 @@
 
 Status: not release-approved. Updated 2026-11-09. This checklist records evidence; the presence of code is not a passing test. Automated tests cannot replace employee rehearsals, content approval, or hardware/browser measurements.
 
+## Build and real-testing sequence
+
+Jim clarified on 2026-11-10: “We can do real testing after you are finished.” Complete implementation and developer checks first, then run the employee, device/network, and event rehearsal checks below. Those later checks are not prerequisites for finishing the build. Record them honestly as pending; do not claim release approval or successful real testing from the local automated evidence.
+
+Hosting details are needed when publishing the game. Review of the drafted benefit copy can happen with the finished game before the employee event. Neither is an unresolved game mechanic. A failed browser-control connection is a developer-tool limitation, not evidence that the game is broken.
+
 ## Current verified build
 
 Source package `a5cf0b9` contains runtime `9939a98`. The combined Node 24.20.0 suite passed **143 tests**, with no failures or skips: [test output](../test-results/full-suite-9939a98-runtime.log). The exact runtime image passed a three-second graceful-stop limit, same-volume recreation, and backup restoration into a fresh volume: [container evidence](../test-results/container-9939a98.json), [deployment details](deployment-check.md).

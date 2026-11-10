@@ -2,6 +2,10 @@
 
 Design proposal, 2026-11-09. The scope is in [scope.md](scope.md). Jim's subsequent build instruction authorizes implementation. Event date, spending authority, production hosting, content approvers, hardware baseline, and rehearsal attendees remain open. This document is not evidence that the game has passed release acceptance.
 
+## Sequencing clarification · 2026-11-10
+
+Jim directed that real testing follow the finished build. Continue implementation and developer verification without waiting for employee rehearsal, hardware/network testing, or event logistics. Keep the original functional scope and report those later release checks separately. Hosting account/domain/budget are publishing decisions; the drafted benefit questions can be reviewed with the finished game before the employee event.
+
 ## Experience
 
 An original pixel neighborhood has been taken over by an officious AI. Employees restore homes through eight benefit-themed chapters. Bragging Square is the shared starting point. Every chapter opens for everyone simultaneously; stations have no exclusive queue. The world remains one shared instance.
