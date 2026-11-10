@@ -1,0 +1,58 @@
+{
+  "date": "2026-11-10",
+  "beforeRevision": "1154c82",
+  "fixedRevision": "8f0b3ee",
+  "browser": "Google Chrome 157.0.8103.51 on macOS",
+  "environment": "Isolated loopback demo servers, not user4175 game",
+  "before": {
+    "phase": "draft",
+    "actions": [
+      "Finish setup",
+      "Dismiss intro",
+      "Right",
+      "d",
+      "Refresh"
+    ],
+    "position": {
+      "x": 600,
+      "y": 380
+    },
+    "tutorial": [],
+    "reloadFocus": "HTML document"
+  },
+  "after": {
+    "phase": "draft",
+    "rightPosition": {
+      "x": 635,
+      "y": 380
+    },
+    "rightThenDPosition": {
+      "x": 670,
+      "y": 380
+    },
+    "reloadFocus": "world canvas",
+    "downThenSAfterReloadPosition": {
+      "x": 670,
+      "y": 450
+    },
+    "tutorial": [
+      "move"
+    ],
+    "chapterScores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "finalEditableFocusGuardReload": "canvas focus verified again"
+  },
+  "screenshots": [
+    "movement-draft-before.png",
+    "movement-draft-after.png"
+  ],
+  "notes": "Native inputs through CUA; positions and score verified by read-only SQLite queries. No host start or synthetic scoring."
+}

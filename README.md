@@ -1,6 +1,6 @@
 # Second Nature Trail
 
-Original browser neighborhood adventure for one private Second Nature employee event. The local implementation is complete against [the scope](docs/scope.md), with 152 automated developer checks passing. Real employee, device, and network testing comes after the build; those results are separate from implementation completion.
+Original browser neighborhood adventure for one private Second Nature employee event. The local implementation is complete against [the scope](docs/scope.md), with 156 automated developer checks passing. Real employee, device, and network testing comes after the build; those results are separate from implementation completion.
 
 Requires Node 24. No third-party runtime dependencies.
 

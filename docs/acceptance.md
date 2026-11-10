@@ -10,7 +10,9 @@ Hosting details are needed when publishing the game. Review of the drafted benef
 
 ## Current verified build
 
-Runtime **`1154c82`** includes live Neighbors controls and explicit map chapter status. The combined Node 24.20.0 suite passed **152 tests**, with no failures or skips: [test output](../test-results/full-suite-1154c82-runtime.log). Its exact-source image passed production startup and byte-for-byte checks of all seven packaged and served public assets: [packaging evidence](../test-results/container-1154c82-static.json). The backend and Dockerfile hashes remain identical to `9939a98`, whose image passed a three-second graceful-stop limit, same-volume recreation, and backup restoration into a fresh volume: [durability evidence](../test-results/container-9939a98.json), [deployment details](deployment-check.md). These are distinct checks with their original source revisions preserved.
+Runtime **`8f0b3ee`** fixes pre-lobby practice movement and restores map keyboard focus on entry/reload while preserving active inputs and dialogs. The Node 24.20.0 suite passed **156 tests**, with no failures or skips: [test output](../test-results/full-suite-8f0b3ee-runtime.log). Native Chrome 157 reproduced the original failure and verified arrows/WASD, movement tutorial completion, zero competitive points, and keyboard focus after refresh: [before/after evidence](../test-results/movement-draft-native.json).
+
+Earlier package `1154c82` passed production startup and all seven asset byte checks; its backend matched `9939a98`, which passed container restart and fresh-volume backup restoration. Those historical container checks do not include this draft-movement change: [packaging evidence](../test-results/container-1154c82-static.json), [durability evidence](../test-results/container-9939a98.json).
 
 The full 100-player performance and award evidence remains tied to **`d042570`**, before the later sign-in, finale display, paused display, and shutdown fixes. The controls ledger likewise retains each reviewed source/browser boundary. A passing current test suite does not silently recertify those earlier rendered or load measurements.
 
