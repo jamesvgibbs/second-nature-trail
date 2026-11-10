@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-10",
+  "runtime": "bee72d5",
+  "nativeReview": "c9d07f0 completion behavior, with final bee72d5 removing only redundant success toast",
+  "browser": "Safari27.2 on macOS",
+  "environment": "Isolated chapter3 preview4177, initial clock offset via preview helper, no user gameplay mutations",
+  "verified": [
+    "Same impersonation question as user screenshot: correct submission shows completed10points and no choices/retry",
+    "Next encounter receives focus; Enter opens question2",
+    "Second correct submission offers Back to encounters",
+    "List records both questions10points each",
+    "Reopening first correct answer remains completed with no retry controls"
+  ],
+  "screenshots": [
+    "learning-completed-after.png",
+    "learning-completed-review.png"
+  ],
+  "scoring": "Unchanged; live4175 serves fixed client, no restart needed."
+}
