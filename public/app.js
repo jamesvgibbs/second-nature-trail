@@ -1232,8 +1232,9 @@ function learning() {
   (state.chapter?.questions || []).forEach((q, i) => {
     const answer = state.me.progress?.[state.event.chapter]?.quiz?.[i];
     $("#learning-list").append(
-      btn(`${answer ? "✓ " : ""}Encounter ${i + 1}: ${q.prompt}`, () =>
-        quiz(i),
+      btn(
+        `${answer ? (answer.correct ? `✓ Correct · ${state.rules.quizPoints} points` : "Answered · 0 points") + " · " : ""}Encounter ${i + 1}: ${q.prompt}`,
+        () => quiz(i),
       ),
     );
   });
@@ -1245,7 +1246,7 @@ function quiz(index) {
   panel = "quiz";
   open(
     `Human intelligence · ${index + 1} of 2`,
-    `<h3>${esc(q.prompt)}</h3>${a ? `<div class="notice">First answer: ${a.correct ? "correct" : "incorrect"}. ${esc(a.explanation)}</div><p class="small">Another answer is an unscored retry.</p>` : '<p class="small muted">Your first confirmed answer counts. Take a moment.</p>'}<div class="choice-list" id="task-choices"></div><div id="quiz-confirm"></div>`,
+    `<h3>${esc(q.prompt)}</h3>${a ? `<div class="notice">First answer: ${a.correct ? "correct" : "incorrect"}. ${a.correct ? state.rules.quizPoints : 0} points earned. ${esc(a.explanation)}</div><p class="small">Retries do not change these points. Learning points add to your chapter score; objective progress tracks the main task.</p>` : '<p class="small muted">Your first confirmed answer counts. Take a moment.</p>'}<div class="choice-list" id="task-choices"></div><div id="quiz-confirm"></div>`,
   );
   selection = null;
   q.options.forEach((o, i) =>
@@ -1265,11 +1266,11 @@ function quiz(index) {
           expectedChapter: chapterIndex,
         });
         if (r !== null) {
+          quiz(index);
           if (r.explanation)
             toast(
-              `${r.correct ? "Correct." : "Not quite."} ${r.first ? "First answer recorded." : "Unscored retry."} ${r.explanation}`,
+              `${r.correct ? "Correct." : "Not quite."} ${r.first ? `${r.correct ? state.rules.quizPoints : 0} points earned. First answer recorded.` : "Unscored retry. Your first answer and its points are unchanged."} ${r.explanation}`,
             );
-          quiz(index);
         }
       },
       "primary",
