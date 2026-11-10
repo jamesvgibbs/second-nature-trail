@@ -1,6 +1,6 @@
 # Second Nature Trail
 
-Original browser neighborhood adventure for one private Second Nature employee event. This is an implementation in progress against [the scope](docs/scope.md), not a release-approved event build.
+Original browser neighborhood adventure for one private Second Nature employee event. The local implementation is complete against [the scope](docs/scope.md), with 152 automated developer checks passing. Real employee, device, and network testing comes after the build; those results are separate from implementation completion.
 
 Requires Node 24. No third-party runtime dependencies.
 
@@ -40,10 +40,10 @@ The output contains private bearer invitations. Distribute them through the orga
 
 Run one Node process with a persistent local disk for `data/event.sqlite`, behind an HTTPS reverse proxy that permits streaming responses. Set `BIND=0.0.0.0`, `COOKIE_SECURE=1`, `HOST_TOKENS`, and `PRESENTATION_TOKEN`. A Dockerfile is included; mount persistent storage at `/app/data`. Do not run multiple replicas against independent databases. SQLite transactions commit accepted mutations before returning success.
 
-Hosting is not yet selected or deployed. The Sites Cloudflare Worker runtime does not directly run this Node server. The production host must support this process and persistent storage, or the transport/storage layer must be ported and reverified.
+Jim deferred hosting on **2026-11-10**; work continues with the local game. No production host has been selected or deployed. The Sites Cloudflare Worker runtime does not directly run this Node server. The production host must support this process and persistent storage, or the transport/storage layer must be ported and reverified.
 
-## Release gates
+## Later real testing
 
-See [acceptance evidence](docs/acceptance.md), [design decisions](docs/design.md), and [operator runbook](docs/runbook.md). Content is draft until approved by SN owners. Automated checks cannot establish employee usability, lowest-spec hardware performance, real-device compatibility, or the 95-minute dress rehearsal.
+See [acceptance evidence](docs/acceptance.md), [design decisions](docs/design.md), and [operator runbook](docs/runbook.md). Benefit copy remains provisional for later SN content review. Employee usability, lowest-spec hardware performance, real-device compatibility, representative-network behavior, and the 95-minute dress rehearsal still need real-world testing. These later checks do not leave the local implementation unfinished.
 
 Implementation reference: [Node 24 SQLite API](https://nodejs.org/download/release/v24.20.0/docs/api/sqlite.html).
