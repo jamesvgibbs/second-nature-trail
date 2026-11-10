@@ -96,3 +96,36 @@ export function routeSummary(task, path) {
     missing: (task.requiredNodes || []).filter((id) => !path.includes(id)),
   };
 }
+
+// Classify recorded chapter progress, not time spent visiting or socializing.
+// Fresh personal reserves are allocations, not evidence of participation.
+export function chapterMapStatus(event = {}, record = {}, index) {
+  const chapter = Number.isInteger(event.chapter) ? event.chapter : 0;
+  const phase = event.phase === "paused" ? event.pausedPhase : event.phase;
+  const past = ["finale", "awards", "closed"].includes(phase) || index < chapter ||
+    (index === chapter && phase === "brag");
+  const upcoming = index > chapter ||
+    (index === chapter && ["draft", "lobby", "countdown"].includes(phase));
+  const position = past ? "past" : upcoming ? "upcoming" : "current";
+  const score = Number.isFinite(record.score) ? record.score : 0;
+  const recorded =
+    ["step", "score", "mistakes", "primary", "falseAccusations", "siteHits", "targetHits", "budget", "rewardBalance", "rewardEarned"]
+      .some((key) => Number.isFinite(record[key]) && record[key] !== 0) ||
+    ["timeMs", "lastTaskAt", "targetRound", "pendingAssist"]
+      .some((key) => record[key] !== null && record[key] !== undefined) ||
+    ["challenge", "secret", "inspected"].some((key) => !!record[key]) ||
+    (record.quiz || []).some((answer) => answer !== null && answer !== undefined) ||
+    ["assists", "rewardUses", "cycles"].some((key) => record[key]?.length > 0) ||
+    (record.delivery?.stage && record.delivery.stage !== "load") ||
+    record.delivery?.loaded != null || record.delivery?.route != null ||
+    !!record.delivery?.visited;
+  const status = record.complete ? "Complete" : recorded ? "Partial" : "Unplayed";
+  const unranked = event.ranked?.[index] === false;
+  const progress = `${status} · ${score} points`;
+  const label = unranked
+    ? `Skipped · Unranked · ${progress} (not counted)`
+    : position === "upcoming"
+      ? index === chapter && phase === "countdown" ? "Starting" : "Upcoming"
+      : position === "current" ? `Active · ${progress}` : progress;
+  return { position, status, score, unranked, label };
+}

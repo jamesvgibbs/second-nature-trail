@@ -20,6 +20,7 @@ import {
   writeSafeOverride,
   restorationProgress,
   routeSummary,
+  chapterMapStatus,
 } from "/helpers.mjs";
 const $ = (s) => document.querySelector(s),
   app = $("#app"),
@@ -1404,25 +1405,32 @@ function map() {
   panel = "map";
   open(
     "One shared neighborhood",
-    `<p class="small">Eight districts around Bragging Square. The active chapter’s locations are open to everyone at once.</p><div class="chapter-map" id="map-districts"></div>`,
+    `<p class="small">Eight districts around Bragging Square. The active chapter’s locations are open to everyone at once.</p><p class="small muted">Unplayed means no objective, learning, clue, or assist progress is recorded; moving and socializing do not count as chapter progress. Complete means the main objective is finished.</p><div class="chapter-map" id="map-districts"></div>`,
   );
   districts.forEach((d, i) => {
+    const status = chapterMapStatus(state.event, state.me?.progress?.[i], i);
     const b = btn(
-      `${i + 1}. ${d[0]}${i === state.event.chapter ? " · ACTIVE" : ""}`,
+      `${i + 1}. ${d[0]}${status.position === "current" ? " · ACTIVE" : ""}`,
       () => {
-        if (i !== state.event.chapter) {
-          toast("That district opens in its chapter.");
+        const liveStatus = chapterMapStatus(state.event, state.me?.progress?.[i], i);
+        if (liveStatus.position !== "current") {
+          toast(liveStatus.position === "past"
+            ? `That chapter has ended. ${liveStatus.label}.`
+            : "That district opens in its chapter.");
           return;
         }
         close();
         travel(0, "activity");
       },
-      i === state.event.chapter ? "primary" : "",
+      status.position === "current" ? "primary" : "",
     );
     const places = document.createElement("span");
     places.className = "map-places";
     places.textContent = `${d[1]} · ${d[2]}`;
-    b.append(places);
+    const progress = document.createElement("span");
+    progress.className = "map-places";
+    progress.textContent = status.label;
+    b.append(places, progress);
     $("#map-districts").append(b);
   });
 }
