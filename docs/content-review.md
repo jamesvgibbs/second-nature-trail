@@ -286,4 +286,4 @@ Reviewer notes:
 
 ## Approval record
 
-Record the actual reviewer and date here only after explicit review. A generated sheet or passing code test is not content approval. Set the release approval configuration only after the approved content is frozen.
+Review this draft with the finished game before the employee event. Record the actual reviewer and date here after review; a generated sheet or passing code test does not establish content approval.
