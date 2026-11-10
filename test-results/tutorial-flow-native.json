@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-10",
+  "runtimeCommit": "8f0b3ee",
+  "browser": "Google Chrome157.0.8103.51 on macOS",
+  "environment": "Isolated local4177 demo; user4175 state not changed",
+  "phase": "draft",
+  "steps": [
+    "move",
+    "interact",
+    "collect",
+    "answer",
+    "help"
+  ],
+  "ready": true,
+  "practice": {
+    "moved": true,
+    "interacted": true,
+    "collected": true,
+    "answered": true
+  },
+  "competitiveScores": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "route": "Movement verified in prior native check. This check restored that test identity, then clicked Meet your guide→Say hello; Collect a practice supply→Collect practice parcel; Answer a practice question→Repair parts; Ask a neighbor for help→Request help; I’m ready.",
+  "screenshot": "tutorial-ready-chrome.png",
+  "result": "Complete flow succeeds. User-reported collection failure not reproduced; requested exact symptom."
+}
