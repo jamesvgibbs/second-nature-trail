@@ -679,7 +679,10 @@ function accept(s, kind = "full", allowEpoch = false) {
   updateConnection();
   const tradesChanged =
     JSON.stringify(previous?.trades) !== JSON.stringify(state.trades);
-  if (tradesChanged && panel === "neighbors" && modal.open)
+  if (
+    panel === "neighbors" && modal.open &&
+    (tradesChanged || neighborListSignature(previous) !== neighborListSignature(state))
+  )
     preservePanelFocus(() => neighbors(true));
   if (
     panel === "inventory" &&
@@ -1285,6 +1288,14 @@ function inventory(refresh = false) {
     btn("View the rules", rules),
   );
 }
+function neighborListSignature(view) {
+  return JSON.stringify({
+    chapter: view?.event?.chapter,
+    peers: (view?.players || [])
+      .filter((p) => p.id !== view.me?.id)
+      .map((p) => [p.id, p.name, p.help ?? null]),
+  });
+}
 function neighbors(refresh = false) {
   const chapterIndex = state.event.chapter;
   panel = "neighbors";
@@ -1322,19 +1333,20 @@ function neighbors(refresh = false) {
       d.innerHTML = `<strong>${esc(p.name)}${p.help !== null && p.help !== undefined ? '<br><span class="badge">Asked for help</span>' : ""}</strong>`;
       const r = document.createElement("div");
       r.className = "row";
-      r.append(
-        btn("Help", async () => {
-          const v = await act("assist", {
-            target: p.id,
-            expectedChapter: chapterIndex,
-          });
-          if (v !== null)
-            toast(
-              "Assist registered. It counts when the unfinished task is completed.",
-            );
-        }),
-        btn("Trade", () => trade(p)),
-      );
+      const assistButton = btn("Help", async () => {
+        const v = await act("assist", {
+          target: p.id,
+          expectedChapter: chapterIndex,
+        });
+        if (v !== null)
+          toast(
+            "Assist registered. It counts when the unfinished task is completed.",
+          );
+      });
+      assistButton.dataset.focusKey = `neighbor:${p.id}:assist`;
+      const tradeButton = btn("Trade", () => trade(p));
+      tradeButton.dataset.focusKey = `neighbor:${p.id}:trade`;
+      r.append(assistButton, tradeButton);
       d.append(r);
       $("#neighbor-list").append(d);
     });
@@ -1343,15 +1355,15 @@ function neighbors(refresh = false) {
     d.className = "card";
     d.style.padding = "14px";
     d.innerHTML = `<p class="small">${esc(t.from)} gives ${t.give.qty} ${esc(t.give.item)} for ${t.receive.qty} ${esc(t.receive.item)} from ${esc(t.to)}.</p><p class="small">Confirmed: ${t.confirmed?.length || 0} of 2</p>`;
-    d.append(
-      btn(
-        "Confirm current offer",
-        () =>
-          act("tradeConfirm", { tradeId: t.id, expectedChapter: chapterIndex }),
-        "primary",
-      ),
-      btn("Cancel", () => act("tradeCancel", { tradeId: t.id }), "quiet"),
+    const confirmButton = btn(
+      "Confirm current offer",
+      () => act("tradeConfirm", { tradeId: t.id, expectedChapter: chapterIndex }),
+      "primary",
     );
+    confirmButton.dataset.focusKey = `trade:${t.id}:confirm`;
+    const cancelButton = btn("Cancel", () => act("tradeCancel", { tradeId: t.id }), "quiet");
+    cancelButton.dataset.focusKey = `trade:${t.id}:cancel`;
+    d.append(confirmButton, cancelButton);
     $("#trade-list").append(d);
   });
 }
@@ -3039,12 +3051,15 @@ function preservePanelFocus(update) {
   const active = document.activeElement,
     buttons = [...body.querySelectorAll("button")],
     text = active?.textContent,
+    focusKey = active?.dataset?.focusKey,
     index = buttons.indexOf(active);
   update();
+  if (index < 0) return;
   const next = [...body.querySelectorAll("button")];
-  (next.find((b) => b.textContent === text) || next[index])?.focus({
-    preventScroll: true,
-  });
+  const replacement = focusKey
+    ? next.find((b) => b.dataset.focusKey === focusKey)
+    : next.find((b) => b.textContent === text) || next[index];
+  (replacement || $("#close-modal"))?.focus({ preventScroll: true });
 }
 function reserveHTML() {
   const reserve = state.me?.progress?.[state.event.chapter]?.reserve;
