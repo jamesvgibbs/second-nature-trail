@@ -386,6 +386,8 @@ small,
   min-height: 0;
 }
 .world-wrap {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
   position: relative;
   overflow: hidden;
   background: #749b7c;
@@ -398,26 +400,23 @@ small,
   image-rendering: pixelated;
   outline-offset: -5px;
 }
-.map-label {
-  position: absolute;
-  top: 18px;
-  left: 18px;
+.world-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  padding: 10px 14px;
   background: var(--ink);
   color: var(--paper);
-  padding: 10px 14px;
+  border-top: 2px solid #42654b;
+}
+.map-label {
   font-size: 0.75rem;
-  pointer-events: none;
-  box-shadow: 4px 4px 0 #42654b;
+  font-weight: 700;
 }
 .world-hint {
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
-  padding: 10px 14px;
-  background: #f7f2dff2;
   font-size: 0.7rem;
-  border: 1px solid #526648;
-  pointer-events: none;
+  color: #d9e5cf;
 }
 .mission {
   overflow-y: auto;

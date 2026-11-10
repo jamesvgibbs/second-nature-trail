@@ -1,4 +1,5 @@
 import { createProjection, reduceProjection } from "/projection.mjs";
+import { districtScenery, SQUARE_TREES } from "/scenery.mjs";
 import { localFrameMeasurement } from "/performance.mjs";
 const measureFrame = localFrameMeasurement();
 import {
@@ -704,7 +705,7 @@ function accept(s, kind = "full", allowEpoch = false) {
   return true;
 }
 function game() {
-  app.innerHTML = `<main class="game ${isPresentation ? "presentation" : ""}">${topbar(`<div class="row"><span id="connection" class="pill"></span><div style="text-align:right"><div class="phase-label" id="phase-label"></div><div class="timer" id="timer">--:--</div></div></div>`)}<div class="game-main"><section class="world-wrap"><canvas class="world" id="world" width="1200" height="800" tabindex="0" role="application" aria-label="Shared neighborhood. Move with arrow keys or WASD, or click a destination. Press E to interact. Tab reaches all menus."></canvas><div class="map-label" id="map-label">BRAGGING SQUARE</div><div class="world-hint" id="world-hint">Click to walk · WASD / arrows to move · E to interact</div></section><aside class="mission" id="mission"></aside></div><footer class="game-footer"><div class="row" id="toolbar"></div><span class="small">One neighborhood. Everyone belongs.</span><span class="small" id="player-name"></span></footer></main>`;
+  app.innerHTML = `<main class="game ${isPresentation ? "presentation" : ""}">${topbar(`<div class="row"><span id="connection" class="pill"></span><div style="text-align:right"><div class="phase-label" id="phase-label"></div><div class="timer" id="timer">--:--</div></div></div>`)}<div class="game-main"><section class="world-wrap"><canvas class="world" id="world" width="1200" height="800" tabindex="0" role="application" aria-label="Shared neighborhood. Move with arrow keys or WASD, or click a destination. Press E to interact. Tab reaches all menus."></canvas><div class="world-legend"><div class="map-label" id="map-label">BRAGGING SQUARE</div><div class="world-hint" id="world-hint">Click to walk · WASD / arrows to move · E to interact</div></div></section><aside class="mission" id="mission"></aside></div><footer class="game-footer"><div class="row" id="toolbar"></div><span class="small">One neighborhood. Everyone belongs.</span><span class="small" id="player-name"></span></footer></main>`;
   activeCanvas = $("#world");
   activeCtx = activeCanvas.getContext("2d");
   if (!isPresentation) {
@@ -1826,11 +1827,31 @@ function drawAvatar(ctx, x, y, character = 0, color = 0, scale = 1) {
   ctx.restore();
 }
 function tree(ctx, x, y, type = 0) {
+  rect(ctx, x - 18, y + 23, 36, 6, "#6b895f");
   rect(ctx, x - 4, y + 9, 8, 18, "#84684c");
   rect(ctx, x - 14, y - 7, 28, 23, type ? "#537c58" : "#416e52");
   rect(ctx, x - 10, y - 15, 20, 12, "#5b8b59");
   rect(ctx, x - 17, y, 7, 13, "#5b8b59");
   rect(ctx, x - 8, y - 12, 8, 6, "#7b9c65");
+}
+function drawBeacon(ctx, x, y, restored) {
+  const activeLights = 4 - Math.floor(restored * 4);
+  // Four orange control lamps turn mint as residents reclaim this district.
+  rect(ctx, x - 22, y + 22, 44, 8, "#6b895f");
+  rect(ctx, x - 18, y - 3, 36, 31, "#4c6967");
+  rect(ctx, x - 15, y, 30, 25, "#203f49");
+  rect(ctx, x - 2, y - 10, 4, 10, "#4c6967");
+  rect(ctx, x - 5, y - 13, 10, 5, activeLights ? "#ed996c" : "#b9e5a5");
+  for (let n = 0; n < 4; n++) {
+    rect(ctx, x - 11 + (n % 2) * 13, y + 4 + Math.floor(n / 2) * 10, 9, 7,
+      n < activeLights ? "#ed996c" : "#a9d9bd");
+  }
+  rect(ctx, x - 61, y + 32, 122, 24, "#203f49");
+  rect(ctx, x - 59, y + 34, 118, 20, "#f7f2df");
+  ctx.font = "bold 18px monospace";
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#203f49";
+  ctx.fillText(activeLights ? "AI BEACON" : "RESTORED", x, y + 52);
 }
 function building(ctx, x, y, w, h, color, index, lit) {
   rect(ctx, x + 7, y + 8, w, h, "#52764f");
@@ -1930,32 +1951,9 @@ function drawMap(ctx, live) {
     );
     rect(ctx, a[0] - 6, a[1] - 20, 12, 35, "#d9ccaa");
     rect(ctx, b[0] - 6, b[1] - 20, 12, 35, "#d9ccaa");
-    // Original AI relay: its four control lights switch off as this district repairs.
-    const relayX = x + 137,
-      relayY = y + 100;
-    rect(ctx, relayX, relayY, 23, 30, "#294450");
-    rect(ctx, relayX + 9, relayY - 9, 5, 10, "#53646a");
-    const activeLights = 4 - Math.floor(districtRestored * 4);
-    for (let n = 0; n < 4; n++)
-      rect(
-        ctx,
-        relayX + 4 + (n % 2) * 9,
-        relayY + 5 + Math.floor(n / 2) * 10,
-        6,
-        6,
-        n < activeLights ? "#e88960" : "#79b8af",
-      );
-    ctx.font = "9px monospace";
-    ctx.textAlign = "center";
-    ctx.fillStyle = "#233e3b";
-    ctx.fillText(
-      activeLights ? "AI RELAY" : "NEIGHBOR LINK",
-      relayX + 11,
-      relayY + 42,
-    );
-    tree(ctx, x + 137, y + 145, i % 2);
-    tree(ctx, x + 276, y + 22);
-    tree(ctx, x - 5, y + 148);
+    const scenery = districtScenery(a, b);
+    scenery.trees.forEach(([tx, ty], n) => tree(ctx, tx, ty, (i + n) % 2));
+    drawBeacon(ctx, scenery.beacon.x, scenery.beacon.y, districtRestored);
     ctx.font = "bold 11px monospace";
     ctx.textAlign = "center";
     ctx.fillStyle = "#233e3b";
@@ -1979,10 +1977,12 @@ function drawMap(ctx, live) {
   rect(ctx, 592, 360, 12, 37, "#d7e4c9");
   rect(ctx, 584, 353, 28, 12, "#e9e6c9");
   rect(ctx, 587, 396, 24, 5, "#4a7c78");
-  tree(ctx, 454, 346);
-  tree(ctx, 738, 346);
-  tree(ctx, 454, 458);
-  tree(ctx, 738, 458);
+  SQUARE_TREES.forEach(([x, y], i) => {
+    // Set the plaza trees in contained beds, clear of benches, fountain and signs.
+    rect(ctx, x - 21, y + 17, 42, 16, "#8b8060");
+    rect(ctx, x - 18, y + 19, 36, 11, "#aeb68a");
+    tree(ctx, x, y, i % 2);
+  });
   rect(ctx, 485, 438, 38, 8, "#967148");
   rect(ctx, 490, 446, 5, 8, "#574f3e");
   rect(ctx, 513, 446, 5, 8, "#574f3e");
@@ -3019,7 +3019,7 @@ function drawRepairs(ctx) {
       slot = Math.floor(i / 8),
       door = DOORS[district * 2],
       x = door[0] - 47 + (slot % 7) * 14,
-      y = door[1] + 27 + Math.floor(slot / 7) * 18;
+      y = door[1] + 23 + Math.floor(slot / 7) * 14;
     rect(ctx, x, y, 10, 10, id === state.me?.id ? "#fff2ab" : "#b9e5a5");
     rect(ctx, x + 3, y + 2, 2, 6, "#43755b");
     rect(ctx, x + 1, y + 4, 6, 2, "#43755b");
@@ -3030,7 +3030,7 @@ function drawRepairs(ctx) {
       ctx.fillStyle = "#142b35";
       ctx.font = "bold 10px monospace";
       ctx.textAlign = "center";
-      ctx.fillText("YOUR REPAIR", x + 5, y + 24);
+      ctx.fillText("YOUR REPAIR", door[0] - 31, door[1] + 80);
     }
   });
 }
