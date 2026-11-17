@@ -116,3 +116,70 @@ export function deliveryReceipt(before, after, action, result) {
   }
   return { id: action.requestId, title, details, deltas, completed, deltaStatus: consistent ? "consistent" : "concurrent", stage };
 }
+
+// Shared receipts for the existing non-delivery activities. These report current
+// authoritative totals and submitted outcomes; they do not inspect answer keys.
+export function actionReceipt(before, after, action, result) {
+  if (action?.type === "task" && before?.event?.chapter === 0)
+    return deliveryReceipt(before, after, action, result);
+  if (!["task", "challenge", "rewardRedeem"].includes(action?.type) || !action.requestId || result?.ok !== true) return null;
+  const chapter = before?.event?.chapter;
+  if (!Number.isInteger(chapter) || chapter < 0 || chapter > 7 || action.expectedChapter !== chapter || after?.event?.chapter !== chapter || before.event.phase !== "chapter" || after.event.phase !== "chapter") return null;
+  if (!before.me?.id || before.me.id !== after.me?.id || !before.projectionEpoch || before.projectionEpoch !== after.projectionEpoch || !Number.isSafeInteger(before.projectionVersion) || !Number.isSafeInteger(after.projectionVersion) || after.projectionVersion <= before.projectionVersion) return null;
+  const previous = before.me.progress?.[chapter], current = after.me.progress?.[chapter], task = before.chapter?.task;
+  const total = before.chapter?.taskCount;
+  if (!previous || !current || !Number.isSafeInteger(total) || total < 1 || !Number.isSafeInteger(current.step) || !numeric(current.score)) return null;
+  if (action.type === "task" && (previous.complete || action.expectedStep !== previous.step || action.expectedStage !== (task?.stage || null))) return null;
+  let title, details, stage, completed = current.complete === true;
+  const deltas = [{ label: "Score now", value: current.score }];
+  if (action.type === "challenge") {
+    if (!previous.complete || previous.challenge || typeof result.correct !== "boolean" || current.step !== previous.step || current.challenge !== result.correct || (!result.correct && current.mistakes !== previous.mistakes + 1)) return null;
+    title = result.correct ? "Challenge complete" : "Try another approach";
+    details = [result.correct ? "You solved the optional challenge." : "That choice did not solve the challenge. Review the problem and try again."];
+    stage = "challenge"; completed = result.correct;
+  } else if (action.type === "rewardRedeem" || task?.kind === "rewards") {
+    const project = before.chapter?.rewardShop?.options?.[action.choice];
+    if (chapter !== 6 || result.correct !== true || !project || previous.rewardUses?.includes(project.id) || !current.rewardUses?.includes(project.id) || current.rewardUses.length !== previous.rewardUses.length + 1 || current.rewardBalance !== previous.rewardBalance - project.cost || current.step !== previous.step + (previous.complete ? 0 : 1) || !current.complete) return null;
+    title = "Neighborhood project funded";
+    details = [project.label, ...(typeof result.message === "string" ? [result.message] : [])];
+    deltas.push({ label: "Reward tokens remaining", value: current.rewardBalance });
+    stage = "redeem";
+  } else if (task?.kind === "targeting") {
+    // Ordinary hits and misses stay inline; no additional dialog per round.
+    if (action.expectedRound !== task.round || result.correct !== true || current.step !== previous.step + 1 || current.targetHits !== previous.targetHits + 1 || current.siteHits !== 0) return null;
+    title = "Site cleared";
+    details = [`${task.target?.name || "This site"} is clear.`, current.complete ? "Every outbreak site is clear." : "Continue to the next marked site."];
+    deltas.push({ label: "Targets resolved", value: current.targetHits });
+    stage = "target-site";
+  } else if (task?.kind === "budget") {
+    const cycle = current.cycles?.at(-1);
+    if (typeof result.correct !== "boolean" || current.step !== previous.step + 1 || current.cycles?.length !== previous.cycles?.length + 1 || !cycle || cycle.onTime !== result.correct || cycle.retained !== current.budget) return null;
+    title = cycle.onTime ? "Payment made on time" : "Payment cycle recorded";
+    details = [`Paid ${cycle.payment}; spent ${cycle.expense}; kept ${cycle.retained}.`, cycle.onTime ? "This fictional payment met the amount and deadline." : "This fictional payment did not meet both the required amount and deadline."];
+    deltas.push({ label: "Fictional budget retained", value: current.budget });
+    stage = "budget";
+  } else if (task?.kind === "routing") {
+    if (typeof result.correct !== "boolean" || current.step !== previous.step + (result.correct ? 1 : 0) || (!result.correct && current.mistakes !== previous.mistakes + 1)) return null;
+    title = result.correct ? "Home connected" : "Connection needs another plan";
+    details = [result.correct ? "Your route connects this home within its relay and cable constraints." : "This route did not meet every connection, relay and budget requirement. Adjust the plan and try again."];
+    stage = "routing";
+  } else if (task?.stage === "inspect") {
+    if (result.inspected !== true || previous.inspected || !current.inspected || current.step !== previous.step) return null;
+    title = "Site inspected";
+    details = ["The site evidence is ready. Review it before choosing your next action."];
+    stage = "inspect";
+  } else if (task?.stage === "decide") {
+    if (!previous.inspected || typeof result.correct !== "boolean" || current.step !== previous.step + (result.correct ? 1 : 0) || (result.correct ? current.inspected : current.mistakes !== previous.mistakes + 1)) return null;
+    title = result.correct ? "Work completed" : "This site still needs help";
+    details = [result.correct ? "Your action completed this site’s task." : "That action did not resolve the task. Review the evidence and try again."];
+    stage = "decide";
+    if (chapter === 6) deltas.push({ label: "Reward tokens available", value: current.rewardBalance });
+  } else return null;
+  if (action.type !== "challenge") {
+    if (current.complete !== (current.step === total)) return null;
+    if (result.complete !== undefined && result.complete !== current.complete) return null;
+    deltas.unshift({ label: "Objective progress", value: `${current.step}/${total}` });
+    if (completed && !previous.complete) details.push("Your completed objective contributes to shared neighborhood restoration.");
+  }
+  return { id: action.requestId, title, details, deltas, completed, deltaStatus: "totals", stage };
+}
