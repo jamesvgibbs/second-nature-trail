@@ -1,0 +1,111 @@
+{
+  "label": "Bounded seeded HTTP property simulation; injected clock, real movement and SQLite; not exhaustive state-space or capacity proof",
+  "sourceCommit": "e06bf60ecba5c3538703e84dd1ea99d83edba8cd",
+  "sourceHashes": {
+    "server.mjs": "3e0006a03cf775cf6fd6e0dd9847185a146c45d0e1fa1ba9c8cf52183d36df4f",
+    "engine.mjs": "adbb77be85fb3e09e331f55356a832218142ff9209f46fbedc9fed193d74969d",
+    "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+    "test/simulation-properties.test.mjs": "e16c1b29224dcd37fe46a5af2eb8ddd9b2c961ca6ce0d1c0e94108d097949e05"
+  },
+  "startedAt": "2026-11-17T20:54:54.322Z",
+  "seeds": [
+    {
+      "seed": 1,
+      "accepted": 50,
+      "rejected": 54,
+      "duplicates": 4,
+      "concurrentPairs": 14,
+      "concurrentTradeRaces": 1,
+      "steps": 90,
+      "reopened": true,
+      "independent": true,
+      "ending": "fallback"
+    },
+    {
+      "seed": 17,
+      "accepted": 55,
+      "rejected": 58,
+      "duplicates": 8,
+      "concurrentPairs": 5,
+      "concurrentTradeRaces": 1,
+      "steps": 90,
+      "reopened": true,
+      "independent": true,
+      "ending": "fallback"
+    },
+    {
+      "seed": 42,
+      "accepted": 69,
+      "rejected": 51,
+      "duplicates": 8,
+      "concurrentPairs": 7,
+      "concurrentTradeRaces": 1,
+      "steps": 90,
+      "reopened": true,
+      "independent": true,
+      "ending": "threshold-reached"
+    },
+    {
+      "seed": 138,
+      "accepted": 65,
+      "rejected": 57,
+      "duplicates": 5,
+      "concurrentPairs": 5,
+      "concurrentTradeRaces": 1,
+      "steps": 90,
+      "reopened": true,
+      "independent": true,
+      "ending": "threshold-reached"
+    },
+    {
+      "seed": 503,
+      "accepted": 52,
+      "rejected": 59,
+      "duplicates": 6,
+      "concurrentPairs": 7,
+      "concurrentTradeRaces": 1,
+      "steps": 90,
+      "reopened": true,
+      "independent": true,
+      "ending": "fallback"
+    },
+    {
+      "seed": 7920,
+      "accepted": 60,
+      "rejected": 56,
+      "duplicates": 4,
+      "concurrentPairs": 11,
+      "concurrentTradeRaces": 1,
+      "steps": 90,
+      "reopened": true,
+      "independent": true,
+      "ending": "threshold-reached"
+    },
+    {
+      "seed": 65536,
+      "accepted": 63,
+      "rejected": 51,
+      "duplicates": 3,
+      "concurrentPairs": 13,
+      "concurrentTradeRaces": 1,
+      "steps": 90,
+      "reopened": true,
+      "independent": true,
+      "ending": "threshold-reached"
+    },
+    {
+      "seed": 99991,
+      "accepted": 45,
+      "rejected": 60,
+      "duplicates": 6,
+      "concurrentPairs": 13,
+      "concurrentTradeRaces": 1,
+      "steps": 90,
+      "reopened": true,
+      "independent": true,
+      "ending": "fallback"
+    }
+  ],
+  "passed": true,
+  "finishedAt": "2026-11-17T20:55:34.517Z"
+}
