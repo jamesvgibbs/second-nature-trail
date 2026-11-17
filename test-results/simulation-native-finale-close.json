@@ -1,0 +1,150 @@
+{
+  "capturedAt": "2026-11-17T21:37:00.118Z",
+  "phase": "closed",
+  "contributions": 60,
+  "frozenHash": "c1962104dbf63b1e0ceeb5bc1a758bd0a2b13df5eeffef9acc7bc47e076366e6",
+  "baseline": "simulation-native-finale-baseline.json",
+  "frozenEqual": true,
+  "operationalAudit": [
+    {
+      "at": 1794948226101,
+      "operatorId": "operator-1",
+      "type": "lobby",
+      "reason": "Isolated Move Day developer review"
+    },
+    {
+      "at": 1794948494113,
+      "operatorId": "operator-1",
+      "type": "start",
+      "reason": "Isolated Move Day developer review"
+    },
+    {
+      "at": 1794948513446,
+      "operatorId": "operator-1",
+      "type": "pause",
+      "reason": "Isolated Move Day developer review"
+    },
+    {
+      "at": 1794948521743,
+      "operatorId": "operator-1",
+      "type": "resume",
+      "reason": "Isolated Move Day developer review"
+    },
+    {
+      "at": 1794949278726,
+      "operatorId": "operator-1",
+      "type": "pause",
+      "reason": "Isolated native simulation: inspect paused presentation"
+    },
+    {
+      "at": 1794949315622,
+      "operatorId": "operator-1",
+      "type": "advance",
+      "reason": "Isolated visual rehearsal: proceed to chapter three"
+    },
+    {
+      "at": 1794949496206,
+      "operatorId": "operator-1",
+      "type": "advance",
+      "reason": "Isolated all-chapter native developer simulation"
+    },
+    {
+      "at": 1794949496229,
+      "operatorId": "operator-1",
+      "type": "advance",
+      "reason": "Isolated all-chapter native developer simulation"
+    },
+    {
+      "at": 1794949548416,
+      "operatorId": "operator-1",
+      "type": "pause",
+      "reason": "Isolated all-chapter native developer simulation"
+    },
+    {
+      "at": 1794949576426,
+      "operatorId": "operator-1",
+      "type": "resume",
+      "reason": "Isolated all-chapter native developer simulation"
+    },
+    {
+      "at": 1794949670322,
+      "operatorId": "operator-1",
+      "type": "pause",
+      "reason": "Isolated all-chapter native developer simulation"
+    },
+    {
+      "at": 1794949812419,
+      "operatorId": "operator-1",
+      "type": "resume",
+      "reason": "Isolated all-chapter native developer simulation"
+    },
+    {
+      "at": 1794950044105,
+      "operatorId": "operator-1",
+      "type": "advance",
+      "reason": "Isolated all-chapter native developer simulation"
+    },
+    {
+      "at": 1794950062733,
+      "operatorId": "operator-1",
+      "type": "rescue",
+      "reason": "Isolated all-chapter native developer simulation"
+    },
+    {
+      "at": 1794950362937,
+      "operatorId": "operator-1",
+      "type": "advance",
+      "reason": "Isolated all-chapter native developer simulation"
+    },
+    {
+      "at": 1794950461423,
+      "operatorId": "operator-1",
+      "type": "broadcast",
+      "reason": "Operator requested from control page",
+      "message": "Developer simulation: your selected answer should stay selected."
+    },
+    {
+      "at": 1794950564061,
+      "operatorId": "operator-1",
+      "type": "broadcast",
+      "reason": "Isolated all-chapter native developer simulation",
+      "message": ""
+    },
+    {
+      "at": 1794950677864,
+      "operatorId": "operator-1",
+      "type": "advance",
+      "reason": "Isolated all-chapter native developer simulation"
+    },
+    {
+      "at": 1794950990566,
+      "operatorId": "operator-1",
+      "type": "advance",
+      "reason": "Isolated all-chapter native developer simulation"
+    },
+    {
+      "at": 1794951153226,
+      "operatorId": "operator-1",
+      "type": "advance",
+      "reason": "Isolated all-chapter native developer simulation"
+    },
+    {
+      "at": 1794951153255,
+      "operatorId": "operator-1",
+      "type": "advance",
+      "reason": "Isolated all-chapter native developer simulation"
+    },
+    {
+      "at": 1794951184361,
+      "operatorId": "operator-1",
+      "type": "advance",
+      "reason": "Isolated all-chapter native developer simulation"
+    },
+    {
+      "at": 1794951420028,
+      "operatorId": "operator-1",
+      "type": "close",
+      "reason": "Complete isolated native review after preserved finale evidence"
+    }
+  ]
+}
