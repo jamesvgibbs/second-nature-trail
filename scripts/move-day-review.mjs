@@ -26,13 +26,17 @@ const root = new URL('../', import.meta.url), startedAt = new Date().toISOString
 const sourceFiles = ['server.mjs','engine.mjs','content.mjs','command-checkpoint.mjs','scripts/move-day-review.mjs', ...readdirSync(new URL('../public/', import.meta.url)).filter(file => /\.(?:mjs|js|css|html)$/.test(file)).map(file => 'public/' + file)];
 const sourceHashes = Object.fromEntries(sourceFiles.map(file => [file, createHash('sha256').update(readFileSync(new URL(file, root))).digest('hex')]));
 const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim();
+const uncommittedSourceFiles = sourceFiles.filter(file => {
+  try { return createHash('sha256').update(execFileSync('git', ['show', `${sourceCommit}:${file}`], { cwd: root, stdio: ['ignore','pipe','ignore'] })).digest('hex') !== sourceHashes[file]; }
+  catch { return true; }
+});
 const hostTokens = [0,1].map(() => randomBytes(32).toString('hex')), presentationToken = randomBytes(32).toString('hex');
 const app = createGameServer({ dbPath: ':memory:', demo: false, hostTokens, presentationToken, secure: false });
 for (let n = 1; n <= count; n++) app.addInvitation(`review-${n}`, n === 1 && !verify ? 'Your review player' : `Simulated neighbor ${n}`, `move-review-${n}`);
 const clients = [], controllers = [], pendingPumps = [], samples = [], errors = [];
 let origin, hostCookie, input, closing = false, closePromise, sequence = Promise.resolve(), frameCount = 0;
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-const report = { scenario: 'bounded chapter1 HTTP/SSE developer check; not full-hour capacity or representative network evidence', mode: verify ? 'verification' : 'native visual review', startedAt, sourceCommit, sourceHashes, roster: count, scoresSeeded: false, clockOffsets: false, storage: ':memory:', environment: { node: process.version, platform: process.platform, arch: process.arch, network: 'loopback; server and simulated clients share one process; user computer not controlled' }, errors };
+const report = { scenario: 'bounded chapter1 HTTP/SSE developer check; not full-hour capacity or representative network evidence', mode: verify ? 'verification' : 'native visual review', startedAt, sourceCommit, sourceHashes, uncommittedSourceFiles, roster: count, scoresSeeded: false, clockOffsets: false, storage: ':memory:', environment: { node: process.version, platform: process.platform, arch: process.arch, network: 'loopback; server and simulated clients share one process; user computer not controlled' }, errors };
 async function http(path, body, cookie, client) {
   const start = performance.now();
   const response = await fetch(origin + path, { method: body === undefined ? 'GET' : 'POST', headers: { ...(body === undefined ? {} : { 'Content-Type': 'application/json' }), ...(cookie ? { Cookie: cookie } : {}), ...(client ? { 'x-trail-client': client } : {}) }, body: body === undefined ? undefined : JSON.stringify(body) });
