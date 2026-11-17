@@ -77,6 +77,10 @@ test('visual review reserves one human identity; real peers can move between cro
     current = await state();
     assert(current.players.filter(p => p.id !== 'review-1').every(p => (Math.abs(p.position.y - 160) < 0.6 && p.position.x >= 159.5 && p.position.x <= 300.5) || (Math.abs(p.position.x - 230) < 0.6 && p.position.y >= 59.5 && p.position.y <= 160.5)));
     assert.equal(current.event.contributions[0], 0); assert.equal(current.event.phase, 'lobby');
+    replacement.child.stdin.write('district\n'); await replacement.waitFor(text => text.includes('ARRANGEMENT district:'));
+    current = await state(); assert(current.players.filter(p => p.id !== 'review-1').every(p => Math.hypot(p.position.x - 160, p.position.y - 160) < 1));
+    replacement.child.stdin.write('optional\n'); await replacement.waitFor(text => text.includes('ARRANGEMENT optional:'));
+    current = await state(); assert(current.players.filter(p => p.id !== 'review-1').every(p => Math.hypot(p.position.x - 300, p.position.y - 160) < 1));
     run.child.stdin.end(); await wait(100); assert.equal(run.child.exitCode, null); assert.equal((await state()).connections.length, 3);
   } finally { controller?.abort(); await replacement?.stop(); await run.stop(); }
 });

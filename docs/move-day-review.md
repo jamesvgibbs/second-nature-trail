@@ -17,6 +17,7 @@ The terminal prints the player URL, host URL and a fresh local operator token. U
 | `square` | All simulated neighbors walk to Bragging Square |
 | `depot` | They walk to a compact grid near the moving depot |
 | `spread` | They walk along the Move Day depot–crossing–home route |
+| `district` / `optional` | Walk to the current chapter’s main / optional activity site |
 | `start` | Ordinary host start, including the normal ten-second countdown |
 | `pause` / `resume` | Normal host pause and resume |
 | `repair 5` | Five unfinished bots play three real deliveries each; use only after unrepaired captures |

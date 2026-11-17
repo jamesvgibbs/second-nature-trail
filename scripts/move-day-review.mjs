@@ -122,7 +122,9 @@ async function walk(client, destination, stopDistance = 0.5) {
 }
 async function arrange(place) {
   await Promise.all(clients.map((client, i) => {
-    const target = place === 'depot' ? { x: 110 + i % 11 * 10, y: 160 + Math.floor(i / 11) * 6 }
+    const target = place === 'district' ? (client.state.chapter.task?.target || client.state.chapter.locations[0])
+      : place === 'optional' ? client.state.chapter.locations[1]
+      : place === 'depot' ? { x: 110 + i % 11 * 10, y: 160 + Math.floor(i / 11) * 6 }
       : place === 'square' ? { x: 550 + i % 11 * 10, y: 350 + Math.floor(i / 11) * 6 }
       : i % 2 === 0 ? { x: 160 + 140 * (i / Math.max(1, clients.length - 1)), y: 160 }
       : { x: 230, y: 60 + 100 * (i / Math.max(1, clients.length - 1)) };
@@ -160,7 +162,7 @@ async function command(line) {
   const [word, argument] = line.trim().split(/\s+/);
   if (!word || closing) return;
   if (word === 'quit') return close();
-  if (['square','depot','spread'].includes(word)) { await arrange(word); return; }
+  if (['square','depot','spread','district','optional'].includes(word)) { await arrange(word); return; }
   if (word === 'repair') {
     const n = Number(argument || 5); assert(Number.isInteger(n) && n >= 1 && n <= clients.length, 'repair count must select1..all simulated neighbors');
     const current = await status(); assert.equal(current.summary.phase, 'chapter', 'repair requires an active chapter');
@@ -169,7 +171,7 @@ async function command(line) {
     await Promise.all(selected.map(deliveries)); await status(); return;
   }
   if (['start','pause','resume'].includes(word)) await host(word);
-  else if (word !== 'status') throw Error('Commands: square, depot, spread, start, pause, resume, repair [count], status, quit.');
+  else if (word !== 'status') throw Error('Commands: square, depot, spread, district, optional, start, pause, resume, repair [count], status, quit.');
   await status();
 }
 try {
@@ -219,7 +221,7 @@ try {
       console.log(`PRIMARY TOKEN ${hostTokens[0]}`);
     } else console.log(`ATTACHED: ${clients.length} simulated identities reconnected through invitation takeover; human identity untouched. No position, score or progress assigned.`);
     console.log(`VISUAL REVIEW: ${clients.length} simulated neighbors; the human browser makes ${count} real connected participants. Bots remain idle until commanded. No objective completion is fabricated.`);
-    console.log('Commands: square, depot, spread, start, pause, resume, repair [count], status, quit. repair plays three real deliveries per selected bot.');
+    console.log('Commands: square, depot, spread, district, optional, start, pause, resume, repair [count], status, quit. repair plays three real deliveries per selected bot.');
     input = createInterface({ input: process.stdin, crlfDelay: Infinity, terminal: false });
     input.on('line', line => { sequence = sequence.then(() => command(line)).catch(error => console.log('COMMAND ERROR: ' + error.message)); });
     input.on('close', () => { if (!closing) console.log('Input closed; review remains available. SIGTERM stops this isolated server.'); });
