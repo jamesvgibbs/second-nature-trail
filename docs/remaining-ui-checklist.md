@@ -1,6 +1,21 @@
 # Remaining UI rehearsal routes
 
-Prepared 2026-11-09 from the current client/content and existing [controls matrix](controls-matrix.md) and [browser ledger](browser-checks.md). This is a checklist, not new pass evidence. The main-objective/knowledge matrix is recorded separately; do not repeat those passes here or assume they cover optional actions. Record revision, browser, method, actual result, refresh persistence, and artifact for each remaining route.
+Prepared 2026-11-09; status reconciled 2026-11-17 against the [current native review](simulation-native-review.md) and [simulation coverage](simulation-coverage.md), alongside the historical [controls matrix](controls-matrix.md) and [browser ledger](browser-checks.md). The routes below remain reusable procedures, not a claim that every listed check is still untested or now passed. The main-objective/knowledge matrix is recorded separately; do not repeat those passes here or assume they cover optional actions. Record revision, browser, method, actual result, refresh persistence, and artifact for each remaining route.
+
+## Current completion and remaining limits
+
+The November 17 native ledger is the authoritative account of the isolated Safari review and its source revisions. Completed portions should not be repeated merely because this older route lists them:
+
+| Route | Current bounded native evidence | Still distinct from that evidence |
+|---|---|---|
+| Secrets and mystery | One identity acquired all eight clues through visible controls under host-operated phase advances. Pointer letters, wrong full answer, Backspace/Clear, NEIGHBOR success and refresh persistence passed. | Fresh keyboard-only acquisition/solve; normal-duration pacing. No seeded-clue fixture is counted. |
+| Optional challenges | Early gate plus actual successful challenges in chapters 1, 2, 6 and 8; their main objectives were genuinely completed. | Remaining native chapter/method combinations; all eight gates/retries/bonuses already have automated coverage. |
+| Trade and inventory | Two independent native sessions saw exact quantities, no transfer at first confirmation, one transfer at second, refresh persistence and actual consumption of the received part. Offers-first layout was rechecked after the crowded-roster defect was fixed. | Native cancellation/disconnect/takeover/phase races and supplier award qualification; these have separate automated evidence. |
+| Help and emotes | Registered assist feedback and recipient Wave/expiry observed. | No earned assist claimed because that recipient did not finish the objective. Every preset was not natively repeated. |
+| Settings | Extra-large/reduced-motion use; saved UJNK/F/O/P/L hints/menu shortcuts and refresh; duplicate/whitespace rejection. | Remapped movement was pressed but not position-measured; audible music/effects and the complete failure-ordering surface sweep remain distinct. |
+| Operations/presentation | Primary login, frozen rules, reasoned pause/audit, safe presentation and retained host privileges, host advance, broadcast preserving selection. | Dedicated display-token native login, backup takeover and every destructive recovery control; HTTP/adapter evidence is separately recorded. |
+| Finale | After 59 normal bot contributions, native Tab/Return reached 60; success, disabled repeat, personal marker, reload persistence and awards rendering passed. | Fresh native fallback ending, fifteen earned-award layout, and byte equality across the native contribution. Controller verified frozen equality across its 59 actions; the saved export was captured afterward. |
+| Rewards | Persistent-event O clue, two jobs/four tokens, initial zero-token lock. Fresh `4186` chapter-7 rehearsal is in progress. | No native redemption result is entered until that rehearsal finishes. Automated earned-token/redemption coverage already passes. |
 
 ## Optional challenges and secrets
 
