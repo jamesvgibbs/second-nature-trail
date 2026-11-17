@@ -11,6 +11,7 @@ import {
 } from "../public/scenery.mjs";
 import { restorationProgress } from "../public/helpers.mjs";
 import { SITE_LABELS } from "../public/trail-visuals.mjs";
+import { overviewCrowd } from "../public/crowd-view.mjs";
 import { moveDaySceneModel } from "../public/move-day-scene.mjs";
 import { RULES } from "../content.mjs";
 
@@ -77,6 +78,8 @@ function renderer(restored = 0, self = "p0", chapter = -1) {
     ROAD_BANDS,
     SITE_LABELS,
     moveDaySceneModel,
+    overviewCrowd,
+    isPresentation: false,
     restorationProgress,
     target: null,
     state: {
