@@ -43,6 +43,8 @@ const sourceHashes = Object.fromEntries(
     "scripts/load-navigation.mjs",
     "scripts/load-routing.mjs",
     "scripts/load-timings.mjs",
+    "scripts/export-audit.mjs",
+    "scripts/verify-results.mjs",
   ].map((path) => [
     path,
     createHash("sha256")
@@ -56,6 +58,7 @@ const duration = Number(process.env.LOAD_SECONDS || 3605);
 const joinWindow = Number(process.env.LOAD_JOIN_SECONDS || 60);
 const count = Number(process.env.LOAD_PLAYERS || 100);
 const out = resolve(process.env.LOAD_OUTPUT || "test-results/load-latest.json");
+mkdirSync(resolve(out, ".."), { recursive: true });
 const journalOut = out.replace(/\.json$/, "") + ".journal.json";
 const auditOut = out.replace(/\.json$/, "") + ".audit.json";
 const timingOut = out.replace(/\.json$/, "") + ".timings.json";
@@ -552,7 +555,12 @@ try {
       if (!advance.r.ok)
         throw Error("Could not advance to requested smoke chapter");
     }
+    if (app.engine.state.chapter !== startChapter || app.engine.state.phase !== "chapter")
+      throw Error("Host advance did not reach the requested chapter scenario");
     eventStartedAt = app.engine.state.chapterOpenedAt;
+    console.log(JSON.stringify({ scenarioReady: true, requestedChapterIndex: startChapter,
+      actualChapterIndex: app.engine.state.chapter, phase: app.engine.state.phase,
+      chapterOpenedAt: eventStartedAt, pacing: "Earlier phases explicitly advanced; remaining chapter clock is normal" }));
     if (variedStarts) {
       // Explicit synthetic setup: deterministic fractional positions within25px
       // of authored sites. This is not player-earned travel or a normal event.
