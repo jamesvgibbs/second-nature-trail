@@ -1,0 +1,18 @@
+{
+  "capturedAt": "2026-11-17T21:50:20.484Z",
+  "sourceCommit": "89f86f8c3ce9fabb5f6d5aefd8ac7b2fe680c024",
+  "method": "Read-only committed SQLite inspection before fixture cleanup; no gameplay mutation",
+  "phase": "chapter",
+  "chapterIndex": 5,
+  "players": 100,
+  "completed": 100,
+  "paymentCycles": 300,
+  "onTimePayments": 300,
+  "allFinalBudgets": 110,
+  "learningCorrect": 200,
+  "challenges": 100,
+  "secrets": 100,
+  "otherChapterSteps": 0,
+  "progressHash": "051ea5c56a0434f340d1226ef229f1c9ab79956d3e3ccdac19976ba64c736fa2",
+  "passed": true
+}

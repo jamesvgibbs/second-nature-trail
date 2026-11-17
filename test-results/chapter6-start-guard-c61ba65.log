@@ -1,0 +1,147 @@
+{"at":"2026-11-17T21:52:02.377Z","phase":"draft","chapter":0,"chapterCompletionCounts":[0,0,0,0,0,0,0,0],"requests":3,"scoringSamples":0,"scoringP95Ms":null,"errors":{}}
+{"at":"2026-11-17T21:52:02.604Z","phase":"lobby","chapter":0,"chapterCompletionCounts":[0,0,0,0,0,0,0,0],"requests":7,"scoringSamples":0,"scoringP95Ms":null,"errors":{}}
+{"scenarioReady":true,"requestedChapterIndex":5,"actualChapterIndex":5,"phase":"chapter","chapterOpenedAt":1794952324259,"pacing":"Earlier phases explicitly advanced; remaining chapter clock is normal"}
+{"at":"2026-11-17T21:52:04.361Z","phase":"chapter","chapter":5,"chapterCompletionCounts":[0,0,0,0,0,0,0,0],"requests":51,"scoringSamples":6,"scoringP95Ms":15.226916000000074,"errors":{}}
+{
+  "label": "SHORTENED SMOKE TEST, not release capacity acceptance",
+  "syntheticPriorActions": 0,
+  "startChapter": 5,
+  "syntheticVariedNearSiteStarts": false,
+  "rulesVersion": "trail-0.3.0-draft",
+  "contentHash": "368f66fb87ee9d1690c61e1c0457abba7049bde20c0af2d466a634d0b953dd5f",
+  "sourceCommit": "98a13f113baf54958a111054e910854597de057b",
+  "sourceHashes": {
+    "server.mjs": "3e0006a03cf775cf6fd6e0dd9847185a146c45d0e1fa1ba9c8cf52183d36df4f",
+    "command-checkpoint.mjs": "1f3df952d81bae0148e9f6f7840ea2117577cfc1ae66b48de941af869fc471e7",
+    "engine.mjs": "adbb77be85fb3e09e331f55356a832218142ff9209f46fbedc9fed193d74969d",
+    "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+    "public/world.mjs": "d412a2dee8b4b1dc3779d1dabc46561383646ac63651dcf7cd30eeba8bd063a0",
+    "public/app.js": "6d7fcad9e6b91d33261ba72bc0e2127df763a4c42635e8af0cc62cf4702ccc13",
+    "public/helpers.mjs": "8aaafb2ece299ce54821745a0a2be07c754793c9229f3166092d05771718249a",
+    "public/performance.mjs": "090cdd66c6b421fa0265b76aad7fa59738486fcd498110d87c60303cf78d4898",
+    "public/projection.mjs": "90b19560a0e02a7b9d19d69e567d2ef332526f351b2370040a5d7e60a47d6b79",
+    "public/style.css": "b46c16731b00e25d928b778c893f1b679e83ce21f7ffd856597aec551c1f9674",
+    "scripts/load.mjs": "d2f2236b417b3c24145ca0d9fbac228bd435df091d39abc7086c080f568bd844",
+    "scripts/load-navigation.mjs": "520f2128823f27adfbe41b394702d77682a69612114abb57c6520e378323b6e4",
+    "scripts/load-routing.mjs": "0b02bddb26279933f28ecf5eadedb8c15b9e9baa4f2672c1bc61175f5ca3e279",
+    "scripts/load-timings.mjs": "89af581c11aedd551e1693bf88e20f6986041a10eb01376f7c7fdd12fbb36458",
+    "scripts/export-audit.mjs": "52dd80735b1a933c311e5c247b430faf90a8052fe0d581db6427df0f0258a4fb",
+    "scripts/verify-results.mjs": "dee9387ae12e3660191e5f4fde25ab08889336c7ba8c4f9a55b82735204a0549"
+  },
+  "nodeVersion": "v24.20.0",
+  "platform": "darwin",
+  "memoryBytes": {
+    "rss": 123731968,
+    "heapTotal": 31408128,
+    "heapUsed": 19268000,
+    "external": 5688392,
+    "arrayBuffers": 1603142
+  },
+  "startedAt": "2026-11-17T21:52:02.354Z",
+  "elapsedSeconds": 10.047,
+  "eventPlaySeconds": 8.142,
+  "finalPhase": "chapter",
+  "exportReconciles": null,
+  "awardCount": 0,
+  "distinctWinners": 0,
+  "requestedPlayers": 2,
+  "joinedPlayers": 2,
+  "actualJoinSpanSeconds": 0.006,
+  "chapterCompletionCounts": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "simulatedMainObjectiveTimesMs": [
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    },
+    {
+      "samples": 0,
+      "p50": null,
+      "p95": null
+    }
+  ],
+  "rewardProjects": {
+    "garden": 0,
+    "welcome": 0,
+    "festival": 0
+  },
+  "targetResolutions": [
+    0,
+    0
+  ],
+  "joinWindowSeconds": 0,
+  "network": "localhost; not the representative company network",
+  "requests": 96,
+  "confirmedActionSamples": 70,
+  "rawTimingArtifact": "/Users/jgibbs/Code/second-nature-trail/test-results/chapter6-start-guard-c61ba65.timings.json",
+  "rawTimingComplete": true,
+  "rawTimingRecords": 70,
+  "rawTimingDropped": 0,
+  "tradeCompletions": 1,
+  "reconnectsAfterThirtySecondOutage": 0,
+  "latencyMs": {
+    "p50": 6.831125000000156,
+    "p95": 15.53408300000001,
+    "p99": 20.72437500000001
+  },
+  "scoringInventorySamples": 10,
+  "scoringInventoryLatencyMs": {
+    "p50": 14.164542000000438,
+    "p95": 18.02387499999986,
+    "p99": 18.02387499999986
+  },
+  "clockTransitionSamples": 0,
+  "clockArrivalLagMs": {
+    "p95": null,
+    "max": null,
+    "withinOneSecond": 0
+  },
+  "movementProfile": "10 requests/second per player while traveling; at most one in-flight per player",
+  "errors": {},
+  "phaseSamples": "13 observations in /Users/jgibbs/Code/second-nature-trail/test-results/chapter6-start-guard-c61ba65.json",
+  "limitations": [
+    "No browser rendering measured",
+    "No human rehearsal",
+    "Inspect tradeCompletions and reconnectsAfterThirtySecondOutage to verify scenario coverage",
+    "Phase observations are raw arrival times; no one-second clock compliance claim"
+  ]
+}

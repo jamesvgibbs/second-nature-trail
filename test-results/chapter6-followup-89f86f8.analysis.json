@@ -1,0 +1,79 @@
+{
+  "sourceCommit": "89f86f8c3ce9fabb5f6d5aefd8ac7b2fe680c024",
+  "scope": "Isolated chapter 6 with normal remaining phase clock, no synthetic history/positions; earlier phases host-advanced and unplayed",
+  "sourceHashesMatch": true,
+  "phase": "chapter",
+  "startChapterIndex": 5,
+  "eventSeconds": 182.87,
+  "completed": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    100,
+    0,
+    0
+  ],
+  "rawSamples": 3750,
+  "scoringSamples": 900,
+  "over500": 0,
+  "byType": {
+    "assist": {
+      "samples": 50,
+      "p95": 53.74683299999924,
+      "p99": 65.57887499999924,
+      "max": 65.57887499999924,
+      "over500": 0
+    },
+    "tradeOffer": {
+      "samples": 50,
+      "p95": 57.52483399999983,
+      "p99": 62.7009590000016,
+      "max": 62.7009590000016,
+      "over500": 0
+    },
+    "tradeConfirm": {
+      "samples": 100,
+      "p95": 50.87762499999917,
+      "p99": 62.92887499999779,
+      "max": 62.92887499999779,
+      "over500": 0
+    },
+    "quiz": {
+      "samples": 200,
+      "p95": 261.5462499999994,
+      "p99": 270.79020899999887,
+      "max": 272.3754170000029,
+      "over500": 0
+    },
+    "task": {
+      "samples": 300,
+      "p95": 88.1474159999998,
+      "p99": 88.64870900000096,
+      "max": 88.70395799999824,
+      "over500": 0
+    },
+    "secret": {
+      "samples": 100,
+      "p95": 89.97283299999253,
+      "p99": 90.38658400000713,
+      "max": 90.38658400000713,
+      "over500": 0
+    },
+    "challenge": {
+      "samples": 100,
+      "p95": 77.86212499999965,
+      "p99": 78.30774999999267,
+      "max": 78.30774999999267,
+      "over500": 0
+    }
+  },
+  "errors": {},
+  "limitations": [
+    "Fresh inventory permits 50 trades absent from full-run chapter 6, and the accepted-request ledger is shorter.",
+    "Saved-demo 4175 backup/restart and source hash checks overlapped on the shared development computer.",
+    "No packet scheduling, CPU or GC profiler was captured; full-run spike causation remains unproven.",
+    "Presentation log sampled an intermediate chapter 2 during rapid advance; final report/raw actions and committed SQLite inspection confirm actual chapter index 5."
+  ]
+}

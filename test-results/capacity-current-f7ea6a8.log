@@ -1,0 +1,260 @@
+{"at":"2026-11-17T20:41:56.386Z","phase":"draft","chapter":0,"chapterCompletionCounts":[0,0,0,0,0,0,0,0],"requests":3,"scoringSamples":0,"scoringP95Ms":null,"errors":{}}
+{"at":"2026-11-17T20:41:56.616Z","phase":"lobby","chapter":0,"chapterCompletionCounts":[0,0,0,0,0,0,0,0],"requests":5,"scoringSamples":0,"scoringP95Ms":null,"errors":{}}
+{"at":"2026-11-17T20:42:58.864Z","phase":"countdown","chapter":0,"chapterCompletionCounts":[0,0,0,0,0,0,0,0],"requests":1305,"scoringSamples":0,"scoringP95Ms":null,"errors":{}}
+{"at":"2026-11-17T20:43:08.901Z","phase":"chapter","chapter":0,"chapterCompletionCounts":[0,0,0,0,0,0,0,0],"requests":1305,"scoringSamples":0,"scoringP95Ms":null,"errors":{}}
+{"at":"2026-11-17T20:47:58.980Z","phase":"brag","chapter":0,"chapterCompletionCounts":[100,0,0,0,0,0,0,0],"requests":7442,"scoringSamples":1800,"scoringP95Ms":136.83091699999932,"errors":{}}
+{"at":"2026-11-17T20:49:58.883Z","phase":"chapter","chapter":1,"chapterCompletionCounts":[100,0,0,0,0,0,0,0],"requests":7442,"scoringSamples":1800,"scoringP95Ms":136.83091699999932,"errors":{}}
+{"at":"2026-11-17T20:54:59.093Z","phase":"brag","chapter":1,"chapterCompletionCounts":[100,100,0,0,0,0,0,0],"requests":17694,"scoringSamples":3501,"scoringP95Ms":142.39791600010358,"errors":{}}
+{"at":"2026-11-17T20:56:58.995Z","phase":"chapter","chapter":2,"chapterCompletionCounts":[100,100,0,0,0,0,0,0],"requests":17694,"scoringSamples":3501,"scoringP95Ms":142.39791600010358,"errors":{}}
+{"at":"2026-11-17T21:01:58.903Z","phase":"brag","chapter":2,"chapterCompletionCounts":[100,100,100,0,0,0,0,0],"requests":28236,"scoringSamples":5202,"scoringP95Ms":188.7649579999852,"errors":{}}
+{"at":"2026-11-17T21:03:58.959Z","phase":"chapter","chapter":3,"chapterCompletionCounts":[100,100,100,0,0,0,0,0],"requests":28236,"scoringSamples":5202,"scoringP95Ms":188.7649579999852,"errors":{}}
+{"at":"2026-11-17T21:08:59.034Z","phase":"brag","chapter":3,"chapterCompletionCounts":[100,100,100,100,0,0,0,0],"requests":39368,"scoringSamples":6852,"scoringP95Ms":189.65645899996161,"errors":{}}
+{"at":"2026-11-17T21:10:58.880Z","phase":"chapter","chapter":4,"chapterCompletionCounts":[100,100,100,100,0,0,0,0],"requests":39368,"scoringSamples":6852,"scoringP95Ms":189.65645899996161,"errors":{}}
+{"at":"2026-11-17T21:15:58.907Z","phase":"brag","chapter":4,"chapterCompletionCounts":[100,100,100,100,100,0,0,0],"requests":50568,"scoringSamples":9102,"scoringP95Ms":197.51670800009742,"errors":{}}
+{"at":"2026-11-17T21:17:58.988Z","phase":"chapter","chapter":5,"chapterCompletionCounts":[100,100,100,100,100,0,0,0],"requests":50568,"scoringSamples":9102,"scoringP95Ms":197.51670800009742,"errors":{}}
+{"at":"2026-11-17T21:22:58.947Z","phase":"brag","chapter":5,"chapterCompletionCounts":[100,100,100,100,100,100,0,0],"requests":54878,"scoringSamples":9852,"scoringP95Ms":199.58025000011548,"errors":{}}
+{"at":"2026-11-17T21:24:59.003Z","phase":"chapter","chapter":6,"chapterCompletionCounts":[100,100,100,100,100,100,0,0],"requests":54878,"scoringSamples":9852,"scoringP95Ms":199.58025000011548,"errors":{}}
+{"at":"2026-11-17T21:29:59.081Z","phase":"brag","chapter":6,"chapterCompletionCounts":[100,100,100,100,100,100,100,0],"requests":63232,"scoringSamples":11602,"scoringP95Ms":218.52216699998826,"errors":{}}
+{"at":"2026-11-17T21:31:59.090Z","phase":"chapter","chapter":7,"chapterCompletionCounts":[100,100,100,100,100,100,100,0],"requests":63232,"scoringSamples":11602,"scoringP95Ms":218.52216699998826,"errors":{}}
+{"at":"2026-11-17T21:36:58.953Z","phase":"brag","chapter":7,"chapterCompletionCounts":[100,100,100,100,100,100,100,100],"requests":76249,"scoringSamples":12452,"scoringP95Ms":251.85695899976417,"errors":{}}
+{"at":"2026-11-17T21:38:59.083Z","phase":"finale","chapter":7,"chapterCompletionCounts":[100,100,100,100,100,100,100,100],"requests":76249,"scoringSamples":12452,"scoringP95Ms":251.85695899976417,"errors":{}}
+{"at":"2026-11-17T21:42:59.133Z","phase":"awards","chapter":7,"chapterCompletionCounts":[100,100,100,100,100,100,100,100],"requests":76349,"scoringSamples":12452,"scoringP95Ms":251.85695899976417,"errors":{}}
+{
+  "label": "capacity duration exercised; inspect scenario coverage",
+  "syntheticPriorActions": 0,
+  "startChapter": 0,
+  "syntheticVariedNearSiteStarts": false,
+  "rulesVersion": "trail-0.3.0-draft",
+  "contentHash": "368f66fb87ee9d1690c61e1c0457abba7049bde20c0af2d466a634d0b953dd5f",
+  "sourceCommit": "f7ea6a873badbe290680aa3a220a0181acbe2ff5",
+  "sourceHashes": {
+    "server.mjs": "3e0006a03cf775cf6fd6e0dd9847185a146c45d0e1fa1ba9c8cf52183d36df4f",
+    "command-checkpoint.mjs": "1f3df952d81bae0148e9f6f7840ea2117577cfc1ae66b48de941af869fc471e7",
+    "engine.mjs": "2583f022c822ec6c088c966dc986baa750bd02974b355dafb36351c855213d21",
+    "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+    "public/world.mjs": "d412a2dee8b4b1dc3779d1dabc46561383646ac63651dcf7cd30eeba8bd063a0",
+    "public/app.js": "9be92132ec9c45f650bb5fd61fe03ba1af6a521452bed27e98bec38898e7be65",
+    "public/helpers.mjs": "8aaafb2ece299ce54821745a0a2be07c754793c9229f3166092d05771718249a",
+    "public/performance.mjs": "090cdd66c6b421fa0265b76aad7fa59738486fcd498110d87c60303cf78d4898",
+    "public/projection.mjs": "90b19560a0e02a7b9d19d69e567d2ef332526f351b2370040a5d7e60a47d6b79",
+    "public/style.css": "bf203462ad5a10248aff742262382b92462a389e03b50860daa9357ee82ae05f",
+    "scripts/load.mjs": "8192bbca261a0ec887570c34f582edf86afbeabe5d9be683eb5523c772933351",
+    "scripts/load-navigation.mjs": "520f2128823f27adfbe41b394702d77682a69612114abb57c6520e378323b6e4",
+    "scripts/load-routing.mjs": "0b02bddb26279933f28ecf5eadedb8c15b9e9baa4f2672c1bc61175f5ca3e279",
+    "scripts/load-timings.mjs": "89af581c11aedd551e1693bf88e20f6986041a10eb01376f7c7fdd12fbb36458"
+  },
+  "nodeVersion": "v24.20.0",
+  "platform": "darwin",
+  "memoryBytes": {
+    "rss": 495075328,
+    "heapTotal": 258572288,
+    "heapUsed": 144097904,
+    "external": 26477081,
+    "arrayBuffers": 13188584
+  },
+  "startedAt": "2026-11-17T20:41:56.366Z",
+  "elapsedSeconds": 3669.408,
+  "eventPlaySeconds": 3607.001,
+  "finalPhase": "awards",
+  "exportReconciles": true,
+  "awardCount": 15,
+  "distinctWinners": 15,
+  "requestedPlayers": 100,
+  "joinedPlayers": 100,
+  "actualJoinSpanSeconds": 60.005,
+  "chapterCompletionCounts": [
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+  ],
+  "simulatedMainObjectiveTimesMs": [
+    {
+      "samples": 100,
+      "p50": 98820,
+      "p95": 98835
+    },
+    {
+      "samples": 100,
+      "p50": 74383,
+      "p95": 74401
+    },
+    {
+      "samples": 100,
+      "p50": 79756,
+      "p95": 79780
+    },
+    {
+      "samples": 100,
+      "p50": 76111,
+      "p95": 76135
+    },
+    {
+      "samples": 100,
+      "p50": 166264,
+      "p95": 166287
+    },
+    {
+      "samples": 100,
+      "p50": 91293,
+      "p95": 91315
+    },
+    {
+      "samples": 100,
+      "p50": 87887,
+      "p95": 87913
+    },
+    {
+      "samples": 100,
+      "p50": 32449,
+      "p95": 32476
+    }
+  ],
+  "rewardProjects": {
+    "garden": 34,
+    "welcome": 33,
+    "festival": 33
+  },
+  "targetResolutions": [
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18
+  ],
+  "joinWindowSeconds": 60,
+  "network": "localhost; not the representative company network",
+  "requests": 76349,
+  "confirmedActionSamples": 75944,
+  "rawTimingArtifact": "/Users/jgibbs/Code/second-nature-trail/test-results/capacity-current-f7ea6a8.timings.json",
+  "rawTimingComplete": true,
+  "rawTimingRecords": 75944,
+  "rawTimingDropped": 0,
+  "tradeCompletions": 84,
+  "reconnectsAfterThirtySecondOutage": 1,
+  "latencyMs": {
+    "p50": 11.691042000078596,
+    "p95": 155.96704099979252,
+    "p99": 245.2505419999361
+  },
+  "scoringInventorySamples": 12452,
+  "scoringInventoryLatencyMs": {
+    "p50": 124.63829200016335,
+    "p95": 251.85695899976417,
+    "p99": 333.20770800020546
+  },
+  "clockTransitionSamples": 1854,
+  "clockArrivalLagMs": {
+    "p95": 362,
+    "max": 376,
+    "withinOneSecond": 1854
+  },
+  "movementProfile": "10 requests/second per player while traveling; at most one in-flight per player",
+  "errors": {},
+  "phaseSamples": "2063 observations in /Users/jgibbs/Code/second-nature-trail/test-results/capacity-current-f7ea6a8.json",
+  "limitations": [
+    "No browser rendering measured",
+    "No human rehearsal",
+    "Inspect tradeCompletions and reconnectsAfterThirtySecondOutage to verify scenario coverage",
+    "Phase observations are raw arrival times; no one-second clock compliance claim"
+  ]
+}

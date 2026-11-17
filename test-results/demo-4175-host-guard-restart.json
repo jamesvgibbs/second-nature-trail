@@ -1,0 +1,111 @@
+{
+  "at": "2026-11-17T21:48:42.141Z",
+  "sourceCommit": "89f86f8c3ce9fabb5f6d5aefd8ac7b2fe680c024",
+  "node": "v24.20.0",
+  "port": 4175,
+  "oldPid": 35604,
+  "oldExitCode": 0,
+  "newPid": 7396,
+  "newSession": 40235,
+  "phase": "closed",
+  "backup": "data/local-demo-c018f24-ihxldc1d/before-host-guard-509854b-20261117.sqlite",
+  "backupMode": "0600",
+  "backupIntegrity": "ok",
+  "gameReset": false,
+  "hashesEqualAcross": [
+    "live-before",
+    "consistent-backup",
+    "graceful-stop",
+    "restarted"
+  ],
+  "preserved": {
+    "capturedAt": "2026-11-17T21:48:41.984Z",
+    "phase": "closed",
+    "chapter": 7,
+    "version": "trail-0.3.0-draft",
+    "contentHash": "368f66fb87ee9d1690c61e1c0457abba7049bde20c0af2d466a634d0b953dd5f",
+    "integrity": "ok",
+    "hashes": {
+      "game": "82ece7cf01f997a157032791027d019ea3d6a409baa22c832ccb6068ab602baa",
+      "players": "8525e61339bea144d1bd8b16a39c46bd6c52ee569cab4358d8d4e0cc0ef7a462",
+      "snapshot": "e8999c402ee09f0d3ae689061faeda9b2275091c2f112406563e0aed10307a19",
+      "awards": "029246cfdc65ff516ab5f57cda249654684e7301e106ad54589315fab7c4d5e6",
+      "sessions": "71500eafa5331a6aa17aaef14292c905e3bba95c3cade2c95360aefc1f749f66",
+      "invitations": "080835d026722b269ec69f6258b94c8d8ee2c6457da185adb905c448c353f035",
+      "setup_cursors": "b387366a78a5a791c3eace4983bd7dd9907aabb56488512964187f194018baaa"
+    },
+    "counts": {
+      "players": 20,
+      "sessions": 2,
+      "invitations": 20,
+      "setup_cursors": 1
+    }
+  },
+  "health": {
+    "ok": true
+  },
+  "backendHashes": {
+    "server.mjs": "3e0006a03cf775cf6fd6e0dd9847185a146c45d0e1fa1ba9c8cf52183d36df4f",
+    "engine.mjs": "adbb77be85fb3e09e331f55356a832218142ff9209f46fbedc9fed193d74969d",
+    "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+    "command-checkpoint.mjs": "1f3df952d81bae0148e9f6f7840ea2117577cfc1ae66b48de941af869fc471e7"
+  },
+  "assets": {
+    "app.js": {
+      "sha256": "6d7fcad9e6b91d33261ba72bc0e2127df763a4c42635e8af0cc62cf4702ccc13",
+      "contentType": "text/javascript"
+    },
+    "crowd-view.mjs": {
+      "sha256": "d69f819492387f00bc7872cc293f79a45e5e79b8a66b883a03d57871d2241ae2",
+      "contentType": "text/javascript"
+    },
+    "helpers.mjs": {
+      "sha256": "8aaafb2ece299ce54821745a0a2be07c754793c9229f3166092d05771718249a",
+      "contentType": "text/javascript"
+    },
+    "index.html": {
+      "sha256": "d1ec19805d30903b41253a794bcd85533bf85dd9b8dd51e2567b542ee66189f0",
+      "contentType": "text/html"
+    },
+    "move-day-scene.mjs": {
+      "sha256": "512311ada7279b3d922882a4d80e5563851e806f3d9fca8690d2089d34b262ef",
+      "contentType": "text/javascript"
+    },
+    "performance.mjs": {
+      "sha256": "090cdd66c6b421fa0265b76aad7fa59738486fcd498110d87c60303cf78d4898",
+      "contentType": "text/javascript"
+    },
+    "projection.mjs": {
+      "sha256": "90b19560a0e02a7b9d19d69e567d2ef332526f351b2370040a5d7e60a47d6b79",
+      "contentType": "text/javascript"
+    },
+    "scenery.mjs": {
+      "sha256": "8f93c22c649c3aa4ec183ad64d21cb929ac7b118c38d3d286feb269af6875ddb",
+      "contentType": "text/javascript"
+    },
+    "style.css": {
+      "sha256": "b46c16731b00e25d928b778c893f1b679e83ce21f7ffd856597aec551c1f9674",
+      "contentType": "text/css"
+    },
+    "trail-feedback.mjs": {
+      "sha256": "08e44cc0c354bd668cdeea0867e008404bc74030e1a297c85867226a8d182d8f",
+      "contentType": "text/javascript"
+    },
+    "trail-visuals.mjs": {
+      "sha256": "a72a7c38cb300c5943f489b25dbbe3641c926f07dd36628582eb0dc80050b414",
+      "contentType": "text/javascript"
+    },
+    "world.mjs": {
+      "sha256": "d412a2dee8b4b1dc3779d1dabc46561383646ac63651dcf7cd30eeba8bd063a0",
+      "contentType": "text/javascript"
+    }
+  },
+  "untouchedPorts": [
+    4173,
+    4182
+  ],
+  "limitations": [
+    "Existing closed event preserved; this maintenance does not create a new playable event.",
+    "No authentication cookie, invitation token or raw saved player data is included."
+  ]
+}
