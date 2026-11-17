@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-17",
+  "check": "Read-only bytes on existing 4175; no restart or state mutation",
+  "assets": [
+    {
+      "asset": "app.js",
+      "sha256": "9be92132ec9c45f650bb5fd61fe03ba1af6a521452bed27e98bec38898e7be65",
+      "contentType": "text/javascript",
+      "matches": true
+    },
+    {
+      "asset": "style.css",
+      "sha256": "bf203462ad5a10248aff742262382b92462a389e03b50860daa9357ee82ae05f",
+      "contentType": "text/css",
+      "matches": true
+    },
+    {
+      "asset": "scenery.mjs",
+      "sha256": "8f93c22c649c3aa4ec183ad64d21cb929ac7b118c38d3d286feb269af6875ddb",
+      "contentType": "text/javascript",
+      "matches": true
+    },
+    {
+      "asset": "trail-visuals.mjs",
+      "sha256": "a72a7c38cb300c5943f489b25dbbe3641c926f07dd36628582eb0dc80050b414",
+      "contentType": "text/javascript",
+      "matches": true
+    },
+    {
+      "asset": "trail-feedback.mjs",
+      "sha256": "929e3bc5e75f0599ac04ea7d4ba2a590188a853c991612c9a2a80f23aed9ff69",
+      "contentType": "text/javascript",
+      "matches": true
+    },
+    {
+      "asset": "move-day-scene.mjs",
+      "sha256": "512311ada7279b3d922882a4d80e5563851e806f3d9fca8690d2089d34b262ef",
+      "contentType": "text/javascript",
+      "matches": true
+    },
+    {
+      "asset": "world.mjs",
+      "sha256": "d412a2dee8b4b1dc3779d1dabc46561383646ac63651dcf7cd30eeba8bd063a0",
+      "contentType": "text/javascript",
+      "matches": true
+    }
+  ]
+}

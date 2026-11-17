@@ -1,0 +1,53 @@
+{
+  "date": "2026-11-17",
+  "clientCommit": "fdd979d",
+  "sceneCommit": "5a6f25a",
+  "finalTestedSource": "cee1031",
+  "node": "24.20.0",
+  "browser": "Native Safari on macOS",
+  "window": "1366×768 outer window; normal page/text scale; not a CSS viewport measurement",
+  "scope": "Representative Move Day chapter only, awaiting Jim’s art-direction review before extension",
+  "normalFlow": [
+    "New invitation, setup, safe robot choice, five practice steps, ready, and normal host countdown completed through ordinary UI before chapter review.",
+    "The current scene keeps the normal movement and task API. No saved user event was restarted or mutated."
+  ],
+  "nativeChecks": [
+    "One-player review: repair kit on paved route delivered 17 points; home warmed, parts fell 3 to 1; 1/3 progress survived refresh. This first capture preceded the final focus-only client refinements.",
+    "100-participant review:99 simulated neighbors plus one native review player. Depot concentration rendered own loaded cart plus exactly 3 companions; no persistent names or emotes.",
+    "Square arrangement:99 simulated neighbors moved to the square while the review player stayed at the depot.0 nearby shown;99 others remained discoverable. Cart, both roads and home stayed clear.",
+    "Route-spread arrangement:99 simulated neighbors distributed along actual Move Day depot/crossing/home paths.99 nearby shown,3 companion sprites; same reserved anchors and unselected labels.",
+    "Selected companion revealed its name only in its button. Neighbors menu inspected through Simulated neighbor 100 with Help/Trade controls.",
+    "Map opened preserved overview; Escape returned to focused scene with loaded cart and pending stage unchanged.",
+    "Keyboard Enter packed cargo and focused the persistent journal. Pointer route confirmation and delivery also focused the accepted result.",
+    "Crowded event: repair kit plus damaged shortcut disclosed 4 lost value and 10 delivery points; accepted delivery awarded 10 points, used 2 parts, advanced 1/3 and lit the home.",
+    "20 simulated neighbors completed their own three deliveries through normal APIs; shared count 20/100 matched visible repaired fence/cable. Personal first delivery did not increment shared completed-objective count.",
+    "Final committed client reloaded on the repaired scene: 1/3 personal progress, 20/100 shared progress, remaining supplies and warm home persisted."
+  ],
+  "screenshots": {
+    "before": "move-day-crowd-before.png",
+    "intermediateOverflow": "move-day-first-laptop-overflow.png",
+    "departureAndDecision": "move-day-crowd-depot-decision.png",
+    "square": "move-day-crowd-square.png",
+    "routeSpread": "move-day-crowd-route-spread.png",
+    "acceptedRepair": "move-day-crowd-delivery-repair.png",
+    "finalReloadedRepair": "move-day-crowd-repair-refreshed.png"
+  },
+  "automated": {
+    "passed": 232,
+    "failed": 0,
+    "skipped": 0,
+    "log": "move-day-final-suite.log",
+    "serverCheck": "move-day-100-0ac6efe.json"
+  },
+  "fixtureNotes": [
+    "The original spread command placed peers across the whole neighborhood; that was corrected before the route-spread screenshot.",
+    "99 bot identities reconnected through ordinary invitation takeover into a replacement controller to correct the already-running fixture. Human session and progress were preserved.",
+    "Host pause/resume was used for rendered inspection. This is not a new normal-five-minute completion or full-event pacing claim.",
+    "The review fixture remains paused on 4182 with 100 connected participants; temporary single-player 4180 was stopped normally."
+  ],
+  "limits": [
+    "Developer visual review is separate from Jim’s art approval and later employee comprehension testing.",
+    "100 HTTP/SSE clients are simulated, not 100 human browser sessions. Bounded chapter 1 correctness does not replace full-event or representative-network testing.",
+    "Other chapters retain existing design. Their full crowd, device, accessibility and art review remains separate."
+  ]
+}
