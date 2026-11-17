@@ -2439,7 +2439,8 @@ function neighbors(refresh = false) {
   panel = "neighbors";
   if (!refresh) open("Good neighbors, good odds");
   body.innerHTML =
-    '<p class="small">Help with an unfinished task, offer a fair trade, or send a little encouragement.</p><div class="row" id="emotes"></div><h3 style="margin-top:22px">Ask for help</h3><div class="row" id="help-requests"></div><div id="neighbor-list"></div><h3 style="margin-top:22px">Your open trades</h3><div id="trade-list"></div>';
+    '<h3>Your open trades</h3><div id="trade-list"></div><p class="small">Help with an unfinished task, offer a fair trade, or send a little encouragement.</p><div class="row" id="emotes"></div><h3 style="margin-top:22px">Ask for help</h3><div class="row" id="help-requests"></div><h3 style="margin-top:22px">Your neighbors</h3><div id="neighbor-list"></div>';
+  if (!refresh) body.scrollTop = 0;
   (
     state.rules?.emotes || [
       "Wave",
@@ -2501,11 +2502,11 @@ function neighbors(refresh = false) {
     const d = document.createElement("div");
     d.className = "card";
     d.style.padding = "14px";
-    d.innerHTML = `<p class="small">${esc(t.from)} gives ${t.give.qty} ${esc(
-      t.give.item,
-    )} for ${t.receive.qty} ${esc(t.receive.item)} from ${esc(
-      t.to,
-    )}.</p><p class="small">Confirmed: ${t.confirmed?.length || 0} of 2</p>`;
+    const name = (id) =>
+      id === state.me?.id
+        ? "You"
+        : state.players?.find((p) => p.id === id)?.name || "Another neighbor";
+    d.innerHTML = `<p class="small">${esc(name(t.from))} ${t.from === state.me?.id ? "give" : "gives"}: <strong>${t.give.qty} ${esc(t.give.item)}</strong><br>${esc(name(t.to))} ${t.to === state.me?.id ? "give" : "gives"}: <strong>${t.receive.qty} ${esc(t.receive.item)}</strong></p><p class="small">Confirmed: ${t.confirmed?.length || 0} of 2</p>`;
     const confirmButton = btn(
       "Confirm current offer",
       () =>
@@ -2522,6 +2523,9 @@ function neighbors(refresh = false) {
     d.append(confirmButton, cancelButton);
     $("#trade-list").append(d);
   });
+  if (!state.trades?.length)
+    $("#trade-list").innerHTML =
+      '<p class="small muted">No open trades. Choose Trade beside a neighbor below to make an offer.</p>';
   refreshNeighborEmotes();
 }
 function refreshNeighborEmotes() {

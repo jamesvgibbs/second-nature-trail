@@ -617,3 +617,60 @@ test("failed practice help remains retryable and does not submit or complete the
   assert.equal(f.context.state.me.tutorial.includes("help"), true);
   assert.equal(f.modal.open, false);
 });
+test("a100-person roster puts outgoing/incoming trade confirmations first with friendly escaped names and unchanged quantities", async () => {
+  const f = fixture(1);
+  for (let i = 1; i < 100; i++) {
+    f.engine.addPlayer(
+      "person-" + i,
+      i === 99 ? "Ada <neighbor>" : "Neighbor " + i,
+    );
+    f.engine.get("person-" + i).setup = true;
+  }
+  f.send();
+  f.context.trade(f.context.state.players.find((p) => p.id === "person-99"));
+  f.ids.get("#give-item").value = "parts";
+  f.ids.get("#give-qty").value = "2";
+  f.ids.get("#receive-item").value = "food";
+  f.ids.get("#receive-qty").value = "2";
+  const p = f.ids.get("#trade-form").onsubmit({ preventDefault() {} });
+  f.resolve();
+  await p;
+  assert.equal(f.ids.get("#neighbor-list").children.length, 99);
+  const bodyIds = f.body.children.map((n) => n.id);
+  assert.equal(bodyIds[0], "trade-list");
+  assert(bodyIds.indexOf("trade-list") < bodyIds.indexOf("emotes"));
+  assert.equal(f.body.scrollTop, 0);
+  let card = f.ids.get("#trade-list").children[0];
+  assert.match(card.innerHTML, /You give: <strong>2 parts/);
+  assert.match(card.innerHTML, /Ada &lt;neighbor&gt; gives: <strong>2 food/);
+  assert.equal(card.innerHTML.includes("person-99"), false);
+  const offer = f.context.state.trades[0];
+  const focused = card.querySelectorAll("button")[0];
+  focused.focus();
+  f.send((view) => {
+    view.players.find((p) => p.id === "person-99").name = "Ada updated";
+  });
+  assert.equal(
+    f.document.activeElement.dataset.focusKey,
+    `trade:${offer.id}:confirm`,
+  );
+  card = f.ids.get("#trade-list").children[0];
+  assert.match(card.innerHTML, /Ada updated gives/);
+  // Same real offer projected for its recipient preserves the exchange directions.
+  f.context.state = {
+    ...f.context.state,
+    me: { ...f.context.state.me, id: "person-99" },
+  };
+  f.context.neighbors();
+  card = f.ids.get("#trade-list").children[0];
+  assert.match(card.innerHTML, /Neighbor gives: <strong>2 parts/);
+  assert.match(card.innerHTML, /You give: <strong>2 food/);
+  f.context.state.players = f.context.state.players.filter(
+    (p) => p.id !== "neighbor",
+  );
+  f.context.neighbors();
+  assert.match(
+    f.ids.get("#trade-list").children[0].innerHTML,
+    /Another neighbor gives/,
+  );
+});
