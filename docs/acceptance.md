@@ -1,6 +1,6 @@
 # Release evidence
 
-Status: not release-approved. Updated 2026-11-10. This checklist records evidence; the presence of code is not a passing test. Automated tests cannot replace employee rehearsals, content approval, or hardware/browser measurements.
+Status: not release-approved. Updated 2026-11-17. This checklist records evidence; the presence of code is not a passing test. Automated tests cannot replace employee rehearsals, content approval, or hardware/browser measurements.
 
 ## Build and real-testing sequence
 
@@ -10,7 +10,13 @@ Hosting details are needed when publishing the game. Review of the drafted benef
 
 ## Current verified build
 
-Runtime **`bee72d5`** gives correct learning answers a completed screen with earned points and Next/Back navigation, without retry controls; it retains the fixes for pre-lobby practice movement and restores map keyboard focus on entry/reload while preserving active inputs and dialogs. The Node 24.20.0 suite passed **165 tests**, with no failures or skips: [test output](../test-results/full-suite-bee72d5-runtime.log). Native Chrome 157 reproduced the original failure and verified arrows/WASD, movement tutorial completion, zero competitive points, and keyboard focus after refresh: [before/after evidence](../test-results/movement-draft-native.json). Native Safari verified correct first-answer credit, incorrect-first/correct-retry feedback, encounter-list points, and score persistence after refresh: [learning feedback evidence](../test-results/learning-feedback-native.json). Native Safari also verified the completed-answer and keyboard Next/Back flow for the impersonation question: [completion evidence](../test-results/learning-completion-native.json).
+The 2026-11-17 retro redesign makes the existing cargo costs, route consequences, progress and action results visible without changing the server rules or saved progress. The shared neighborhood uses distinct service buildings and dark homes that gain mint foundations with shared progress, then warm windows at full restoration. The final map keeps asphalt, shoulders, roofs, signs and plot artwork separate; noninteractive beacon placards and repeated shoulder debris are removed.
+
+Native Safari completed all five tutorial steps, the normal countdown and all three chapter-1 deliveries within the ordinary five-minute chapter: **17 + 8 + 20 delivery points**, then two correct learning encounters for **65 total**. Supplies fell from twelve to five; a refresh preserved the first delivery. A chapter-2 wrong/correct retry produced the expected persistent report, ten points and 1/6 progress. Final desktop and compact screenshots cover zero restoration and a legitimately completed district. [Native evidence](../test-results/retro-demo-native.json), [desktop map](../test-results/retro-streets-repaired-desktop.png), [compact map](../test-results/retro-streets-repaired-compact.png).
+
+The final Node24.20.0 suite passed **210 tests**, with no failures or skips. Results are recorded in [the final test log](../test-results/retro-final-suite.log). Tests include authoritative outcomes for all cargo/route combinations, other activity feedback, stale response protection, pause handling, local demo isolation, road/shoulder walkability and actual paint clearance in every chapter/restoration state. Six current static files match the existing local game server byte for byte; the player's saved event was not restarted or mutated. [Live asset evidence](../test-results/retro-live-assets.json).
+
+Use `npm run demo` with Node24 for a fresh isolated local walkthrough; [demo instructions](demo.md) explain the normal clocks and explicit operator pacing commands. This is ready for local demonstration and later employee evaluation; the outstanding human, device and network checks below remain pending. Prior movement and learning fixes retain their original evidence in `test-results/movement-draft-native.json`, `learning-feedback-native.json`, and `learning-completion-native.json`.
 
 Earlier package `1154c82` passed production startup and all seven asset byte checks; its backend matched `9939a98`, which passed container restart and fresh-volume backup restoration. Those historical container checks do not include this draft-movement change: [packaging evidence](../test-results/container-1154c82-static.json), [durability evidence](../test-results/container-9939a98.json).
 

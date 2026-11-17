@@ -1,0 +1,44 @@
+{
+  "date": "2026-11-17",
+  "browser": "Native Safari on macOS",
+  "environment": "Isolated localhost in-memory demo; existing player4175 database untouched",
+  "dimensions": "Outer windows1447x889 desktop and1059x799 compact; not CSS viewport dimensions",
+  "before": [
+    "retro-before-cargo.png",
+    "retro-before-presentation.png",
+    "retro-recovered-desktop.png",
+    "retro-recovered-compact.png"
+  ],
+  "after": [
+    "retro-cargo-after.png",
+    "retro-streets-unrestored-desktop.png",
+    "retro-streets-unrestored-compact.png",
+    "retro-streets-repaired-desktop.png",
+    "retro-streets-repaired-compact.png"
+  ],
+  "verified": [
+    "Five tutorial actions completed through rendered UI; normal10second countdown",
+    "Chapter1 completed through rendered UI under ordinary5minute clock: repair/protected17; essentials/shortcut8; connection/protected20; supplies12to5; both correct learning answers10each; final65points",
+    "Refresh after first delivery preserved17points,1/3progress,10storedsupplies",
+    "Persistent delivery outcomes; route cost shown before confirmation; allcargo choices andConfirm visible after layout correction",
+    "Chapter2 wrong decision produced retry report; correct retry then10points,1/6progress,onefilter consumed",
+    "Final full-map streets and shoulders visibly continuous atdesktopandcompact; signs/roofs/plots clear; no beaconplacards or decorative shoulder debris",
+    "One district fully restored from actual completedobjective: warmwindows; seven unrestored districts dark. Freshzero-progress presentation all8dark",
+    "Host sign-in and safe presentation opened using isolatedoperator credentials; presentation no private controls",
+    "Final static6asset byte checks match userlive4175withoutrestart"
+  ],
+  "limits": [
+    "Native review is bounded developer verification, not employee usability, all-browser coverage, balance approval, production capacity, or full95minute rehearsal",
+    "Chapter2 reached via explicit local demo operatorphaseadvance; firstchapter played with normalclock",
+    "Partial restoration and all8finale visual geometry covered by automatedpainttests, not eight separate native completedchapters",
+    "Final street artwork was refreshed after firstchapter completion; gameplay and collisiondata unchanged"
+  ],
+  "runtimeCommit": "53a0662",
+  "functionalTests": {
+    "node": "24.20.0",
+    "passed": 210,
+    "failed": 0,
+    "skipped": 0,
+    "log": "retro-final-suite.log"
+  }
+}
