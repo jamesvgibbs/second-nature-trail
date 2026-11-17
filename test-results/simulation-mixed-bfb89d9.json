@@ -1,0 +1,6016 @@
+{
+  "label": "Synthetic-clock24-player mixed-decision HTTP/SSE event; not normal pacing, full-capacity, browser or human acceptance",
+  "sourceCommit": "bfb89d9f1d92e48f8b8c6858072c36c808894307",
+  "sourceHashes": {
+    "engine.mjs": "adbb77be85fb3e09e331f55356a832218142ff9209f46fbedc9fed193d74969d",
+    "server.mjs": "3e0006a03cf775cf6fd6e0dd9847185a146c45d0e1fa1ba9c8cf52183d36df4f",
+    "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+    "command-checkpoint.mjs": "1f3df952d81bae0148e9f6f7840ea2117577cfc1ae66b48de941af869fc471e7",
+    "public/world.mjs": "d412a2dee8b4b1dc3779d1dabc46561383646ac63651dcf7cd30eeba8bd063a0",
+    "scripts/simulate-event.mjs": "9def73d2bcd7cd9617cd851f59088fd5f7338182d3afc6f976c0b6ed829c3f00",
+    "scripts/verify-results.mjs": "dee9387ae12e3660191e5f4fde25ab08889336c7ba8c4f9a55b82735204a0549"
+  },
+  "node": "v24.20.0",
+  "startedAt": "2026-11-17T20:48:30.388Z",
+  "players": 24,
+  "clockInjected": true,
+  "positionsAssigned": false,
+  "scoresSeeded": false,
+  "coverage": [
+    {
+      "id": "normal-entry",
+      "status": "verified",
+      "assertions": [
+        "24 invitations+sessions+SSE",
+        "both operators and safe display",
+        "setup and earned tutorial readiness"
+      ]
+    },
+    {
+      "id": "concurrent-barter",
+      "status": "verified",
+      "assertions": [
+        "12 dual-confirm transfers",
+        "aggregate inventory conserved",
+        "later supplied-item consumption reconciled independently"
+      ]
+    },
+    {
+      "id": "pause-resume",
+      "status": "verified",
+      "assertions": [
+        "wrong-phase task rejected without mutation",
+        "backup operator resumes",
+        "pause duration excluded from objective timer"
+      ]
+    },
+    {
+      "id": "cargo-route-consequences",
+      "status": "verified",
+      "assertions": [
+        "all three distinct cargo plans",
+        "protected vs shortcut primary33 vs19",
+        "same request concurrent retry only loads once",
+        "conflicting request reuse rejected"
+      ]
+    },
+    {
+      "id": "sqlite-restart",
+      "status": "verified",
+      "assertions": [
+        "same player cookies accepted",
+        "all progress and inventory preserved",
+        "fresh projection epoch",
+        "no position/score fixture assignment"
+      ]
+    },
+    {
+      "id": "timed-targeting",
+      "status": "verified",
+      "assertions": [
+        "18 correct signals per player across3 physical sites",
+        "one accepted miss costs primary",
+        "same-round retry rejected"
+      ]
+    },
+    {
+      "id": "payment-cycles",
+      "status": "verified",
+      "assertions": [
+        "partial payment loses on-time credit",
+        "late full payment loses on-time credit",
+        "optional expense changes retained budget",
+        "all3 cycles completed"
+      ]
+    },
+    {
+      "id": "reward-decisions",
+      "status": "verified",
+      "assertions": [
+        "all3 authored projects funded",
+        "garden+welcome spends12 without extra points",
+        "duplicate project rejected"
+      ]
+    },
+    {
+      "id": "all-secrets-mystery",
+      "status": "verified",
+      "assertions": [
+        "8 distinct clues per identity",
+        "duplicate secret adds no clue",
+        "incorrect mystery rejected as outcome",
+        "correct complete mystery earned"
+      ]
+    },
+    {
+      "id": "immutable-finale-awards-export",
+      "status": "verified",
+      "assertions": [
+        "24 real contributors",
+        "frozen scoring unchanged",
+        "15 unique qualifying winners",
+        "independent inventory/outcome/ranking reconciliation"
+      ]
+    }
+  ],
+  "expectedRejections": [
+    {
+      "type": "task",
+      "error": "Scoring is closed for this phase"
+    },
+    {
+      "type": "task",
+      "error": "Request ID reused with different action"
+    },
+    {
+      "type": "task",
+      "error": "This round is resolved; wait for the next outbreak"
+    },
+    {
+      "type": "rewardRedeem",
+      "error": "You already funded this project"
+    },
+    {
+      "type": "rewardRedeem",
+      "error": "You already funded this project"
+    },
+    {
+      "type": "rewardRedeem",
+      "error": "You already funded this project"
+    },
+    {
+      "type": "rewardRedeem",
+      "error": "You already funded this project"
+    },
+    {
+      "type": "rewardRedeem",
+      "error": "You already funded this project"
+    },
+    {
+      "type": "rewardRedeem",
+      "error": "You already funded this project"
+    },
+    {
+      "type": "rewardRedeem",
+      "error": "You already funded this project"
+    },
+    {
+      "type": "rewardRedeem",
+      "error": "You already funded this project"
+    },
+    {
+      "type": "quiz",
+      "error": "Scoring is closed for this phase"
+    }
+  ],
+  "chapters": [
+    {
+      "chapter": 1,
+      "completed": 24,
+      "quizFirstWrongImmutable": true,
+      "secretCount": 24,
+      "challengeCount": 24,
+      "firstPlayer": {
+        "step": 3,
+        "score": 75,
+        "mistakes": 1,
+        "complete": true,
+        "timeMs": 63000,
+        "challenge": true,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": false,
+            "explanation": "Planning essential services reduces last-minute friction. Confirm the actual services offered in your resident package."
+          },
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Benefits and availability depend on the actual package. Check its details."
+          }
+        ],
+        "secret": true,
+        "assists": [
+          "mixed-1"
+        ],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 33,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 5,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "chapter": 2,
+      "completed": 24,
+      "quizFirstWrongImmutable": true,
+      "secretCount": 24,
+      "challengeCount": 24,
+      "firstPlayer": {
+        "step": 6,
+        "score": 75,
+        "mistakes": 2,
+        "complete": true,
+        "timeMs": 56000,
+        "challenge": true,
+        "quiz": [
+          {
+            "choice": 2,
+            "correct": false,
+            "explanation": "Use the required filter dimensions and installation direction for the equipment."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "A delivered filter still needs to be installed. Follow the equipment guidance."
+          }
+        ],
+        "secret": true,
+        "assists": [
+          "mixed-1"
+        ],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 5,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 3,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "chapter": 3,
+      "completed": 24,
+      "quizFirstWrongImmutable": true,
+      "secretCount": 24,
+      "challengeCount": 24,
+      "firstPlayer": {
+        "step": 6,
+        "score": 75,
+        "mistakes": 2,
+        "complete": true,
+        "timeMs": 56000,
+        "challenge": true,
+        "quiz": [
+          {
+            "choice": 2,
+            "correct": false,
+            "explanation": "Verify requests through a trusted channel you already know."
+          },
+          {
+            "choice": 2,
+            "correct": true,
+            "explanation": "Protection services do not eliminate every risk. Confirm the actual services and reporting steps in the package."
+          }
+        ],
+        "secret": true,
+        "assists": [
+          "mixed-1"
+        ],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 6,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 0,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "chapter": 4,
+      "completed": 24,
+      "quizFirstWrongImmutable": true,
+      "secretCount": 24,
+      "challengeCount": 24,
+      "firstPlayer": {
+        "step": 6,
+        "score": 75,
+        "mistakes": 2,
+        "complete": true,
+        "timeMs": 60000,
+        "challenge": true,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": false,
+            "explanation": "Coverage depends on the policy, exclusions, limits, and circumstances. This game does not decide real claims."
+          },
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Use the actual policy and provider for coverage questions. All game outcomes are fictional."
+          }
+        ],
+        "secret": true,
+        "assists": [
+          "mixed-1"
+        ],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 59,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 4,
+          "filters": 6,
+          "food": 5,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "chapter": 5,
+      "completed": 24,
+      "quizFirstWrongImmutable": true,
+      "secretCount": 24,
+      "challengeCount": 24,
+      "firstPlayer": {
+        "step": 3,
+        "score": 75,
+        "mistakes": 2,
+        "complete": true,
+        "timeMs": 164000,
+        "challenge": true,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": false,
+            "explanation": "Describe the issue and location, then follow the actual reporting process."
+          },
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "Availability and service terms must be checked for the actual benefit. Replacement visuals do not change gameplay."
+          }
+        ],
+        "secret": true,
+        "assists": [
+          "mixed-1"
+        ],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 17,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": 18,
+        "siteHits": 0,
+        "targetHits": 18,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 3,
+          "filters": 6,
+          "food": 6,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "chapter": 6,
+      "completed": 24,
+      "quizFirstWrongImmutable": true,
+      "secretCount": 24,
+      "challengeCount": 24,
+      "firstPlayer": {
+        "step": 3,
+        "score": 60,
+        "mistakes": 2,
+        "complete": true,
+        "timeMs": 135001,
+        "challenge": true,
+        "quiz": [
+          {
+            "choice": 2,
+            "correct": false,
+            "explanation": "Game trading has no effect on real credit or financial accounts."
+          },
+          {
+            "choice": 0,
+            "correct": true,
+            "explanation": "Check the actual benefit terms and eligibility. Game payment cycles are fictional and do not predict credit outcomes."
+          }
+        ],
+        "secret": true,
+        "assists": [
+          "mixed-1"
+        ],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 110,
+        "primary": 2,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [
+          {
+            "income": 100,
+            "opening": 100,
+            "payment": 60,
+            "expense": 0,
+            "retained": 40,
+            "onTime": true,
+            "paidAt": 1794941790388,
+            "dueAt": 1794941829388
+          },
+          {
+            "income": 90,
+            "opening": 130,
+            "payment": 50,
+            "expense": 0,
+            "retained": 80,
+            "onTime": true,
+            "paidAt": 1794941829388,
+            "dueAt": 1794941874388
+          },
+          {
+            "income": 80,
+            "opening": 160,
+            "payment": 50,
+            "expense": 0,
+            "retained": 110,
+            "onTime": false,
+            "paidAt": 1794941919389,
+            "dueAt": 1794941919388
+          }
+        ],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 3,
+          "cable": 6
+        }
+      }
+    },
+    {
+      "chapter": 7,
+      "completed": 24,
+      "quizFirstWrongImmutable": true,
+      "secretCount": 24,
+      "challengeCount": 24,
+      "firstPlayer": {
+        "step": 7,
+        "score": 75,
+        "mistakes": 2,
+        "complete": true,
+        "timeMs": 60000,
+        "challenge": true,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": false,
+            "explanation": "Read the actual eligibility, availability, and redemption terms."
+          },
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "The game does not make real purchases or create financial rewards. Event prizes are handled separately by the organizer."
+          }
+        ],
+        "secret": true,
+        "assists": [
+          "mixed-1"
+        ],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 5,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 12,
+        "rewardUses": [
+          "garden",
+          "welcome"
+        ],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 4,
+          "filters": 6,
+          "food": 4,
+          "cable": 4
+        }
+      }
+    },
+    {
+      "chapter": 8,
+      "completed": 24,
+      "quizFirstWrongImmutable": true,
+      "secretCount": 24,
+      "challengeCount": 24,
+      "firstPlayer": {
+        "step": 3,
+        "score": 75,
+        "mistakes": 2,
+        "complete": true,
+        "timeMs": 30000,
+        "challenge": true,
+        "quiz": [
+          {
+            "choice": 1,
+            "correct": false,
+            "explanation": "Confirm availability and actual service terms for the home."
+          },
+          {
+            "choice": 1,
+            "correct": true,
+            "explanation": "The game illustrates everyday resident needs. Actual benefits and terms require confirmation with the package provider."
+          }
+        ],
+        "secret": true,
+        "assists": [
+          "mixed-1"
+        ],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 2,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 6,
+          "food": 6,
+          "cable": 3
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "independent": {
+    "rankingPass": true,
+    "rankingQualification": "Independent allocation conditional on frozen player inputs and recorded outcomes; not proof of authored-answer correctness.",
+    "inventoryReplayPass": true,
+    "recordedOutcomeReplayPass": true,
+    "fullActionReconciliationPass": true,
+    "fifteenQualifyingDistinctRecipients": true,
+    "rankingErrors": [],
+    "inventoryErrors": [],
+    "actionErrors": [],
+    "evidenceGaps": [],
+    "evidenceLimits": [
+      "Outcome replay uses recorded server correctness; it does not independently prove authored-answer correctness, physical proximity, browser behavior, or human acceptance."
+    ],
+    "journalBound": true,
+    "expectedAwards": [
+      {
+        "category": "Move day mayhem",
+        "playerId": "mixed-16",
+        "name": "Mixed neighbor 16",
+        "metric": 33,
+        "secondary": 0,
+        "reason": "Qualified",
+        "draw": "0c43869fba181791610e45d6e86665a39db64080a1f5df251b4dc6779669eb86",
+        "chapter": 0
+      },
+      {
+        "category": "The great filter shortage",
+        "playerId": "mixed-4",
+        "name": "Mixed neighbor 4",
+        "metric": 6,
+        "secondary": 0,
+        "reason": "Qualified",
+        "draw": "051b78d0a4c1eeda70f1b13cc06d43d2bde5cd11d6da0d25459854f72327b65c",
+        "chapter": 1
+      },
+      {
+        "category": "Attack of the clones",
+        "playerId": "mixed-9",
+        "name": "Mixed neighbor 9",
+        "metric": 6,
+        "secondary": 0,
+        "reason": "Qualified",
+        "draw": "12ba31b45cc5d98627efadbb0cadf1f0625acbfd443ac8d60cdfb424b10dfff5",
+        "chapter": 2
+      },
+      {
+        "category": "RIP, my apartment",
+        "playerId": "mixed-12",
+        "name": "Mixed neighbor 12",
+        "metric": 60,
+        "secondary": 0,
+        "reason": "Qualified",
+        "draw": "113c42223d550a9eb5c5703eb8b0fd50c3413c0f7d06ce7c7b7034f40997efbc",
+        "chapter": 3
+      },
+      {
+        "category": "Pest resistance",
+        "playerId": "mixed-1",
+        "name": "Mixed neighbor 1",
+        "metric": 18,
+        "secondary": 0,
+        "reason": "Qualified",
+        "draw": "00a46fcaf2506f1f359bdae990999da97f27c4a7b1ff1b2b6b18865cb108da75",
+        "chapter": 4
+      },
+      {
+        "category": "Credit where it’s due",
+        "playerId": "mixed-6",
+        "name": "Mixed neighbor 6",
+        "metric": 3,
+        "secondary": 110,
+        "reason": "Qualified",
+        "draw": "033c7d4dfa5ba1842928e85094fe0b37576ba81b56cff9907c95edf6b1d01a72",
+        "chapter": 5
+      },
+      {
+        "category": "Rewards rebellion",
+        "playerId": "mixed-21",
+        "name": "Mixed neighbor 21",
+        "metric": 6,
+        "secondary": 0,
+        "reason": "Qualified",
+        "draw": "03274473a1c0cd68e5a7caa28953e74ad9598caf8f10a19b94eebb1e1da90919",
+        "chapter": 6
+      },
+      {
+        "category": "Reconnect humanity",
+        "playerId": "mixed-10",
+        "name": "Mixed neighbor 10",
+        "metric": 3,
+        "secondary": 0,
+        "reason": "Qualified",
+        "draw": "29f9df8bdf5079477b8831f1a0a3fca1dada1b323550e01006358174cd1deeec",
+        "chapter": 7
+      },
+      {
+        "category": "Top hoarder",
+        "playerId": "mixed-11",
+        "name": "Mixed neighbor 11",
+        "metric": 0,
+        "secondary": 8,
+        "reason": "Qualified",
+        "draw": "0b80833617ed6f7305610abf74473acf02fe13ddd47af8f36ff7c742a0199944"
+      },
+      {
+        "category": "Trailblazer",
+        "playerId": "mixed-22",
+        "name": "Mixed neighbor 22",
+        "metric": -579000,
+        "secondary": 755,
+        "reason": "Qualified",
+        "draw": "48e6437372d0119a45c2df88ef4591736a2b2f90246c60f9966d2775f5045ee9"
+      },
+      {
+        "category": "Neighborhood hero",
+        "playerId": "mixed-13",
+        "name": "Mixed neighbor 13",
+        "metric": 8,
+        "secondary": 1,
+        "reason": "Qualified",
+        "draw": "18d4c2cb20a5295ac4bc85d7d0f2664038ad29f66d45559b64958b16afff84cb"
+      },
+      {
+        "category": "Human intelligence champion",
+        "playerId": "mixed-18",
+        "name": "Mixed neighbor 18",
+        "metric": 16,
+        "secondary": 8,
+        "reason": "Qualified",
+        "draw": "05bd580fd2ea0af036ff5845749b5b964d902c17fcd3adf611f73bcf717afc26"
+      },
+      {
+        "category": "Easter egg hunter",
+        "playerId": "mixed-8",
+        "name": "Mixed neighbor 8",
+        "metric": 9,
+        "secondary": 8,
+        "reason": "Qualified",
+        "draw": "5f77f64a74ff0bd8dc32ec09d8c24558ed1a9fcfdb3df5307b62f6798e01420b"
+      },
+      {
+        "category": "Master trader",
+        "playerId": "mixed-23",
+        "name": "Mixed neighbor 23",
+        "metric": 1,
+        "secondary": 1,
+        "reason": "Qualified",
+        "draw": "1cabd2e8bf1ffaf1da6d172f07e6549c79d32466d7f094c805c9b75414a4f1b0"
+      },
+      {
+        "category": "All-round survivor",
+        "playerId": "mixed-20",
+        "name": "Mixed neighbor 20",
+        "metric": 99.34210526315789,
+        "secondary": 8,
+        "reason": "Qualified",
+        "draw": "983aabb75d1cfdf5f0f3630127bdfb50a8071195ef672506b88f5b307f8abd41"
+      }
+    ],
+    "rankings": [
+      {
+        "category": "Move day mayhem",
+        "chapter": 0,
+        "rows": [
+          {
+            "id": "mixed-16",
+            "name": "Mixed neighbor 16",
+            "metric": 33,
+            "secondary": 0,
+            "draw": "0c43869fba181791610e45d6e86665a39db64080a1f5df251b4dc6779669eb86",
+            "eligible": true
+          },
+          {
+            "id": "mixed-12",
+            "name": "Mixed neighbor 12",
+            "metric": 33,
+            "secondary": 0,
+            "draw": "0ca8a709663e295c3ec5708421812b2ede73374371b738b7b05b7464b7ea28c5",
+            "eligible": true
+          },
+          {
+            "id": "mixed-2",
+            "name": "Mixed neighbor 2",
+            "metric": 33,
+            "secondary": 0,
+            "draw": "0ef8f383955d93c993b1a9b9395110e74250ad55e43b6c6502fcf455dc5e8b9c",
+            "eligible": true
+          },
+          {
+            "id": "mixed-14",
+            "name": "Mixed neighbor 14",
+            "metric": 33,
+            "secondary": 0,
+            "draw": "13daa69218aba03283eafaf03e5651a70d64029924832cef6fae0368fbc7e80c",
+            "eligible": true
+          },
+          {
+            "id": "mixed-10",
+            "name": "Mixed neighbor 10",
+            "metric": 33,
+            "secondary": 0,
+            "draw": "5cf498389e5f27addfcde0af8899ec5cf32d85865408ec7996c6bf5eec01f3e3",
+            "eligible": true
+          },
+          {
+            "id": "mixed-22",
+            "name": "Mixed neighbor 22",
+            "metric": 33,
+            "secondary": 0,
+            "draw": "6d8a58d460992298fc48d82b6a2c20cfc8f024180515482e7d4fb3cfbbd38481",
+            "eligible": true
+          },
+          {
+            "id": "mixed-18",
+            "name": "Mixed neighbor 18",
+            "metric": 33,
+            "secondary": 0,
+            "draw": "9ba1270a79c6c1fa191d1d51584773e511916f6bdbe12ba3ffb26cf6af8eac58",
+            "eligible": true
+          },
+          {
+            "id": "mixed-20",
+            "name": "Mixed neighbor 20",
+            "metric": 33,
+            "secondary": 0,
+            "draw": "a2d5088a4e8b9f60c821f73654ea861be3af9464232c0318480857c2df804011",
+            "eligible": true
+          },
+          {
+            "id": "mixed-6",
+            "name": "Mixed neighbor 6",
+            "metric": 33,
+            "secondary": 0,
+            "draw": "a78e89d4fb0e66957e45f9b1061c71ef4a0fff2af1964b68862209e71304453c",
+            "eligible": true
+          },
+          {
+            "id": "mixed-8",
+            "name": "Mixed neighbor 8",
+            "metric": 33,
+            "secondary": 0,
+            "draw": "d461d40e41c3718a34717dc1c2918673c3374ea88653d617dfa84660072ef9ed",
+            "eligible": true
+          },
+          {
+            "id": "mixed-4",
+            "name": "Mixed neighbor 4",
+            "metric": 33,
+            "secondary": 0,
+            "draw": "d6d9d831892597bc92a41152bad66a1d049e57c9f7f6ea8a0c130033ba9240cf",
+            "eligible": true
+          },
+          {
+            "id": "mixed-0",
+            "name": "Mixed neighbor 0",
+            "metric": 33,
+            "secondary": -1,
+            "draw": "8df0663ee829293664cfba85a0522501f4a593de53a57beedce8ebd641ef3e0f",
+            "eligible": true
+          },
+          {
+            "id": "mixed-7",
+            "name": "Mixed neighbor 7",
+            "metric": 19,
+            "secondary": 0,
+            "draw": "2322ac57f7289ced3d26ff766260d6cd897b57bf674dce872f61ee1b66a73e1f",
+            "eligible": true
+          },
+          {
+            "id": "mixed-11",
+            "name": "Mixed neighbor 11",
+            "metric": 19,
+            "secondary": 0,
+            "draw": "2fc1b30c51f83d0df3ab3b8e6d297b92309c4d76d3c52807293abbc681afb777",
+            "eligible": true
+          },
+          {
+            "id": "mixed-5",
+            "name": "Mixed neighbor 5",
+            "metric": 19,
+            "secondary": 0,
+            "draw": "347c3fc9ee06f047eef885effe037d510dc0cdd660c6cbfd7a10d08e66520ef7",
+            "eligible": true
+          },
+          {
+            "id": "mixed-21",
+            "name": "Mixed neighbor 21",
+            "metric": 19,
+            "secondary": 0,
+            "draw": "34e752fba2e42da0a3cae01aecf4f6874dd5b4615267fff62340e19640886c9f",
+            "eligible": true
+          },
+          {
+            "id": "mixed-9",
+            "name": "Mixed neighbor 9",
+            "metric": 19,
+            "secondary": 0,
+            "draw": "4b1a648587cac0c2fc7747ac4e15de36d1af9586d3fa9f39b1ca77411a9e7432",
+            "eligible": true
+          },
+          {
+            "id": "mixed-13",
+            "name": "Mixed neighbor 13",
+            "metric": 19,
+            "secondary": 0,
+            "draw": "4f0f288b4a398bd0041c94bdfbf75721b29f200b91cd94003fd852310acad668",
+            "eligible": true
+          },
+          {
+            "id": "mixed-19",
+            "name": "Mixed neighbor 19",
+            "metric": 19,
+            "secondary": 0,
+            "draw": "71416ed40208cbd20caff591fb4997e0cdb91ad14387035208f3722c7be81856",
+            "eligible": true
+          },
+          {
+            "id": "mixed-15",
+            "name": "Mixed neighbor 15",
+            "metric": 19,
+            "secondary": 0,
+            "draw": "7a78cccd7496c31f94916782363d8c6363ccf1cff5f0720dd93ba86b44d7ab93",
+            "eligible": true
+          },
+          {
+            "id": "mixed-17",
+            "name": "Mixed neighbor 17",
+            "metric": 19,
+            "secondary": 0,
+            "draw": "a102383f1626aa568a74545bd7430c0559373c9cc5e01132eb1dfbe2e8a419fc",
+            "eligible": true
+          },
+          {
+            "id": "mixed-3",
+            "name": "Mixed neighbor 3",
+            "metric": 19,
+            "secondary": 0,
+            "draw": "bc2267919c4abe70f3f0a2aa27cdb3c4436dfa2b7f0c986f501094a28539f715",
+            "eligible": true
+          },
+          {
+            "id": "mixed-1",
+            "name": "Mixed neighbor 1",
+            "metric": 19,
+            "secondary": 0,
+            "draw": "d6ccc8bb87a2f8ed81585d1d962c9b748570f0e861bc34e013d7705404832032",
+            "eligible": true
+          },
+          {
+            "id": "mixed-23",
+            "name": "Mixed neighbor 23",
+            "metric": 19,
+            "secondary": 0,
+            "draw": "de5a36c5e5d15f2b201138278cfc722f0eca8c05deaf365a8c48adeaf0f0c9b7",
+            "eligible": true
+          }
+        ]
+      },
+      {
+        "category": "The great filter shortage",
+        "chapter": 1,
+        "rows": [
+          {
+            "id": "mixed-4",
+            "name": "Mixed neighbor 4",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "051b78d0a4c1eeda70f1b13cc06d43d2bde5cd11d6da0d25459854f72327b65c",
+            "eligible": true
+          },
+          {
+            "id": "mixed-19",
+            "name": "Mixed neighbor 19",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "05cf0b37928dd90eec07b72f83e8f0382c4dd266ab6bc877e3bdd9d2bd0adcef",
+            "eligible": true
+          },
+          {
+            "id": "mixed-9",
+            "name": "Mixed neighbor 9",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "1420c4aba6a263f60ad9f5bc8016e2a0a609062bad273f06ca236b3caa3067c3",
+            "eligible": true
+          },
+          {
+            "id": "mixed-1",
+            "name": "Mixed neighbor 1",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "1acdfeb29fe4b33fb1ff09a56cbf17ef687272ff4ab76d87e5d3db3b80842de5",
+            "eligible": true
+          },
+          {
+            "id": "mixed-10",
+            "name": "Mixed neighbor 10",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "3433223d0f7ed96cc6d9e4b02b8d39eb474a7180597f88ec5e72739de953540c",
+            "eligible": true
+          },
+          {
+            "id": "mixed-7",
+            "name": "Mixed neighbor 7",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "407256903fd50617d62e8912ff608c605105e6565dfe9bf2fc9fbfedfd9313b4",
+            "eligible": true
+          },
+          {
+            "id": "mixed-22",
+            "name": "Mixed neighbor 22",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "5a38fc79437feb117a47b1a592f87bf99fbcdc53bc7754bbdb5f141231e10ac0",
+            "eligible": true
+          },
+          {
+            "id": "mixed-20",
+            "name": "Mixed neighbor 20",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "5ec689ac7b98e1f99072656e23c2cfeeaf382ffb38f15ca34728bd69f7a983f4",
+            "eligible": true
+          },
+          {
+            "id": "mixed-13",
+            "name": "Mixed neighbor 13",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "8eeb91d0ae98ae49594deb205e91b63ce106838921f0781943f0317af04e29f2",
+            "eligible": true
+          },
+          {
+            "id": "mixed-3",
+            "name": "Mixed neighbor 3",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "93c6d554a71bcc117a4757ce4237be358912c35a25164b9e737ee44e5d63c471",
+            "eligible": true
+          },
+          {
+            "id": "mixed-23",
+            "name": "Mixed neighbor 23",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "9963e9b86703c50c79685da763a08eea338edd8fda816e5a0463cc22a74bc607",
+            "eligible": true
+          },
+          {
+            "id": "mixed-16",
+            "name": "Mixed neighbor 16",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "9e782362a3151cb8a86c0d72292ff2b87b9b122b0e97416bb61e069473dc0310",
+            "eligible": false
+          },
+          {
+            "id": "mixed-15",
+            "name": "Mixed neighbor 15",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "9f8ee109fcdbf03fafd5dbaed8c3401478cceedbe9c90e383e6b3e30bd72ae7d",
+            "eligible": true
+          },
+          {
+            "id": "mixed-18",
+            "name": "Mixed neighbor 18",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "a8f65b8637dbc4052b7af591c5d396ca45c4822d7213826c83e8bb036d551332",
+            "eligible": true
+          },
+          {
+            "id": "mixed-5",
+            "name": "Mixed neighbor 5",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "b961d8828ca30aac14cc6864ae312dc3b25a01e34b7be1a0230f2af617b7fabd",
+            "eligible": true
+          },
+          {
+            "id": "mixed-6",
+            "name": "Mixed neighbor 6",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "c6036ff7e21b7d7874411dcabaf06d3e8dac729064e51185af8187d01c85ddbe",
+            "eligible": true
+          },
+          {
+            "id": "mixed-14",
+            "name": "Mixed neighbor 14",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "d05de92ab7aa47a5003400b47a6751df1217bbe3eb6c15b28d3fab1d77d33912",
+            "eligible": true
+          },
+          {
+            "id": "mixed-17",
+            "name": "Mixed neighbor 17",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "ddcb7a6e91fe59be4b7003df6286a934fa66214adfbe73c66ddbe0efaa226cac",
+            "eligible": true
+          },
+          {
+            "id": "mixed-11",
+            "name": "Mixed neighbor 11",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "de90f175cc7134721b0925170af5680a785111f13248a7b1099d6e31d523b3a4",
+            "eligible": true
+          },
+          {
+            "id": "mixed-8",
+            "name": "Mixed neighbor 8",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "df2102ebb863cade30d6b4a410d58d751f01230eb42c2feb1bfaedc98b70eaea",
+            "eligible": true
+          },
+          {
+            "id": "mixed-12",
+            "name": "Mixed neighbor 12",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "e0c42a53d920567a59dc8c941851df814cfd244d2d24793324c693ab3d8cb561",
+            "eligible": true
+          },
+          {
+            "id": "mixed-21",
+            "name": "Mixed neighbor 21",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "e75fcfae9babf559b0a7d5a5c2a737262afd637d81ff35a4a2466a7968646b17",
+            "eligible": true
+          },
+          {
+            "id": "mixed-2",
+            "name": "Mixed neighbor 2",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "efc18af0cbc2a3c62ab27b0eaea214bd6d1245849e8e54a67d6157c7a6a1c30d",
+            "eligible": true
+          },
+          {
+            "id": "mixed-0",
+            "name": "Mixed neighbor 0",
+            "metric": 5,
+            "secondary": -2,
+            "draw": "877a0ccfdfdcfa70515e87d1eab9a4e4bca02138b459c7a017740bb6f294cf7a",
+            "eligible": true
+          }
+        ]
+      },
+      {
+        "category": "Attack of the clones",
+        "chapter": 2,
+        "rows": [
+          {
+            "id": "mixed-9",
+            "name": "Mixed neighbor 9",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "12ba31b45cc5d98627efadbb0cadf1f0625acbfd443ac8d60cdfb424b10dfff5",
+            "eligible": true
+          },
+          {
+            "id": "mixed-6",
+            "name": "Mixed neighbor 6",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "141a9e3444da22029ac3f5a2eab4d06b00e4698a0c9dc27193c543f987876ab1",
+            "eligible": true
+          },
+          {
+            "id": "mixed-11",
+            "name": "Mixed neighbor 11",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "185951f7fc71bf70d1734befeb5bc511c3ad0702808708df07f7ba021489c60c",
+            "eligible": true
+          },
+          {
+            "id": "mixed-18",
+            "name": "Mixed neighbor 18",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "222da7c58916224cc0efc39d1633d225b5f6bf5ad7032a2313a57651c98d005d",
+            "eligible": true
+          },
+          {
+            "id": "mixed-16",
+            "name": "Mixed neighbor 16",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "28e381efb89a55042d64491e3c6bfea51ccb11f4d02b62179201a2484ca54869",
+            "eligible": false
+          },
+          {
+            "id": "mixed-22",
+            "name": "Mixed neighbor 22",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "2d76e235a323ce874685c4c94e175ba96509e917c18e1d433173b677e96847fc",
+            "eligible": true
+          },
+          {
+            "id": "mixed-10",
+            "name": "Mixed neighbor 10",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "33d98aed3e7177a8c3ce002f421c08e5f2299365e274b3a596d912b2e89c1053",
+            "eligible": true
+          },
+          {
+            "id": "mixed-19",
+            "name": "Mixed neighbor 19",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "36dd17a51bedf3cbe5e1789b9412b624249d3192a1f995fee809dd3173403782",
+            "eligible": true
+          },
+          {
+            "id": "mixed-2",
+            "name": "Mixed neighbor 2",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "5eb36ab4edfbc68302df867465c2d82e26d99d8a7421b33b16f1d6643b3e80c9",
+            "eligible": true
+          },
+          {
+            "id": "mixed-4",
+            "name": "Mixed neighbor 4",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "5ff1b3893f51e06bf5940c5f98784c75c203d3e1c9f3a73ec36369bab0895647",
+            "eligible": false
+          },
+          {
+            "id": "mixed-13",
+            "name": "Mixed neighbor 13",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "614f82efa9a1854ed1ece46dc2d43c6e615723df32d4c1a84e116fc54aedee2a",
+            "eligible": true
+          },
+          {
+            "id": "mixed-12",
+            "name": "Mixed neighbor 12",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "6dd886d76417459395ca6440ac9d11dd088bdbc27b41591167aa26a4010f3969",
+            "eligible": true
+          },
+          {
+            "id": "mixed-8",
+            "name": "Mixed neighbor 8",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "9128cbdd6d39eb28a4ae6849488145b19b7c637ac1cf9afe3ebeb248ef20d260",
+            "eligible": true
+          },
+          {
+            "id": "mixed-15",
+            "name": "Mixed neighbor 15",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "a057fa82de45ea1ac4f6b21113d11bd2123e3e6c269ec3b9e04f63067b9518d3",
+            "eligible": true
+          },
+          {
+            "id": "mixed-1",
+            "name": "Mixed neighbor 1",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "a5fdc75b6c0c29170489be2144781e279b75e2a13b3b5d3a556a6b0cdb625137",
+            "eligible": true
+          },
+          {
+            "id": "mixed-20",
+            "name": "Mixed neighbor 20",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "b0e103111962ad597dc7fca4a6024a4fdd044d124fc4f1ce13825fc9712d2b84",
+            "eligible": true
+          },
+          {
+            "id": "mixed-3",
+            "name": "Mixed neighbor 3",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "bd93bcc9c8225542763902a4638cca5fc37cb473bc65389d8a4be18d98a65762",
+            "eligible": true
+          },
+          {
+            "id": "mixed-14",
+            "name": "Mixed neighbor 14",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "bf410f7d3b053e416c464cb0da9247d4575b2d1295b231945b28597e267fc3ec",
+            "eligible": true
+          },
+          {
+            "id": "mixed-5",
+            "name": "Mixed neighbor 5",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "d14d767135cfdc3d93e89199d668a199aa1c6aa84c517f7cd8d7565efe0a2e07",
+            "eligible": true
+          },
+          {
+            "id": "mixed-17",
+            "name": "Mixed neighbor 17",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "db25b9a09fc56400d47883c363b46361203d1f22adf49d2b42893e2a774630c6",
+            "eligible": true
+          },
+          {
+            "id": "mixed-21",
+            "name": "Mixed neighbor 21",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "e2bced4b6ab19eb054b8b149336d20b22c99f4846d384914b0ca06a9d1d7e11d",
+            "eligible": true
+          },
+          {
+            "id": "mixed-7",
+            "name": "Mixed neighbor 7",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "efb61db07da98462ef539258ca0ef025bd02a93959c2e53ae1370253a3661911",
+            "eligible": true
+          },
+          {
+            "id": "mixed-23",
+            "name": "Mixed neighbor 23",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "f785ddbcf63cbe67c150c435a8f907a868e569eb3fa000e73647aed2026cb71f",
+            "eligible": true
+          },
+          {
+            "id": "mixed-0",
+            "name": "Mixed neighbor 0",
+            "metric": 6,
+            "secondary": -2,
+            "draw": "95b15a96821c7e0e68e2b7626424fbc11c5013d56fce0675eb19cbf61bb871ea",
+            "eligible": true
+          }
+        ]
+      },
+      {
+        "category": "RIP, my apartment",
+        "chapter": 3,
+        "rows": [
+          {
+            "id": "mixed-12",
+            "name": "Mixed neighbor 12",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "113c42223d550a9eb5c5703eb8b0fd50c3413c0f7d06ce7c7b7034f40997efbc",
+            "eligible": true
+          },
+          {
+            "id": "mixed-13",
+            "name": "Mixed neighbor 13",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "35dd1f4302b468885745a328bc743d520ff472a9f3eb70f3464a2c12bb14bf10",
+            "eligible": true
+          },
+          {
+            "id": "mixed-18",
+            "name": "Mixed neighbor 18",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "3cf785f82a95e414af2b737baf30af83016cccb1fc56cde4d6c2e6f48255a825",
+            "eligible": true
+          },
+          {
+            "id": "mixed-7",
+            "name": "Mixed neighbor 7",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "4619f40aa927a9306ef7c2bc3068d1aac60fab155b687997420e9780abcb6d87",
+            "eligible": true
+          },
+          {
+            "id": "mixed-15",
+            "name": "Mixed neighbor 15",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "66c7caf1191b1300127f25ae606983a8cbfc62a62bdaeb7338e7e04666bb6f72",
+            "eligible": true
+          },
+          {
+            "id": "mixed-14",
+            "name": "Mixed neighbor 14",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "6749a210b11537fecd532577d6aa57217d26711155422d2b9630cf32a75db63e",
+            "eligible": true
+          },
+          {
+            "id": "mixed-16",
+            "name": "Mixed neighbor 16",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "762f7f1e5b38c4fdd6dd5a3bb61c89d27e486fa8ae3a9b4a43c7503f1d033222",
+            "eligible": false
+          },
+          {
+            "id": "mixed-10",
+            "name": "Mixed neighbor 10",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "7b929e287b887c34226b25ddcd4411486e8e03953f098909e32c2bfe197c9721",
+            "eligible": true
+          },
+          {
+            "id": "mixed-23",
+            "name": "Mixed neighbor 23",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "7eddc21c69e84ab51260655300f4579105be2c7f9c9dc52b75df0467d100a36d",
+            "eligible": true
+          },
+          {
+            "id": "mixed-5",
+            "name": "Mixed neighbor 5",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "80e05a7934b1bb90c0ee9cdc93f71353a5daa7705ceef9ff42f89c11307c6af8",
+            "eligible": true
+          },
+          {
+            "id": "mixed-4",
+            "name": "Mixed neighbor 4",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "94c9a2fb27247002beb07035fa7fb71491b6ebee5c9f92e09f3dd88e80bb34a9",
+            "eligible": false
+          },
+          {
+            "id": "mixed-20",
+            "name": "Mixed neighbor 20",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "9516c9df941cf91a334ac3139a2908e0b6109c7d6e852947abed2ad870f21660",
+            "eligible": true
+          },
+          {
+            "id": "mixed-21",
+            "name": "Mixed neighbor 21",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "ac5cc4bac538455be88e53efad5fb15f19a969e36b6cfca2c960d5ddcaf15b43",
+            "eligible": true
+          },
+          {
+            "id": "mixed-17",
+            "name": "Mixed neighbor 17",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "ad6cc494b86c1a4674f494cbbb880a3b6f019903174f6b325dbe193e4cb64258",
+            "eligible": true
+          },
+          {
+            "id": "mixed-3",
+            "name": "Mixed neighbor 3",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "b012b7c57d675b2f88fff6dded255c4b99b4306ed57c6d90121915c38c8826d4",
+            "eligible": true
+          },
+          {
+            "id": "mixed-9",
+            "name": "Mixed neighbor 9",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "b19150aef42b0250ccb7b73c91303889687e72bf8a74f0cd25338c84c611ebf9",
+            "eligible": false
+          },
+          {
+            "id": "mixed-8",
+            "name": "Mixed neighbor 8",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "bb5c1e263441024328e234eeb51361e1a2d3581beb66d2aed09998c81b91af6d",
+            "eligible": true
+          },
+          {
+            "id": "mixed-11",
+            "name": "Mixed neighbor 11",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "bdeda45dc1572c4698ba1fc11e0d674fddd2ade202496577fc46b5f2bbf05775",
+            "eligible": true
+          },
+          {
+            "id": "mixed-19",
+            "name": "Mixed neighbor 19",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "cdb7573f74c5a6389c93d89c2032296003074e1c6aa1821bcdb95363fe0e7d9d",
+            "eligible": true
+          },
+          {
+            "id": "mixed-22",
+            "name": "Mixed neighbor 22",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "cecbe3d7088416239c4e74d33d66cdbf36a2020acf0927ac6dc3c3f0fc82360d",
+            "eligible": true
+          },
+          {
+            "id": "mixed-1",
+            "name": "Mixed neighbor 1",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "eb9b928f467b07f18ca428981b74e5f412858ba0b3c1bea7ef9c1cb1d7492678",
+            "eligible": true
+          },
+          {
+            "id": "mixed-6",
+            "name": "Mixed neighbor 6",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "ede7025ea35a448a45f1bff0e76fd9a85f4e217f105896e8b1cf59624122f0e9",
+            "eligible": true
+          },
+          {
+            "id": "mixed-2",
+            "name": "Mixed neighbor 2",
+            "metric": 60,
+            "secondary": 0,
+            "draw": "ef028819c21ac237070297f60ae827e8b7d9ea9d2bc125f3a1041764a59037ef",
+            "eligible": true
+          },
+          {
+            "id": "mixed-0",
+            "name": "Mixed neighbor 0",
+            "metric": 59,
+            "secondary": -2,
+            "draw": "da2736df9a62b2e5ec64377bed1fe02d18de44b1434b56746863863a71f2eaa8",
+            "eligible": true
+          }
+        ]
+      },
+      {
+        "category": "Pest resistance",
+        "chapter": 4,
+        "rows": [
+          {
+            "id": "mixed-1",
+            "name": "Mixed neighbor 1",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "00a46fcaf2506f1f359bdae990999da97f27c4a7b1ff1b2b6b18865cb108da75",
+            "eligible": true
+          },
+          {
+            "id": "mixed-14",
+            "name": "Mixed neighbor 14",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "087e5bdae1f109faaa40b6748a60adb9a7f66c6c4fcd43d2a3e4bd2fabeed069",
+            "eligible": true
+          },
+          {
+            "id": "mixed-19",
+            "name": "Mixed neighbor 19",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "0d8155a86a3a4a171d1481bb2f232e52f3bbed99360fd2b1601a204eeaf0bc72",
+            "eligible": true
+          },
+          {
+            "id": "mixed-22",
+            "name": "Mixed neighbor 22",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "12529ce819f61db608f20d4b2ec825b294b7453089501352ca7a7fc1efdf44c3",
+            "eligible": true
+          },
+          {
+            "id": "mixed-23",
+            "name": "Mixed neighbor 23",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "13fa4fb8d7f46b3890bcf9b3391528954817f881dca2100f24c4d343e24ec89e",
+            "eligible": true
+          },
+          {
+            "id": "mixed-21",
+            "name": "Mixed neighbor 21",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "15464c024d8da7428c934c5c835cb17c421b6a0d7d2364a48191c0fafb60cea3",
+            "eligible": true
+          },
+          {
+            "id": "mixed-12",
+            "name": "Mixed neighbor 12",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "1adf1cf27cb557f53dee4331ab8ee78f83c55d8befc85bb70d427f04f380e6af",
+            "eligible": false
+          },
+          {
+            "id": "mixed-15",
+            "name": "Mixed neighbor 15",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "355af52082b58adca7fccc2ce8ec350914d5541f1396d636c22fb4b66b7c44fb",
+            "eligible": true
+          },
+          {
+            "id": "mixed-13",
+            "name": "Mixed neighbor 13",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "4bddd736066d4c8ea7fa643a5548323a4af410b024d38d09c98026ccac6d66e8",
+            "eligible": true
+          },
+          {
+            "id": "mixed-4",
+            "name": "Mixed neighbor 4",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "67f3e28d5f7938b39d4c40b26e93a90ea8dd2b552c48a80f699948e06e5de829",
+            "eligible": false
+          },
+          {
+            "id": "mixed-2",
+            "name": "Mixed neighbor 2",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "7630c95ce52ffdfd84eef460931220e31dafd0b17186b1fc58ed68a0ab583ef1",
+            "eligible": true
+          },
+          {
+            "id": "mixed-20",
+            "name": "Mixed neighbor 20",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "79a45bcdc6436677182a246d5f4414169e496e7dbb2203907abdf191a6fef50c",
+            "eligible": true
+          },
+          {
+            "id": "mixed-11",
+            "name": "Mixed neighbor 11",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "7b6b5652067ee5a0f13b0cc8b3add50223d3a714dd166e024321bd614e2f44cd",
+            "eligible": true
+          },
+          {
+            "id": "mixed-10",
+            "name": "Mixed neighbor 10",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "8f2fec5d9203d746b1c0215990ba5d6e521ae26b812d05f224b64468f3959ce8",
+            "eligible": true
+          },
+          {
+            "id": "mixed-18",
+            "name": "Mixed neighbor 18",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "a2cd73b675eb3c5a0b840d8d0239ae329055a5120e8071000378a9e5d30f2445",
+            "eligible": true
+          },
+          {
+            "id": "mixed-3",
+            "name": "Mixed neighbor 3",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "aa294654f10a0e921bd5175988985389a26829d5349df2b29c757e80b8913e03",
+            "eligible": true
+          },
+          {
+            "id": "mixed-6",
+            "name": "Mixed neighbor 6",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "b787d4501666260969e146f16082e65bab3bdf0081797e3d758b294dccb922ac",
+            "eligible": true
+          },
+          {
+            "id": "mixed-8",
+            "name": "Mixed neighbor 8",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "cc19ac5105578818e62cc854bbb746f3009318c49b3dd02eae384c0998e6f77a",
+            "eligible": true
+          },
+          {
+            "id": "mixed-9",
+            "name": "Mixed neighbor 9",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "cf29f6a3bc1ee8259e143ef2f4f28e218847145c0d73c753c95082ced1118dec",
+            "eligible": false
+          },
+          {
+            "id": "mixed-7",
+            "name": "Mixed neighbor 7",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "d37e6d21cfe81df5b4d24c8384e5578aa05dfd7616f191494ffaedc9c9001e16",
+            "eligible": true
+          },
+          {
+            "id": "mixed-5",
+            "name": "Mixed neighbor 5",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "e1e40b61102787101707437a55bf201c71ff54b16856e6e84628b7a2b1cc4718",
+            "eligible": true
+          },
+          {
+            "id": "mixed-17",
+            "name": "Mixed neighbor 17",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "ebf2307e11cd22aafad1f2653bcac2e44f519771dc84bbe18df09794cda2a644",
+            "eligible": true
+          },
+          {
+            "id": "mixed-16",
+            "name": "Mixed neighbor 16",
+            "metric": 18,
+            "secondary": 0,
+            "draw": "ef5d6e4ab47b2f2de3e5c86b1ecb5f3c753970a8a42b5b1a8b470129ce2b1c69",
+            "eligible": false
+          },
+          {
+            "id": "mixed-0",
+            "name": "Mixed neighbor 0",
+            "metric": 17,
+            "secondary": -2,
+            "draw": "016f0ae5e8d60390b358497c226fb5ccb08fa52b0a9c5fcb1e95a67b9bb9a826",
+            "eligible": true
+          }
+        ]
+      },
+      {
+        "category": "Credit where it’s due",
+        "chapter": 5,
+        "rows": [
+          {
+            "id": "mixed-6",
+            "name": "Mixed neighbor 6",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "033c7d4dfa5ba1842928e85094fe0b37576ba81b56cff9907c95edf6b1d01a72",
+            "eligible": true
+          },
+          {
+            "id": "mixed-14",
+            "name": "Mixed neighbor 14",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "0a6fcd3d1b70deda7ed63d589638abbebaadbe60e47163a92548d6cc1f2ecd8a",
+            "eligible": true
+          },
+          {
+            "id": "mixed-16",
+            "name": "Mixed neighbor 16",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "290db9ade63e97505b966cdefd7ba620ca190cd7aa236f457932b461b359a473",
+            "eligible": false
+          },
+          {
+            "id": "mixed-5",
+            "name": "Mixed neighbor 5",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "2cca7ca6c0deefb1b48e36234ec4729904b363211a342e1d8a772cb62b6864d6",
+            "eligible": true
+          },
+          {
+            "id": "mixed-18",
+            "name": "Mixed neighbor 18",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "2f52c74741950a97758b523cb7937dfaf2b27975cac85207c7229dd4482fe6b4",
+            "eligible": true
+          },
+          {
+            "id": "mixed-19",
+            "name": "Mixed neighbor 19",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "37715ef2ad231d2e97a69253dc96a647f7a91f11253a2ed7cd2d19fb97b16785",
+            "eligible": true
+          },
+          {
+            "id": "mixed-15",
+            "name": "Mixed neighbor 15",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "3f9fb621ca91e87c5b6a2060dd369a719deb8bbf15052327536cd50eefdf23ad",
+            "eligible": true
+          },
+          {
+            "id": "mixed-21",
+            "name": "Mixed neighbor 21",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "5cab86e754f18458b8b2717e6460059e39351ea0031798177e0db057ecdce296",
+            "eligible": true
+          },
+          {
+            "id": "mixed-9",
+            "name": "Mixed neighbor 9",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "6897ff36e8adf944cfc9ce0d44995e88e4e8267541e506485a9ca57a578af4d2",
+            "eligible": false
+          },
+          {
+            "id": "mixed-17",
+            "name": "Mixed neighbor 17",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "6a2b04ab56efb288027acf4c2f79a0f4ae702349065380926c0856aece019ea1",
+            "eligible": true
+          },
+          {
+            "id": "mixed-22",
+            "name": "Mixed neighbor 22",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "70d33afbbe9470b09d1bdc536019d544e65e6d8f61e5ddad23bafa8387439a21",
+            "eligible": true
+          },
+          {
+            "id": "mixed-4",
+            "name": "Mixed neighbor 4",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "74398d5ea1cf8f60e48b84da5f35d14f534673ce84bfc30134702bc168efa780",
+            "eligible": false
+          },
+          {
+            "id": "mixed-3",
+            "name": "Mixed neighbor 3",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "7f0f146b3849e8d3cf82fe9768943eb19c44c051bb0445f077a3c389229b2d7d",
+            "eligible": true
+          },
+          {
+            "id": "mixed-12",
+            "name": "Mixed neighbor 12",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "8a5fefc40df51c3429dd3f7e0610cd8c10f0e0fc5916d9a7aedda50f2d61c3a2",
+            "eligible": false
+          },
+          {
+            "id": "mixed-7",
+            "name": "Mixed neighbor 7",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "a1afeb2b05794a38dae22f23d62517d12d5aa825c537dff5200f38610ad40c78",
+            "eligible": true
+          },
+          {
+            "id": "mixed-23",
+            "name": "Mixed neighbor 23",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "a3743e305a79a4f1c17a81189f7de24a8746195c3956465de169611a19ce6701",
+            "eligible": true
+          },
+          {
+            "id": "mixed-13",
+            "name": "Mixed neighbor 13",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "a9f9583487b2294b4bb02ac5233d3e36e00856a8bcda87170b52007276ec8605",
+            "eligible": true
+          },
+          {
+            "id": "mixed-8",
+            "name": "Mixed neighbor 8",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "ac66335f4cce08388e193e01c4181dd17ed598e1fe80c74c4179cd4dcc981c01",
+            "eligible": true
+          },
+          {
+            "id": "mixed-20",
+            "name": "Mixed neighbor 20",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "c4d8728276c48cd056b263254b3f1054884dc74a14fbbb7e94d54e5176f4797e",
+            "eligible": true
+          },
+          {
+            "id": "mixed-10",
+            "name": "Mixed neighbor 10",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "df18a167f195440853132a19cc4e17751351418e6cc9af87cd48a14946b60c39",
+            "eligible": true
+          },
+          {
+            "id": "mixed-11",
+            "name": "Mixed neighbor 11",
+            "metric": 3,
+            "secondary": 110,
+            "draw": "fa2bb6601417767280b39923617dd4b5529728ae5c67d5afb37d65e6103316ff",
+            "eligible": true
+          },
+          {
+            "id": "mixed-2",
+            "name": "Mixed neighbor 2",
+            "metric": 3,
+            "secondary": 90,
+            "draw": "76bd82e46ba4cf62516f88ec74ef247a45d3b798b92d4add20a0928c6b0ac9d5",
+            "eligible": true
+          },
+          {
+            "id": "mixed-0",
+            "name": "Mixed neighbor 0",
+            "metric": 2,
+            "secondary": 110,
+            "draw": "820f1a34411634ded2bca2e67e019fa792ddbfbc6828b14ad030d3871e6bb5f9",
+            "eligible": true
+          },
+          {
+            "id": "mixed-1",
+            "name": "Mixed neighbor 1",
+            "metric": 2,
+            "secondary": 70,
+            "draw": "7caf0b3c2708c431fd11d6448a2535048c68ad60e36a78b4a500f51f594e2c12",
+            "eligible": false
+          }
+        ]
+      },
+      {
+        "category": "Rewards rebellion",
+        "chapter": 6,
+        "rows": [
+          {
+            "id": "mixed-21",
+            "name": "Mixed neighbor 21",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "03274473a1c0cd68e5a7caa28953e74ad9598caf8f10a19b94eebb1e1da90919",
+            "eligible": true
+          },
+          {
+            "id": "mixed-23",
+            "name": "Mixed neighbor 23",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "178f693bd6363949d47c4499dfdd5115d10f08af59b878169014519d80fd0398",
+            "eligible": true
+          },
+          {
+            "id": "mixed-20",
+            "name": "Mixed neighbor 20",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "292ffad2b04cc24de11040e73568ee56c4f44b6377dfa691c9355a8ca922cec2",
+            "eligible": true
+          },
+          {
+            "id": "mixed-15",
+            "name": "Mixed neighbor 15",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "4026b6c5279986d66f7b4c0c8093a33cc660e4dc3c34822fd6ba97e3adb1a8bd",
+            "eligible": true
+          },
+          {
+            "id": "mixed-5",
+            "name": "Mixed neighbor 5",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "46948741e0b5c3337d2e05095532e9fb012ec0752648ac5db6013c65050070f3",
+            "eligible": true
+          },
+          {
+            "id": "mixed-10",
+            "name": "Mixed neighbor 10",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "51255a17335f35e7f9271412318ffada7a45e4335114d1926cd2592ed4cf45ac",
+            "eligible": true
+          },
+          {
+            "id": "mixed-11",
+            "name": "Mixed neighbor 11",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "513cd1d21028fe651a4b83441e9a6e0a4daa4a95ae3850dca94cdb3f84cf684e",
+            "eligible": true
+          },
+          {
+            "id": "mixed-18",
+            "name": "Mixed neighbor 18",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "5aa49514d152ad54d59a09aa98b3c8470cc1f377f089de696eba4bee1d160931",
+            "eligible": true
+          },
+          {
+            "id": "mixed-22",
+            "name": "Mixed neighbor 22",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "5bb9b57287770a5e5a0cc8d86b37e706f4cea8862ea01afe55a501093c17bdc9",
+            "eligible": true
+          },
+          {
+            "id": "mixed-6",
+            "name": "Mixed neighbor 6",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "68e5de16527c2dccf4254e858cb2c0c69baf2b6e474ca7b67f02bbbc3dc56a1f",
+            "eligible": false
+          },
+          {
+            "id": "mixed-3",
+            "name": "Mixed neighbor 3",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "6b63e15e8ec34b42d6b58eb1c466fb47a7e92b69126fce33e23d476ed9665b4f",
+            "eligible": true
+          },
+          {
+            "id": "mixed-2",
+            "name": "Mixed neighbor 2",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "7e2f54b67fe0a24cb6e698647865493c1830057cd1fa9268ea34dc7d6c236876",
+            "eligible": true
+          },
+          {
+            "id": "mixed-8",
+            "name": "Mixed neighbor 8",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "97f7958c961c14da529076638c4a52ca396d6ecb70c42a34dbd711dd40417e05",
+            "eligible": true
+          },
+          {
+            "id": "mixed-12",
+            "name": "Mixed neighbor 12",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "b02dba2faedb5026c2659ab1745f17f589d34056313bcfaa56cb05f12f38529c",
+            "eligible": false
+          },
+          {
+            "id": "mixed-19",
+            "name": "Mixed neighbor 19",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "b233990e048b3b0d487d261218b1e0b6955cfd723a89cbbcf0e23475628b7c5f",
+            "eligible": true
+          },
+          {
+            "id": "mixed-13",
+            "name": "Mixed neighbor 13",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "b29e74309b056c88190bde2363d2c6f7b6e109e2591c3fb044a12ab25200b283",
+            "eligible": true
+          },
+          {
+            "id": "mixed-9",
+            "name": "Mixed neighbor 9",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "b8eede5986b4ba66ae192d84b9bc64250bbdc0e01a2c97ca7e36e5b2c8c96854",
+            "eligible": false
+          },
+          {
+            "id": "mixed-16",
+            "name": "Mixed neighbor 16",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "c6b7ae6d2c8c1fce617726f2f7a3bede20309c00aede87c86d4a76e371a060d9",
+            "eligible": false
+          },
+          {
+            "id": "mixed-4",
+            "name": "Mixed neighbor 4",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "c79da52b8b2086f882127d79eff635568b83dfc9392029bebfb9f6c31d9c4822",
+            "eligible": false
+          },
+          {
+            "id": "mixed-14",
+            "name": "Mixed neighbor 14",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "d3cd32694f07535e40b3acb72f2d08ab6284e3a5eff38e193f55f43cb1dc6ce6",
+            "eligible": true
+          },
+          {
+            "id": "mixed-1",
+            "name": "Mixed neighbor 1",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "dafd85f7e1c41f1cc2a7f54b347af21d80c8016dd0553954ff807e0afd3055d8",
+            "eligible": false
+          },
+          {
+            "id": "mixed-17",
+            "name": "Mixed neighbor 17",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "eddebe012115d58c79e436f3aa448d85af4088b4b4ec95c31bc6995bbd58bd0b",
+            "eligible": true
+          },
+          {
+            "id": "mixed-7",
+            "name": "Mixed neighbor 7",
+            "metric": 6,
+            "secondary": 0,
+            "draw": "ef14dde5bfcc8add09b0bdfe07ddb06ac852bb06639daa0e72ece3492c4dc9fe",
+            "eligible": true
+          },
+          {
+            "id": "mixed-0",
+            "name": "Mixed neighbor 0",
+            "metric": 5,
+            "secondary": -2,
+            "draw": "7ba7125041f0d00d07ef421b307540a68ec0a518c8f30d681b0f96691e7080af",
+            "eligible": true
+          }
+        ]
+      },
+      {
+        "category": "Reconnect humanity",
+        "chapter": 7,
+        "rows": [
+          {
+            "id": "mixed-12",
+            "name": "Mixed neighbor 12",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "276d0f253c2aae0e863eb6819c3d92c8c40c4387bd0a9c175d5b71a71890cda5",
+            "eligible": false
+          },
+          {
+            "id": "mixed-10",
+            "name": "Mixed neighbor 10",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "29f9df8bdf5079477b8831f1a0a3fca1dada1b323550e01006358174cd1deeec",
+            "eligible": true
+          },
+          {
+            "id": "mixed-4",
+            "name": "Mixed neighbor 4",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "2bdbe51489d605b6fd55c66f5e985db2c718ec81e2f1f1a85643d222882037d6",
+            "eligible": false
+          },
+          {
+            "id": "mixed-5",
+            "name": "Mixed neighbor 5",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "327a6f6a40c1ebab7b8cbedf38533e71e1ea63ba292a8f64a39e075242907ca3",
+            "eligible": true
+          },
+          {
+            "id": "mixed-18",
+            "name": "Mixed neighbor 18",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "51efbb1866c684f570e6c92bc44eae99080dcf9080ff4a62dc3c4418aafaf952",
+            "eligible": true
+          },
+          {
+            "id": "mixed-6",
+            "name": "Mixed neighbor 6",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "55692c76907e3297de33e1b117d2c32be5b9f96ece21002e00f18dac35bea0f9",
+            "eligible": false
+          },
+          {
+            "id": "mixed-23",
+            "name": "Mixed neighbor 23",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "6a3c12485b679c1d4450d14bf2671cc8c5a82c228cfe16f75fa6572e97fae7b3",
+            "eligible": true
+          },
+          {
+            "id": "mixed-7",
+            "name": "Mixed neighbor 7",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "6dad615e8100feacd1d25e2d06f46926e8118a2d1694ca4744f336073eabbb61",
+            "eligible": true
+          },
+          {
+            "id": "mixed-17",
+            "name": "Mixed neighbor 17",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "6edd517edfaaed903b5c9e0aa388bada04841a21e39001b21998f6c2f95cf127",
+            "eligible": true
+          },
+          {
+            "id": "mixed-11",
+            "name": "Mixed neighbor 11",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "7eeb97b2c3b2bb8e14277e842258db83b239823b8fefd99c460e38da388ed16c",
+            "eligible": true
+          },
+          {
+            "id": "mixed-13",
+            "name": "Mixed neighbor 13",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "851c78e7b489dc6a8294a4734f48a7f98e861d1fcdb5a623db970030174df5e2",
+            "eligible": true
+          },
+          {
+            "id": "mixed-9",
+            "name": "Mixed neighbor 9",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "9f69ced3570b11da329ee002f485ad350d11bce60c9b5245899accfc65fa1bf4",
+            "eligible": false
+          },
+          {
+            "id": "mixed-20",
+            "name": "Mixed neighbor 20",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "ab7594c56617aa2ce8fec2e867d6cb3b1c1923ab5f99f906ba45749dff038978",
+            "eligible": true
+          },
+          {
+            "id": "mixed-22",
+            "name": "Mixed neighbor 22",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "ab830e1fdb7606d6391ceaa0ad4967fbce0565c1953aeaa0ed517bccc03cad49",
+            "eligible": true
+          },
+          {
+            "id": "mixed-8",
+            "name": "Mixed neighbor 8",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "ac7a78c162c110715a9682590197651f080b1da74422a2c9edb2560479a63d95",
+            "eligible": true
+          },
+          {
+            "id": "mixed-19",
+            "name": "Mixed neighbor 19",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "c3675f49d850cd4cbde8f465b687d2597b8c502b9812981200819cbcd1f77d34",
+            "eligible": true
+          },
+          {
+            "id": "mixed-21",
+            "name": "Mixed neighbor 21",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "d2d43ab27d570a1e0501764fed9bfc758a85257f80a8d3ddaa6a26917b9042b4",
+            "eligible": false
+          },
+          {
+            "id": "mixed-16",
+            "name": "Mixed neighbor 16",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "de00dae1d89f76f7af7e2bfb4768e9081e3eabaf58028dcc8d2add7b1e2992b1",
+            "eligible": false
+          },
+          {
+            "id": "mixed-3",
+            "name": "Mixed neighbor 3",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "e09075770d389ce44026e090b18ce9cc708ae6409933d982492a8b98b5af3591",
+            "eligible": true
+          },
+          {
+            "id": "mixed-15",
+            "name": "Mixed neighbor 15",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "e73fa2a19c8d873341eb9ec84a3e8b0032ef647c5a667042269de8687b142fbb",
+            "eligible": true
+          },
+          {
+            "id": "mixed-14",
+            "name": "Mixed neighbor 14",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "e7c15d11f71af7d9287821b25c880e93bf06c98b0d18a62cf8ffe18dbd3201e6",
+            "eligible": true
+          },
+          {
+            "id": "mixed-1",
+            "name": "Mixed neighbor 1",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "f30e758dffad30cbb88a88314a7ae658b3db3d16e852c98368103a064fab377e",
+            "eligible": false
+          },
+          {
+            "id": "mixed-2",
+            "name": "Mixed neighbor 2",
+            "metric": 3,
+            "secondary": 0,
+            "draw": "f4bb4d5a3dfd32e6363e48b19ce58fef28b2d202cbff4b76337bb14f6dce12ae",
+            "eligible": true
+          },
+          {
+            "id": "mixed-0",
+            "name": "Mixed neighbor 0",
+            "metric": 2,
+            "secondary": -2,
+            "draw": "d9f090a301717c2b29f5e81d9dcdf11f659ba9ff9ddd208c70d4344f5fc9d636",
+            "eligible": true
+          }
+        ]
+      },
+      {
+        "category": "Top hoarder",
+        "rows": [
+          {
+            "id": "mixed-12",
+            "name": "Mixed neighbor 12",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "035dc13a3add9e0853f51df844173f1ad9170ab62db50a86cf3054b496b1aa7e",
+            "eligible": false
+          },
+          {
+            "id": "mixed-11",
+            "name": "Mixed neighbor 11",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "0b80833617ed6f7305610abf74473acf02fe13ddd47af8f36ff7c742a0199944",
+            "eligible": true
+          },
+          {
+            "id": "mixed-23",
+            "name": "Mixed neighbor 23",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "2e26f52ccb430dadfaaeee4cdc6b125ea26dba006f5bd026d0343ce658a4dac2",
+            "eligible": true
+          },
+          {
+            "id": "mixed-22",
+            "name": "Mixed neighbor 22",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "2ee85c349172d3ef973a7f7c7b0175881363d9040ba8e6a7ed628a8a4353451a",
+            "eligible": true
+          },
+          {
+            "id": "mixed-0",
+            "name": "Mixed neighbor 0",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "32771970bea756d0a32fd4e8bb96487b65681ca0fdcce24cf9fc7c42b3e5ec5d",
+            "eligible": true
+          },
+          {
+            "id": "mixed-16",
+            "name": "Mixed neighbor 16",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "47f5134d9be55a6f4ea3e351fcdc622d4a762c62e04c5d1e8fbac786d0206c0b",
+            "eligible": false
+          },
+          {
+            "id": "mixed-9",
+            "name": "Mixed neighbor 9",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "4c44e14ca21b7badbb6b7ad3e196ec2429e55061fa0ab862de1c41ca041ee83f",
+            "eligible": false
+          },
+          {
+            "id": "mixed-5",
+            "name": "Mixed neighbor 5",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "502d6eb3af1a28a0951a658971b087e348550f429f92af3095bc8f19132043c7",
+            "eligible": true
+          },
+          {
+            "id": "mixed-14",
+            "name": "Mixed neighbor 14",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "5a9f808122dbd039572a20e862b1fd472825bee8de48867a1dd934cf658bb4f3",
+            "eligible": true
+          },
+          {
+            "id": "mixed-8",
+            "name": "Mixed neighbor 8",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "5d92abc4d2920dea6b3a21a367d8c55c4fce37eb59bfa3aba30441ae6a51cdad",
+            "eligible": true
+          },
+          {
+            "id": "mixed-19",
+            "name": "Mixed neighbor 19",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "612d58b21a22e99c3efffc0419d88c256e6601895bfc9b5af12243b77edee4bc",
+            "eligible": true
+          },
+          {
+            "id": "mixed-7",
+            "name": "Mixed neighbor 7",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "683eb2f668698702186415f9e94038b588f976dd497cd42a30bb42f5d6633d64",
+            "eligible": true
+          },
+          {
+            "id": "mixed-17",
+            "name": "Mixed neighbor 17",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "7320c41cf78e0fbeb4fc080298e0049629f643ffe4b6f6f33b63cf8e7e807408",
+            "eligible": true
+          },
+          {
+            "id": "mixed-10",
+            "name": "Mixed neighbor 10",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "75bd74150217e2bc5abe39b174c9805227f15fdb766b9e0f041088460f3c4234",
+            "eligible": false
+          },
+          {
+            "id": "mixed-20",
+            "name": "Mixed neighbor 20",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "7ba4d4f51ba625ab5c22740f5f8dc396054bb271ccf0b767606294735e668c74",
+            "eligible": true
+          },
+          {
+            "id": "mixed-15",
+            "name": "Mixed neighbor 15",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "8140d554812019960f228f735b72fcfe164480180efe8fc3403de06467b53ae5",
+            "eligible": true
+          },
+          {
+            "id": "mixed-1",
+            "name": "Mixed neighbor 1",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "830d8347c12a23a05457d93e609f49d69bd64491e2723999d244a7ae62cdefdb",
+            "eligible": false
+          },
+          {
+            "id": "mixed-4",
+            "name": "Mixed neighbor 4",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "8ea2977d03328959f366b4b43db657ad2d31ff3379c823bd200868b61d409974",
+            "eligible": false
+          },
+          {
+            "id": "mixed-13",
+            "name": "Mixed neighbor 13",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "94117c0da5506841fe75e667f0682164c0a49ffc2fefc4add307bc6eec8ca3fd",
+            "eligible": true
+          },
+          {
+            "id": "mixed-21",
+            "name": "Mixed neighbor 21",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "9bfbbec6c64f121fa1ed27104b627ce2fd2a5f6b1a3643f9dbbe45e243ba760a",
+            "eligible": false
+          },
+          {
+            "id": "mixed-18",
+            "name": "Mixed neighbor 18",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "a462146c8bbc14998ad00f5a19ac5fc4b3bd95658f58de9a6452723dd867c9a6",
+            "eligible": true
+          },
+          {
+            "id": "mixed-6",
+            "name": "Mixed neighbor 6",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "afe5206314c69395e5be0a5d1a5a63549b4a2c757cd6b2943a932d8943857776",
+            "eligible": false
+          },
+          {
+            "id": "mixed-2",
+            "name": "Mixed neighbor 2",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "bfe665b7c9e7ac14b1f2a90195fc2486f59bfec59c01516cde0f34fc966a4c20",
+            "eligible": true
+          },
+          {
+            "id": "mixed-3",
+            "name": "Mixed neighbor 3",
+            "metric": 0,
+            "secondary": 8,
+            "draw": "f882906ce40f890ce315d0f7e5a641b862e81704fa2e8bc6b1b7e7c332df271a",
+            "eligible": true
+          }
+        ]
+      },
+      {
+        "category": "Trailblazer",
+        "rows": [
+          {
+            "id": "mixed-22",
+            "name": "Mixed neighbor 22",
+            "metric": -579000,
+            "secondary": 755,
+            "draw": "48e6437372d0119a45c2df88ef4591736a2b2f90246c60f9966d2775f5045ee9",
+            "eligible": true
+          },
+          {
+            "id": "mixed-20",
+            "name": "Mixed neighbor 20",
+            "metric": -579000,
+            "secondary": 755,
+            "draw": "4be8997798bae1411f58693d1bf4f3c4cbbdeaa8099acce4f29d28589358e8c1",
+            "eligible": true
+          },
+          {
+            "id": "mixed-16",
+            "name": "Mixed neighbor 16",
+            "metric": -579000,
+            "secondary": 755,
+            "draw": "50c728f291b4842343873a4909eb59a3702ffb128ddec61e4018846b968647c8",
+            "eligible": false
+          },
+          {
+            "id": "mixed-10",
+            "name": "Mixed neighbor 10",
+            "metric": -579000,
+            "secondary": 755,
+            "draw": "60395d63c44ee840a8d3950dc50c0e082af9ae45a4370b76a024d513b9869d2f",
+            "eligible": false
+          },
+          {
+            "id": "mixed-14",
+            "name": "Mixed neighbor 14",
+            "metric": -579000,
+            "secondary": 755,
+            "draw": "6d660194cd286dd469f0f07373ee92fe9da6e7ca6b6165efe54b76fbf8b2f84b",
+            "eligible": true
+          },
+          {
+            "id": "mixed-12",
+            "name": "Mixed neighbor 12",
+            "metric": -579000,
+            "secondary": 755,
+            "draw": "7ebc05f1889cd88c2e177138c12d414158a83da97504a53e6b7045a815bf18fc",
+            "eligible": false
+          },
+          {
+            "id": "mixed-18",
+            "name": "Mixed neighbor 18",
+            "metric": -579000,
+            "secondary": 755,
+            "draw": "95ee569f12f9c51ad19299da3d8a7fef9dd9fd0c6d9f8899d3a0fa535fe9ffae",
+            "eligible": true
+          },
+          {
+            "id": "mixed-4",
+            "name": "Mixed neighbor 4",
+            "metric": -579000,
+            "secondary": 755,
+            "draw": "ad221ab42d99ab98ead5e5abd2fb4391ffa48267751b5f683d0d23db44befcda",
+            "eligible": false
+          },
+          {
+            "id": "mixed-6",
+            "name": "Mixed neighbor 6",
+            "metric": -579000,
+            "secondary": 755,
+            "draw": "b0e8cc74e8e1994e6dbe812632d53c566c42567bd4b3683b34d92e8e634a4900",
+            "eligible": false
+          },
+          {
+            "id": "mixed-2",
+            "name": "Mixed neighbor 2",
+            "metric": -579000,
+            "secondary": 755,
+            "draw": "fcddea05cd406abb4bbc6f0da18f1268bb6126f63f1b1ff9fd489bcfd18a4ba9",
+            "eligible": true
+          },
+          {
+            "id": "mixed-8",
+            "name": "Mixed neighbor 8",
+            "metric": -579000,
+            "secondary": 755,
+            "draw": "fddfb3c92faf25d78efebbb75428f994c63e877d2784ed078e40d82c815c9ce3",
+            "eligible": true
+          },
+          {
+            "id": "mixed-17",
+            "name": "Mixed neighbor 17",
+            "metric": -579000,
+            "secondary": 731,
+            "draw": "1239bb7d2931ca63c67fb4e84fb735a50b5da7c59181f2fa61a557f69b0b1cde",
+            "eligible": true
+          },
+          {
+            "id": "mixed-5",
+            "name": "Mixed neighbor 5",
+            "metric": -579000,
+            "secondary": 731,
+            "draw": "35545683de57ef9b67297eba2fd0d96ccc305082c9702eea263933822139f826",
+            "eligible": true
+          },
+          {
+            "id": "mixed-23",
+            "name": "Mixed neighbor 23",
+            "metric": -579000,
+            "secondary": 731,
+            "draw": "5d7e0fd4348ebfd1c4d69aa2b925d997b28201dbd0cbc1587b75fd81259ea23f",
+            "eligible": true
+          },
+          {
+            "id": "mixed-7",
+            "name": "Mixed neighbor 7",
+            "metric": -579000,
+            "secondary": 731,
+            "draw": "7bbb8191a501d7cdb07411cdcf5faf5b69759476d35091765f5b8d4b72291b3e",
+            "eligible": true
+          },
+          {
+            "id": "mixed-3",
+            "name": "Mixed neighbor 3",
+            "metric": -579000,
+            "secondary": 731,
+            "draw": "8a2b6630c4bcf5366af15d84820c08762217923ba23281a5d14090413b035c93",
+            "eligible": true
+          },
+          {
+            "id": "mixed-9",
+            "name": "Mixed neighbor 9",
+            "metric": -579000,
+            "secondary": 731,
+            "draw": "8bfe29f820a20fc4bc4dc6065dec392fc8b8270ef734d41d06db24e91aaa602e",
+            "eligible": false
+          },
+          {
+            "id": "mixed-11",
+            "name": "Mixed neighbor 11",
+            "metric": -579000,
+            "secondary": 731,
+            "draw": "a2f1872619642e33af235034f15cab540859f4bda223421a36594dedfbc84580",
+            "eligible": false
+          },
+          {
+            "id": "mixed-15",
+            "name": "Mixed neighbor 15",
+            "metric": -579000,
+            "secondary": 731,
+            "draw": "a830834acbeffca76d4d72a1ba266aa6de588a44bdcc21056b3d7c916d727ea4",
+            "eligible": true
+          },
+          {
+            "id": "mixed-21",
+            "name": "Mixed neighbor 21",
+            "metric": -579000,
+            "secondary": 731,
+            "draw": "e92e062eb031271c0add7c69cd77bfcfda00e9f2f21a49012bdd289e97c01d31",
+            "eligible": false
+          },
+          {
+            "id": "mixed-19",
+            "name": "Mixed neighbor 19",
+            "metric": -579000,
+            "secondary": 731,
+            "draw": "ea248cea18eea8d32444f9488c8692d375b41de5e7ac980d469e2971d4059acf",
+            "eligible": true
+          },
+          {
+            "id": "mixed-13",
+            "name": "Mixed neighbor 13",
+            "metric": -579000,
+            "secondary": 731,
+            "draw": "f9ee09f8e687ab333b0de0c6474c6ea1df84af2fb15039c2ee11faba46cf9dc5",
+            "eligible": true
+          },
+          {
+            "id": "mixed-1",
+            "name": "Mixed neighbor 1",
+            "metric": -579000,
+            "secondary": 711,
+            "draw": "b4674cb9d7d9ab356931c82c288172dbccba362f818cbb247a644e8e13915ef6",
+            "eligible": false
+          },
+          {
+            "id": "mixed-0",
+            "name": "Mixed neighbor 0",
+            "metric": -624001,
+            "secondary": 585,
+            "draw": "784150b27d2a181b1b707a783ab462f32ae5f62c4698fd7066a3dfc10251e79b",
+            "eligible": true
+          }
+        ]
+      },
+      {
+        "category": "Neighborhood hero",
+        "rows": [
+          {
+            "id": "mixed-13",
+            "name": "Mixed neighbor 13",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "18d4c2cb20a5295ac4bc85d7d0f2664038ad29f66d45559b64958b16afff84cb",
+            "eligible": true
+          },
+          {
+            "id": "mixed-5",
+            "name": "Mixed neighbor 5",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "320a45611835f8dcb1222fb99375857f69482b1d42e5a250d97ce15f2d7d6f39",
+            "eligible": true
+          },
+          {
+            "id": "mixed-2",
+            "name": "Mixed neighbor 2",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "34ea7e3c8f34a79a0bf94c2e362f50af28144456d78ba227943db3376bea1471",
+            "eligible": true
+          },
+          {
+            "id": "mixed-15",
+            "name": "Mixed neighbor 15",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "47b09d7db3ba42ba585775bc4050a00457eca82ca3c90d40e78ed04e28d9d40a",
+            "eligible": true
+          },
+          {
+            "id": "mixed-17",
+            "name": "Mixed neighbor 17",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "4e9e8afab32a2fcb593ad2dbec936e1eddc4548dfb82cb58396403325b3b1d18",
+            "eligible": true
+          },
+          {
+            "id": "mixed-19",
+            "name": "Mixed neighbor 19",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "4ee2939005dbc3df917ec7e3e94253b34a2cd577095c88e8837a377b5d0f479f",
+            "eligible": true
+          },
+          {
+            "id": "mixed-0",
+            "name": "Mixed neighbor 0",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "548bcc60c93f7a125a5c03749956a3021e57d04e9382cf3465d49e87f3332960",
+            "eligible": true
+          },
+          {
+            "id": "mixed-23",
+            "name": "Mixed neighbor 23",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "628816729c68198aac26535dae1dc1209dcb336115e713fbd429c49b955c1a41",
+            "eligible": true
+          },
+          {
+            "id": "mixed-20",
+            "name": "Mixed neighbor 20",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "7e749aa998474f63a95d0c8a0093f95e0ecb2a1126fd01bd714a836074d600d3",
+            "eligible": true
+          },
+          {
+            "id": "mixed-7",
+            "name": "Mixed neighbor 7",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "862085ca842ce2ccfe752f2931ec46968109bf2fcee549388417da1577040948",
+            "eligible": true
+          },
+          {
+            "id": "mixed-4",
+            "name": "Mixed neighbor 4",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "8eb291ac41f94650a27cfc5b0f3f057239a07b128013d700f279f8e2a29e7426",
+            "eligible": false
+          },
+          {
+            "id": "mixed-3",
+            "name": "Mixed neighbor 3",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "93a358bf8bda26e5f70ddf5154c4fc0ac98f5734269fdb854f12fa87885a0f05",
+            "eligible": true
+          },
+          {
+            "id": "mixed-8",
+            "name": "Mixed neighbor 8",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "a3d95316b1016449e3f6782b22880fdfd3dedacff6f1f43e51734e8af2d690cd",
+            "eligible": true
+          },
+          {
+            "id": "mixed-22",
+            "name": "Mixed neighbor 22",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "a68d0f7be91031d1611eab7dd4aa8b71a903f5fbf70f8dba7c194d008b0cf960",
+            "eligible": false
+          },
+          {
+            "id": "mixed-1",
+            "name": "Mixed neighbor 1",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "a8faac4b6ea07f93bb39799292f6bab8de76792bbd9ea7edf7c78093fbb6aedc",
+            "eligible": false
+          },
+          {
+            "id": "mixed-21",
+            "name": "Mixed neighbor 21",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "aeb4ffe3f76915cb8f38945cd43a11422c2bac511174b662b6bd7a911b7a723d",
+            "eligible": false
+          },
+          {
+            "id": "mixed-10",
+            "name": "Mixed neighbor 10",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "b0ca843f631e29a91ae7df6a0062e5e813d6febb32ae20ffee128d7077e2aa8f",
+            "eligible": false
+          },
+          {
+            "id": "mixed-16",
+            "name": "Mixed neighbor 16",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "bf18b7d63f51dfe1f12c7d55d2ad7f00a13d0d5a8ab25c327752b2c0ee51998a",
+            "eligible": false
+          },
+          {
+            "id": "mixed-6",
+            "name": "Mixed neighbor 6",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "c77c16cf9f5ab47b4f27b1b8838784d6047f03a8a9fd402a15e2720373fa0776",
+            "eligible": false
+          },
+          {
+            "id": "mixed-14",
+            "name": "Mixed neighbor 14",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "d0dd17365d97af67ee12fb81812ac8bdc8dd51b286223782f3710423254b93f9",
+            "eligible": true
+          },
+          {
+            "id": "mixed-12",
+            "name": "Mixed neighbor 12",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "dd25d1ba4cd384aec4d03198e32be668f2fef576b6d3e042bb52fde82c652ce8",
+            "eligible": false
+          },
+          {
+            "id": "mixed-18",
+            "name": "Mixed neighbor 18",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "dd526a43bb97d0a789147be19a6f80b2cd6d400989395c7799250587b1b8a577",
+            "eligible": true
+          },
+          {
+            "id": "mixed-11",
+            "name": "Mixed neighbor 11",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "fc1fd8fe2acfd383b0309d216acf74b63da24a8e8128c69014921235cf3455c4",
+            "eligible": false
+          },
+          {
+            "id": "mixed-9",
+            "name": "Mixed neighbor 9",
+            "metric": 8,
+            "secondary": 1,
+            "draw": "fec43aec859382734781f9645d15a51435a269f11157f6305e3aac70da77e0b5",
+            "eligible": false
+          }
+        ]
+      },
+      {
+        "category": "Human intelligence champion",
+        "rows": [
+          {
+            "id": "mixed-1",
+            "name": "Mixed neighbor 1",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "04957ac8ee312542888e6d444f08da0ebc65e4ccfe9016fcb2a2160b5a059093",
+            "eligible": false
+          },
+          {
+            "id": "mixed-18",
+            "name": "Mixed neighbor 18",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "05bd580fd2ea0af036ff5845749b5b964d902c17fcd3adf611f73bcf717afc26",
+            "eligible": true
+          },
+          {
+            "id": "mixed-16",
+            "name": "Mixed neighbor 16",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "1e688fd448ee2082956496cf1c76ac150e52717464b5bb1afa0b22e44348183f",
+            "eligible": false
+          },
+          {
+            "id": "mixed-9",
+            "name": "Mixed neighbor 9",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "3c4b42a76d2c08b444059ff15fbda2e87603e777ed262cd5167707f443942b85",
+            "eligible": false
+          },
+          {
+            "id": "mixed-23",
+            "name": "Mixed neighbor 23",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "3f7577d5d153166bc0c90ef0c808840cdff241b13c9956acf0079581391e85fc",
+            "eligible": true
+          },
+          {
+            "id": "mixed-6",
+            "name": "Mixed neighbor 6",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "46f191f077a02239b2c07d6c93bef144239826f9a21a0f69aaf89ac5eb9b1fe4",
+            "eligible": false
+          },
+          {
+            "id": "mixed-21",
+            "name": "Mixed neighbor 21",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "6113cbfda2eca29aea58d66f582e982a7a6af9611be4c112586cf4befdc22b6e",
+            "eligible": false
+          },
+          {
+            "id": "mixed-4",
+            "name": "Mixed neighbor 4",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "615ceda56462c031f710a38e5cf7b5baf7b6c1e48cb026128592428078b5c792",
+            "eligible": false
+          },
+          {
+            "id": "mixed-13",
+            "name": "Mixed neighbor 13",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "68c64bedbc91e1ef6084df2f77694e7cd7a72311f5ab572d50d024a0ec997f54",
+            "eligible": false
+          },
+          {
+            "id": "mixed-11",
+            "name": "Mixed neighbor 11",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "7323b1c8b4747bce2b66549a4f279d75d53ae01558008097857ed63c53512cef",
+            "eligible": false
+          },
+          {
+            "id": "mixed-22",
+            "name": "Mixed neighbor 22",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "787fe5a9b0960c23a1635df940595f30cef26027c0bfa078d60cf37fd259eca9",
+            "eligible": false
+          },
+          {
+            "id": "mixed-5",
+            "name": "Mixed neighbor 5",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "85e8d18441f0c0e15a6839b7904abf5089dd57b6a4b9c636f149fa73a938e1cc",
+            "eligible": true
+          },
+          {
+            "id": "mixed-12",
+            "name": "Mixed neighbor 12",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "8f97653eba9bfe30d4c298c260663012aa8efa4e8df259ccc823a7b7be0e4816",
+            "eligible": false
+          },
+          {
+            "id": "mixed-19",
+            "name": "Mixed neighbor 19",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "9e7b136ae8942f9a17337e3d9aee8031896000f9d50dcdfd32fea99ad61dae3c",
+            "eligible": true
+          },
+          {
+            "id": "mixed-15",
+            "name": "Mixed neighbor 15",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "9e892718abcb994a936d26320a31945608b1c9902ca6beba26b6cf9a3bf807b9",
+            "eligible": true
+          },
+          {
+            "id": "mixed-20",
+            "name": "Mixed neighbor 20",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "9f0cda6c3df933ea7cc47c4952d3962f543fa06d299f6a83bee528162424e20b",
+            "eligible": true
+          },
+          {
+            "id": "mixed-8",
+            "name": "Mixed neighbor 8",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "aabdcc2e59d20442ee1bf8c730d1f871be97b13d186537888a20ee55a97ebb91",
+            "eligible": true
+          },
+          {
+            "id": "mixed-3",
+            "name": "Mixed neighbor 3",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "af7ff66ce51a30434c65ec7536a33fa179677381327f5bab64bcd327c0a3ffdb",
+            "eligible": true
+          },
+          {
+            "id": "mixed-7",
+            "name": "Mixed neighbor 7",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "b23d82ab8ad907327f194e255b05f0d3cdf6e4a97b9b644fc08849ded3fd7fec",
+            "eligible": true
+          },
+          {
+            "id": "mixed-14",
+            "name": "Mixed neighbor 14",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "ce5859c87d66753a271a73188ae8af9b87ab558ed3b86bbefe7ce0c3d6d2462f",
+            "eligible": true
+          },
+          {
+            "id": "mixed-2",
+            "name": "Mixed neighbor 2",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "d03f5576f4b1fbb86d1426db4f5da87585d76f40bca37a79a1efaaf22686e4a8",
+            "eligible": true
+          },
+          {
+            "id": "mixed-17",
+            "name": "Mixed neighbor 17",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "d90d2066577ec006448193d0c9e7aabd562ce238c6297b30aec2bfaeafd73fb6",
+            "eligible": true
+          },
+          {
+            "id": "mixed-10",
+            "name": "Mixed neighbor 10",
+            "metric": 16,
+            "secondary": 8,
+            "draw": "f9d1ff0a463530dcac8baf025d0f0bced4b1975c46fa33aaac5574940a945d3c",
+            "eligible": false
+          },
+          {
+            "id": "mixed-0",
+            "name": "Mixed neighbor 0",
+            "metric": 8,
+            "secondary": 8,
+            "draw": "7ec18e1ca70191b9ea5282d513a0b20de461ab02653e94d90d778cebeb6ebb73",
+            "eligible": true
+          }
+        ]
+      },
+      {
+        "category": "Easter egg hunter",
+        "rows": [
+          {
+            "id": "mixed-21",
+            "name": "Mixed neighbor 21",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "0768c2c5fde818b5ce3d884f942d59f9a6b9f97ec49893c88296b847d0b7d2ac",
+            "eligible": false
+          },
+          {
+            "id": "mixed-22",
+            "name": "Mixed neighbor 22",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "289e9c83f22024b2a53b871304410787bc35f925f2048d304f69713e14f09baa",
+            "eligible": false
+          },
+          {
+            "id": "mixed-11",
+            "name": "Mixed neighbor 11",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "4d3660b895d076c4dbe141fb4ed45d166dc23d46d75b50e62e8984fd179479ce",
+            "eligible": false
+          },
+          {
+            "id": "mixed-6",
+            "name": "Mixed neighbor 6",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "5343348baf8a6f971524a60c46698a0773e1d18274ddebadd5c5fffe05371377",
+            "eligible": false
+          },
+          {
+            "id": "mixed-8",
+            "name": "Mixed neighbor 8",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "5f77f64a74ff0bd8dc32ec09d8c24558ed1a9fcfdb3df5307b62f6798e01420b",
+            "eligible": true
+          },
+          {
+            "id": "mixed-1",
+            "name": "Mixed neighbor 1",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "61376d435c09fd7ccb10c469c676c20b2707e75069c5087b8ae37ab789e33677",
+            "eligible": false
+          },
+          {
+            "id": "mixed-14",
+            "name": "Mixed neighbor 14",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "6185f2cf76f0ae037c955b7f5c3fdc1ee02393f508de4b403046ff2a8a035248",
+            "eligible": true
+          },
+          {
+            "id": "mixed-12",
+            "name": "Mixed neighbor 12",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "6879623d3dedbbeae2203146f20cc574c533998090d7a19ea5fc12584ddd4d48",
+            "eligible": false
+          },
+          {
+            "id": "mixed-13",
+            "name": "Mixed neighbor 13",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "68dfda4141eb6400c0bbb0779c9d74c001ec7614630b1f0e88a1fe2bcb3855d7",
+            "eligible": false
+          },
+          {
+            "id": "mixed-5",
+            "name": "Mixed neighbor 5",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "6b9cc0f4578dad8c4e0f4ace902701174ca52c36d7687fa47fca0b20b750261d",
+            "eligible": true
+          },
+          {
+            "id": "mixed-3",
+            "name": "Mixed neighbor 3",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "860c9add5b2e299a7fa1d9a6c85c7600b177d27a3fb8cb9a8d3388ae43a5b3b7",
+            "eligible": true
+          },
+          {
+            "id": "mixed-23",
+            "name": "Mixed neighbor 23",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "8702e7bf52db93a7a2fa0e185c593151adb9b7b3449492689952e65fb2a851bf",
+            "eligible": true
+          },
+          {
+            "id": "mixed-9",
+            "name": "Mixed neighbor 9",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "934b55072681fd9097ce416a4280da4584da1e5fd81a866886c3dafe07e050f6",
+            "eligible": false
+          },
+          {
+            "id": "mixed-4",
+            "name": "Mixed neighbor 4",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "95c958c4432478881029d7a8c697ca2c406c6b3b6c249a043aa55cbd3b522620",
+            "eligible": false
+          },
+          {
+            "id": "mixed-10",
+            "name": "Mixed neighbor 10",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "a01919a662457cdd1895b09f5119ba9c3bd61790215bf8dfa6b33925bc86524f",
+            "eligible": false
+          },
+          {
+            "id": "mixed-19",
+            "name": "Mixed neighbor 19",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "a075b914dd5dc09f8965de2318574f2c18e08959f7ddcbb708cdea8e06a04794",
+            "eligible": true
+          },
+          {
+            "id": "mixed-20",
+            "name": "Mixed neighbor 20",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "a7de9171360336315a08e7985d7305eb9f136e1ee45edd3c1c3a00fbcbb7ce81",
+            "eligible": true
+          },
+          {
+            "id": "mixed-17",
+            "name": "Mixed neighbor 17",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "c59f9542297884021c8cc8f61732721717c951eff14f005ec444455dc3fb31bb",
+            "eligible": true
+          },
+          {
+            "id": "mixed-16",
+            "name": "Mixed neighbor 16",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "cc6089127552b8d2f54a506ddf5e6a7cc02506c34c011a5eb23288417d28f629",
+            "eligible": false
+          },
+          {
+            "id": "mixed-18",
+            "name": "Mixed neighbor 18",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "d21584e78dc754ec99a7ca3273061aae10298cdf105e769949e27618a1dd9f8b",
+            "eligible": false
+          },
+          {
+            "id": "mixed-7",
+            "name": "Mixed neighbor 7",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "d6f2bb5070b17b896174fa327cbb5672fee4ab5ec2d071349da8363632405b13",
+            "eligible": true
+          },
+          {
+            "id": "mixed-0",
+            "name": "Mixed neighbor 0",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "e683b5d5634fa7db2d6effaa9e161658cb0954d22d0f788061fc83821a366184",
+            "eligible": true
+          },
+          {
+            "id": "mixed-15",
+            "name": "Mixed neighbor 15",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "ecaf72d9a3d8885721c887e85bc48534101f3a71ffb78f0d6552d149c7628b69",
+            "eligible": true
+          },
+          {
+            "id": "mixed-2",
+            "name": "Mixed neighbor 2",
+            "metric": 9,
+            "secondary": 8,
+            "draw": "fcb050730740a9e93e63f0affb7d4da64ddccee72caf9f71991bc135044ed773",
+            "eligible": true
+          }
+        ]
+      },
+      {
+        "category": "Master trader",
+        "rows": [
+          {
+            "id": "mixed-23",
+            "name": "Mixed neighbor 23",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "1cabd2e8bf1ffaf1da6d172f07e6549c79d32466d7f094c805c9b75414a4f1b0",
+            "eligible": true
+          },
+          {
+            "id": "mixed-19",
+            "name": "Mixed neighbor 19",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "25c99ba9c6ffd4c0cc1201488e4f22fa1d69450066ac1a298661a24ce9076f4e",
+            "eligible": true
+          },
+          {
+            "id": "mixed-7",
+            "name": "Mixed neighbor 7",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "2ea88500b3add64d2ea1f1d83ce31a93513b2e361f74915f96c89de4a414360e",
+            "eligible": true
+          },
+          {
+            "id": "mixed-13",
+            "name": "Mixed neighbor 13",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "36943c5d1b357d727e2e476e66b96d1eaedde6a0169a74aff7ca03f6464dafa7",
+            "eligible": false
+          },
+          {
+            "id": "mixed-11",
+            "name": "Mixed neighbor 11",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "46a22a5312656e624f7684d1bfe452b31ee0ec57a5df354141fb6209094904f9",
+            "eligible": false
+          },
+          {
+            "id": "mixed-6",
+            "name": "Mixed neighbor 6",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "4a25ae81158d8604a9af8306137b26be87cc3f2e0270e5eb013290dc0048f99c",
+            "eligible": false
+          },
+          {
+            "id": "mixed-0",
+            "name": "Mixed neighbor 0",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "54ca2f97628d449fcb31e081a180b5604967185f3cb99772cf853f623cf2b171",
+            "eligible": true
+          },
+          {
+            "id": "mixed-10",
+            "name": "Mixed neighbor 10",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "5ebeb86cb03eae3a27099366c637a18ded8a7effab94b1240b57561b6cec67e5",
+            "eligible": false
+          },
+          {
+            "id": "mixed-18",
+            "name": "Mixed neighbor 18",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "5fdcb01df273a19cc46be8812eb1f9b49bc51894517d624f4b34b1de3e3b896b",
+            "eligible": false
+          },
+          {
+            "id": "mixed-20",
+            "name": "Mixed neighbor 20",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "94d340c3edaaf0c548e98be082108bf3a8ea0b0a04d08beacd086dc0633c6311",
+            "eligible": true
+          },
+          {
+            "id": "mixed-2",
+            "name": "Mixed neighbor 2",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "962a8ffff40190966dc9f1d123a11dc073a72c215320d0b54d9ec48d6443644f",
+            "eligible": true
+          },
+          {
+            "id": "mixed-3",
+            "name": "Mixed neighbor 3",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "b6be7b21f18f64db9a78e76cb079303ddb416ca6fcd7ef91a628dc4b46afb134",
+            "eligible": true
+          },
+          {
+            "id": "mixed-22",
+            "name": "Mixed neighbor 22",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "c21605cca11b05fcbec65279b0d5edd6d813be0d49c1b9af0fb2bed4ab7e3596",
+            "eligible": false
+          },
+          {
+            "id": "mixed-15",
+            "name": "Mixed neighbor 15",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "c2d7642cce2807b38f476fa3b459f32204f42fd8e4112ab79f9248cc9b729219",
+            "eligible": true
+          },
+          {
+            "id": "mixed-1",
+            "name": "Mixed neighbor 1",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "c7f276e40ff2982dfc5bcf8aa8ce2a628c69a1bae9058a6b2a25f475635e874c",
+            "eligible": false
+          },
+          {
+            "id": "mixed-14",
+            "name": "Mixed neighbor 14",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "c89266b7212642f8747d0a8a6d3dad79a5d92de9196cf8e8b3e8438dd945da67",
+            "eligible": true
+          },
+          {
+            "id": "mixed-17",
+            "name": "Mixed neighbor 17",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "d17fdf8ad4ac66924396d7f5d608f705ee3ad505dc64254fb5d5349ef92a596b",
+            "eligible": true
+          },
+          {
+            "id": "mixed-12",
+            "name": "Mixed neighbor 12",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "d991bce2191944e7b0b1b477ee40ffb87d52955862dae4fa0a0e6fc8b267c744",
+            "eligible": false
+          },
+          {
+            "id": "mixed-16",
+            "name": "Mixed neighbor 16",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "db2722cb5d0ae523f8ca692891e43491ac7c92b9246a70d5ac9d0642c6eb3857",
+            "eligible": false
+          },
+          {
+            "id": "mixed-4",
+            "name": "Mixed neighbor 4",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "de610018e1197276f31c59275447edf9a532a53be9290842be0e038e1fe405eb",
+            "eligible": false
+          },
+          {
+            "id": "mixed-5",
+            "name": "Mixed neighbor 5",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "e16798fca09afe5e78050a8054b222d82ed42295a7e19884e79924b6ab1f5235",
+            "eligible": true
+          },
+          {
+            "id": "mixed-21",
+            "name": "Mixed neighbor 21",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "e7955a5a99517c7d3f552aff5724dac339d9efbaf8f1ab7d97649e38882e5ab7",
+            "eligible": false
+          },
+          {
+            "id": "mixed-8",
+            "name": "Mixed neighbor 8",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "eb49bad4f9970ef25d89f660a14ceae9a63540d5a091ef2fcdee51b7999bfe0a",
+            "eligible": false
+          },
+          {
+            "id": "mixed-9",
+            "name": "Mixed neighbor 9",
+            "metric": 1,
+            "secondary": 1,
+            "draw": "f3c9ebae6c9f184f3fae28cc6b1e41b0759d4438314a3ffee5534b94326af3c1",
+            "eligible": false
+          }
+        ]
+      },
+      {
+        "category": "All-round survivor",
+        "rows": [
+          {
+            "id": "mixed-12",
+            "name": "Mixed neighbor 12",
+            "metric": 99.34210526315789,
+            "secondary": 8,
+            "draw": "0303f124eeab5d75d7835d32c8aacb0f041d2fcf7736fbd5e72f463029466b73",
+            "eligible": false
+          },
+          {
+            "id": "mixed-22",
+            "name": "Mixed neighbor 22",
+            "metric": 99.34210526315789,
+            "secondary": 8,
+            "draw": "1bbf2ad52e18e5de22e0d7860007a8f6984ac05f62d71a905c05c99a8cb9a5fb",
+            "eligible": false
+          },
+          {
+            "id": "mixed-4",
+            "name": "Mixed neighbor 4",
+            "metric": 99.34210526315789,
+            "secondary": 8,
+            "draw": "24d10124e69e44836420df6934fe4d33303b2fb24c0965fe4168b335170285a9",
+            "eligible": false
+          },
+          {
+            "id": "mixed-16",
+            "name": "Mixed neighbor 16",
+            "metric": 99.34210526315789,
+            "secondary": 8,
+            "draw": "2c2d953274f2442acd9ca05fe415f95e04ae2f14984da8aafabb23904f323f59",
+            "eligible": false
+          },
+          {
+            "id": "mixed-20",
+            "name": "Mixed neighbor 20",
+            "metric": 99.34210526315789,
+            "secondary": 8,
+            "draw": "983aabb75d1cfdf5f0f3630127bdfb50a8071195ef672506b88f5b307f8abd41",
+            "eligible": true
+          },
+          {
+            "id": "mixed-2",
+            "name": "Mixed neighbor 2",
+            "metric": 99.34210526315789,
+            "secondary": 8,
+            "draw": "9aee67fc4873c9a1b0bff1c38b28b8df41441eae966dbbb52beeb597e27bffd1",
+            "eligible": true
+          },
+          {
+            "id": "mixed-8",
+            "name": "Mixed neighbor 8",
+            "metric": 99.34210526315789,
+            "secondary": 8,
+            "draw": "a6883e733892026dcda1210cb21dd82593d5fcebc354406b01f9e0b46b71dc27",
+            "eligible": false
+          },
+          {
+            "id": "mixed-18",
+            "name": "Mixed neighbor 18",
+            "metric": 99.34210526315789,
+            "secondary": 8,
+            "draw": "ba19bd8280df2a5cabb926b752ca4731181a44897a4d1c9caaf346464fe882fa",
+            "eligible": false
+          },
+          {
+            "id": "mixed-10",
+            "name": "Mixed neighbor 10",
+            "metric": 99.34210526315789,
+            "secondary": 8,
+            "draw": "ba6c8431616bc196427b618b3fd26c4c2203d21863df12cfb7559d6b3cf1323a",
+            "eligible": false
+          },
+          {
+            "id": "mixed-14",
+            "name": "Mixed neighbor 14",
+            "metric": 99.34210526315789,
+            "secondary": 8,
+            "draw": "cacf0c0cad6da833731736ab836726afdd3738b9f8c0a36ded84b28cbacd4e10",
+            "eligible": true
+          },
+          {
+            "id": "mixed-6",
+            "name": "Mixed neighbor 6",
+            "metric": 99.34210526315789,
+            "secondary": 8,
+            "draw": "eef6a6bf329fdc3e172967fef1e65c282e6d11f0c691c8f7b532b4ff3519f852",
+            "eligible": false
+          },
+          {
+            "id": "mixed-17",
+            "name": "Mixed neighbor 17",
+            "metric": 96.18421052631578,
+            "secondary": 8,
+            "draw": "090d4da28de43003407b9b617da88f89933a6ea22a5dcf1a5f4720ee1d038cba",
+            "eligible": true
+          },
+          {
+            "id": "mixed-5",
+            "name": "Mixed neighbor 5",
+            "metric": 96.18421052631578,
+            "secondary": 8,
+            "draw": "14281ae676539db8e9d3ad1c1971eb6f7bb8db74d3cca67b33ee46f39133a8ca",
+            "eligible": true
+          },
+          {
+            "id": "mixed-13",
+            "name": "Mixed neighbor 13",
+            "metric": 96.18421052631578,
+            "secondary": 8,
+            "draw": "3af0691db827bf8db1c6bb5ea9bd0d1be852c067701613d7a6974bd8b12b3ed1",
+            "eligible": false
+          },
+          {
+            "id": "mixed-15",
+            "name": "Mixed neighbor 15",
+            "metric": 96.18421052631578,
+            "secondary": 8,
+            "draw": "3ff106c7ab98077b701f7f12465f3fd7393c1711e6d2cb37cfd65f4e6884744a",
+            "eligible": true
+          },
+          {
+            "id": "mixed-11",
+            "name": "Mixed neighbor 11",
+            "metric": 96.18421052631578,
+            "secondary": 8,
+            "draw": "5fb4df043eee0c02b16d19a11af637cabd51aac8afd354cf7272123d2cfd70f4",
+            "eligible": false
+          },
+          {
+            "id": "mixed-9",
+            "name": "Mixed neighbor 9",
+            "metric": 96.18421052631578,
+            "secondary": 8,
+            "draw": "6344f5fe505db5189af294d63c5e3a1502a27516cdde9d77c7f962ffc84cb59a",
+            "eligible": false
+          },
+          {
+            "id": "mixed-21",
+            "name": "Mixed neighbor 21",
+            "metric": 96.18421052631578,
+            "secondary": 8,
+            "draw": "8c376668a6224019af8ed85634ab7188aaa14a6b751cf414ad439ee0d851e033",
+            "eligible": false
+          },
+          {
+            "id": "mixed-3",
+            "name": "Mixed neighbor 3",
+            "metric": 96.18421052631578,
+            "secondary": 8,
+            "draw": "a4d553e5067e07dbcd41c7ff13b1578c9bac8f6e6afca36087b229d46c96dfd2",
+            "eligible": true
+          },
+          {
+            "id": "mixed-7",
+            "name": "Mixed neighbor 7",
+            "metric": 96.18421052631578,
+            "secondary": 8,
+            "draw": "a644ad90a9a0e7197e35a82d7fcb8f0af0eb8527297a636243a5a25136beaba9",
+            "eligible": true
+          },
+          {
+            "id": "mixed-23",
+            "name": "Mixed neighbor 23",
+            "metric": 96.18421052631578,
+            "secondary": 8,
+            "draw": "eced4af5b5f9913a34b995e99a14554c01b4e3a5a0de13a7d191621e7b312b2a",
+            "eligible": false
+          },
+          {
+            "id": "mixed-19",
+            "name": "Mixed neighbor 19",
+            "metric": 96.18421052631578,
+            "secondary": 8,
+            "draw": "f49e390c9098d7f341a4c6f90a1ebbcd8b9fb2970e20ec5975efa16c34550a21",
+            "eligible": true
+          },
+          {
+            "id": "mixed-1",
+            "name": "Mixed neighbor 1",
+            "metric": 93.55263157894737,
+            "secondary": 8,
+            "draw": "732ff7c1f9a64921a3f8644790a7d80dec01d94401051799c942c7c4d1f789bc",
+            "eligible": false
+          },
+          {
+            "id": "mixed-0",
+            "name": "Mixed neighbor 0",
+            "metric": 76.9736842105263,
+            "secondary": 8,
+            "draw": "1f2101b414fd2ebe8a6e28e462cfbbc99950eef374a6571368370ec861a73683",
+            "eligible": true
+          }
+        ]
+      }
+    ],
+    "independentMetrics": {
+      "mixed-0": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 585,
+        "timeMs": 624001,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 8,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 76.9736842105263
+      },
+      "mixed-1": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 711,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 93.55263157894737
+      },
+      "mixed-2": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 755,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 99.34210526315789
+      },
+      "mixed-3": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 731,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 96.18421052631578
+      },
+      "mixed-4": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 755,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 99.34210526315789
+      },
+      "mixed-5": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 731,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 96.18421052631578
+      },
+      "mixed-6": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 755,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 99.34210526315789
+      },
+      "mixed-7": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 731,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 96.18421052631578
+      },
+      "mixed-8": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 755,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 99.34210526315789
+      },
+      "mixed-9": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 731,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 96.18421052631578
+      },
+      "mixed-10": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 755,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 99.34210526315789
+      },
+      "mixed-11": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 731,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 96.18421052631578
+      },
+      "mixed-12": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 755,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 99.34210526315789
+      },
+      "mixed-13": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 731,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 96.18421052631578
+      },
+      "mixed-14": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 755,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 99.34210526315789
+      },
+      "mixed-15": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 731,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 96.18421052631578
+      },
+      "mixed-16": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 755,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 99.34210526315789
+      },
+      "mixed-17": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 731,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 96.18421052631578
+      },
+      "mixed-18": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 755,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 99.34210526315789
+      },
+      "mixed-19": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 731,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 96.18421052631578
+      },
+      "mixed-20": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 755,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 99.34210526315789
+      },
+      "mixed-21": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 731,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 96.18421052631578
+      },
+      "mixed-22": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 755,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 99.34210526315789
+      },
+      "mixed-23": {
+        "inventoryValue": 0,
+        "completed": 8,
+        "total": 731,
+        "timeMs": 579000,
+        "assists": 8,
+        "assistRecipients": 1,
+        "correct": 16,
+        "secrets": 9,
+        "traders": 1,
+        "suppliedConsumed": 1,
+        "mean": 96.18421052631578
+      }
+    },
+    "objectiveTimeObservations": [
+      {
+        "playerId": "mixed-0",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-0",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-0",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-0",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-0",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-0",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 135001,
+        "completedAt": 1794941919389,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941919389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-0",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-0",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-1",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-1",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-1",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-1",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-1",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-1",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-1",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-1",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-2",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-2",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-2",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-2",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-2",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-2",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-2",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-2",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-3",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-3",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-3",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-3",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-3",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-3",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-3",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-3",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-4",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-4",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-4",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-4",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-4",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-4",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-4",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-4",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-5",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-5",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-5",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-5",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-5",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-5",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-5",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-5",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-6",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-6",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-6",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-6",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-6",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-6",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-6",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-6",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-7",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-7",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-7",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-7",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-7",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-7",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-7",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-7",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-8",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-8",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-8",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-8",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-8",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-8",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-8",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-8",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-9",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-9",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-9",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-9",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-9",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-9",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-9",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-9",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-10",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-10",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-10",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-10",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-10",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-10",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-10",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-10",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-11",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-11",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-11",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-11",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-11",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-11",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-11",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-11",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-12",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-12",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-12",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-12",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-12",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-12",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-12",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-12",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-13",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-13",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-13",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-13",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-13",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-13",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-13",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-13",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-14",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-14",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-14",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-14",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-14",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-14",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-14",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-14",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-15",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-15",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-15",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-15",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-15",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-15",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-15",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-15",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-16",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-16",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-16",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-16",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-16",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-16",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-16",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-16",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-17",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-17",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-17",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-17",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-17",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-17",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-17",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-17",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-18",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-18",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-18",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-18",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-18",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-18",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-18",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-18",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-19",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-19",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-19",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-19",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-19",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-19",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-19",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-19",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-20",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-20",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-20",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-20",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-20",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-20",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-20",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-20",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-21",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-21",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-21",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-21",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-21",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-21",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-21",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-21",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-22",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-22",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-22",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-22",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-22",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-22",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-22",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-22",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-23",
+        "chapter": 0,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 63000,
+        "completedAt": 1794941404388,
+        "chapterOpenedAt": 1794941341388,
+        "outcomeLoggedAt": 1794941404388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-23",
+        "chapter": 1,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941466388,
+        "chapterOpenedAt": 1794941410388,
+        "outcomeLoggedAt": 1794941466388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-23",
+        "chapter": 2,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 56000,
+        "completedAt": 1794941531388,
+        "chapterOpenedAt": 1794941475388,
+        "outcomeLoggedAt": 1794941531388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-23",
+        "chapter": 3,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941600388,
+        "chapterOpenedAt": 1794941540388,
+        "outcomeLoggedAt": 1794941600388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-23",
+        "chapter": 4,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 164000,
+        "completedAt": 1794941773388,
+        "chapterOpenedAt": 1794941609388,
+        "outcomeLoggedAt": 1794941773388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-23",
+        "chapter": 5,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 90000,
+        "completedAt": 1794941874388,
+        "chapterOpenedAt": 1794941784388,
+        "outcomeLoggedAt": 1794941874388,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-23",
+        "chapter": 6,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 60000,
+        "completedAt": 1794941986389,
+        "chapterOpenedAt": 1794941926389,
+        "outcomeLoggedAt": 1794941986389,
+        "logDelayMs": 0
+      },
+      {
+        "playerId": "mixed-23",
+        "chapter": 7,
+        "source": "objectiveCompleted",
+        "frozenTimeMs": 30000,
+        "completedAt": 1794942022389,
+        "chapterOpenedAt": 1794941992389,
+        "outcomeLoggedAt": 1794942022389,
+        "logDelayMs": 0
+      }
+    ]
+  },
+  "passed": true,
+  "finishedAt": "2026-11-17T20:48:54.389Z",
+  "syntheticTime": "2026-11-17T19:00:33.389Z"
+}

@@ -1,0 +1,9 @@
+CHAPTER 1 mixed simulation
+CHAPTER 2 mixed simulation
+CHAPTER 3 mixed simulation
+CHAPTER 4 mixed simulation
+CHAPTER 5 mixed simulation
+CHAPTER 6 mixed simulation
+CHAPTER 7 mixed simulation
+CHAPTER 8 mixed simulation
+{"passed":true,"chapters":8,"coverage":["normal-entry","concurrent-barter","pause-resume","cargo-route-consequences","sqlite-restart","timed-targeting","payment-cycles","reward-decisions","all-secrets-mystery","immutable-finale-awards-export"],"errors":[],"report":"/Users/jgibbs/Code/second-nature-trail/test-results/simulation-mixed-bfb89d9.json"}
