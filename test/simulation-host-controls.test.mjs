@@ -353,3 +353,20 @@ test("a replaced operator connection cannot publish an old request failure into 
   await pending;
   assert.deepEqual(f.messages, []);
 });
+
+test('End scoring remains available from legitimately paused chapter and break controls', async () => {
+  for (const phase of ['chapter', 'brag']) {
+    const f = hostUI();
+    await f.run('Open lobby');
+    await f.run('Start event');
+    await f.run('Advance to next phase');
+    if (phase === 'brag') await f.run('Advance to next phase');
+    await f.run('Pause');
+    assert.equal(f.engine.state.pause.phase, phase);
+    await f.run('End scoring');
+    assert.equal(f.engine.state.phase, 'finale');
+    assert.equal(f.engine.state.pause, null);
+    assert(f.engine.state.snapshot);
+    assert.equal(f.engine.event().remainingMs, 240000);
+  }
+});
