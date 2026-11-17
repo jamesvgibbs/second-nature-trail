@@ -865,98 +865,667 @@ dialog h2 {
 }
 
 /* The trail is a field expedition: quiet body text, compact pixel-like labels. */
-body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-.eyebrow, .chapter-count, .hud-caption, .timer, .phase-label, .map-label, .brand,
-.delivery-trail, .supply-total strong { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
-.game-main { grid-template-columns: minmax(0, 1fr) 330px; }
-.world-wrap { grid-template-rows: auto minmax(0, 1fr) auto; background: #203a40; }
-.map-viewport { display: grid; place-items: center; min-width: 0; min-height: 0; overflow: hidden; background: #203a40; }
-.world { width: 100%; height: auto; aspect-ratio: 3 / 2; max-width: 100%; max-height: 100%; }
-.supply-hud { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; padding: 10px 16px; color: #f4efd9; background: #1d3740; border-bottom: 2px solid #687b6d; }
-.hud-caption { display: block; font-size: .62rem; letter-spacing: .12em; color: #b9c9b7; }
-.supply-total strong { display: block; font-size: 1.2rem; line-height: 1.1; }
-.supply-total small { font-family: system-ui, sans-serif; font-size: .7rem; font-weight: 500; color: #cbd5c2; }
-.supply-counts { display: flex; gap: 18px; flex-wrap: wrap; }
-.supply-count { display: grid; grid-template-columns: 15px auto; align-items: center; gap: 0 6px; font-size: .7rem; text-transform: capitalize; }
-.supply-count strong { font-size: 1rem; }
-.supply-count > span { grid-column: 2; color: #cbd5c2; }
-.supply-icon { width: 13px; height: 13px; display: block; background: #c6ad78; border: 3px solid #8f805e; box-shadow: 2px 2px 0 #0e2630; }
-.supply-icon.filters { background: repeating-linear-gradient(90deg, #d2d6bb 0 2px, #6e8e89 2px 4px); }
-.supply-icon.food { background: #b9cd8f; border-color: #718d61; }
-.supply-icon.cable { border: 3px double #ddbe79; background: #253e43; }
-.hud-safe { font-size: .75rem; color: #c9ddb9; }
-.mission { padding: 23px 20px; background: #f5efdc; border-color: #263f48; }
-.mission h2 { font-size: 1.9rem; letter-spacing: -.045em; line-height: 1.05; }
-.mission p { font-size: .86rem; line-height: 1.5; }
-.mission .chapter-count { color: #527164; }
-.mission .stat-row { font-size: .78rem; margin: 11px 0; }
-.mission .stat-row strong { font-size: 1rem; }
-.mission .task-primary { display: flex; min-height: 52px; padding: 13px; border-color: #264c43; background: #bfd6a2; font-size: .93rem; }
-.mission .task-destination { font-size: .73rem; margin: 9px 0 18px; color: #4c6862; }
-.secondary-heading { font: 700 .63rem ui-monospace, monospace; letter-spacing: .1em; color: #627266; border-top: 1px solid #c9cfb8; padding-top: 16px; margin-top: 18px; }
-.secondary-actions { display: grid; gap: 0; }
-.secondary-actions button.quiet { border: 0; border-bottom: 1px solid #d5d8c4; min-height: 36px; margin: 0; padding: 9px 2px; font-weight: 600; font-size: .81rem; }
-.delivery-trail { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin: 20px 0 17px; }
-.delivery-trail span { display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center; color: #6c776c; font-size: .59rem; line-height: 1.2; }
-.delivery-trail b { display: grid; place-items: center; width: 25px; height: 25px; border: 1px solid #bec7ac; background: #e8e7d2; font-size: .75rem; }
-.delivery-trail .current { color: #213c3b; font-weight: 700; }
-.delivery-trail .current b { color: #f7f2df; border-color: #203f49; background: #203f49; outline: 2px solid #d5af6a; outline-offset: 2px; }
-.delivery-trail .done b { background: #b9d2a3; border-color: #839d76; }
-#modal-body h3 { line-height: 1.25; }
-#modal-body p { line-height: 1.5; }
-.choice-list button { text-align: left; line-height: 1.4; }
-.world-legend { background: #1d3740; padding: 9px 15px; gap: 5px 16px; }
-.world-hint { font-size: .72rem; }
-@media (max-width: 1100px) {
-  .game-main { grid-template-columns: minmax(0, 1fr) 300px; }
-  .supply-hud { padding: 8px 10px; gap: 8px; }
-  .supply-counts { gap: 10px; }
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 }
-.cargo-panel { background: #203f49; color: #f5efdc; padding: 18px; margin-bottom: 20px; border-left: 5px solid #cfac6b; }
-.cargo-panel p { margin: 10px 0; }
-.cargo-panel .eyebrow { color: #c3d5b7; }
-.cargo-heading { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
-.cart-slots { display: flex; gap: 6px; margin: 15px 0 10px; }
-.cart-slots span { width: 29px; height: 25px; border: 2px solid #758d86; background: #2e4e56; }
-.cart-slots .filled { background: #c4ab71; border-color: #f1d596; box-shadow: inset 0 -5px #a88e5d; }
-.reserve-note { font-size: .72rem; color: #ced9c4; padding-top: 10px; border-top: 1px solid #5c776e; }
-.choice-list button { display: block; width: 100%; }
-.choice-detail { display: block; margin-top: 7px; font-size: .78em; font-weight: 500; color: #536962; }
-.choice-list button.selected .choice-detail { color: #284b40; }
-.action-receipt h3 { font-size: 1.8rem; letter-spacing: -.035em; margin: 10px 0 18px; }
-.receipt-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 9px; margin-bottom: 20px; }
-.receipt-stats > div { border-top: 3px solid #5f8b6e; background: #e5e8d2; padding: 12px; }
-.receipt-stats strong { display: block; font: 700 1.6rem ui-monospace, monospace; color: #244b43; }
-.receipt-stats span { font-size: .7rem; color: #48635b; }
-#receipt-next button { min-width: 200px; margin-top: 10px; }
-.hero-art { background: #203a40; }
-.hero-art canvas { object-fit: contain; }
-.host-stats { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-@media (max-width: 760px) { .host-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-h1, h2, h3 { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: -.035em; }
-.hero-copy h1 { letter-spacing: -.045em; line-height: 1.03; }
-.mission h2 { font-size: 1.65rem; line-height: 1.12; letter-spacing: -.04em; }
-dialog { width: min(720px, calc(100vw - 30px)); max-height: 90vh; }
-dialog[open] { display: flex; flex-direction: column; }
-dialog > header { flex-shrink: 0; padding: 14px 20px; }
-dialog h2 { font-size: 1.2rem; }
-#modal-body { min-height: 0; padding: 20px; }
-#activity-prompt { margin: 12px 0; }
-.cargo-panel { padding: 12px 14px; margin-bottom: 16px; }
-.cargo-heading { align-items: center; }
-.cargo-manifest { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 14px; font-size: .72rem; margin-top: 9px; color: #dbe4cf; }
-.cargo-manifest details { font-size: .7rem; }
-.cargo-manifest summary { cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
-.cargo-manifest details > span { display: block; padding: 7px 0 2px; }
-.cart-slots { align-items: center; gap: 4px; margin: 0; }
-.cart-slots span { width: 17px; height: 16px; }
-.cart-slots strong { font-size: .74rem; margin-left: 5px; }
-.choice-list { gap: 8px; margin: 12px 0; }
-.choice-list button { padding: 10px 12px; }
-.choice-detail { margin-top: 4px; }
-#task-confirm { position: sticky; bottom: -20px; padding: 12px 0; background: var(--paper); border-top: 1px solid #d3d8c1; }
-#selection-status { font-size: .75rem; margin: 8px 0; }
-.receipt-caption { color: #617568; margin-bottom: 7px; }
-.receipt-stats:empty { display: none; }
-.receipt-supplies { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: -8px 0 16px; padding: 10px 0; border-bottom: 1px solid #d3d8c1; font-size: .75rem; color: #48635b; }
-#receipt-next { position: sticky; bottom: -20px; padding: 5px 0 10px; background: var(--paper); }
+.eyebrow,
+.chapter-count,
+.hud-caption,
+.timer,
+.phase-label,
+.map-label,
+.brand,
+.delivery-trail,
+.supply-total strong {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+.game-main {
+  grid-template-columns: minmax(0, 1fr) 330px;
+}
+.world-wrap {
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  background: #203a40;
+}
+.map-viewport {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: #203a40;
+}
+.world {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  max-width: 100%;
+  max-height: 100%;
+}
+.supply-hud {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 24px;
+  padding: 10px 16px;
+  color: #f4efd9;
+  background: #1d3740;
+  border-bottom: 2px solid #687b6d;
+}
+.hud-caption {
+  display: block;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: #b9c9b7;
+}
+.supply-total strong {
+  display: block;
+  font-size: 1.2rem;
+  line-height: 1.1;
+}
+.supply-total small {
+  font-family: system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #cbd5c2;
+}
+.supply-counts {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.supply-count {
+  display: grid;
+  grid-template-columns: 15px auto;
+  align-items: center;
+  gap: 0 6px;
+  font-size: 0.7rem;
+  text-transform: capitalize;
+}
+.supply-count strong {
+  font-size: 1rem;
+}
+.supply-count > span {
+  grid-column: 2;
+  color: #cbd5c2;
+}
+.supply-icon {
+  width: 13px;
+  height: 13px;
+  display: block;
+  background: #c6ad78;
+  border: 3px solid #8f805e;
+  box-shadow: 2px 2px 0 #0e2630;
+}
+.supply-icon.filters {
+  background: repeating-linear-gradient(90deg, #d2d6bb 0 2px, #6e8e89 2px 4px);
+}
+.supply-icon.food {
+  background: #b9cd8f;
+  border-color: #718d61;
+}
+.supply-icon.cable {
+  border: 3px double #ddbe79;
+  background: #253e43;
+}
+.hud-safe {
+  font-size: 0.75rem;
+  color: #c9ddb9;
+}
+.mission {
+  padding: 23px 20px;
+  background: #f5efdc;
+  border-color: #263f48;
+}
+.mission h2 {
+  font-size: 1.9rem;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+}
+.mission p {
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+.mission .chapter-count {
+  color: #527164;
+}
+.mission .stat-row {
+  font-size: 0.78rem;
+  margin: 11px 0;
+}
+.mission .stat-row strong {
+  font-size: 1rem;
+}
+.mission .task-primary {
+  display: flex;
+  min-height: 52px;
+  padding: 13px;
+  border-color: #264c43;
+  background: #bfd6a2;
+  font-size: 0.93rem;
+}
+.mission .task-destination {
+  font-size: 0.73rem;
+  margin: 9px 0 18px;
+  color: #4c6862;
+}
+.secondary-heading {
+  font:
+    700 0.63rem ui-monospace,
+    monospace;
+  letter-spacing: 0.1em;
+  color: #627266;
+  border-top: 1px solid #c9cfb8;
+  padding-top: 16px;
+  margin-top: 18px;
+}
+.secondary-actions {
+  display: grid;
+  gap: 0;
+}
+.secondary-actions button.quiet {
+  border: 0;
+  border-bottom: 1px solid #d5d8c4;
+  min-height: 36px;
+  margin: 0;
+  padding: 9px 2px;
+  font-weight: 600;
+  font-size: 0.81rem;
+}
+.delivery-trail {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin: 20px 0 17px;
+}
+.delivery-trail span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+  color: #6c776c;
+  font-size: 0.59rem;
+  line-height: 1.2;
+}
+.delivery-trail b {
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border: 1px solid #bec7ac;
+  background: #e8e7d2;
+  font-size: 0.75rem;
+}
+.delivery-trail .current {
+  color: #213c3b;
+  font-weight: 700;
+}
+.delivery-trail .current b {
+  color: #f7f2df;
+  border-color: #203f49;
+  background: #203f49;
+  outline: 2px solid #d5af6a;
+  outline-offset: 2px;
+}
+.delivery-trail .done b {
+  background: #b9d2a3;
+  border-color: #839d76;
+}
+#modal-body h3 {
+  line-height: 1.25;
+}
+#modal-body p {
+  line-height: 1.5;
+}
+.choice-list button {
+  text-align: left;
+  line-height: 1.4;
+}
+.world-legend {
+  background: #1d3740;
+  padding: 9px 15px;
+  gap: 5px 16px;
+}
+.world-hint {
+  font-size: 0.72rem;
+}
+@media (max-width: 1100px) {
+  .game-main {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+  .supply-hud {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+  .supply-counts {
+    gap: 10px;
+  }
+}
+.cargo-panel {
+  background: #203f49;
+  color: #f5efdc;
+  padding: 18px;
+  margin-bottom: 20px;
+  border-left: 5px solid #cfac6b;
+}
+.cargo-panel p {
+  margin: 10px 0;
+}
+.cargo-panel .eyebrow {
+  color: #c3d5b7;
+}
+.cargo-heading {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.cart-slots {
+  display: flex;
+  gap: 6px;
+  margin: 15px 0 10px;
+}
+.cart-slots span {
+  width: 29px;
+  height: 25px;
+  border: 2px solid #758d86;
+  background: #2e4e56;
+}
+.cart-slots .filled {
+  background: #c4ab71;
+  border-color: #f1d596;
+  box-shadow: inset 0 -5px #a88e5d;
+}
+.reserve-note {
+  font-size: 0.72rem;
+  color: #ced9c4;
+  padding-top: 10px;
+  border-top: 1px solid #5c776e;
+}
+.choice-list button {
+  display: block;
+  width: 100%;
+}
+.choice-detail {
+  display: block;
+  margin-top: 7px;
+  font-size: 0.78em;
+  font-weight: 500;
+  color: #536962;
+}
+.choice-list button.selected .choice-detail {
+  color: #284b40;
+}
+.action-receipt h3 {
+  font-size: 1.8rem;
+  letter-spacing: -0.035em;
+  margin: 10px 0 18px;
+}
+.receipt-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 9px;
+  margin-bottom: 20px;
+}
+.receipt-stats > div {
+  border-top: 3px solid #5f8b6e;
+  background: #e5e8d2;
+  padding: 12px;
+}
+.receipt-stats strong {
+  display: block;
+  font:
+    700 1.6rem ui-monospace,
+    monospace;
+  color: #244b43;
+}
+.receipt-stats span {
+  font-size: 0.7rem;
+  color: #48635b;
+}
+#receipt-next button {
+  min-width: 200px;
+  margin-top: 10px;
+}
+.hero-art {
+  background: #203a40;
+}
+.hero-art canvas {
+  object-fit: contain;
+}
+.host-stats {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+@media (max-width: 760px) {
+  .host-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+h1,
+h2,
+h3 {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  letter-spacing: -0.035em;
+}
+.hero-copy h1 {
+  letter-spacing: -0.045em;
+  line-height: 1.03;
+}
+.mission h2 {
+  font-size: 1.65rem;
+  line-height: 1.12;
+  letter-spacing: -0.04em;
+}
+dialog {
+  width: min(720px, calc(100vw - 30px));
+  max-height: 90vh;
+}
+dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+dialog > header {
+  flex-shrink: 0;
+  padding: 14px 20px;
+}
+dialog h2 {
+  font-size: 1.2rem;
+}
+#modal-body {
+  min-height: 0;
+  padding: 20px;
+}
+#activity-prompt {
+  margin: 12px 0;
+}
+.cargo-panel {
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+.cargo-heading {
+  align-items: center;
+}
+.cargo-manifest {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 14px;
+  font-size: 0.72rem;
+  margin-top: 9px;
+  color: #dbe4cf;
+}
+.cargo-manifest details {
+  font-size: 0.7rem;
+}
+.cargo-manifest summary {
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.cargo-manifest details > span {
+  display: block;
+  padding: 7px 0 2px;
+}
+.cart-slots {
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+}
+.cart-slots span {
+  width: 17px;
+  height: 16px;
+}
+.cart-slots strong {
+  font-size: 0.74rem;
+  margin-left: 5px;
+}
+.choice-list {
+  gap: 8px;
+  margin: 12px 0;
+}
+.choice-list button {
+  padding: 10px 12px;
+}
+.choice-detail {
+  margin-top: 4px;
+}
+#task-confirm {
+  position: sticky;
+  bottom: -20px;
+  padding: 12px 0;
+  background: var(--paper);
+  border-top: 1px solid #d3d8c1;
+}
+#selection-status {
+  font-size: 0.75rem;
+  margin: 8px 0;
+}
+.receipt-caption {
+  color: #617568;
+  margin-bottom: 7px;
+}
+.receipt-stats:empty {
+  display: none;
+}
+.receipt-supplies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: -8px 0 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid #d3d8c1;
+  font-size: 0.75rem;
+  color: #48635b;
+}
+#receipt-next {
+  position: sticky;
+  bottom: -20px;
+  padding: 5px 0 10px;
+  background: var(--paper);
+}
+
+/* Move Day is a single illustrated crossing with choices beside the cart. */
+.move-day-game .game-main {
+  grid-template-columns: minmax(0, 1fr) 350px;
+}
+.move-day-game .world-wrap,
+.move-day-game .map-viewport {
+  background: #789170;
+}
+.move-day-game .supply-hud {
+  padding: 8px 14px;
+  min-height: 36px;
+  gap: 7px 15px;
+}
+.move-day-game .supply-hud strong {
+  font-size: 0.82rem;
+}
+.move-day-game .world-legend {
+  padding: 7px 12px;
+}
+.move-day-game .map-label {
+  font-size: 0.65rem;
+}
+.move-day-game .world-hint {
+  font-size: 0.66rem;
+}
+.move-day-mission {
+  padding: 15px 18px;
+}
+.move-day-mission h2 {
+  margin: 7px 0 5px;
+  font-size: 1.8rem;
+}
+.move-day-mission .chapter-count {
+  font-size: 0.64rem;
+}
+.move-day-mission .move-day-story {
+  font-size: 0.78rem;
+  line-height: 1.35;
+  margin: 0 0 11px;
+}
+.travel-journal {
+  border-left: 3px solid #7d936a;
+  padding: 6px 10px;
+  background: #e6e7cf;
+  margin: 0 0 10px;
+}
+.travel-journal .eyebrow {
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+}
+.travel-journal h3 {
+  font-size: 0.86rem;
+  margin: 4px 0;
+}
+.move-day-mission .travel-journal p {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  margin: 0;
+}
+.focused-cart {
+  border-block: 1px solid #b7c3a9;
+  padding: 7px 0;
+  margin-bottom: 10px;
+  font-size: 0.72rem;
+}
+.focused-cart .spread {
+  justify-content: space-between;
+  gap: 6px;
+}
+.focused-cart strong {
+  font-size: 0.8rem;
+}
+.focused-supplies {
+  display: flex;
+  gap: 15px;
+  color: #526557;
+  margin-top: 5px;
+}
+.move-day-mission #move-day-prompt {
+  font-size: 1rem;
+  margin: 9px 0 7px;
+}
+.move-day-choices {
+  display: grid;
+  gap: 6px;
+}
+.move-day-choices button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin: 0;
+  padding: 8px 10px;
+  font-size: 0.79rem;
+  line-height: 1.15;
+  border-width: 1px;
+  box-shadow: none;
+}
+.move-day-choices button.selected {
+  border-color: #365a43;
+  background: #ccdab6;
+  outline: 1px solid #365a43;
+}
+.move-day-choices .choice-detail {
+  margin-top: 4px;
+  font-size: 0.85em;
+  line-height: 1.3;
+}
+.move-day-controls {
+  margin-top: 9px;
+}
+.move-day-controls .move-day-primary {
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+  font-size: 0.86rem;
+}
+.move-day-mission .move-day-travel {
+  font-size: 0.65rem;
+  margin: 5px 0 0;
+}
+.move-day-companions {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 10px;
+}
+.move-day-companions > p {
+  width: 100%;
+  font-size: 0.65rem;
+  margin: 0 0 3px;
+}
+.move-day-companions button {
+  font-size: 0.59rem;
+  padding: 5px;
+  border-width: 1px;
+  margin: 0;
+}
+.move-day-game .game-footer {
+  padding-block: 8px;
+}
+.move-day-game .game-footer button {
+  padding: 7px 9px;
+  font-size: 0.72rem;
+}
+[hidden] {
+  display: none !important;
+}
+@media (max-width: 1100px) {
+  .move-day-game .game-main {
+    grid-template-columns: minmax(0, 1fr) 320px;
+  }
+  .move-day-mission {
+    padding: 12px;
+  }
+}
+.move-day-game {
+  grid-template-rows: 57px minmax(0, 1fr) 47px;
+}
+.move-day-game .topbar {
+  padding-block: 5px;
+}
+.move-day-broadcast {
+  font-size: 0.72rem;
+  border-bottom: 1px solid #c4cdb4;
+  padding: 0 0 6px;
+  margin-bottom: 7px;
+}
+.move-day-broadcast summary {
+  cursor: pointer;
+  color: #486653;
+}
+.move-day-mission .move-day-broadcast p {
+  margin-bottom: 5px;
+}
+.move-day-mission .travel-journal {
+  padding: 5px 9px;
+  margin-bottom: 9px;
+}
+.move-day-mission .travel-journal .eyebrow {
+  display: none;
+}
+.move-day-mission .move-day-choices button {
+  height: auto;
+  min-height: 48px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  flex: none;
+}
+.move-day-mission .move-day-choices .choice-detail {
+  width: 100%;
+  white-space: normal;
+}
+.move-day-mission .move-day-companions button {
+  width: auto;
+  flex: 1 1 auto;
+  min-height: 28px;
+}

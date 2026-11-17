@@ -1,7 +1,18 @@
 import { createProjection, reduceProjection } from "/projection.mjs";
 import { districtScenery, SQUARE_TREES, ROAD_BANDS } from "/scenery.mjs";
 import { deliveryModel, actionReceipt } from "/trail-feedback.mjs";
-import { FIELD_NOTES, fitWorld, DELIVERY_STAGES, stageLabel, SITE_LABELS } from "/trail-visuals.mjs";
+import {
+  FIELD_NOTES,
+  fitWorld,
+  DELIVERY_STAGES,
+  stageLabel,
+  SITE_LABELS,
+} from "/trail-visuals.mjs";
+import {
+  moveDaySceneModel,
+  drawMoveDayScene,
+  hitMoveDayHotspot,
+} from "/move-day-scene.mjs";
 import { localFrameMeasurement } from "/performance.mjs";
 const measureFrame = localFrameMeasurement();
 import {
@@ -82,6 +93,16 @@ let projection = createProjection(),
   settingsSequence = 0,
   visualIntentGeneration = 0,
   latestVisualIntentInsects = false;
+let moveDayOverview = false;
+let moveDayState = {
+  epoch: null,
+  key: "",
+  selection: null,
+  pending: false,
+  token: 0,
+  journal: [],
+  focusedPeerId: null,
+};
 let state = null,
   connected = false,
   authorizationLost = false,
@@ -237,10 +258,16 @@ async function act(type, fields = {}, observe = null) {
     return null;
   }
   try {
-    const before = observe ? structuredClone({
-      projectionEpoch: state.projectionEpoch, projectionVersion: state.projectionVersion,
-      event: state.event, me: state.me, chapter: state.chapter, rules: state.rules,
-    }) : null;
+    const before = observe
+      ? structuredClone({
+          projectionEpoch: state.projectionEpoch,
+          projectionVersion: state.projectionVersion,
+          event: state.event,
+          me: state.me,
+          chapter: state.chapter,
+          rules: state.rules,
+        })
+      : null;
     const action = {
       type,
       requestId: crypto.randomUUID(),
@@ -288,12 +315,18 @@ function applyPrefs() {
 }
 applyPrefs();
 function topbar(extra = "") {
-  return `<header class="topbar"><div class="brand"><span class="brand-mark">sn</span> SECOND NATURE TRAIL</div>${extra || '<span class="eyebrow">A neighborhood worth saving</span>'}</header>`;
+  return `<header class="topbar"><div class="brand"><span class="brand-mark">sn</span> SECOND NATURE TRAIL</div>${
+    extra || '<span class="eyebrow">A neighborhood worth saving</span>'
+  }</header>`;
 }
 function blocked(message, title = "A bigger adventure needs a bigger screen") {
   app.innerHTML =
     topbar() +
-    `<main class="phone-screen card"><div class="eyebrow">Before you set out</div><h1>${esc(title)}</h1><p>${esc(message)}</p><p class="small">Event code: SN-TRAIL</p><div id="blocked-actions" class="row"></div><p class="small muted" style="margin-top:20px">Using a company laptop? Ask your event host for device support. Touchscreen laptops are supported.</p></main>`;
+    `<main class="phone-screen card"><div class="eyebrow">Before you set out</div><h1>${esc(
+      title,
+    )}</h1><p>${esc(
+      message,
+    )}</p><p class="small">Event code: SN-TRAIL</p><div id="blocked-actions" class="row"></div><p class="small muted" style="margin-top:20px">Using a company laptop? Ask your event host for device support. Touchscreen laptops are supported.</p></main>`;
   $("#blocked-actions").append(
     btn("Copy invitation link", async () => {
       await navigator.clipboard.writeText(location.href);
@@ -349,7 +382,9 @@ function windowCheck() {
   } else n?.remove();
 }
 function landing(error = "") {
-  app.innerHTML = `<div class="landing">${topbar()}<main class="hero"><section class="hero-copy"><div class="pill"><span class="dot"></span> 100 NEIGHBORS · ONE SHARED WORLD</div><h1>The machines<br>lost the plot.<br><span>We’ve got this.</span></h1><p>Pack your cart. Find your people. Bring a neighborhood back to life, one very human decision at a time.</p><form class="join-form"><label for="invite">Your private invitation code</label><div class="row"><input id="invite" name="invite" placeholder="Paste your invitation code" required autocomplete="off"><button class="primary">Set out →</button></div></form>${error ? `<p class="error">${esc(error)}</p>` : ""}<p class="small entry-note">Laptop or desktop · Keyboard or mouse · No install</p></section><section class="hero-art"><canvas id="hero-map" width="1200" height="800" aria-label="Original pixel neighborhood with houses, parks, and a central meeting square"></canvas><div class="art-caption">EST. BEFORE THE ROBOTS GOT IDEAS &nbsp; / &nbsp; BRAGGING SQUARE</div></section></main><footer class="landing-bottom"><div><strong>08 chapters</strong><p>A fresh district. A different kind of trouble.</p></div><div><strong>15 ways to shine</strong><p>Find your edge. Help a neighbor find theirs.</p></div><div><strong>01 neighborhood</strong><p>Every repair makes this place a little more human.</p></div></footer></div>`;
+  app.innerHTML = `<div class="landing">${topbar()}<main class="hero"><section class="hero-copy"><div class="pill"><span class="dot"></span> 100 NEIGHBORS · ONE SHARED WORLD</div><h1>The machines<br>lost the plot.<br><span>We’ve got this.</span></h1><p>Pack your cart. Find your people. Bring a neighborhood back to life, one very human decision at a time.</p><form class="join-form"><label for="invite">Your private invitation code</label><div class="row"><input id="invite" name="invite" placeholder="Paste your invitation code" required autocomplete="off"><button class="primary">Set out →</button></div></form>${
+    error ? `<p class="error">${esc(error)}</p>` : ""
+  }<p class="small entry-note">Laptop or desktop · Keyboard or mouse · No install</p></section><section class="hero-art"><canvas id="hero-map" width="1200" height="800" aria-label="Original pixel neighborhood with houses, parks, and a central meeting square"></canvas><div class="art-caption">EST. BEFORE THE ROBOTS GOT IDEAS &nbsp; / &nbsp; BRAGGING SQUARE</div></section></main><footer class="landing-bottom"><div><strong>08 chapters</strong><p>A fresh district. A different kind of trouble.</p></div><div><strong>15 ways to shine</strong><p>Find your edge. Help a neighbor find theirs.</p></div><div><strong>01 neighborhood</strong><p>Every repair makes this place a little more human.</p></div></footer></div>`;
   drawMap($("#hero-map").getContext("2d"), false);
   $(".join-form").onsubmit = (e) => {
     e.preventDefault();
@@ -430,7 +465,9 @@ async function connect(takeover = false) {
   }
   const url = isPresentation
     ? "/api/events?presentation=1"
-    : `/api/events?client=${encodeURIComponent(client)}${takeover ? "&takeover=1" : ""}`;
+    : `/api/events?client=${encodeURIComponent(client)}${
+        takeover ? "&takeover=1" : ""
+      }`;
   const source = new EventSource(url);
   stream = source;
   let bootstrapPending = true;
@@ -518,7 +555,11 @@ function updateConnection() {
     el.append(
       dot,
       document.createTextNode(
-        authorizationLost ? "SIGN-IN REQUIRED" : connected ? "CONNECTED" : "RECONNECTING",
+        authorizationLost
+          ? "SIGN-IN REQUIRED"
+          : connected
+            ? "CONNECTED"
+            : "RECONNECTING",
       ),
     );
     if (authorizationLost) {
@@ -551,7 +592,9 @@ function updateConnection() {
 function setup() {
   app.innerHTML =
     topbar() +
-    `<main class="setup"><div class="eyebrow safe">YOUR NEIGHBORHOOD NEEDS YOU</div><h1>Make yourself at home.</h1><p class="intro">Hi, ${esc(state.me.name)}. Pick your look and how you’d like to play.</p><form id="setup-form"><div class="grid2"><section class="card"><h2>Choose your character</h2><div class="avatar-grid" id="avatars"></div><label>Pick a palette</label><div class="palette-grid" id="palettes"></div><p class="small muted">Same abilities. Same chances. Entirely your style.</p></section><section class="card"><h2>Show spiders and insects?</h2><p class="small">Choose before entering the world. Both versions play exactly the same.</p><label class="radio-choice"><input type="radio" name="insects" value="false" required> Replace with friendly robots</label><label class="radio-choice"><input type="radio" name="insects" value="true" required> Show spiders and insects</label><div id="setup-settings"></div></section></div><div class="row spread" style="margin-top:24px;color:var(--paper)"><span class="small">You can change these settings during play.</span><button class="primary">Enter Bragging Square →</button></div></form></main>`;
+    `<main class="setup"><div class="eyebrow safe">YOUR NEIGHBORHOOD NEEDS YOU</div><h1>Make yourself at home.</h1><p class="intro">Hi, ${esc(
+      state.me.name,
+    )}. Pick your look and how you’d like to play.</p><form id="setup-form"><div class="grid2"><section class="card"><h2>Choose your character</h2><div class="avatar-grid" id="avatars"></div><label>Pick a palette</label><div class="palette-grid" id="palettes"></div><p class="small muted">Same abilities. Same chances. Entirely your style.</p></section><section class="card"><h2>Show spiders and insects?</h2><p class="small">Choose before entering the world. Both versions play exactly the same.</p><label class="radio-choice"><input type="radio" name="insects" value="false" required> Replace with friendly robots</label><label class="radio-choice"><input type="radio" name="insects" value="true" required> Show spiders and insects</label><div id="setup-settings"></div></section></div><div class="row spread" style="margin-top:24px;color:var(--paper)"><span class="small">You can change these settings during play.</span><button class="primary">Enter Bragging Square →</button></div></form></main>`;
   avatarOptions();
   settingsFields($("#setup-settings"));
   $("#setup-form")
@@ -647,13 +690,32 @@ function accept(s, kind = "full", allowEpoch = false) {
     next.coreVersion !== projection.coreVersion;
   if (next.epoch !== projection.epoch) {
     target = null;
-    if (previous && modal.open && ["receipt", "activity", "challenge", "quiz", "secret", "targeting", "routing"].includes(panel)) {
+    if (
+      previous &&
+      modal.open &&
+      [
+        "receipt",
+        "activity",
+        "challenge",
+        "quiz",
+        "secret",
+        "targeting",
+        "routing",
+      ].includes(panel)
+    ) {
       close();
-      toast("The connection has refreshed. Open the current activity to continue.");
+      toast(
+        "The connection has refreshed. Open the current activity to continue.",
+      );
     }
   }
   projection = next;
   state = next.state;
+  if (
+    isMoveDayFocused() &&
+    moveDayCompanionSignature(previous) !== moveDayCompanionSignature(state)
+  )
+    renderMoveDayCompanions();
   if (kind === "move") return true;
   if ($("#supply-hud")) renderSupplyHUD();
   if (state.me?.settings) {
@@ -689,6 +751,7 @@ function accept(s, kind = "full", allowEpoch = false) {
     { ...state.event, remainingMs: undefined },
     state.chapter,
     state.me?.progress,
+    state.me?.inventory,
     state.me?.tutorial,
     state.me?.ready,
     state.me?.mystery,
@@ -701,8 +764,10 @@ function accept(s, kind = "full", allowEpoch = false) {
   const tradesChanged =
     JSON.stringify(previous?.trades) !== JSON.stringify(state.trades);
   if (
-    panel === "neighbors" && modal.open &&
-    (tradesChanged || neighborListSignature(previous) !== neighborListSignature(state))
+    panel === "neighbors" &&
+    modal.open &&
+    (tradesChanged ||
+      neighborListSignature(previous) !== neighborListSignature(state))
   )
     preservePanelFocus(() => neighbors(true));
   if (
@@ -724,7 +789,11 @@ function accept(s, kind = "full", allowEpoch = false) {
   return true;
 }
 function game() {
-  app.innerHTML = `<main class="game ${isPresentation ? "presentation" : ""}">${topbar(`<div class="row"><span id="connection" class="pill"></span><div style="text-align:right"><div class="phase-label" id="phase-label"></div><div class="timer" id="timer">--:--</div></div></div>`)}<div class="game-main"><section class="world-wrap"><div id="supply-hud" class="supply-hud"></div><div class="map-viewport"><canvas class="world" id="world" width="1200" height="800" tabindex="0" role="application" aria-label="Shared neighborhood. Move with arrow keys or WASD, or click a destination. Press E to interact. Tab reaches all menus."></canvas></div><div class="world-legend"><div class="map-label" id="map-label">BRAGGING SQUARE</div><div class="world-hint" id="world-hint">Click to walk · WASD / arrows to move · E to interact</div></div></section><aside class="mission" id="mission"></aside></div><footer class="game-footer"><div class="row" id="toolbar"></div><span class="small">One neighborhood. Everyone belongs.</span><span class="small" id="player-name"></span></footer></main>`;
+  app.innerHTML = `<main class="game ${
+    isPresentation ? "presentation" : ""
+  }">${topbar(
+    `<div class="row"><span id="connection" class="pill"></span><div style="text-align:right"><div class="phase-label" id="phase-label"></div><div class="timer" id="timer">--:--</div></div></div>`,
+  )}<div class="game-main"><section class="world-wrap"><div id="supply-hud" class="supply-hud"></div><div class="map-viewport"><canvas class="world" id="world" width="1200" height="800" tabindex="0" role="application" aria-label="Shared neighborhood. Move with arrow keys or WASD, or click a destination. Press E to interact. Tab reaches all menus."></canvas></div><div class="world-legend"><div class="map-label" id="map-label">BRAGGING SQUARE</div><div class="world-hint" id="world-hint">Click to walk · WASD / arrows to move · E to interact</div></div></section><aside class="mission" id="mission"></aside></div><footer class="game-footer"><div class="row" id="toolbar"></div><span class="small">One neighborhood. Everyone belongs.</span><span class="small" id="player-name"></span></footer></main>`;
   activeCanvas = $("#world");
   activeCtx = activeCanvas.getContext("2d");
   if (typeof canvasObserver !== "undefined") canvasObserver?.disconnect();
@@ -743,13 +812,21 @@ function game() {
       btn("Help [H]", help),
       btn("Settings", settings),
     );
+    const notes = btn("Field notes", moveDayFieldNotes);
+    notes.id = "field-notes-menu";
+    const back = btn("Return to Move Day", () => setMoveDayOverview(false));
+    back.id = "move-day-return";
+    bar.append(notes, back);
     $("#player-name").textContent = state.me?.name || "";
     activeCanvas.addEventListener("pointerdown", (e) => {
       const r = activeCanvas.getBoundingClientRect();
       const x = ((e.clientX - r.left) / r.width) * 1200,
         y = ((e.clientY - r.top) / r.height) * 800;
-      setDestination(x, y);
-      activeCanvas.focus();
+      if (isMoveDayFocused()) moveDaySceneClick(x, y);
+      else {
+        setDestination(x, y);
+        activeCanvas.focus();
+      }
     });
     activeCanvas.addEventListener("keydown", worldKeys);
   } else {
@@ -783,16 +860,484 @@ function renderSupplyHUD() {
   const hud = $("#supply-hud");
   if (!hud) return;
   if (isPresentation || !state?.me) {
-    hud.innerHTML = '<span class="hud-caption">NEIGHBORHOOD FIELD REPORT</span><span class="hud-safe">Friendly robot visuals</span>';
+    hud.innerHTML =
+      '<span class="hud-caption">NEIGHBORHOOD FIELD REPORT</span><span class="hud-safe">Friendly robot visuals</span>';
+    return;
+  }
+  if (isMoveDayFocused()) {
+    const model = deliveryModel(state);
+    const shared = moveDaySceneModel(state).sharedRecovery;
+    hud.innerHTML = `<span class="hud-caption">MOVE DAY · YOUR DELIVERY TRAIL</span><strong>${model.completedDeliveries} / ${model.totalDeliveries} deliveries</strong><span class="hud-safe">District: ${shared.completed}/${shared.total} neighbors finished</span>`;
     return;
   }
   const inventory = state.me.inventory || {};
   const used = Object.values(inventory).reduce((sum, n) => sum + n, 0);
-  hud.innerHTML = `<div class="supply-total"><span class="hud-caption">YOUR SUPPLIES</span><strong>${used}<small> / ${state.rules?.storageLimit || 12} stored</small></strong></div><div class="supply-counts">${['parts', 'filters', 'food', 'cable'].map((item) => `<span class="supply-count"><i class="supply-icon ${item}" aria-hidden="true"></i><strong>${inventory[item] || 0}</strong><span>${item}</span></span>`).join('')}</div>`;
+  hud.innerHTML = `<div class="supply-total"><span class="hud-caption">YOUR SUPPLIES</span><strong>${used}<small> / ${
+    state.rules?.storageLimit || 12
+  } stored</small></strong></div><div class="supply-counts">${[
+    "parts",
+    "filters",
+    "food",
+    "cable",
+  ]
+    .map(
+      (item) =>
+        `<span class="supply-count"><i class="supply-icon ${item}" aria-hidden="true"></i><strong>${
+          inventory[item] || 0
+        }</strong><span>${item}</span></span>`,
+    )
+    .join("")}</div>`;
 }
 function deliveryTrailHTML(task, progress) {
   const stage = DELIVERY_STAGES.findIndex(([key]) => key === task?.stage);
-  return `<div class="delivery-trail" aria-label="Delivery stages">${DELIVERY_STAGES.map(([key, label], i) => `<span class="${progress?.complete ? 'done' : i === stage ? 'current' : i < stage ? 'done' : ''}"${i === stage && !progress?.complete ? ' aria-current="step"' : ''}><b>${i + 1}</b>${label}</span>`).join('')}</div>`;
+  return `<div class="delivery-trail" aria-label="Delivery stages">${DELIVERY_STAGES.map(
+    ([key, label], i) =>
+      `<span class="${
+        progress?.complete
+          ? "done"
+          : i === stage
+            ? "current"
+            : i < stage
+              ? "done"
+              : ""
+      }"${
+        i === stage && !progress?.complete ? ' aria-current="step"' : ""
+      }><b>${i + 1}</b>${label}</span>`,
+  ).join("")}</div>`;
+}
+function isMoveDayAvailable() {
+  return (
+    !isPresentation &&
+    state?.event?.chapter === 0 &&
+    (state.event.phase === "chapter" ||
+      (state.event.phase === "paused" && state.event.pausedPhase === "chapter"))
+  );
+}
+function isMoveDayFocused() {
+  return (
+    typeof moveDayOverview !== "undefined" &&
+    !moveDayOverview &&
+    isMoveDayAvailable()
+  );
+}
+function syncMoveDayState() {
+  const model = deliveryModel(state);
+  if (!model) return null;
+  if (moveDayState.epoch !== state.projectionEpoch) {
+    moveDayState = {
+      epoch: state.projectionEpoch,
+      key: "",
+      selection: null,
+      pending: false,
+      token: moveDayState.token + 1,
+      journal: [],
+      focusedPeerId: null,
+    };
+  }
+  const key = `${state.projectionEpoch}:${model.completedDeliveries}:${model.stage}`;
+  if (moveDayState.key !== key) {
+    moveDayState.key = key;
+    moveDayState.selection = null;
+  }
+  return model;
+}
+function moveDayNearTarget() {
+  const p = state?.me?.position,
+    destination = state?.chapter?.task?.target;
+  return (
+    !!p &&
+    !!destination &&
+    Math.hypot(p.x - destination.x, p.y - destination.y) < 60
+  );
+}
+function moveDaySidebarHTML() {
+  const model = syncMoveDayState();
+  if (!model) return "<p>Loading your delivery cart…</p>";
+  const latest = moveDayState.journal.at(-1);
+  const heading = model.complete ? "A little more human." : "Move Day";
+  const manifest = model.loaded
+    ? Object.entries(model.loaded)
+        .map(([kind, qty]) => `${qty} ${esc(kind)}`)
+        .join(" + ")
+    : "Empty cart";
+  return `<div class="move-day-sidebar"><span class="chapter-count">CHAPTER 1 · ${
+    model.complete
+      ? "DELIVERIES COMPLETE"
+      : "TRIP " + model.deliveryNumber + " OF " + model.totalDeliveries
+  }</span><h2>${heading}</h2><section class="travel-journal" aria-live="polite" aria-atomic="true"><span class="eyebrow">TRAVEL JOURNAL</span><h3 id="move-day-result" tabindex="-1">${esc(
+    latest?.title ||
+      (model.completedDeliveries
+        ? `${model.completedDeliveries} ${model.completedDeliveries === 1 ? "delivery" : "deliveries"} made.`
+        : "A home needs its supplies."),
+  )}</h3><p>${esc(
+    latest?.text ||
+      (model.complete
+        ? "The roadside home has supplies again."
+        : model.loaded
+          ? "Cargo packed. Choose your next stop."
+          : "Choose a load, then a crossing."),
+  )}</p></section><section class="focused-cart"><div class="row spread"><strong>${manifest}</strong><span>${
+    model.slots
+  }/${model.maxSlots} cart slots</span></div><div class="focused-supplies">${[
+    "parts",
+    "food",
+    "cable",
+  ]
+    .map((item) => `<span><b>${model.storage[item]}</b> ${item}</span>`)
+    .join(
+      "",
+    )}</div></section><div id="move-day-actions"></div><div id="move-day-companions" class="move-day-companions"></div></div>`;
+}
+function renderMoveDaySidebar() {
+  const model = syncMoveDayState(),
+    holder = $("#move-day-actions");
+  if (!model || !holder) return;
+  const paused = state.event.phase !== "chapter" || !!state.event.paused;
+  const prompt = document.createElement("h3");
+  prompt.id = "move-day-prompt";
+  prompt.tabIndex = -1;
+  prompt.textContent = model.complete
+    ? "Where next?"
+    : {
+        load: "What will you carry?",
+        route: "Which way will you go?",
+        travel: "Check the crossing.",
+        deliver: "Bring the supplies home.",
+      }[model.stage];
+  holder.append(prompt);
+  if (!model.complete && ["load", "route"].includes(model.stage)) {
+    const choices = document.createElement("div");
+    choices.className = "move-day-choices";
+    const options = model.stage === "load" ? model.plans : model.routes;
+    options.forEach((option, i) => {
+      const b = btn(
+        option.label,
+        () => selectMoveDayChoice(i),
+        `move-day-choice${moveDayState.selection === i ? " selected" : ""}`,
+      );
+      b.dataset.focusKey = `move-day:${model.stage}:choice:${i}`;
+      b.setAttribute("aria-pressed", String(moveDayState.selection === i));
+      const detail = document.createElement("span");
+      detail.className = "choice-detail";
+      detail.textContent = deliveryChoiceDetail(model, i);
+      b.append(detail);
+      b.disabled = paused || moveDayState.pending || option.available === false;
+      choices.append(b);
+    });
+    holder.append(choices);
+  }
+  const controls = document.createElement("div");
+  controls.className = "move-day-controls";
+  const near = moveDayNearTarget(),
+    traveling = !!target?.arrival && target.arrival === "activity";
+  const travelLabel = {
+    load: model.completedDeliveries ? "Return to the depot" : "Go to the depot",
+    route: "Return to the depot",
+    travel:
+      model.selectedRoute === "shortcut"
+        ? "Take the damaged shortcut"
+        : "Take the paved detour",
+    deliver: "Go to the roadside home",
+  }[model.stage];
+  const actionLabel = {
+    load: "Pack this load",
+    route: "Choose this route",
+    travel: "Inspect the crossing",
+    deliver: "Deliver supplies",
+  }[model.stage];
+  const primary = btn(
+    model.complete
+      ? "Open field notes"
+      : moveDayState.pending
+        ? "Recording…"
+        : !near
+          ? traveling
+            ? "On the way…"
+            : travelLabel
+          : actionLabel,
+    model.complete ? moveDayFieldNotes : moveDayPrimary,
+    "primary move-day-primary",
+  );
+  primary.id = "move-day-primary";
+  primary.dataset.focusKey = "move-day:primary";
+  primary.disabled =
+    !model.complete && (paused || moveDayState.pending || (!near && traveling));
+  controls.append(primary);
+  if (!model.complete) {
+    const status = document.createElement("p");
+    status.id = "move-day-travel";
+    status.className = "small move-day-travel";
+    status.textContent = paused
+      ? "The expedition is paused."
+      : near
+        ? "Ready when you are."
+        : traveling
+          ? "On the way to your next stop…"
+          : "Head to your next stop when ready.";
+    controls.append(status);
+  }
+  holder.append(controls);
+  renderMoveDayCompanions();
+}
+function selectMoveDayChoice(index) {
+  const model = syncMoveDayState();
+  if (
+    !model ||
+    moveDayState.pending ||
+    state.event.phase !== "chapter" ||
+    state.event.paused
+  )
+    return;
+  const option = (
+    model.stage === "load"
+      ? model.plans
+      : model.stage === "route"
+        ? model.routes
+        : []
+  )[index];
+  if (!option || option.available === false) return;
+  moveDayState.selection = index;
+  renderMission();
+  const button = [
+    ...($("#move-day-actions")?.querySelectorAll("button") || []),
+  ].find(
+    (b) => b.dataset.focusKey === `move-day:${model.stage}:choice:${index}`,
+  );
+  button?.focus({ preventScroll: true });
+}
+function moveDayPrimary() {
+  const model = syncMoveDayState();
+  if (
+    !model ||
+    model.complete ||
+    moveDayState.pending ||
+    state.event.phase !== "chapter" ||
+    state.event.paused
+  )
+    return;
+  if (!moveDayNearTarget()) {
+    travel(0, "activity");
+    renderMission();
+    return;
+  }
+  return submitMoveDayChoice();
+}
+async function submitMoveDayChoice() {
+  const model = syncMoveDayState();
+  if (
+    !model ||
+    model.complete ||
+    moveDayState.pending ||
+    state.event.phase !== "chapter" ||
+    state.event.paused ||
+    !moveDayNearTarget()
+  )
+    return;
+  const choice = ["load", "route"].includes(model.stage)
+    ? moveDayState.selection
+    : 0;
+  if (choice === null) {
+    toast(
+      model.stage === "load" ? "Choose a load first." : "Choose a route first.",
+    );
+    return;
+  }
+  const epoch = state.projectionEpoch,
+    token = ++moveDayState.token;
+  const originFocus = document.activeElement;
+  const restoreFocus =
+    originFocus === activeCanvas ||
+    originFocus === document.body ||
+    originFocus === document.documentElement ||
+    $("#mission")?.contains(originFocus);
+  const focusRevision = modal.trailRevision;
+  moveDayState.pending = true;
+  renderMission();
+  let accepted = null;
+  const result = await act(
+    "task",
+    {
+      choice,
+      expectedChapter: 0,
+      expectedStep: model.completedDeliveries,
+      expectedStage: model.stage,
+    },
+    (record) => {
+      accepted = record;
+    },
+  );
+  if (token !== moveDayState.token) return;
+  moveDayState.pending = false;
+  if (
+    result === null ||
+    state.projectionEpoch !== epoch ||
+    state.event.chapter !== 0 ||
+    state.event.phase !== "chapter"
+  ) {
+    if ($("#mission")) renderMission();
+    return;
+  }
+  const receipt =
+    accepted &&
+    actionReceipt(
+      accepted.before,
+      accepted.after,
+      accepted.action,
+      accepted.result,
+    );
+  if (receipt && receiptMatchesState(accepted.after)) {
+    const points = receipt.deltas.find(
+      (item) => item.label === "Points this trip",
+    );
+    const text =
+      model.stage === "deliver"
+        ? `${receipt.details[0]} ${
+            points ? "+" + points.value + " points. " : ""
+          }${state.me.progress[0].step}/${
+            model.totalDeliveries
+          } deliveries made.`
+        : receipt.details.slice(0, model.stage === "route" ? 2 : 1).join(" ");
+    if (!moveDayState.journal.some((entry) => entry.id === receipt.id))
+      moveDayState.journal = [
+        ...moveDayState.journal.slice(-2),
+        {
+          id: receipt.id,
+          title: receipt.title,
+          text: text.replace(/the broken highway/gi, "the roadside home"),
+        },
+      ];
+  }
+  const currentFocus = document.activeElement;
+  const focusHere =
+    restoreFocus &&
+    !modal.open &&
+    modal.trailRevision === focusRevision &&
+    isMoveDayFocused() &&
+    !currentFocus?.dataset?.peerId &&
+    (currentFocus === activeCanvas ||
+      currentFocus === document.body ||
+      currentFocus === document.documentElement ||
+      $("#mission")?.contains(currentFocus));
+  renderMission();
+  if (focusHere && isMoveDayFocused())
+    $("#move-day-result")?.focus({ preventScroll: true });
+}
+function setMoveDayOverview(overview) {
+  moveDayOverview = !!overview;
+  if (modal.open) close();
+  renderSupplyHUD();
+  renderMission();
+  updateControlHints();
+  activeCanvas?.focus({ preventScroll: true });
+}
+function moveDayFieldNotes() {
+  panel = "field-notes";
+  const progress = state.me?.progress?.[0];
+  open(
+    "Move Day · Field notes",
+    `<p>Your chapter score: <strong>${
+      progress?.score || 0
+    }</strong> · Deliveries: ${
+      progress?.step || 0
+    }/3</p><p class="small">A delivery helps the roadside home. Finishing your objective also contributes to shared district recovery.</p><div id="move-day-notes" class="stack"></div><hr>${contributionsHTML()}`,
+  );
+  $("#move-day-notes").append(
+    btn("Learning encounters", learning, "primary"),
+    btn(
+      progress?.challenge ? "✓ Challenge complete" : "Try the harder challenge",
+      () => {
+        close();
+        travel(1, "challenge");
+      },
+    ),
+    btn(progress?.secret ? "✓ Clue discovered" : "Look for a secret", () => {
+      close();
+      travel(1, "secret");
+    }),
+    btn("The neighborhood mystery", mystery),
+    btn("Inventory & reserves", () => inventory()),
+    btn("Rules & scoring", rules),
+  );
+}
+function moveDayCompanionSignature(view) {
+  if (!view) return "";
+  const model = moveDaySceneModel(view, {
+    focusedPeerId: moveDayState.focusedPeerId,
+  });
+  return JSON.stringify([
+    model.teammateCount,
+    model.nearbyCount,
+    model.teammates.map((p) => [p.id, p.name]),
+  ]);
+}
+function renderMoveDayCompanions() {
+  const holder = $("#move-day-companions");
+  if (
+    !holder ||
+    !isMoveDayAvailable() ||
+    typeof moveDaySceneModel !== "function"
+  )
+    return;
+  const model = moveDaySceneModel(state, {
+    focusedPeerId: moveDayState.focusedPeerId,
+  });
+  const focusedPeer = holder.contains(document.activeElement)
+    ? document.activeElement?.dataset?.peerId
+    : null;
+  const label = document.createElement("p");
+  label.className = "small";
+  label.textContent = `${model.nearbyCount || 0} nearby · ${
+    model.teammateCount || 0
+  } others on the trail`;
+  holder.replaceChildren(label);
+  (model.teammates || []).slice(0, 3).forEach((peer, i) => {
+    const b = btn(
+      moveDayState.focusedPeerId === peer.id
+        ? peer.name
+        : `Nearby companion ${i + 1}`,
+      () => {
+        moveDayState.focusedPeerId =
+          moveDayState.focusedPeerId === peer.id ? null : peer.id;
+        renderMoveDayCompanions();
+        [...holder.querySelectorAll("button")]
+          .find((b) => b.dataset.peerId === peer.id)
+          ?.focus({ preventScroll: true });
+      },
+      "quiet",
+    );
+    b.dataset.peerId = peer.id;
+    b.setAttribute(
+      "aria-pressed",
+      String(moveDayState.focusedPeerId === peer.id),
+    );
+    holder.append(b);
+  });
+  if (focusedPeer && !modal.open)
+    (
+      [...holder.querySelectorAll("button")].find(
+        (b) => b.dataset.peerId === focusedPeer,
+      ) || activeCanvas
+    )?.focus({ preventScroll: true });
+}
+function moveDaySceneClick(x, y) {
+  const model = moveDaySceneModel(state, {
+    focusedPeerId: moveDayState.focusedPeerId,
+  });
+  const hotspot = hitMoveDayHotspot(model, x, y);
+  if (!hotspot) return;
+  if (hotspot.action === "overview") {
+    setMoveDayOverview(true);
+    return;
+  }
+  if (hotspot.action === "learning") {
+    moveDayFieldNotes();
+    return;
+  }
+  if (hotspot.action === "objective") {
+    if (hotspot.route && state.chapter?.task?.stage === "route")
+      selectMoveDayChoice(hotspot.route === "scenic" ? 0 : 1);
+    else moveDayPrimary();
+  }
 }
 function firstUseControls() {
   if (isPresentation || !state.me || state.me.tutorial?.length >= 5) return;
@@ -804,7 +1349,17 @@ function firstUseControls() {
   panel = "controls-intro";
   open(
     "Your first steps on the trail",
-    `<p>Explore together at your own pace. Every action works with a keyboard or a mouse / trackpad.</p><table class="compact-table"><tr><th>Action</th><th>Keyboard</th><th>Pointer</th></tr><tr><td>Walk</td><td>${esc(movementKeys())} or arrow keys while the map is focused</td><td>Click a destination on the map</td></tr><tr><td>Visit an objective</td><td>Tab to its button, then Enter; ${esc(keyLabel("interact"))} interacts nearby</td><td>Click the objective button</td></tr><tr><td>Choose an action</td><td>Tab and Enter, or a numbered choice</td><td>Click a choice, then Confirm</td></tr><tr><td>Close a menu</td><td>Escape</td><td>Click ×</td></tr></table><p class="notice">${["draft", "lobby"].includes(state.event.phase) ? "Start with the five practice steps in the sidebar." : "Follow the current chapter in the sidebar."} Help (${esc(keyLabel("help"))}) stays available throughout the game. Settings changes controls, text size, sound, and visuals.</p><div id="intro-start"></div>`,
+    `<p>Explore together at your own pace. Every action works with a keyboard or a mouse / trackpad.</p><table class="compact-table"><tr><th>Action</th><th>Keyboard</th><th>Pointer</th></tr><tr><td>Walk</td><td>${esc(
+      movementKeys(),
+    )} or arrow keys while the map is focused</td><td>Click a destination on the map</td></tr><tr><td>Visit an objective</td><td>Tab to its button, then Enter; ${esc(
+      keyLabel("interact"),
+    )} interacts nearby</td><td>Click the objective button</td></tr><tr><td>Choose an action</td><td>Tab and Enter, or a numbered choice</td><td>Click a choice, then Confirm</td></tr><tr><td>Close a menu</td><td>Escape</td><td>Click ×</td></tr></table><p class="notice">${
+      ["draft", "lobby"].includes(state.event.phase)
+        ? "Start with the five practice steps in the sidebar."
+        : "Follow the current chapter in the sidebar."
+    } Help (${esc(
+      keyLabel("help"),
+    )}) stays available throughout the game. Settings changes controls, text size, sound, and visuals.</p><div id="intro-start"></div>`,
   );
   $("#intro-start").append(btn("Let’s explore", close, "primary"));
 }
@@ -814,6 +1369,7 @@ function renderMission() {
     ? document.activeElement
     : null;
   const focusedText = focused?.textContent;
+  const focusedKey = focused?.dataset?.focusKey;
   const focusedIndex = focused
     ? [...mission.querySelectorAll("button")].indexOf(focused)
     : -1;
@@ -831,7 +1387,12 @@ function renderMission() {
     e.paused ? "Paused" : e.phase || "Lobby"
   ).replaceAll("_", " ");
   let html = "";
-  if (e.broadcast) html += `<div class="notice">${esc(e.broadcast)}</div>`;
+  if (e.broadcast)
+    html += isMoveDayFocused()
+      ? `<details class="move-day-broadcast"><summary>Message from the host</summary><p>${esc(
+          e.broadcast,
+        )}</p></details>`
+      : `<div class="notice">${esc(e.broadcast)}</div>`;
   if (displayPhase === "lobby" || displayPhase === "draft") {
     html += `<span class="chapter-count">BEFORE THE ADVENTURE</span><h2>Welcome to<br>Bragging Square.</h2><p>The AI has put the neighborhood on “permanent optimization.” Let’s remind it who lives here.</p>`;
     if (!isPresentation) {
@@ -844,17 +1405,40 @@ function renderMission() {
     html +=
       '<span class="chapter-count">HERE WE GO</span><h2>The trail<br>starts here.</h2><p>Pack some patience. The machines packed none.</p><div class="notice">The shared countdown is part of the first chapter’s five minutes.</div>';
   } else if (displayPhase === "finale") {
-    html += `<span class="chapter-count">THE NEIGHBORHOOD FINALE</span><h2>Bring the<br>lights home.</h2><p>One last repair. One home at a time. Every neighbor gets a turn.</p><div class="progress-track"><div class="progress-fill" style="width:${Math.min(100, (100 * (e.finale?.contributors?.length || 0)) / (e.finale?.target || 1))}%"></div></div>${e.finale?.ending ? `<div class="notice" role="status">${esc(e.finale.ending)}</div>` : `<p class="small">${e.finale?.contributors?.length || 0} neighbors have contributed toward ${e.finale?.target || 1} repairs.</p>`}<p class="small">Award results are locked. This moment belongs to everyone.</p><div id="finale-action"></div>`;
+    html += `<span class="chapter-count">THE NEIGHBORHOOD FINALE</span><h2>Bring the<br>lights home.</h2><p>One last repair. One home at a time. Every neighbor gets a turn.</p><div class="progress-track"><div class="progress-fill" style="width:${Math.min(
+      100,
+      (100 * (e.finale?.contributors?.length || 0)) / (e.finale?.target || 1),
+    )}%"></div></div>${
+      e.finale?.ending
+        ? `<div class="notice" role="status">${esc(e.finale.ending)}</div>`
+        : `<p class="small">${
+            e.finale?.contributors?.length || 0
+          } neighbors have contributed toward ${
+            e.finale?.target || 1
+          } repairs.</p>`
+    }<p class="small">Award results are locked. This moment belongs to everyone.</p><div id="finale-action"></div>`;
   } else if (["awards", "closed"].includes(displayPhase)) {
     html +=
       '<span class="chapter-count">HUMANS: STILL PRETTY GOOD</span><h2>The end of<br>the trail.</h2>' +
       (e.finale?.ending
         ? `<div class="notice" role="status">${esc(e.finale.ending)}</div>`
         : "") +
-      '<p>For the fixers, the thinkers, and the people who stopped to help.</p>' +
+      "<p>For the fixers, the thinkers, and the people who stopped to help.</p>" +
       awardsHTML();
+  } else if (isMoveDayFocused()) {
+    html += moveDaySidebarHTML();
   } else {
-    html += `<span class="chapter-count">CHAPTER ${Number(e.chapter) + 1} / 08 ${e.ranked?.[e.chapter] === false ? "· UNRANKED" : ""}</span><h2>${esc(ch?.title || districts[e.chapter]?.[0] || "The adventure")}</h2><p>${esc(ch?.objective || FIELD_NOTES[e.chapter] || "Help your neighbors restore the district.")}</p>`;
+    html += `<span class="chapter-count">CHAPTER ${
+      Number(e.chapter) + 1
+    } / 08 ${
+      e.ranked?.[e.chapter] === false ? "· UNRANKED" : ""
+    }</span><h2>${esc(
+      ch?.title || districts[e.chapter]?.[0] || "The adventure",
+    )}</h2><p>${esc(
+      ch?.objective ||
+        FIELD_NOTES[e.chapter] ||
+        "Help your neighbors restore the district.",
+    )}</p>`;
     if (displayPhase === "brag" || displayPhase === "brag_break") {
       html +=
         '<div class="phase-banner"><strong>Bragging rights.</strong><p class="small" style="margin:8px 0 0">Supplies and scoring are frozen. Tell us how you did it.</p></div>' +
@@ -863,13 +1447,43 @@ function renderMission() {
         awardsHTML() +
         nextChapterHTML();
     } else if (!isPresentation) {
-      html += `<div class="stat-row"><span>Your chapter score</span><strong>${progress?.score || 0}</strong></div><div class="stat-row"><span>Objective progress</span><strong>${progress?.step || 0} / ${ch?.taskCount || ch?.task?.totalSteps || 3}</strong></div><div class="progress-track"><div class="progress-fill" style="width:${progress?.complete ? 100 : Math.min(100, (100 * (progress?.step || 0)) / (ch?.taskCount || ch?.task?.totalSteps || 3))}%"></div></div>${e.chapter === 0 ? deliveryTrailHTML(ch?.task, progress) : ""}<div id="chapter-actions"></div><div class="secondary-heading">FIELD NOTES & EXPLORATION</div><div id="secondary-actions" class="secondary-actions"></div>`;
+      html += `<div class="stat-row"><span>Your chapter score</span><strong>${
+        progress?.score || 0
+      }</strong></div><div class="stat-row"><span>Objective progress</span><strong>${
+        progress?.step || 0
+      } / ${
+        ch?.taskCount || ch?.task?.totalSteps || 3
+      }</strong></div><div class="progress-track"><div class="progress-fill" style="width:${
+        progress?.complete
+          ? 100
+          : Math.min(
+              100,
+              (100 * (progress?.step || 0)) /
+                (ch?.taskCount || ch?.task?.totalSteps || 3),
+            )
+      }%"></div></div>${
+        e.chapter === 0 ? deliveryTrailHTML(ch?.task, progress) : ""
+      }<div id="chapter-actions"></div><div class="secondary-heading">FIELD NOTES & EXPLORATION</div><div id="secondary-actions" class="secondary-actions"></div>`;
     }
     html += "<hr><h3>Neighborhood restoration</h3>" + contributionsHTML();
   }
   $("#mission").innerHTML = html;
+  mission.classList.toggle("move-day-mission", isMoveDayFocused());
+  app
+    .querySelector?.(".game")
+    ?.classList.toggle("move-day-game", isMoveDayFocused());
+  if (isMoveDayFocused()) renderMoveDaySidebar();
+  updateControlHints();
   mission.dataset.phase = `${e.phase}:${displayPhase}:${e.chapter}`;
-  $("#map-label").textContent = e.finale?.contributors?.includes(me.id) ? "YOUR REPAIR · AMBER MARKER" : (ch?.task?.target?.name || ch?.title || "Bragging Square").toUpperCase();
+  $("#map-label").textContent = isMoveDayFocused()
+    ? "MOVE DAY · THE CROSSING"
+    : e.finale?.contributors?.includes(me.id)
+      ? "YOUR REPAIR · AMBER MARKER"
+      : (
+          ch?.task?.target?.name ||
+          ch?.title ||
+          "Bragging Square"
+        ).toUpperCase();
   if ($("#tutorial-actions")) renderTutorial();
   if ($("#chapter-actions")) {
     const n = $("#chapter-actions");
@@ -884,7 +1498,8 @@ function renderMission() {
         "primary task-primary",
       ),
     );
-    if (progress?.complete) n.querySelectorAll("button").forEach((b) => b.disabled = true);
+    if (progress?.complete)
+      n.querySelectorAll("button").forEach((b) => (b.disabled = true));
     if (!progress?.complete && ch?.task?.target) {
       const destination = document.createElement("p");
       destination.className = "task-destination";
@@ -893,7 +1508,11 @@ function renderMission() {
     }
     const secondary = $("#secondary-actions") || n;
     secondary.append(
-      btn("Learning encounters", learning, progress?.complete ? "primary" : "quiet"),
+      btn(
+        "Learning encounters",
+        learning,
+        progress?.complete ? "primary" : "quiet",
+      ),
       btn(
         progress?.challenge
           ? "✓ Challenge complete"
@@ -901,7 +1520,11 @@ function renderMission() {
         () => travel(1, "challenge"),
         "quiet",
       ),
-      btn(progress?.secret ? "✓ Clue discovered" : "Look for a secret", () => travel(1, "secret"), "quiet"),
+      btn(
+        progress?.secret ? "✓ Clue discovered" : "Look for a secret",
+        () => travel(1, "secret"),
+        "quiet",
+      ),
       btn(
         me.mystery ? "✓ Mystery solved" : "The neighborhood mystery",
         mystery,
@@ -915,7 +1538,9 @@ function renderMission() {
         ),
       );
     if (e.paused) {
-      [n, secondary].forEach((group) => group.querySelectorAll("button").forEach((b) => (b.disabled = true)));
+      [n, secondary].forEach((group) =>
+        group.querySelectorAll("button").forEach((b) => (b.disabled = true)),
+      );
       n.prepend(
         Object.assign(document.createElement("p"), {
           className: "notice",
@@ -933,7 +1558,9 @@ function renderMission() {
           const r = await act("finale");
           if (r !== null)
             toast(
-              `Repair ${state.event.finale.contributors.indexOf(state.me.id) + 1} is yours. Your marker is lit in the neighborhood.`,
+              `Repair ${
+                state.event.finale.contributors.indexOf(state.me.id) + 1
+              } is yours. Your marker is lit in the neighborhood.`,
             );
         },
         "primary",
@@ -949,8 +1576,18 @@ function renderMission() {
     const buttons = [...mission.querySelectorAll("button")];
     const replacement =
       previousPhase === mission.dataset.phase
-        ? buttons.find((b) => b.textContent === focusedText && !b.disabled) ||
-          buttons[focusedIndex]
+        ? (isMoveDayFocused() &&
+            focused.id === "move-day-result" &&
+            $("#move-day-result")) ||
+          buttons.find(
+            (b) =>
+              focusedKey && b.dataset.focusKey === focusedKey && !b.disabled,
+          ) ||
+          (!isMoveDayFocused() &&
+            (buttons.find(
+              (b) => b.textContent === focusedText && !b.disabled,
+            ) ||
+              buttons[focusedIndex]))
         : null;
     (replacement && !replacement.disabled ? replacement : activeCanvas)?.focus({
       preventScroll: true,
@@ -961,7 +1598,13 @@ function nextChapterHTML() {
   const next = state.world?.find((c) => c.index === state.event.chapter + 1);
   if (!next)
     return `<section class="notice"><span class="eyebrow">UP NEXT · THE FINALE</span><h3>Bring the lights home</h3><p class="small">Scoring is finished. Every neighbor can restore a home together before the awards.</p></section>`;
-  return `<section class="notice"><span class="eyebrow">UP NEXT · CHAPTER ${next.index + 1}</span><h3>${esc(next.title)}</h3>${next.objective ? `<p class="small">${esc(next.objective)}</p>` : ""}<p class="small">Start at ${esc(next.locations[0].name)}. Then explore ${esc(next.locations[1].name)} for a challenge and a hidden clue. The next chapter opens when this break ends.</p></section>`;
+  return `<section class="notice"><span class="eyebrow">UP NEXT · CHAPTER ${
+    next.index + 1
+  }</span><h3>${esc(next.title)}</h3>${
+    next.objective ? `<p class="small">${esc(next.objective)}</p>` : ""
+  }<p class="small">Start at ${esc(next.locations[0].name)}. Then explore ${esc(
+    next.locations[1].name,
+  )} for a challenge and a hidden clue. The next chapter opens when this break ends.</p></section>`;
 }
 function rewardsShop() {
   const chapterIndex = state.event.chapter;
@@ -976,19 +1619,29 @@ function rewardsShop() {
   for (const [i, project] of shop.options.entries()) {
     const used = shop.uses.includes(project.id);
     const b = btn(
-      `${used ? "✓ " : ""}${project.label} · ${project.cost} tokens — ${project.outcome}`,
+      `${used ? "✓ " : ""}${project.label} · ${project.cost} tokens — ${
+        project.outcome
+      }`,
       async () => {
         if (pending) return;
-        pending = true; b.disabled = true;
+        pending = true;
+        b.disabled = true;
         const revision = modal.trailRevision;
         let accepted = null;
-        const r = await act("rewardRedeem", { choice: i, expectedChapter: chapterIndex }, (record) => { accepted = record; });
+        const r = await act(
+          "rewardRedeem",
+          { choice: i, expectedChapter: chapterIndex },
+          (record) => {
+            accepted = record;
+          },
+        );
         pending = false;
         if (modal.trailRevision !== revision || !modal.open) return;
         b.disabled = false;
         if (r !== null) {
           if (presentAcceptedAction(accepted, "rewards")) return;
-          rewardsShop(); toast(r.message || project.outcome);
+          rewardsShop();
+          toast(r.message || project.outcome);
         }
       },
     );
@@ -1003,18 +1656,30 @@ function contributionsHTML() {
   const c = state.event?.contributions || [];
   const restoration = restorationProgress(state.event);
   return (
-    `<p class="small">${restoration.completed} completed objectives · AI control ${100 - restoration.percent}%</p><div class="progress-track" aria-label="Neighborhood restored ${restoration.percent}%"><div class="progress-fill" style="width:${restoration.percent}%"></div></div><p class="small muted">Completed objectives restore the district’s homes. Mint foundations show shared progress; warm windows mark a fully restored district.</p>` +
+    `<p class="small">${
+      restoration.completed
+    } completed objectives · AI control ${
+      100 - restoration.percent
+    }%</p><div class="progress-track" aria-label="Neighborhood restored ${
+      restoration.percent
+    }%"><div class="progress-fill" style="width:${
+      restoration.percent
+    }%"></div></div><p class="small muted">Completed objectives restore the district’s homes. Mint foundations show shared progress; warm windows mark a fully restored district.</p>` +
     districts
       .map(
         (d, i) =>
-          `<div class="stat-row"><span>${i + 1}. ${esc(d[1])}</span><strong>${typeof c[i] === "object" ? c[i]?.count || 0 : c[i] || 0}</strong></div>`,
+          `<div class="stat-row"><span>${i + 1}. ${esc(d[1])}</span><strong>${
+            typeof c[i] === "object" ? c[i]?.count || 0 : c[i] || 0
+          }</strong></div>`,
       )
       .join("") +
     (state.rules?.rewards?.projects || [])
       .filter((p) => state.event.rewardProjects?.[p.id])
       .map(
         (p) =>
-          `<p class="small">${esc(p.label)}: ${state.event.rewardProjects[p.id]} funded</p>`,
+          `<p class="small">${esc(p.label)}: ${
+            state.event.rewardProjects[p.id]
+          } funded</p>`,
       )
       .join("")
   );
@@ -1026,7 +1691,18 @@ function awardsHTML() {
         a
           .map(
             (x, i) =>
-              `<li><span class="rank">${i + 1}</span><span>${esc(x.category || x.title || x.name)}<br><strong>${esc(x.winnerName || x.winner?.name || x.playerName || x.name || state.players?.find((p) => p.id === x.playerId)?.name || x.playerId || x.winner || "Unawarded")}</strong></span></li>`,
+              `<li><span class="rank">${i + 1}</span><span>${esc(
+                x.category || x.title || x.name,
+              )}<br><strong>${esc(
+                x.winnerName ||
+                  x.winner?.name ||
+                  x.playerName ||
+                  x.name ||
+                  state.players?.find((p) => p.id === x.playerId)?.name ||
+                  x.playerId ||
+                  x.winner ||
+                  "Unawarded",
+              )}</strong></span></li>`,
           )
           .join("") +
         "</ol>"
@@ -1132,6 +1808,7 @@ function renderTutorial() {
   );
 }
 function travel(index, kind) {
+  if (isMoveDayFocused() && kind !== "activity") setMoveDayOverview(true);
   if (!state.chapter?.locations?.[index]) return;
   const l =
       (kind === "activity" && state.chapter.task?.target) ||
@@ -1145,10 +1822,19 @@ function travel(index, kind) {
     return;
   }
   setDestination(l.x, l.y, kind);
-  toast(`Walking to ${l.name}. You can also use the keyboard.`);
+  toast(
+    isMoveDayFocused()
+      ? `Heading to ${kind === "activity" && state.chapter.task?.stage === "deliver" ? "the roadside home" : l.name}.`
+      : `Walking to ${l.name}. You can also use the keyboard.`,
+  );
   activeCanvas.focus();
 }
 function showActivity(kind) {
+  if (kind === "activity" && isMoveDayFocused()) {
+    renderMission();
+    if (!modal.open) $("#move-day-primary")?.focus({ preventScroll: true });
+    return;
+  }
   if (kind === "rewards") {
     rewardsShop();
     return;
@@ -1158,7 +1844,10 @@ function showActivity(kind) {
     panel = "secret";
     open(
       "Something the AI missed",
-      `<p>${esc(state.chapter?.secretHint || "A curious detail is tucked near this location.")}</p><div id="secret-action"></div>`,
+      `<p>${esc(
+        state.chapter?.secretHint ||
+          "A curious detail is tucked near this location.",
+      )}</p><div id="secret-action"></div>`,
     );
     $("#secret-action").append(
       btn(
@@ -1203,17 +1892,70 @@ function showActivity(kind) {
     kind === "challenge"
       ? "A little extra trouble"
       : task.target?.name || c.locations[0].name,
-    `${task.kind === "rewards" ? `<div class="notice">${c.rewardShop?.balance || 0} reward tokens available · ${c.rewardShop?.earned || 0} earned. Choose a neighborhood repair to finish your main objective. Tokens are nontradable; repairs add no award points.</div>` : ""}${task.kind === "budget" ? `<div class="notice">Fictional cycle ${(prog?.step || 0) + 1} of 3<br>Income ${task.income} + retained ${task.retained} = ${task.budget}<br>Payment due: ${task.due}. This budget cannot be traded.<br><span id="budget-clock"></span></div>` : ""}${
+    `${
+      task.kind === "rewards"
+        ? `<div class="notice">${
+            c.rewardShop?.balance || 0
+          } reward tokens available · ${
+            c.rewardShop?.earned || 0
+          } earned. Choose a neighborhood repair to finish your main objective. Tokens are nontradable; repairs add no award points.</div>`
+        : ""
+    }${
+      task.kind === "budget"
+        ? `<div class="notice">Fictional cycle ${
+            (prog?.step || 0) + 1
+          } of 3<br>Income ${task.income} + retained ${task.retained} = ${
+            task.budget
+          }<br>Payment due: ${
+            task.due
+          }. This budget cannot be traded.<br><span id="budget-clock"></span></div>`
+        : ""
+    }${
       chapterIndex === 0 && task.kind === "delivery"
         ? deliveryPanelHTML(deliveryModel(state))
         : ""
-    }<span class="eyebrow">${chapterIndex === 0 && task.kind === "delivery" ? esc(stageLabel(task)) : esc(task.kind || "NEIGHBORHOOD TASK") + " · " + (kind === "challenge" ? "OPTIONAL CHALLENGE" : "STEP " + ((prog?.step || 0) + 1) + " OF " + (c.taskCount || task.totalSteps || 3))}</span>${task.evidence ? `<section class="evidence-card" aria-label="Evidence from your inspection"><span class="eyebrow">YOUR INSPECTION</span><p>${esc(task.evidence)}</p></section>` : ""}<h3 id="activity-prompt" tabindex="-1" style="margin-top:18px">${esc(chapterIndex === 0 && task.kind === "delivery" ? deliveryPrompt(task) : task.prompt)}</h3>${chapterIndex === 0 && task.kind === "delivery" ? "" : '<p class="small muted">Choose an action, then confirm.</p>'}<div class="choice-list" id="task-choices"></div><div class="row" id="task-confirm"></div>`,
+    }<span class="eyebrow">${
+      chapterIndex === 0 && task.kind === "delivery"
+        ? esc(stageLabel(task))
+        : esc(task.kind || "NEIGHBORHOOD TASK") +
+          " · " +
+          (kind === "challenge"
+            ? "OPTIONAL CHALLENGE"
+            : "STEP " +
+              ((prog?.step || 0) + 1) +
+              " OF " +
+              (c.taskCount || task.totalSteps || 3))
+    }</span>${
+      task.evidence
+        ? `<section class="evidence-card" aria-label="Evidence from your inspection"><span class="eyebrow">YOUR INSPECTION</span><p>${esc(
+            task.evidence,
+          )}</p></section>`
+        : ""
+    }<h3 id="activity-prompt" tabindex="-1" style="margin-top:18px">${esc(
+      chapterIndex === 0 && task.kind === "delivery"
+        ? deliveryPrompt(task)
+        : task.prompt,
+    )}</h3>${
+      chapterIndex === 0 && task.kind === "delivery"
+        ? ""
+        : '<p class="small muted">Choose an action, then confirm.</p>'
+    }<div class="choice-list" id="task-choices"></div><div class="row" id="task-confirm"></div>`,
   );
   selection = null;
-  const delivery = chapterIndex === 0 && kind === "activity" ? deliveryModel(state) : null;
+  const delivery =
+    chapterIndex === 0 && kind === "activity" ? deliveryModel(state) : null;
   task.options.forEach((o, i) => {
-    const label = delivery?.stage === "load" ? delivery.plans[i]?.label : delivery?.stage === "route" ? delivery.routes[i]?.label : null;
-    const choice = btn(`${i + 1}. ${label || (typeof o === "string" ? o : o.label || o.text)}`, () => choose(i), "choice");
+    const label =
+      delivery?.stage === "load"
+        ? delivery.plans[i]?.label
+        : delivery?.stage === "route"
+          ? delivery.routes[i]?.label
+          : null;
+    const choice = btn(
+      `${i + 1}. ${label || (typeof o === "string" ? o : o.label || o.text)}`,
+      () => choose(i),
+      "choice",
+    );
     choice.trailLabel = choice.textContent;
     const fact = deliveryChoiceDetail(delivery, i);
     if (fact) {
@@ -1225,97 +1967,246 @@ function showActivity(kind) {
     $("#task-choices").append(choice);
   });
   let pending = false;
-  const confirm = btn("Confirm action", async () => {
-    if (pending) return;
-    if (selection === null) { toast("Choose an action first."); return; }
-    pending = true;
-    confirm.disabled = true;
-    confirm.trailPending = true;
-    confirm.textContent = "Recording…";
-    const revision = modal.trailRevision;
-    let accepted = null;
-    const r = await act(kind === "challenge" ? "challenge" : "task", {
-      choice: selection, expectedChapter: chapterIndex,
-      expectedStep: task.step, expectedStage: task.stage || null,
-    }, (record) => { accepted = record; });
-    pending = false;
-    confirm.trailPending = false;
-    if (modal.trailRevision !== revision || !modal.open) return;
-    confirm.disabled = !!state.event.paused || (task.kind === "budget" && Date.now() + serverOffset < state.chapter.task?.opensAt);
-    confirm.textContent = "Confirm action";
-    if (r === null) return;
-    if (presentAcceptedAction(accepted, kind)) return;
-    if (r.message) toast(r.message);
-    if (state.me.progress?.[state.event.chapter]?.complete || kind === "challenge") close();
-    else if (state.chapter.task?.target && Math.hypot(
-      state.me.position.x - state.chapter.task.target.x,
-      state.me.position.y - state.chapter.task.target.y,
-    ) >= 60) { close(); travel(0, "activity"); }
-    else showActivity(kind);
-  }, "primary");
-  confirm.disabled = !!state.event.paused || (task.kind === "budget" && Date.now() + serverOffset < task.opensAt);
+  const confirm = btn(
+    "Confirm action",
+    async () => {
+      if (pending) return;
+      if (selection === null) {
+        toast("Choose an action first.");
+        return;
+      }
+      pending = true;
+      confirm.disabled = true;
+      confirm.trailPending = true;
+      confirm.textContent = "Recording…";
+      const revision = modal.trailRevision;
+      let accepted = null;
+      const r = await act(
+        kind === "challenge" ? "challenge" : "task",
+        {
+          choice: selection,
+          expectedChapter: chapterIndex,
+          expectedStep: task.step,
+          expectedStage: task.stage || null,
+        },
+        (record) => {
+          accepted = record;
+        },
+      );
+      pending = false;
+      confirm.trailPending = false;
+      if (modal.trailRevision !== revision || !modal.open) return;
+      confirm.disabled =
+        !!state.event.paused ||
+        (task.kind === "budget" &&
+          Date.now() + serverOffset < state.chapter.task?.opensAt);
+      confirm.textContent = "Confirm action";
+      if (r === null) return;
+      if (presentAcceptedAction(accepted, kind)) return;
+      if (r.message) toast(r.message);
+      if (
+        state.me.progress?.[state.event.chapter]?.complete ||
+        kind === "challenge"
+      )
+        close();
+      else if (
+        state.chapter.task?.target &&
+        Math.hypot(
+          state.me.position.x - state.chapter.task.target.x,
+          state.me.position.y - state.chapter.task.target.y,
+        ) >= 60
+      ) {
+        close();
+        travel(0, "activity");
+      } else showActivity(kind);
+    },
+    "primary",
+  );
+  confirm.disabled =
+    !!state.event.paused ||
+    (task.kind === "budget" && Date.now() + serverOffset < task.opensAt);
   $("#task-confirm").append(confirm);
   $("#activity-prompt")?.focus({ preventScroll: true });
 }
 function deliveryPanelHTML(model) {
   if (!model) return "";
-  return `<section class="cargo-panel"><div class="cargo-heading"><span class="eyebrow">TRIP ${model.deliveryNumber} / ${model.totalDeliveries}</span><div class="cart-slots" aria-label="${model.slots} of ${model.maxSlots} cart slots packed">${Array.from({ length: model.maxSlots }, (_, i) => `<span class="${i < model.slots ? 'filled' : ''}" aria-hidden="true"></span>`).join('')}<strong>${model.slots}/${model.maxSlots} slots</strong></div></div><div class="cargo-manifest"><span>${model.loaded ? Object.entries(model.loaded).map(([kind, qty]) => `${qty} ${esc(kind)}`).join(' + ') : 'Cart empty'} · separate from ${model.storageLimit}-item storage</span><details><summary>Personal reserve</summary><span>${Object.entries(model.reserve).map(([kind, qty]) => `${qty} ${esc(kind)}`).join(' · ')}</span></details></div></section>`;
+  return `<section class="cargo-panel"><div class="cargo-heading"><span class="eyebrow">TRIP ${
+    model.deliveryNumber
+  } / ${model.totalDeliveries}</span><div class="cart-slots" aria-label="${
+    model.slots
+  } of ${model.maxSlots} cart slots packed">${Array.from(
+    { length: model.maxSlots },
+    (_, i) =>
+      `<span class="${
+        i < model.slots ? "filled" : ""
+      }" aria-hidden="true"></span>`,
+  ).join("")}<strong>${model.slots}/${
+    model.maxSlots
+  } slots</strong></div></div><div class="cargo-manifest"><span>${
+    model.loaded
+      ? Object.entries(model.loaded)
+          .map(([kind, qty]) => `${qty} ${esc(kind)}`)
+          .join(" + ")
+      : "Cart empty"
+  } · separate from ${
+    model.storageLimit
+  }-item storage</span><details><summary>Personal reserve</summary><span>${Object.entries(
+    model.reserve,
+  )
+    .map(([kind, qty]) => `${qty} ${esc(kind)}`)
+    .join(" · ")}</span></details></div></section>`;
 }
 function deliveryPrompt(task) {
-  return ({ load: "What will you take?", route: "Which crossing will you use?", travel: "Check the crossing.", deliver: "Unload at the highway." })[task?.stage] || task?.prompt || "Choose an action.";
+  return (
+    {
+      load: "What will you take?",
+      route: "Which crossing will you use?",
+      travel: "Check the crossing.",
+      deliver: "Unload at the highway.",
+    }[task?.stage] ||
+    task?.prompt ||
+    "Choose an action."
+  );
 }
 function deliveryChoiceDetail(model, index) {
   if (!model) return "";
   if (model.stage === "load") {
     const plan = model.plans[index];
-    return plan ? `${Object.entries(plan.cargo).map(([kind, qty]) => `${qty} ${kind}`).join(' + ')} · ${plan.slots}/${model.maxSlots} slots · ${plan.safe.points} points via paved route${plan.available ? '' : ' · Supplies unavailable'}` : "";
+    return plan
+      ? `${Object.entries(plan.cargo)
+          .map(([kind, qty]) => `${qty} ${kind}`)
+          .join(" + ")} · ${plan.slots}/${model.maxSlots} slots · ${
+          plan.safe.points
+        } points via paved route${
+          plan.available ? "" : " · Supplies unavailable"
+        }`
+      : "";
   }
   if (model.stage === "route") {
     const route = model.routes[index];
-    return route ? `${route.value} useful value · ${route.points} delivery points · ${route.damageValue ? `loses ${route.damageValue} cargo value` : 'cargo protected'}` : "";
+    return route
+      ? `${route.value} useful value · ${route.points} delivery points · ${
+          route.damageValue
+            ? `loses ${route.damageValue} cargo value`
+            : "cargo protected"
+        }`
+      : "";
   }
   return "";
 }
 function presentAcceptedAction(accepted, kind = "activity") {
   if (!accepted) return false;
-  const receipt = actionReceipt(accepted.before, accepted.after, accepted.action, accepted.result);
+  const receipt = actionReceipt(
+    accepted.before,
+    accepted.after,
+    accepted.action,
+    accepted.result,
+  );
   if (!receipt || receipt.stage === "inspect") return false;
   if (!receiptMatchesState(accepted.after)) {
     close();
-    toast("Your action is recorded. The field panel shows your latest supplies and score.");
+    toast(
+      "Your action is recorded. The field panel shows your latest supplies and score.",
+    );
     return true;
   }
   return showActionReceipt(receipt, {
-    epoch: accepted.after.projectionEpoch, chapter: accepted.after.event.chapter,
-    phase: accepted.after.event.phase, kind,
+    epoch: accepted.after.projectionEpoch,
+    chapter: accepted.after.event.chapter,
+    phase: accepted.after.event.phase,
+    kind,
   });
 }
 function receiptMatchesState(after) {
   const chapter = after?.event?.chapter;
-  return after?.projectionEpoch === state?.projectionEpoch && after?.me?.id === state?.me?.id &&
+  return (
+    after?.projectionEpoch === state?.projectionEpoch &&
+    after?.me?.id === state?.me?.id &&
     JSON.stringify([after?.me?.progress?.[chapter], after?.me?.inventory]) ===
-      JSON.stringify([state?.me?.progress?.[chapter], state?.me?.inventory]);
+      JSON.stringify([state?.me?.progress?.[chapter], state?.me?.inventory])
+  );
 }
 function receiptCurrent(context) {
-  return state?.projectionEpoch === context.epoch && state?.event?.chapter === context.chapter &&
-    state?.event?.phase === context.phase && context.phase === "chapter";
+  return (
+    state?.projectionEpoch === context.epoch &&
+    state?.event?.chapter === context.chapter &&
+    state?.event?.phase === context.phase &&
+    context.phase === "chapter"
+  );
 }
 function showActionReceipt(receipt, context) {
   if (!receiptCurrent(context)) return false;
   panel = "receipt";
-  const allTotals = ["load", "route", "travel", "inspect"].includes(receipt.stage) ? [] : receipt.deltas;
-  const totals = allTotals.filter((delta) => !/^(Stored|Reserve) /.test(delta.label));
-  const supplies = allTotals.filter((delta) => /^(Stored|Reserve) /.test(delta.label));
-  const label = (text) => text === "Score now" ? "Chapter score" : text.replace(/ now$/, "");
-  open("Field report", `<section class="action-receipt"><span class="eyebrow">${receipt.stage === 'challenge' ? 'OPTIONAL CHALLENGE' : receipt.stage === 'redeem' ? 'NEIGHBORHOOD PROJECT' : receipt.completed ? 'YOUR OBJECTIVE IS COMPLETE' : 'EXPEDITION UPDATE'}</span><h3>${esc(receipt.title)}</h3>${allTotals.length ? '<p class="small receipt-caption">After this action</p>' : ''}<div class="receipt-stats">${totals.map((delta) => `<div><strong>${esc(delta.value)}</strong><span>${esc(label(delta.label))}</span></div>`).join('')}</div>${supplies.length ? `<div class="receipt-supplies">${supplies.map((delta) => `<span><strong>${esc(delta.value)}</strong> ${esc(label(delta.label))}</span>`).join('')}</div>` : ''}${receipt.details.map((detail) => `<p>${esc(detail)}</p>`).join('')}<div id="receipt-next"></div></section>`);
-  const next = btn(context.kind === "rewards" ? "Back to rewards" : receipt.completed ? "Back to the neighborhood" : "Continue →", () => {
-    if (!receiptCurrent(context)) { close(); return; }
-    close();
-    if (context.kind === "rewards") rewardsShop();
-    else if (context.kind === "challenge") {
-      if (!state.me.progress?.[context.chapter]?.challenge) travel(1, "challenge");
-    } else if (!state.me.progress?.[context.chapter]?.complete) travel(0, "activity");
-  }, "primary");
+  const allTotals = ["load", "route", "travel", "inspect"].includes(
+    receipt.stage,
+  )
+    ? []
+    : receipt.deltas;
+  const totals = allTotals.filter(
+    (delta) => !/^(Stored|Reserve) /.test(delta.label),
+  );
+  const supplies = allTotals.filter((delta) =>
+    /^(Stored|Reserve) /.test(delta.label),
+  );
+  const label = (text) =>
+    text === "Score now" ? "Chapter score" : text.replace(/ now$/, "");
+  open(
+    "Field report",
+    `<section class="action-receipt"><span class="eyebrow">${
+      receipt.stage === "challenge"
+        ? "OPTIONAL CHALLENGE"
+        : receipt.stage === "redeem"
+          ? "NEIGHBORHOOD PROJECT"
+          : receipt.completed
+            ? "YOUR OBJECTIVE IS COMPLETE"
+            : "EXPEDITION UPDATE"
+    }</span><h3>${esc(receipt.title)}</h3>${
+      allTotals.length
+        ? '<p class="small receipt-caption">After this action</p>'
+        : ""
+    }<div class="receipt-stats">${totals
+      .map(
+        (delta) =>
+          `<div><strong>${esc(delta.value)}</strong><span>${esc(
+            label(delta.label),
+          )}</span></div>`,
+      )
+      .join("")}</div>${
+      supplies.length
+        ? `<div class="receipt-supplies">${supplies
+            .map(
+              (delta) =>
+                `<span><strong>${esc(delta.value)}</strong> ${esc(
+                  label(delta.label),
+                )}</span>`,
+            )
+            .join("")}</div>`
+        : ""
+    }${receipt.details
+      .map((detail) => `<p>${esc(detail)}</p>`)
+      .join("")}<div id="receipt-next"></div></section>`,
+  );
+  const next = btn(
+    context.kind === "rewards"
+      ? "Back to rewards"
+      : receipt.completed
+        ? "Back to the neighborhood"
+        : "Continue →",
+    () => {
+      if (!receiptCurrent(context)) {
+        close();
+        return;
+      }
+      close();
+      if (context.kind === "rewards") rewardsShop();
+      else if (context.kind === "challenge") {
+        if (!state.me.progress?.[context.chapter]?.challenge)
+          travel(1, "challenge");
+      } else if (!state.me.progress?.[context.chapter]?.complete)
+        travel(0, "activity");
+    },
+    "primary",
+  );
   $("#receipt-next").append(next);
   next.focus({ preventScroll: true });
   return true;
@@ -1339,7 +2230,10 @@ function choose(i) {
     status.setAttribute("aria-live", "polite");
     $("#task-choices").after(status);
   }
-  status.textContent = `Selected: ${$("#task-choices").children[i].trailLabel || $("#task-choices").children[i].textContent}. Confirm when ready.`;
+  status.textContent = `Selected: ${
+    $("#task-choices").children[i].trailLabel ||
+    $("#task-choices").children[i].textContent
+  }. Confirm when ready.`;
 }
 function learning() {
   panel = "learning";
@@ -1351,7 +2245,13 @@ function learning() {
     const answer = state.me.progress?.[state.event.chapter]?.quiz?.[i];
     $("#learning-list").append(
       btn(
-        `${answer ? (answer.correct ? `✓ Correct · ${state.rules.quizPoints} points` : "Answered · 0 points") + " · " : ""}Encounter ${i + 1}: ${q.prompt}`,
+        `${
+          answer
+            ? (answer.correct
+                ? `✓ Correct · ${state.rules.quizPoints} points`
+                : "Answered · 0 points") + " · "
+            : ""
+        }Encounter ${i + 1}: ${q.prompt}`,
         () => quiz(i),
       ),
     );
@@ -1370,11 +2270,21 @@ function quiz(index, result = null) {
     );
     open(
       `Human intelligence · ${index + 1} of 2`,
-      `<h3>${a?.correct ? "✓ Correct" : "✓ Correct practice answer"}</h3><p><strong>${earned} points earned.</strong>${a?.correct ? " This encounter is complete." : " Your first answer was incorrect; this practice retry adds no points."}</p><p>${esc(q.prompt)}</p><p class="notice">Your correct answer: ${esc(q.options[answerChoice])}</p><p>${esc(a?.explanation || result.explanation)}</p><p class="small">Learning points add to your chapter score; objective progress tracks the main task.</p><div id="quiz-next"></div>`,
+      `<h3>${
+        a?.correct ? "✓ Correct" : "✓ Correct practice answer"
+      }</h3><p><strong>${earned} points earned.</strong>${
+        a?.correct
+          ? " This encounter is complete."
+          : " Your first answer was incorrect; this practice retry adds no points."
+      }</p><p>${esc(q.prompt)}</p><p class="notice">Your correct answer: ${esc(
+        q.options[answerChoice],
+      )}</p><p>${esc(
+        a?.explanation || result.explanation,
+      )}</p><p class="small">Learning points add to your chapter score; objective progress tracks the main task.</p><div id="quiz-next"></div>`,
     );
     const nextButton = btn(
       next >= 0 ? "Next encounter" : "Back to encounters",
-      () => next >= 0 ? quiz(next) : learning(),
+      () => (next >= 0 ? quiz(next) : learning()),
       "primary",
     );
     $("#quiz-next").append(nextButton);
@@ -1383,7 +2293,15 @@ function quiz(index, result = null) {
   }
   open(
     `Human intelligence · ${index + 1} of 2`,
-    `<h3>${esc(q.prompt)}</h3>${a ? `<div class="notice">First answer: ${a.correct ? "correct" : "incorrect"}. ${a.correct ? state.rules.quizPoints : 0} points earned. ${esc(a.explanation)}</div><p class="small">Retries do not change these points. Learning points add to your chapter score; objective progress tracks the main task.</p>` : '<p class="small muted">Your first confirmed answer counts. Take a moment.</p>'}<div class="choice-list" id="task-choices"></div><div id="quiz-confirm"></div>`,
+    `<h3>${esc(q.prompt)}</h3>${
+      a
+        ? `<div class="notice">First answer: ${
+            a.correct ? "correct" : "incorrect"
+          }. ${a.correct ? state.rules.quizPoints : 0} points earned. ${esc(
+            a.explanation,
+          )}</div><p class="small">Retries do not change these points. Learning points add to your chapter score; objective progress tracks the main task.</p>`
+        : '<p class="small muted">Your first confirmed answer counts. Take a moment.</p>'
+    }<div class="choice-list" id="task-choices"></div><div id="quiz-confirm"></div>`,
   );
   selection = null;
   q.options.forEach((o, i) =>
@@ -1407,7 +2325,13 @@ function quiz(index, result = null) {
           quiz(index, { ...r, choice });
           if (!r.correct && r.explanation)
             toast(
-              `${r.correct ? "Correct." : "Not quite."} ${r.first ? `${r.correct ? state.rules.quizPoints : 0} points earned. First answer recorded.` : "Unscored retry. Your first answer and its points are unchanged."} ${r.explanation}`,
+              `${r.correct ? "Correct." : "Not quite."} ${
+                r.first
+                  ? `${
+                      r.correct ? state.rules.quizPoints : 0
+                    } points earned. First answer recorded.`
+                  : "Unscored retry. Your first answer and its points are unchanged."
+              } ${r.explanation}`,
             );
         }
       },
@@ -1425,7 +2349,11 @@ function inventory(refresh = false) {
     Object.entries(inv)
       .map(
         ([k, v]) =>
-          `<div class="inventory-item"><strong>${esc(k)}</strong><span>${v} units ${typeof values[k] === "number" ? `· ${values[k]} value each` : ""}</span></div>`,
+          `<div class="inventory-item"><strong>${esc(
+            k,
+          )}</strong><span>${v} units ${
+            typeof values[k] === "number" ? `· ${values[k]} value each` : ""
+          }</span></div>`,
       )
       .join("") +
     reserveHTML() +
@@ -1477,7 +2405,11 @@ function neighbors(refresh = false) {
     .forEach((p) => {
       const d = document.createElement("div");
       d.className = "player-item";
-      d.innerHTML = `<strong>${esc(p.name)}${p.help !== null && p.help !== undefined ? '<br><span class="badge">Asked for help</span>' : ""}</strong>`;
+      d.innerHTML = `<strong>${esc(p.name)}${
+        p.help !== null && p.help !== undefined
+          ? '<br><span class="badge">Asked for help</span>'
+          : ""
+      }</strong>`;
       const r = document.createElement("div");
       r.className = "row";
       const assistButton = btn("Help", async () => {
@@ -1501,14 +2433,23 @@ function neighbors(refresh = false) {
     const d = document.createElement("div");
     d.className = "card";
     d.style.padding = "14px";
-    d.innerHTML = `<p class="small">${esc(t.from)} gives ${t.give.qty} ${esc(t.give.item)} for ${t.receive.qty} ${esc(t.receive.item)} from ${esc(t.to)}.</p><p class="small">Confirmed: ${t.confirmed?.length || 0} of 2</p>`;
+    d.innerHTML = `<p class="small">${esc(t.from)} gives ${t.give.qty} ${esc(
+      t.give.item,
+    )} for ${t.receive.qty} ${esc(t.receive.item)} from ${esc(
+      t.to,
+    )}.</p><p class="small">Confirmed: ${t.confirmed?.length || 0} of 2</p>`;
     const confirmButton = btn(
       "Confirm current offer",
-      () => act("tradeConfirm", { tradeId: t.id, expectedChapter: chapterIndex }),
+      () =>
+        act("tradeConfirm", { tradeId: t.id, expectedChapter: chapterIndex }),
       "primary",
     );
     confirmButton.dataset.focusKey = `trade:${t.id}:confirm`;
-    const cancelButton = btn("Cancel", () => act("tradeCancel", { tradeId: t.id }), "quiet");
+    const cancelButton = btn(
+      "Cancel",
+      () => act("tradeCancel", { tradeId: t.id }),
+      "quiet",
+    );
     cancelButton.dataset.focusKey = `trade:${t.id}:cancel`;
     d.append(confirmButton, cancelButton);
     $("#trade-list").append(d);
@@ -1553,16 +2494,27 @@ function map() {
     "One shared neighborhood",
     `<p class="small">Eight districts around Bragging Square. The active chapter’s locations are open to everyone at once.</p><p class="small muted">Unplayed means no objective, learning, clue, or assist progress is recorded; moving and socializing do not count as chapter progress. Complete means the main objective is finished.</p><div class="chapter-map" id="map-districts"></div>`,
   );
+  if (isMoveDayAvailable())
+    $("#map-districts").append(
+      btn("Explore the neighborhood overview", () => setMoveDayOverview(true)),
+      btn("Return to Move Day", () => setMoveDayOverview(false), "primary"),
+    );
   districts.forEach((d, i) => {
     const status = chapterMapStatus(state.event, state.me?.progress?.[i], i);
     const b = btn(
       `${i + 1}. ${d[0]}${status.position === "current" ? " · ACTIVE" : ""}`,
       () => {
-        const liveStatus = chapterMapStatus(state.event, state.me?.progress?.[i], i);
+        const liveStatus = chapterMapStatus(
+          state.event,
+          state.me?.progress?.[i],
+          i,
+        );
         if (liveStatus.position !== "current") {
-          toast(liveStatus.position === "past"
-            ? `That chapter has ended. ${liveStatus.label}.`
-            : "That district opens in its chapter.");
+          toast(
+            liveStatus.position === "past"
+              ? `That chapter has ended. ${liveStatus.label}.`
+              : "That district opens in its chapter.",
+          );
           return;
         }
         close();
@@ -1585,7 +2537,13 @@ function mystery() {
   panel = "mystery";
   open(
     "The neighborhood mystery",
-    `<p>Eight districts. Eight overlooked clues. The AI missed a very human message.</p><p class="small">Your discovered clues:</p><div class="mystery">${districts.map((_, i) => esc(state.me.clues?.find((c) => c.chapter === i)?.letter || "_")).join(" ")}</div><form id="mystery-form"><label>Your answer<input id="mystery-answer" autocomplete="off" maxlength="64" required></label><p class="small">Type your answer or click your discovered letters. Both submit the same answer.</p><div id="mystery-letters" class="row" role="group" aria-label="Discovered clue letters"></div><div id="mystery-edit" class="row" style="margin:16px 0"></div><p id="mystery-entry-status" class="small" role="status" aria-live="polite"></p><button class="primary">Reveal the message</button></form>`,
+    `<p>Eight districts. Eight overlooked clues. The AI missed a very human message.</p><p class="small">Your discovered clues:</p><div class="mystery">${districts
+      .map((_, i) =>
+        esc(state.me.clues?.find((c) => c.chapter === i)?.letter || "_"),
+      )
+      .join(
+        " ",
+      )}</div><form id="mystery-form"><label>Your answer<input id="mystery-answer" autocomplete="off" maxlength="64" required></label><p class="small">Type your answer or click your discovered letters. Both submit the same answer.</p><div id="mystery-letters" class="row" role="group" aria-label="Discovered clue letters"></div><div id="mystery-edit" class="row" style="margin:16px 0"></div><p id="mystery-entry-status" class="small" role="status" aria-live="polite"></p><button class="primary">Reveal the message</button></form>`,
   );
   const input = $("#mystery-answer");
   const announce = () => {
@@ -1648,7 +2606,15 @@ function help() {
   panel = "help";
   open(
     "A hand with the controls",
-    `<div class="notice">Help does not pause the shared clock.</div><table class="compact-table"><tr><th>Action</th><th>Keyboard</th><th>Mouse / trackpad</th></tr><tr><td>Move</td><td>${esc(movementKeys())} or arrows</td><td>Click a destination</td></tr><tr><td>Interact</td><td>${esc(keyLabel("interact"))} or Enter</td><td>Objective button</td></tr><tr><td>Choose</td><td>1–4, Tab + Enter</td><td>Click then confirm</td></tr><tr><td>Inventory / map</td><td>${esc(keyLabel("inventory"))} / ${esc(keyLabel("map"))}</td><td>Bottom buttons</td></tr><tr><td>Close</td><td>Escape</td><td>× button</td></tr></table><p class="small" style="margin-top:18px">Focus the map to use movement keys. In menus, Tab moves between controls. Your character passes through other players. Nothing requires sound or rapid clicking.</p><div class="row" id="help-buttons"></div>`,
+    `<div class="notice">Help does not pause the shared clock.</div><table class="compact-table"><tr><th>Action</th><th>Keyboard</th><th>Mouse / trackpad</th></tr><tr><td>Move</td><td>${esc(
+      movementKeys(),
+    )} or arrows</td><td>Click a destination</td></tr><tr><td>Interact</td><td>${esc(
+      keyLabel("interact"),
+    )} or Enter</td><td>Objective button</td></tr><tr><td>Choose</td><td>1–4, Tab + Enter</td><td>Click then confirm</td></tr><tr><td>Inventory / map</td><td>${esc(
+      keyLabel("inventory"),
+    )} / ${esc(
+      keyLabel("map"),
+    )}</td><td>Bottom buttons</td></tr><tr><td>Close</td><td>Escape</td><td>× button</td></tr></table><p class="small" style="margin-top:18px">Focus the map to use movement keys. In menus, Tab moves between controls. Your character passes through other players. Nothing requires sound or rapid clicking.</p><div class="row" id="help-buttons"></div>`,
   );
   $("#help-buttons").append(
     btn("See award rules", rules),
@@ -1734,13 +2700,21 @@ function worldKeys(e) {
             : null;
   if (vector) {
     e.preventDefault();
+    if (isMoveDayFocused()) setMoveDayOverview(true);
     const next = clipMove(pos, {
       x: Math.max(30, Math.min(1170, pos.x + vector[0] * 35)),
       y: Math.max(30, Math.min(770, pos.y + vector[1] * 35)),
     });
     target = { ...next, path: [next] };
+  } else if (k === "escape" && isMoveDayAvailable() && moveDayOverview) {
+    e.preventDefault();
+    setMoveDayOverview(false);
   } else if (k === keys.interact || k === "enter") {
     e.preventDefault();
+    if (isMoveDayFocused()) {
+      moveDayPrimary();
+      return;
+    }
     const loc = [
       state.chapter?.task?.target || state.chapter?.locations?.[0],
       state.chapter?.locations?.[1],
@@ -1783,7 +2757,11 @@ modal.addEventListener("keydown", (e) => {
 function frame(now) {
   if (!activeCanvas?.isConnected) return;
   measureFrame(now, state?.event?.phase);
-  drawMap(activeCtx, true);
+  if (isMoveDayFocused())
+    drawMoveDayScene(activeCtx, state, {
+      focusedPeerId: moveDayState.focusedPeerId,
+    });
+  else drawMap(activeCtx, true);
   if (target && connected && !modal.open && !isPresentation) {
     const p = state.me.position;
     const frozen =
@@ -1835,7 +2813,9 @@ function frame(now) {
         ? `${Math.floor(seconds / 60)
             .toString()
             .padStart(2, "0")}:${(seconds % 60).toString().padStart(2, "0")}`
-        : e.phase === "closed" ? "ENDED" : "LOBBY";
+        : e.phase === "closed"
+          ? "ENDED"
+          : "LOBBY";
   }
   requestAnimationFrame(frame);
 }
@@ -1952,13 +2932,17 @@ function tree(ctx, x, y, type = 0) {
   rect(ctx, x - 8, y - 12, 8, 6, "#94a774");
 }
 function building(ctx, x, y, w, h, color, index, lit, recovery = 0) {
-  const wall = lit ? color : ['#71827c', '#657d7c', '#7b8580', '#6b7b83'][index % 4];
-  const roof = '#263f48', edge = lit ? '#c9d5b5' : '#9ba994';
-  const light = lit ? '#f2d28a' : '#385456';
-  rect(ctx, x + 7, y + 8, w, h, '#233d3d');
+  const wall = lit
+    ? color
+    : ["#71827c", "#657d7c", "#7b8580", "#6b7b83"][index % 4];
+  const roof = "#263f48",
+    edge = lit ? "#c9d5b5" : "#9ba994";
+  const light = lit ? "#f2d28a" : "#385456";
+  rect(ctx, x + 7, y + 8, w, h, "#233d3d");
   rect(ctx, x, y, w, h, wall);
-  rect(ctx, x, y + h - 5, w, 5, '#3a5555');
-  if (recovery > 0) rect(ctx, x, y + h - 4, Math.round(w * recovery), 3, '#b9d9b0');
+  rect(ctx, x, y + h - 5, w, 5, "#3a5555");
+  if (recovery > 0)
+    rect(ctx, x, y + h - 4, Math.round(w * recovery), 3, "#b9d9b0");
   // Three original roof profiles share the established footprint.
   rect(ctx, x - 5, y - 5, w + 10, 14, roof);
   if (index % 3 === 0) {
@@ -1973,80 +2957,111 @@ function building(ctx, x, y, w, h, color, index, lit, recovery = 0) {
   }
   rect(ctx, x - 2, y + 7, w + 4, 3, edge);
   // Keep the center doorway separate from every facade detail.
-  rect(ctx, x + 37, y + h - 25, 16, 25, '#1c373e');
-  rect(ctx, x + 49, y + h - 14, 2, 2, '#e9c477');
+  rect(ctx, x + 37, y + h - 25, 16, 25, "#1c373e");
+  rect(ctx, x + 49, y + h - 14, 2, 2, "#e9c477");
   for (const wx of [10, 63]) {
-    rect(ctx, x + wx, y + 20, 17, 19, '#263f48');
+    rect(ctx, x + wx, y + 20, 17, 19, "#263f48");
     rect(ctx, x + wx + 2, y + 22, 13, 15, light);
-    rect(ctx, x + wx + 8, y + 22, 2, 15, '#263f48');
+    rect(ctx, x + wx + 8, y + 22, 2, 15, "#263f48");
   }
   const kind = Math.floor(index / 2);
   if (kind === 0) {
     // Freight depot: loading bay, stacked parcels and a highway maintenance stripe.
-    rect(ctx, x + 31, y + 18, 28, 19, '#35505a');
-    for (let n = 0; n < 4; n++) rect(ctx, x + 33, y + 20 + n * 4, 24, 1, '#9ca58d');
-    for (const [cx, cy] of [[9, 44], [23, 48], [65, 45]]) {
-      rect(ctx, x + cx, y + cy, 13, 12, '#b89460');
-      rect(ctx, x + cx + 5, y + cy, 3, 12, '#ddc387');
+    rect(ctx, x + 31, y + 18, 28, 19, "#35505a");
+    for (let n = 0; n < 4; n++)
+      rect(ctx, x + 33, y + 20 + n * 4, 24, 1, "#9ca58d");
+    for (const [cx, cy] of [
+      [9, 44],
+      [23, 48],
+      [65, 45],
+    ]) {
+      rect(ctx, x + cx, y + cy, 13, 12, "#b89460");
+      rect(ctx, x + cx + 5, y + cy, 3, 12, "#ddc387");
     }
-    if (index % 2) for (let n = 0; n < 5; n++) rect(ctx, x + 8 + n * 16, y + 12, 10, 4, '#e9a667');
+    if (index % 2)
+      for (let n = 0; n < 5; n++)
+        rect(ctx, x + 8 + n * 16, y + 12, 10, 4, "#e9a667");
   } else if (kind === 1) {
     // Ductwork and filter grilles.
-    rect(ctx, x + 32, y + 15, 26, 21, '#243f46');
+    rect(ctx, x + 32, y + 15, 26, 21, "#243f46");
     for (let n = 0; n < 5; n++) rect(ctx, x + 35 + n * 4, y + 18, 2, 15, edge);
-    rect(ctx, x + 7, y + 44, 20, 5, '#abb8a8');
-    rect(ctx, x + 21, y + 44, 6, 16, '#abb8a8');
+    rect(ctx, x + 7, y + 44, 20, 5, "#abb8a8");
+    rect(ctx, x + 21, y + 44, 6, 16, "#abb8a8");
   } else if (kind === 2) {
     // Civic archive: shallow pillars and a lit verification terminal.
     for (const px of [3, 29, 58, 84]) rect(ctx, x + px, y + 15, 3, 44, edge);
-    rect(ctx, x + 37, y + 14, 16, 20, '#203b43');
-    rect(ctx, x + 40, y + 18, 10, 9, lit ? '#b9d9b0' : '#e9a667');
+    rect(ctx, x + 37, y + 14, 16, 20, "#203b43");
+    rect(ctx, x + 40, y + 18, 10, 9, lit ? "#b9d9b0" : "#e9a667");
   } else if (kind === 3) {
     // Weather damage is visible until the shared district repair advances.
-    rect(ctx, x + 35, y + 14, 20, 21, '#ddd3b2');
-    for (let n = 0; n < 3; n++) rect(ctx, x + 39, y + 19 + n * 5, 12, 2, '#617978');
-    if (!lit) for (const [cx, cy] of [[12, 21], [17, 26], [22, 31], [67, 47], [72, 52]]) rect(ctx, x + cx, y + cy, 9, 3, '#304b4b');
+    rect(ctx, x + 35, y + 14, 20, 21, "#ddd3b2");
+    for (let n = 0; n < 3; n++)
+      rect(ctx, x + 39, y + 19 + n * 5, 12, 2, "#617978");
+    if (!lit)
+      for (const [cx, cy] of [
+        [12, 21],
+        [17, 26],
+        [22, 31],
+        [67, 47],
+        [72, 52],
+      ])
+        rect(ctx, x + cx, y + cy, 9, 3, "#304b4b");
   } else if (kind === 4) {
     // Apartment balconies / service HQ. No insect imagery in the scenery.
     rect(ctx, x + 5, y + 39, 26, 4, roof);
     rect(ctx, x + 59, y + 39, 26, 4, roof);
-    rect(ctx, x + 35, y + 17, 20, 17, '#263f48');
-    rect(ctx, x + 39, y + 21, 4, 4, '#e9a667');
-    rect(ctx, x + 47, y + 21, 4, 4, '#b9d9b0');
+    rect(ctx, x + 35, y + 17, 20, 17, "#263f48");
+    rect(ctx, x + 39, y + 21, 4, 4, "#e9a667");
+    rect(ctx, x + 47, y + 21, 4, 4, "#b9d9b0");
   } else if (kind === 5) {
     // Trading desk and the payment cycle terminal.
-    rect(ctx, x + 7, y + 12, 76, 8, '#a59777');
-    for (let n = 0; n < 5; n++) rect(ctx, x + 9 + n * 15, y + 12, 8, 8, '#d9c28c');
-    rect(ctx, x + 34, y + 23, 22, 12, '#203b43');
-    rect(ctx, x + 38, y + 27, 14, 3, lit ? '#b9d9b0' : '#e9a667');
+    rect(ctx, x + 7, y + 12, 76, 8, "#a59777");
+    for (let n = 0; n < 5; n++)
+      rect(ctx, x + 9 + n * 15, y + 12, 8, 8, "#d9c28c");
+    rect(ctx, x + 34, y + 23, 22, 12, "#203b43");
+    rect(ctx, x + 38, y + 27, 14, 3, lit ? "#b9d9b0" : "#e9a667");
   } else if (kind === 6) {
     // Market stalls and an arcade marquee, contained inside the facade.
-    for (let n = 0; n < 6; n++) rect(ctx, x + 6 + n * 13, y + 11, 12, 9, n % 2 ? '#c5a469' : '#688d81');
-    rect(ctx, x + 34, y + 24, 22, 11, '#263f48');
-    rect(ctx, x + 42, y + 26, 6, 7, '#e9c477');
+    for (let n = 0; n < 6; n++)
+      rect(ctx, x + 6 + n * 13, y + 11, 12, 9, n % 2 ? "#c5a469" : "#688d81");
+    rect(ctx, x + 34, y + 24, 22, 11, "#263f48");
+    rect(ctx, x + 42, y + 26, 6, 7, "#e9c477");
   } else {
     // Network exchange / AI headquarters: visible server racks and cable trunk.
     for (const rx of [8, 62]) {
-      rect(ctx, x + rx, y + 16, 20, 29, '#203b43');
+      rect(ctx, x + rx, y + 16, 20, 29, "#203b43");
       for (let n = 0; n < 4; n++) {
-        rect(ctx, x + rx + 3, y + 19 + n * 6, 12, 2, '#778f8c');
-        rect(ctx, x + rx + 16, y + 19 + n * 6, 2, 2, lit ? '#b9d9b0' : '#e9a667');
+        rect(ctx, x + rx + 3, y + 19 + n * 6, 12, 2, "#778f8c");
+        rect(
+          ctx,
+          x + rx + 16,
+          y + 19 + n * 6,
+          2,
+          2,
+          lit ? "#b9d9b0" : "#e9a667",
+        );
       }
     }
-    rect(ctx, x + 33, y + 14, 3, 23, '#c4b88f');
-    rect(ctx, x + 33, y + 14, 25, 3, '#c4b88f');
+    rect(ctx, x + 33, y + 14, 3, 23, "#c4b88f");
+    rect(ctx, x + 33, y + 14, 25, 3, "#c4b88f");
   }
   if (!lit) {
     // An amber lock plate identifies occupied infrastructure, without animation.
-    rect(ctx, x + 73, y + 51, 10, 9, '#203b43');
-    rect(ctx, x + 76, y + 53, 4, 5, '#e9a667');
+    rect(ctx, x + 73, y + 51, 10, 9, "#203b43");
+    rect(ctx, x + 76, y + 53, 4, 5, "#e9a667");
   }
 }
 function drawRoads(ctx) {
   ROAD_BANDS.forEach((road) => {
     rect(ctx, road.x, road.y, road.width, road.height, "#a9ac91");
-    rect(ctx, road.x + (road.width < road.height ? 2 : 0), road.y + (road.width > road.height ? 2 : 0),
-      road.width - (road.width < road.height ? 4 : 0), road.height - (road.width > road.height ? 4 : 0), "#717f78");
+    rect(
+      ctx,
+      road.x + (road.width < road.height ? 2 : 0),
+      road.y + (road.width > road.height ? 2 : 0),
+      road.width - (road.width < road.height ? 4 : 0),
+      road.height - (road.width > road.height ? 4 : 0),
+      "#717f78",
+    );
   });
   for (let x = 0; x < 1200; x += 38) {
     rect(ctx, x, 243, 14, 2, "#c9c8a5");
@@ -2063,14 +3078,28 @@ function drawMap(ctx, live) {
   for (let x = 0; x < 1200; x += 20)
     for (let y = 0; y < 800; y += 20) {
       if ((x * 13 + y * 7) % 93 < 20) rect(ctx, x + 3, y + 4, 3, 2, "#385650");
-      if ((x * 3 + y * 17) % 137 < 12) rect(ctx, x + 10, y + 12, 2, 3, "#526950");
+      if ((x * 3 + y * 17) % 137 < 12)
+        rect(ctx, x + 10, y + 12, 2, 3, "#526950");
     }
   const restoration = restorationProgress(state?.event);
   // District grounds are painted first. Roads remain continuous clear corridors.
   cells.forEach(([col, row], i) => {
-    const recovered = restoration.districts[i], active = live && state?.event?.chapter === i;
-    rect(ctx, col * 415 + 24, row * 260 + 19, 305, row === 1 ? 185 : 205,
-      recovered >= 1 ? "#657c61" : recovered > 0 ? "#435c55" : active ? "#49665d" : "#3b5552");
+    const recovered = restoration.districts[i],
+      active = live && state?.event?.chapter === i;
+    rect(
+      ctx,
+      col * 415 + 24,
+      row * 260 + 19,
+      305,
+      row === 1 ? 185 : 205,
+      recovered >= 1
+        ? "#657c61"
+        : recovered > 0
+          ? "#435c55"
+          : active
+            ? "#49665d"
+            : "#3b5552",
+    );
   });
   drawRoads(ctx);
   cells.forEach(([col, row], i) => {
@@ -2114,7 +3143,11 @@ function drawMap(ctx, live) {
       for (let n = 0; n < 3; n++) rect(ctx, 222, 54 + n * 5, 16, 2, "#526c67");
       rect(ctx, 219, 55, 2, 12, "#d4b777");
       rect(ctx, 239, 55, 2, 12, "#d4b777");
-      for (const [rx, ry] of [[220, 155], [230, 160], [235, 154]]) {
+      for (const [rx, ry] of [
+        [220, 155],
+        [230, 160],
+        [235, 154],
+      ]) {
         rect(ctx, rx, ry, 8, 5, "#4c5c58");
         rect(ctx, rx + 1, ry, 5, 2, "#9a9a7e");
       }
@@ -2192,7 +3225,11 @@ function drawMap(ctx, live) {
       ctx.fillText(i ? "?" : "!", l.x, l.y - 18);
       rect(ctx, l.x - 3, l.y - 11, 6, 5, i ? "#b9e5a5" : "#ed825e");
     });
-    if (state?.event?.chapter === 0 && state.me?.progress?.[0]?.delivery?.loaded && state.me?.position) {
+    if (
+      state?.event?.chapter === 0 &&
+      state.me?.progress?.[0]?.delivery?.loaded &&
+      state.me?.position
+    ) {
       const p = state.me.position;
       rect(ctx, p.x - 25, p.y + 5, 21, 13, "#997d55");
       rect(ctx, p.x - 23, p.y + 2, 7, 10, "#cbb17a");
@@ -2200,7 +3237,16 @@ function drawMap(ctx, live) {
       rect(ctx, p.x - 23, p.y + 17, 5, 4, "#20343c");
       rect(ctx, p.x - 10, p.y + 17, 5, 4, "#20343c");
     }
+    const chapterOnePeers =
+      state?.event?.chapter === 0
+        ? new Set(
+            moveDaySceneModel(state)
+              .teammates.map((p) => p.id)
+              .concat(state.me?.id),
+          )
+        : null;
     (state?.players || [])
+      .filter((p) => !chapterOnePeers || chapterOnePeers.has(p.id))
       .filter(
         (p) =>
           p.connected !== false && (p.setup !== false || p.id === state.me?.id),
@@ -2212,6 +3258,7 @@ function drawMap(ctx, live) {
         const pos = p.position || { x: 600, y: 430 };
         rect(ctx, pos.x - 9, pos.y + 6, 18, 5, "#698768");
         drawAvatar(ctx, pos.x, pos.y, p.character || 0, p.palette || 0, 1.5);
+        if (chapterOnePeers) return;
         ctx.font = "bold 11px monospace";
         const label = p.name || "Neighbor",
           width = ctx.measureText(label).width + 10;
@@ -2322,7 +3369,9 @@ function hostDashboard() {
     topbar(
       '<span id="host-connection" class="pill">PRIVATE OPERATOR CONTROLS · CONNECTING</span>',
     ) +
-    `<main class="host-shell"><div class="eyebrow safe">LIVE OPERATIONS</div><h1>${esc(e.name || "Second Nature Trail")}</h1><div class="host-stats">${[
+    `<main class="host-shell"><div class="eyebrow safe">LIVE OPERATIONS</div><h1>${esc(
+      e.name || "Second Nature Trail",
+    )}</h1><div class="host-stats">${[
       ["Players", ps.length],
       ["Connected", (raw.connections || []).length],
       [
@@ -2345,13 +3394,25 @@ function hostDashboard() {
       )
       .join(
         "",
-      )}</div><div class="host-grid"><section class="card"><span class="eyebrow">EVENT STATE</span><h2 id="host-phase" style="margin-top:14px">${esc(e.phase || "draft")} ${e.paused ? "· paused" : ""}</h2><p id="host-context" class="small">Chapter ${Number(e.chapter ?? -1) + 1} of 8. Control owner: ${esc(e.controlOwner || raw.controlOwner || "See operator log")}.</p><div class="host-actions" id="host-actions"></div><hr><form id="broadcast-form"><label>Message to all players<input id="broadcast" maxlength="200" required></label><button>Broadcast message</button></form></section><section class="card"><h2>Operator log</h2><div class="log" id="host-log">${
+      )}</div><div class="host-grid"><section class="card"><span class="eyebrow">EVENT STATE</span><h2 id="host-phase" style="margin-top:14px">${esc(
+      e.phase || "draft",
+    )} ${
+      e.paused ? "· paused" : ""
+    }</h2><p id="host-context" class="small">Chapter ${
+      Number(e.chapter ?? -1) + 1
+    } of 8. Control owner: ${esc(
+      e.controlOwner || raw.controlOwner || "See operator log",
+    )}.</p><div class="host-actions" id="host-actions"></div><hr><form id="broadcast-form"><label>Message to all players<input id="broadcast" maxlength="200" required></label><button>Broadcast message</button></form></section><section class="card"><h2>Operator log</h2><div class="log" id="host-log">${
       (raw.audit || raw.log || e.audit || [])
         .slice(-20)
         .reverse()
         .map(
           (a) =>
-            `<div>${esc(new Date(a.at || a.time || Date.now()).toLocaleTimeString())} · ${esc(a.operatorId || a.operator || a.actor || "operator")} · ${esc(a.type || a.action)} · ${esc(a.reason || "")}</div>`,
+            `<div>${esc(
+              new Date(a.at || a.time || Date.now()).toLocaleTimeString(),
+            )} · ${esc(
+              a.operatorId || a.operator || a.actor || "operator",
+            )} · ${esc(a.type || a.action)} · ${esc(a.reason || "")}</div>`,
         )
         .join("") || "No operator actions recorded yet."
     }</div><div class="row" id="host-links" style="margin-top:24px"></div></section><section class="card" style="grid-column:1/-1"><h2>Participant status</h2><div id="host-players"></div></section></div></main>`;
@@ -2377,7 +3438,22 @@ function hostDashboard() {
           const ps = raw.players || [];
           open(
             label,
-            `<p>${esc(e.name || "Second Nature Trail")} · ${ps.length} players · current phase ${esc(e.phase)}</p>${type === "shorten" ? `<label>Seconds remaining after this change<input id="host-seconds" type="number" min="1" step="1" max="${Math.max(1, Math.ceil((e.remainingMs || 0) / 1000))}" value="30" required></label>` : ""}${type === "advance" ? `<p class="notice">Ends this phase now. During a chapter, current results stay ranked and the chapter award settles. Use Skip chapter only for an unranked recovery.</p>` : ""}<label>Reason<input id="host-reason" value="${esc(label)}" required></label><div id="host-confirm"></div>`,
+            `<p>${esc(e.name || "Second Nature Trail")} · ${
+              ps.length
+            } players · current phase ${esc(e.phase)}</p>${
+              type === "shorten"
+                ? `<label>Seconds remaining after this change<input id="host-seconds" type="number" min="1" step="1" max="${Math.max(
+                    1,
+                    Math.ceil((e.remainingMs || 0) / 1000),
+                  )}" value="30" required></label>`
+                : ""
+            }${
+              type === "advance"
+                ? `<p class="notice">Ends this phase now. During a chapter, current results stay ranked and the chapter award settles. Use Skip chapter only for an unranked recovery.</p>`
+                : ""
+            }<label>Reason<input id="host-reason" value="${esc(
+              label,
+            )}" required></label><div id="host-confirm"></div>`,
           );
           $("#host-confirm").append(
             btn(
@@ -2422,7 +3498,13 @@ function hostDashboard() {
     btn("Review frozen content and rules", () => {
       open(
         "Event content and scoring",
-        `<p class="notice">${raw.rules?.contentApproved ? "Content marked approved in the frozen ruleset." : "Draft content: SN owner approval is still required before release."}</p><p class="small">Content fingerprint: <code style="overflow-wrap:anywhere">${esc(raw.contentHash || "Unavailable")}</code></p>${rulesHTML(raw)}`,
+        `<p class="notice">${
+          raw.rules?.contentApproved
+            ? "Content marked approved in the frozen ruleset."
+            : "Draft content: SN owner approval is still required before release."
+        }</p><p class="small">Content fingerprint: <code style="overflow-wrap:anywhere">${esc(
+          raw.contentHash || "Unavailable",
+        )}</code></p>${rulesHTML(raw)}`,
       );
     }),
     btn("Export results", () => {
@@ -2450,7 +3532,11 @@ function updateHostPlayers(ps) {
     d = document.createElement("div");
     d.id = `host-player-${p.id}`;
     d.className = "player-item";
-    d.innerHTML = `<strong>${esc(p.name)}</strong><span class="small host-player-status">${hostPlayerStatus(p)}</span>`;
+    d.innerHTML = `<strong>${esc(
+      p.name,
+    )}</strong><span class="small host-player-status">${hostPlayerStatus(
+      p,
+    )}</span>`;
     d.append(
       btn("Rescue", () =>
         hostCommand("rescue", {
@@ -2470,7 +3556,9 @@ function hostPlayerStatus(p) {
       : p.connectionStatus === "reconnecting"
         ? "Reconnecting / offline"
         : "Not joined";
-  return `${connection} · ${p.ready ? "Ready" : p.setup ? "Practicing" : "Setup incomplete"}`;
+  return `${connection} · ${
+    p.ready ? "Ready" : p.setup ? "Practicing" : "Setup incomplete"
+  }`;
 }
 window.addEventListener("resize", () => {
   if (activeCanvas) windowCheck();
@@ -2509,7 +3597,11 @@ function standingsHTML() {
       .slice(0, 10)
       .map(
         (p, i) =>
-          `<li><span class="rank">${i + 1}</span><span>${esc(p.name)}${p.eligible === false ? '<br><span class="small muted">Already awarded</span>' : ""}</span><span class="score">${p.score}</span></li>`,
+          `<li><span class="rank">${i + 1}</span><span>${esc(p.name)}${
+            p.eligible === false
+              ? '<br><span class="small muted">Already awarded</span>'
+              : ""
+          }</span><span class="score">${p.score}</span></li>`,
       )
       .join("") +
     '</ol><p class="small muted">Ranking uses recorded chapter performance. Prize eligibility is separate.</p>'
@@ -2535,7 +3627,9 @@ function rulesHTML(context = state) {
       : maxima
           .map(
             (value, index) =>
-              `${context.world?.[index]?.title || `Chapter ${index + 1}`}: ${value}`,
+              `${
+                context.world?.[index]?.title || `Chapter ${index + 1}`
+              }: ${value}`,
           )
           .join("; ");
   const groups = [
@@ -2544,12 +3638,16 @@ function rulesHTML(context = state) {
       [
         [
           "Storage",
-          `${r.storageLimit} tradable items. Starting allocation: ${list(r.allocation)}.`,
+          `${r.storageLimit} tradable items. Starting allocation: ${list(
+            r.allocation,
+          )}.`,
         ],
         ["Published item values", list(r.values)],
         [
           "Delivery cart",
-          `${r.cargoSlots} slots per load. Slot weights: ${list(r.cargoWeights)}.`,
+          `${r.cargoSlots} slots per load. Slot weights: ${list(
+            r.cargoWeights,
+          )}.`,
         ],
         [
           "Available loads",
@@ -2572,7 +3670,15 @@ function rulesHTML(context = state) {
         ],
         [
           "Rewards projects",
-          `${r.rewards.perJob} nontradable tokens per completed rewards job. After all ${r.spatialTaskCount} jobs, redeem at least one project to complete the objective; the redemption adds no score. Each project can be funded once per player: ${r.rewards.projects.map((p) => `${p.label}, ${p.cost} tokens`).join("; ")}. Remaining tokens may fund another affordable project.`,
+          `${
+            r.rewards.perJob
+          } nontradable tokens per completed rewards job. After all ${
+            r.spatialTaskCount
+          } jobs, redeem at least one project to complete the objective; the redemption adds no score. Each project can be funded once per player: ${r.rewards.projects
+            .map((p) => `${p.label}, ${p.cost} tokens`)
+            .join(
+              "; ",
+            )}. Remaining tokens may fund another affordable project.`,
         ],
         [
           "Cargo delivery",
@@ -2612,7 +3718,9 @@ function rulesHTML(context = state) {
         ],
         [
           "Current objective",
-          `${context.chapter?.title || "Current chapter"}: ${context.chapter?.taskCount ?? "loading"} main-objective steps.`,
+          `${context.chapter?.title || "Current chapter"}: ${
+            context.chapter?.taskCount ?? "loading"
+          } main-objective steps.`,
         ],
       ],
     ],
@@ -2621,23 +3729,41 @@ function rulesHTML(context = state) {
       [
         [
           "Chapter and break",
-          `${r.chapterMs / 60000} minutes of play, then ${r.breakMs / 60000} minutes of bragging. The opening ${r.countdownMs / 1000}-second countdown is included in chapter one's play window.`,
+          `${r.chapterMs / 60000} minutes of play, then ${
+            r.breakMs / 60000
+          } minutes of bragging. The opening ${
+            r.countdownMs / 1000
+          }-second countdown is included in chapter one's play window.`,
         ],
         [
           "Target rounds",
-          `One attempt per ${r.targetRoundMs / 1000}-second round, starting with a ${r.targetTelegraphMs / 1000}-second preparation signal. Optional automatic confirmation submits only the target you selected, with the same timing and limits.`,
+          `One attempt per ${
+            r.targetRoundMs / 1000
+          }-second round, starting with a ${
+            r.targetTelegraphMs / 1000
+          }-second preparation signal. Optional automatic confirmation submits only the target you selected, with the same timing and limits.`,
         ],
         [
           "Payment cycles",
-          `${r.budgetIncomes.length} cycles of ${r.budgetCycleMs / 1000} seconds, measured from the chapter opening. A cycle cannot be paid early. Its full payment must arrive before the deadline.`,
+          `${r.budgetIncomes.length} cycles of ${
+            r.budgetCycleMs / 1000
+          } seconds, measured from the chapter opening. A cycle cannot be paid early. Its full payment must arrive before the deadline.`,
         ],
         [
           "Payment amounts",
-          `Cycle income: ${r.budgetIncomes.join(" / ")}. Amount due: ${r.budgetDues.join(" / ")}. Retained budget carries forward; the optional decoration costs ${r.optionalExpense}. This budget cannot be traded.`,
+          `Cycle income: ${r.budgetIncomes.join(
+            " / ",
+          )}. Amount due: ${r.budgetDues.join(
+            " / ",
+          )}. Retained budget carries forward; the optional decoration costs ${
+            r.optionalExpense
+          }. This budget cannot be traded.`,
         ],
         [
           "Finale",
-          `${r.finaleMs / 60000} minutes. Award inputs are frozen before it begins; finale contributions cannot change prizes.`,
+          `${
+            r.finaleMs / 60000
+          } minutes. Award inputs are frozen before it begins; finale contributions cannot change prizes.`,
         ],
       ],
     ],
@@ -2657,7 +3783,14 @@ function rulesHTML(context = state) {
     groups
       .map(
         ([title, rows]) =>
-          `<h3 style="margin-top:20px">${esc(title)}</h3><table class="compact-table">${rows.map(([label, value]) => `<tr><th>${esc(label)}</th><td>${esc(value)}</td></tr>`).join("")}</table>`,
+          `<h3 style="margin-top:20px">${esc(
+            title,
+          )}</h3><table class="compact-table">${rows
+            .map(
+              ([label, value]) =>
+                `<tr><th>${esc(label)}</th><td>${esc(value)}</td></tr>`,
+            )
+            .join("")}</table>`,
       )
       .join("") +
     `<h3 style="margin-top:20px">Who qualifies?</h3><table class="compact-table">${Object.entries(
@@ -2669,7 +3802,11 @@ function rulesHTML(context = state) {
       )
       .join(
         "",
-      )}</table><h3 style="margin-top:20px">Published tie breakers</h3><p class="small">${esc(r.ties)}</p><h3>When no one qualifies</h3><p class="small">${esc(r.fallback)}</p><div class="notice">${esc(r.fiction)}</div>`
+      )}</table><h3 style="margin-top:20px">Published tie breakers</h3><p class="small">${esc(
+      r.ties,
+    )}</p><h3>When no one qualifies</h3><p class="small">${esc(
+      r.fallback,
+    )}</p><div class="notice">${esc(r.fiction)}</div>`
   );
 }
 
@@ -2677,7 +3814,12 @@ function targeting(task) {
   panel = "targeting";
   open(
     "Outbreak response",
-    `<div class="eyebrow">TARGET SELECTION MODE · ARROWS SELECT · SPACE ACTS</div><h3 style="margin-top:16px">${esc(task.prompt || "Resolve the marked outbreak. Leave friendly neighbors alone.")}</h3><p class="small">One deliberate action per round. No rapid clicking. Your choice of visuals does not change the targets.</p><div class="row spread"><span id="round-label" class="badge">Round ${Number(task.round) + 1}</span><span id="round-timer" class="small"></span></div><div id="targets" class="target-grid" style="margin:18px 0"></div><p id="site-progress" class="notice"></p><label class="row"><input id="auto-target" type="checkbox">Confirm my selected target automatically when the signal opens</label><div id="target-confirm"></div><p id="target-status" class="notice"></p>`,
+    `<div class="eyebrow">TARGET SELECTION MODE · ARROWS SELECT · SPACE ACTS</div><h3 style="margin-top:16px">${esc(
+      task.prompt ||
+        "Resolve the marked outbreak. Leave friendly neighbors alone.",
+    )}</h3><p class="small">One deliberate action per round. No rapid clicking. Your choice of visuals does not change the targets.</p><div class="row spread"><span id="round-label" class="badge">Round ${
+      Number(task.round) + 1
+    }</span><span id="round-timer" class="small"></span></div><div id="targets" class="target-grid" style="margin:18px 0"></div><p id="site-progress" class="notice"></p><label class="row"><input id="auto-target" type="checkbox">Confirm my selected target automatically when the signal opens</label><div id="target-confirm"></div><p id="target-status" class="notice"></p>`,
   );
   selection = null;
   drawTargets(task);
@@ -2762,8 +3904,11 @@ function drawTargets(task) {
 function updateTargetStatus(task) {
   const preparing = Date.now() + serverOffset < (task.actionAllowedAt || 0);
   if ($("#site-progress"))
-    $("#site-progress").textContent =
-      `${task.target?.name || "Current site"} · ${task.siteHits || 0} / ${task.hitsRequired || 1} outbreaks resolved here`;
+    $("#site-progress").textContent = `${
+      task.target?.name || "Current site"
+    } · ${task.siteHits || 0} / ${
+      task.hitsRequired || 1
+    } outbreaks resolved here`;
   if ($("#target-status"))
     $("#target-status").textContent = state.event.paused
       ? "Play is paused."
@@ -2801,13 +3946,19 @@ async function resolveTarget() {
   autoTargetRound = `${shown.chapter}:${shown.step}:${shown.round}`;
   const revision = modal.trailRevision;
   let accepted = null;
-  const r = await act("task", {
-    choice: selection,
-    expectedChapter: shown.chapter,
-    expectedStep: shown.step,
-    expectedStage: shown.stage || null,
-    expectedRound: shown.round,
-  }, (record) => { accepted = record; });
+  const r = await act(
+    "task",
+    {
+      choice: selection,
+      expectedChapter: shown.chapter,
+      expectedStep: shown.step,
+      expectedStage: shown.stage || null,
+      expectedRound: shown.round,
+    },
+    (record) => {
+      accepted = record;
+    },
+  );
   targetRequestPending = false;
   if (modal.trailRevision !== revision || !modal.open) return;
   if (r !== null) {
@@ -2834,32 +3985,70 @@ function routing(task) {
   routePath = [task.source];
   open(
     "Reconnect a home",
-    `<div class="notice">Required relays: ${(task.requiredNodes || []).map(esc).join(", ") || "None"}. Cable budget: ${task.budget ?? "unlimited"} units.</div><div class="eyebrow">ROUTE PLANNING · NO DRAGGING REQUIRED</div><h3 style="margin-top:16px">Connect ${esc(task.destination)} to the exchange.</h3><p class="small">Build a path by selecting connected nodes. Broken links cannot carry the signal. Start at the exchange and finish at the home.</p><canvas id="routing-canvas" width="540" height="250" style="width:100%;border:2px solid var(--ink);background:#dce6cf" aria-label="Network diagram; the same connections are described by the node buttons below"></canvas><p class="small">Broken links: ${(task.blockedEdges || []).map((e) => e.map(esc).join(" ↔ ")).join("; ") || "None"}. Dashed lines show these breaks.</p><div id="route-nodes" class="choice-list"></div><p id="route-path" class="notice"></p><div class="row" id="route-actions"></div>`,
+    `<div class="notice">Required relays: ${
+      (task.requiredNodes || []).map(esc).join(", ") || "None"
+    }. Cable budget: ${
+      task.budget ?? "unlimited"
+    } units.</div><div class="eyebrow">ROUTE PLANNING · NO DRAGGING REQUIRED</div><h3 style="margin-top:16px">Connect ${esc(
+      task.destination,
+    )} to the exchange.</h3><p class="small">Build a path by selecting connected nodes. Broken links cannot carry the signal. Start at the exchange and finish at the home.</p><canvas id="routing-canvas" width="540" height="250" style="width:100%;border:2px solid var(--ink);background:#dce6cf" aria-label="Network diagram; the same connections are described by the node buttons below"></canvas><p class="small">Broken links: ${
+      (task.blockedEdges || [])
+        .map((e) => e.map(esc).join(" ↔ "))
+        .join("; ") || "None"
+    }. Dashed lines show these breaks.</p><div id="route-nodes" class="choice-list"></div><p id="route-path" class="notice"></p><div class="row" id="route-actions"></div>`,
   );
   drawRouting(task);
   let pending = false;
-  const submit = btn("Connect this route", async () => {
-    if (pending) return;
-    pending = true; submit.disabled = true;
-    const revision = modal.trailRevision;
-    let accepted = null;
-    const r = await act("task", {
-      path: [...routePath], expectedChapter: chapterIndex,
-      expectedStep: task.step, expectedStage: task.stage || null,
-    }, (record) => { accepted = record; });
-    pending = false;
-    if (modal.trailRevision !== revision || !modal.open) return;
-    submit.disabled = false;
-    if (r === null) return;
-    if (presentAcceptedAction(accepted)) return;
-    if (state.me.progress[state.event.chapter].complete) { close(); toast("Every home is connected."); }
-    else if (state.chapter.task.target && state.chapter.task.step !== task.step) { close(); travel(0, "activity"); }
-    else routing(state.chapter.task);
-  }, "primary");
-  $("#route-actions").append(submit, btn("Reset path", () => {
-    if (pending) return;
-    routePath = [task.source]; drawRouting(state.chapter.task);
-  }, "quiet"));
+  const submit = btn(
+    "Connect this route",
+    async () => {
+      if (pending) return;
+      pending = true;
+      submit.disabled = true;
+      const revision = modal.trailRevision;
+      let accepted = null;
+      const r = await act(
+        "task",
+        {
+          path: [...routePath],
+          expectedChapter: chapterIndex,
+          expectedStep: task.step,
+          expectedStage: task.stage || null,
+        },
+        (record) => {
+          accepted = record;
+        },
+      );
+      pending = false;
+      if (modal.trailRevision !== revision || !modal.open) return;
+      submit.disabled = false;
+      if (r === null) return;
+      if (presentAcceptedAction(accepted)) return;
+      if (state.me.progress[state.event.chapter].complete) {
+        close();
+        toast("Every home is connected.");
+      } else if (
+        state.chapter.task.target &&
+        state.chapter.task.step !== task.step
+      ) {
+        close();
+        travel(0, "activity");
+      } else routing(state.chapter.task);
+    },
+    "primary",
+  );
+  $("#route-actions").append(
+    submit,
+    btn(
+      "Reset path",
+      () => {
+        if (pending) return;
+        routePath = [task.source];
+        drawRouting(state.chapter.task);
+      },
+      "quiet",
+    ),
+  );
 }
 function drawRouting(task) {
   const c = $("#routing-canvas"),
@@ -2911,8 +4100,15 @@ function drawRouting(task) {
     ctx.fillText(n.label || n.id, p.x, p.y + 29);
   });
   const summary = routeSummary(task, routePath);
-  $("#route-path").textContent =
-    `${routePath.join(" → ")} · Cost ${summary.cost} / ${task.budget ?? "unlimited"}${summary.invalid ? " · Contains a missing or broken link" : ""}${summary.missing.length ? " · Still needs " + summary.missing.join(", ") : " · Required relays included"}`;
+  $("#route-path").textContent = `${routePath.join(" → ")} · Cost ${
+    summary.cost
+  } / ${task.budget ?? "unlimited"}${
+    summary.invalid ? " · Contains a missing or broken link" : ""
+  }${
+    summary.missing.length
+      ? " · Still needs " + summary.missing.join(", ")
+      : " · Required relays included"
+  }`;
   const list = $("#route-nodes");
   list.replaceChildren();
   nodes.forEach((n) => {
@@ -3001,8 +4197,10 @@ setInterval(() => {
     )
       resolveTarget();
     if ($("#round-timer"))
-      $("#round-timer").textContent =
-        `Next round in ${Math.max(0, Math.ceil((task.nextRoundAt - Date.now() - serverOffset) / 1000))}s`;
+      $("#round-timer").textContent = `Next round in ${Math.max(
+        0,
+        Math.ceil((task.nextRoundAt - Date.now() - serverOffset) / 1000),
+      )}s`;
   }
 }, 250);
 let audioContext = null,
@@ -3109,7 +4307,11 @@ function updateHostLive() {
     (hostConnected ? "CONNECTED" : "RECONNECTING");
   const context = $("#host-context");
   if (context)
-    context.textContent = `Chapter ${Number(e.chapter ?? -1) + 1} of 8. Control owner: ${e.controlOwner || raw.controlOwner || "No operator action yet"}.`;
+    context.textContent = `Chapter ${
+      Number(e.chapter ?? -1) + 1
+    } of 8. Control owner: ${
+      e.controlOwner || raw.controlOwner || "No operator action yet"
+    }.`;
   const values = {
     Players: ps.length,
     Connected: (raw.connections || []).length,
@@ -3135,7 +4337,9 @@ function updateHostLive() {
         .reverse()
         .map(
           (a) =>
-            `<div>${esc(new Date(a.at).toLocaleTimeString())} · ${esc(a.operatorId)} · ${esc(a.type)} · ${esc(a.reason)}</div>`,
+            `<div>${esc(new Date(a.at).toLocaleTimeString())} · ${esc(
+              a.operatorId,
+            )} · ${esc(a.type)} · ${esc(a.reason)}</div>`,
         )
         .join("") || "No operator actions recorded yet.";
     if (log.innerHTML !== html) log.innerHTML = html;
@@ -3171,8 +4375,11 @@ function setDestination(x, y, arrival) {
 function drawRepairs(ctx) {
   const contributors = state?.event?.finale?.contributors || [];
   contributors.forEach((id, i) => {
-    const district = i % 8, slot = Math.floor(i / 8), door = DOORS[district * 2];
-    const x = door[0] - 27 + (slot % 7) * 8, y = door[1] + 49 + Math.floor(slot / 7) * 9;
+    const district = i % 8,
+      slot = Math.floor(i / 8),
+      door = DOORS[district * 2];
+    const x = door[0] - 27 + (slot % 7) * 8,
+      y = door[1] + 49 + Math.floor(slot / 7) * 9;
     rect(ctx, x, y, 6, 6, id === state.me?.id ? "#fff2ab" : "#b9e5a5");
     rect(ctx, x + 2, y + 1, 1, 4, "#43755b");
     rect(ctx, x + 1, y + 3, 4, 1, "#43755b");
@@ -3193,7 +4400,11 @@ setInterval(() => {
       : now > t.dueAt
         ? "This cycle’s deadline has passed. A late payment is still recorded."
         : `Payment due in ${Math.max(0, Math.ceil((t.dueAt - now) / 1000))}s`;
-    if ($("#task-confirm button")) $("#task-confirm button").disabled = waiting || !!state.event.paused || !!$("#task-confirm button").trailPending;
+    if ($("#task-confirm button"))
+      $("#task-confirm button").disabled =
+        waiting ||
+        !!state.event.paused ||
+        !!$("#task-confirm button").trailPending;
   }
 }, 250);
 async function presentation() {
@@ -3271,10 +4482,26 @@ function updateControlHints() {
   }
   const hint = $("#world-hint");
   if (hint)
-    hint.textContent = `Click to walk · ${movementKeys()} / arrows to move · ${keyLabel("interact")} to interact`;
+    hint.textContent = isMoveDayFocused()
+      ? `Choose beside the scene · ${keyLabel(
+          "interact",
+        )} continues · ${movementKeys()} / arrows switch to free walking`
+      : `Click to walk · ${movementKeys()} / arrows to move · ${keyLabel(
+          "interact",
+        )} to interact`;
+  if ($("#field-notes-menu"))
+    $("#field-notes-menu").hidden = !isMoveDayAvailable();
+  if ($("#move-day-return"))
+    $("#move-day-return").hidden = !isMoveDayAvailable() || isMoveDayFocused();
   activeCanvas?.setAttribute(
     "aria-label",
-    `Shared neighborhood. Move with arrow keys or ${movementKeys()}, or click a destination. Press ${keyLabel("interact")} to interact. Tab reaches all menus.`,
+    isMoveDayFocused()
+      ? `Move Day delivery scene. Tab reaches cargo and route choices. ${keyLabel(
+          "interact",
+        )} continues the current stage. Movement keys switch to the neighborhood overview.`
+      : `Shared neighborhood. Move with arrow keys or ${movementKeys()}, or click a destination. Press ${keyLabel(
+          "interact",
+        )} to interact. Tab reaches all menus.`,
   );
 }
 function verifiedHighlightHTML() {
@@ -3284,7 +4511,9 @@ function verifiedHighlightHTML() {
   const award = state.event.awards?.find((a) => a.chapter === chapter);
   if (!award) return "";
   if (!award.playerId)
-    return `<div class="notice">Chapter prize unawarded: ${esc(award.reason)}.</div>`;
+    return `<div class="notice">Chapter prize unawarded: ${esc(
+      award.reason,
+    )}.</div>`;
   const labels = [
     "useful cargo value delivered",
     "correct installations minus incorrect attempts",
@@ -3295,7 +4524,13 @@ function verifiedHighlightHTML() {
     "distinct completed challenges",
     "valid homes connected minus invalid attempts",
   ];
-  return `<section class="notice" aria-label="Recorded chapter highlight"><strong>Chapter prize: ${esc(award.name)}</strong><p class="small" style="margin:8px 0 0">Recorded result: ${award.metric} ${labels[chapter]}.${chapter === 5 ? ` Retained fictional budget: ${award.secondary}.` : ""}</p></section>`;
+  return `<section class="notice" aria-label="Recorded chapter highlight"><strong>Chapter prize: ${esc(
+    award.name,
+  )}</strong><p class="small" style="margin:8px 0 0">Recorded result: ${
+    award.metric
+  } ${labels[chapter]}.${
+    chapter === 5 ? ` Retained fictional budget: ${award.secondary}.` : ""
+  }</p></section>`;
 }
 
 function noteVisualIntent(insects, persist = false) {
