@@ -2,7 +2,7 @@
 // No saved DB, game-clock offsets, assigned scores or completed-task fixtures.
 import { createGameServer } from '../server.mjs';
 import { createProjection, reduceProjection } from '../public/projection.mjs';
-import { findPath, stepToward, waypointReached, isWalkable, DOORS } from '../public/world.mjs';
+import { findPath, stepToward, waypointReached, isWalkable } from '../public/world.mjs';
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -10,16 +10,18 @@ import { createInterface } from 'node:readline';
 import { performance } from 'node:perf_hooks';
 import assert from 'node:assert/strict';
 
-let verify = false, count = 100, port, output;
+let verify = false, count = 100, port, output, attach;
 const args = process.argv.slice(2);
 for (let i = 0; i < args.length; i++) {
   const flag = args[i];
   if (flag === '--verify') { verify = true; continue; }
-  if (!['--players', '--port', '--output'].includes(flag) || !args[i + 1]) throw Error('Usage: node scripts/move-day-review.mjs [--verify] [--players 2..100] [--port N] [--output new-report.json]');
+  if (!['--players', '--port', '--output', '--attach'].includes(flag) || !args[i + 1]) throw Error('Usage: node scripts/move-day-review.mjs [--verify] [--players 2..100] [--port N] [--output new-report.json] [--attach http://127.0.0.1:PORT]');
   const value = args[++i];
-  if (flag === '--output') output = value;
+  if (flag === '--attach') attach = value;
+  else if (flag === '--output') output = value;
   else { if (!/^\d+$/.test(value)) throw Error('Numeric option required'); if (flag === '--players') count = Number(value); else port = Number(value); }
 }
+if (attach) { assert(!verify && /^http:\/\/127\.0\.0\.1:\d+$/.test(attach), 'Attach requires an existing loopback review server'); assert(process.env.MOVE_REVIEW_HOST_TOKEN, 'MOVE_REVIEW_HOST_TOKEN required for attach'); }
 port ??= verify ? 0 : 4182;
 assert(Number.isInteger(count) && count >= 2 && count <= 100 && Number.isInteger(port) && port >= 0 && port <= 65535, 'Invalid roster or port');
 const root = new URL('../', import.meta.url), startedAt = new Date().toISOString();
@@ -31,8 +33,8 @@ const uncommittedSourceFiles = sourceFiles.filter(file => {
   catch { return true; }
 });
 const hostTokens = [0,1].map(() => randomBytes(32).toString('hex')), presentationToken = randomBytes(32).toString('hex');
-const app = createGameServer({ dbPath: ':memory:', demo: false, hostTokens, presentationToken, secure: false });
-for (let n = 1; n <= count; n++) app.addInvitation(`review-${n}`, n === 1 && !verify ? 'Your review player' : `Simulated neighbor ${n}`, `move-review-${n}`);
+const app = attach ? null : createGameServer({ dbPath: ':memory:', demo: false, hostTokens, presentationToken, secure: false });
+for (let n = 1; app && n <= count; n++) app.addInvitation(`review-${n}`, n === 1 && !verify ? 'Your review player' : `Simulated neighbor ${n}`, `move-review-${n}`);
 const clients = [], controllers = [], pendingPumps = [], samples = [], errors = [];
 let origin, hostCookie, input, closing = false, closePromise, sequence = Promise.resolve(), frameCount = 0;
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -120,10 +122,10 @@ async function walk(client, destination, stopDistance = 0.5) {
 }
 async function arrange(place) {
   await Promise.all(clients.map((client, i) => {
-    const door = DOORS[i % DOORS.length];
     const target = place === 'depot' ? { x: 110 + i % 11 * 10, y: 160 + Math.floor(i / 11) * 6 }
       : place === 'square' ? { x: 550 + i % 11 * 10, y: 350 + Math.floor(i / 11) * 6 }
-      : { x: door[0] + (Math.floor(i / DOORS.length) % 3 - 1) * 15, y: door[1] + 20 + Math.floor(i / 48) * 10 };
+      : i % 2 === 0 ? { x: 160 + 140 * (i / Math.max(1, clients.length - 1)), y: 160 }
+      : { x: 230, y: 60 + 100 * (i / Math.max(1, clients.length - 1)) };
     return walk(client, target);
   }));
   console.log(`ARRANGEMENT ${place}: ${clients.length} connected simulated neighbors walked through the normal movement API.`);
@@ -151,7 +153,7 @@ async function deliveries(client) {
 async function close() {
   if (closePromise) return closePromise;
   closing = true; input?.close(); controllers.forEach(controller => controller.abort());
-  closePromise = (async () => { await Promise.allSettled(pendingPumps); await app.close(); })();
+  closePromise = (async () => { await Promise.allSettled(pendingPumps); await app?.close(); })();
   return closePromise;
 }
 async function command(line) {
@@ -161,6 +163,8 @@ async function command(line) {
   if (['square','depot','spread'].includes(word)) { await arrange(word); return; }
   if (word === 'repair') {
     const n = Number(argument || 5); assert(Number.isInteger(n) && n >= 1 && n <= clients.length, 'repair count must select1..all simulated neighbors');
+    const current = await status(); assert.equal(current.summary.phase, 'chapter', 'repair requires an active chapter');
+    await waitForChapter(); // A just-accepted resume can precede its next SSE projection.
     const selected = clients.filter(client => !client.state.me.progress[0].complete).slice(0, n);
     await Promise.all(selected.map(deliveries)); await status(); return;
   }
@@ -169,25 +173,27 @@ async function command(line) {
   await status();
 }
 try {
-  origin = await new Promise((resolve, reject) => { app.server.once('error', reject); app.server.listen(port, '127.0.0.1', () => resolve(`http://127.0.0.1:${app.server.address().port}`)); });
-  const primary = await http('/api/host/login', { token: hostTokens[0] }); hostCookie = primary.cookie;
-  const backup = await http('/api/host/login', { token: hostTokens[1] });
-  const display = await http('/api/presentation/login', { token: presentationToken });
-  await connect(hostCookie, '/api/events?client=review-host-one');
-  await connect(backup.cookie, '/api/events?client=review-host-two');
-  await connect(display.cookie, '/api/events?presentation=1');
-  await host('lobby');
+  origin = attach || await new Promise((resolve, reject) => { app.server.once('error', reject); app.server.listen(port, '127.0.0.1', () => resolve(`http://127.0.0.1:${app.server.address().port}`)); });
+  const primary = await http('/api/host/login', { token: attach ? process.env.MOVE_REVIEW_HOST_TOKEN : hostTokens[0] }); hostCookie = primary.cookie;
+  if (!attach) {
+    const backup = await http('/api/host/login', { token: hostTokens[1] });
+    const display = await http('/api/presentation/login', { token: presentationToken });
+    await connect(hostCookie, '/api/events?client=review-host-one');
+    await connect(backup.cookie, '/api/events?client=review-host-two');
+    await connect(display.cookie, '/api/events?presentation=1');
+    await host('lobby');
+  }
   for (let start = verify ? 1 : 2; start <= count; start += 5) {
     await Promise.all(Array.from({ length: Math.min(5, count - start + 1) }, async (_, offset) => {
-      const n = start + offset, id = `review-${n}`, joined = await http('/api/join', { token: `move-review-${n}` });
+      const n = start + offset, id = `review-${n}`, joined = await http('/api/join', { token: `move-review-${n}`, ...(attach ? { takeover: true } : {}) });
       const client = { id, cookie: joined.cookie, client: `bot-${n}`, movementSequence: 0, projection: createProjection(), state: null }; clients.push(client);
       await connect(client.cookie, `/api/events?client=${client.client}`, state => project(client, state, 'full'));
-      assert(client.state); await action(client, 'setup', { character: n % 12, palette: n % 6, insects: false, settingsSequence: 1 });
+      assert(client.state); if (!attach) await action(client, 'setup', { character: n % 12, palette: n % 6, insects: false, settingsSequence: 1 });
     }));
     await sleep(260); // Login IP rate stays below the normal public limit.
   }
   clients.sort((a,b) => Number(a.id.slice(7)) - Number(b.id.slice(7)));
-  const initial = await status(); assert.equal(initial.summary.connectedParticipants, clients.length);
+  const initial = await status(); assert.equal(initial.summary.connectedParticipants, clients.length + (attach ? 1 : 0));
   report.initialConnectedParticipants = initial.summary.connectedParticipants;
   if (verify) {
     await host('start'); const clock = await status();
@@ -206,11 +212,13 @@ try {
     if (output) writeFileSync(output, JSON.stringify(report, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
     console.log('VERIFIED ' + JSON.stringify(report));
   } else {
-    await arrange('depot');
-    console.log(`PLAYER http://localhost:${app.server.address().port}/?invite=move-review-1`);
-    console.log(`HOST ${origin}/host`);
-    console.log(`PRIMARY TOKEN ${hostTokens[0]}`);
-    console.log(`VISUAL REVIEW: ${clients.length} simulated neighbors; the human browser makes ${count} real connected participants. Bots remain idle until commanded. No peer objectives are pre-completed.`);
+    if (!attach) {
+      await arrange('depot');
+      console.log(`PLAYER http://localhost:${app.server.address().port}/?invite=move-review-1`);
+      console.log(`HOST ${origin}/host`);
+      console.log(`PRIMARY TOKEN ${hostTokens[0]}`);
+    } else console.log(`ATTACHED: ${clients.length} simulated identities reconnected through invitation takeover; human identity untouched. No position, score or progress assigned.`);
+    console.log(`VISUAL REVIEW: ${clients.length} simulated neighbors; the human browser makes ${count} real connected participants. Bots remain idle until commanded. No objective completion is fabricated.`);
     console.log('Commands: square, depot, spread, start, pause, resume, repair [count], status, quit. repair plays three real deliveries per selected bot.');
     input = createInterface({ input: process.stdin, crlfDelay: Infinity, terminal: false });
     input.on('line', line => { sequence = sequence.then(() => command(line)).catch(error => console.log('COMMAND ERROR: ' + error.message)); });

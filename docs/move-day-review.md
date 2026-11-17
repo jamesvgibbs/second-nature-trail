@@ -16,7 +16,7 @@ The terminal prints the player URL, host URL and a fresh local operator token. U
 | --- | --- |
 | `square` | All simulated neighbors walk to Bragging Square |
 | `depot` | They walk to a compact grid near the moving depot |
-| `spread` | They walk to clear positions near the 16 authored doors |
+| `spread` | They walk along the Move Day depot–crossing–home route |
 | `start` | Ordinary host start, including the normal ten-second countdown |
 | `pause` / `resume` | Normal host pause and resume |
 | `repair 5` | Five unfinished bots play three real deliveries each; use only after unrepaired captures |
@@ -24,6 +24,8 @@ The terminal prints the player URL, host URL and a fresh local operator token. U
 | `quit` | Close this isolated server and discard its walkthrough |
 
 Movement commands obey normal phase rules. Arrange the crowd while in the lobby or an unpaused chapter. They do not teleport, bypass collisions, or move during pause. If stdin closes, the server remains available; SIGTERM stops it. The live scene should bound the companions it draws without hiding the true participant count. Renderer tests and native screenshots establish visual crowd behavior separately from these server connections.
+
+A review controller can reconnect simulated identities to an already-running fixture with `--attach http://127.0.0.1:4182` and its local operator token in `MOVE_REVIEW_HOST_TOKEN`. This uses normal invitation takeover for bots 2–100; it preserves the human identity and existing state. It does not open a new server or database. The replacement controller must be stopped before the original server. These bot reconnects are review activity and must be disclosed in screenshots/evidence.
 
 The optional repair sequence uses a protected repair kit, shortcut essentials, then a protected connection kit. Each bot earns 45 delivery points and 27 useful delivered value, finishes with 0 parts / 3 filters / 1 food / 1 cable, and consumes no personal reserve. Those values are checked against real accepted actions. A completed bot contributes one actual district repair; with 100 invitations that is 1% of the district. No roster denominator is rewritten for the screenshot.
 

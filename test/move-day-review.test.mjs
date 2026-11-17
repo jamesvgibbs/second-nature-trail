@@ -48,7 +48,7 @@ test('bounded HTTP/SSE scenario performs actual cargo choices and preserves ever
 });
 
 test('visual review reserves one human identity; real peers can move between crowd arrangements without scoring', async () => {
-  const run = launch(['--players', '3']); let controller;
+  const run = launch(['--players', '3']); let controller, replacement;
   try {
     await run.waitFor(text => text.includes('PLAYER '));
     const origin = run.output().match(/HOST (http:\/\/127\.0\.0\.1:\d+)/)[1];
@@ -68,8 +68,15 @@ test('visual review reserves one human identity; real peers can move between cro
     run.child.stdin.write('square\n'); await run.waitFor(text => text.includes('ARRANGEMENT square:'));
     let current = await state();
     assert(current.players.filter(p => p.id !== 'review-1').every(p => p.position.x >= 550 && p.position.y >= 350));
-    run.child.stdin.write('spread\n'); await run.waitFor(text => text.includes('ARRANGEMENT spread:'));
-    current = await state(); assert.equal(current.event.contributions[0], 0); assert.equal(current.event.phase, 'lobby');
+    const humanBefore = current.players.find(p => p.id === 'review-1');
+    replacement = launch(['--players', '3', '--attach', origin], { MOVE_REVIEW_HOST_TOKEN: token });
+    await replacement.waitFor(text => text.includes('ATTACHED: 2 simulated identities reconnected'));
+    current = await state(); assert.equal(current.connections.length, 3);
+    assert.deepEqual(current.players.find(p => p.id === 'review-1'), humanBefore, 'controller takeover must not change human state');
+    replacement.child.stdin.write('spread\n'); await replacement.waitFor(text => text.includes('ARRANGEMENT spread:'));
+    current = await state();
+    assert(current.players.filter(p => p.id !== 'review-1').every(p => (Math.abs(p.position.y - 160) < 0.6 && p.position.x >= 159.5 && p.position.x <= 300.5) || (Math.abs(p.position.x - 230) < 0.6 && p.position.y >= 59.5 && p.position.y <= 160.5)));
+    assert.equal(current.event.contributions[0], 0); assert.equal(current.event.phase, 'lobby');
     run.child.stdin.end(); await wait(100); assert.equal(run.child.exitCode, null); assert.equal((await state()).connections.length, 3);
-  } finally { controller?.abort(); await run.stop(); }
+  } finally { controller?.abort(); await replacement?.stop(); await run.stop(); }
 });
