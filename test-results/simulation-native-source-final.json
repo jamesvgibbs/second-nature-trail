@@ -1,0 +1,10 @@
+{
+  "capturedAt": "2026-11-17T20:56:00.260Z",
+  "clientCommit": "87c1c37",
+  "files": {
+    "public/app.js": "6d145a9c050c8b72feb3b8b37f65a72e8f91766f00c6e327d2e6e3521846f87a",
+    "public/crowd-view.mjs": "d69f819492387f00bc7872cc293f79a45e5e79b8a66b883a03d57871d2241ae2",
+    "public/style.css": "b46c16731b00e25d928b778c893f1b679e83ce21f7ffd856597aec551c1f9674",
+    "public/move-day-scene.mjs": "512311ada7279b3d922882a4d80e5563851e806f3d9fca8690d2089d34b262ef"
+  }
+}
