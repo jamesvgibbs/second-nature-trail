@@ -10,6 +10,7 @@
     "start": "node server.mjs",
     "dev": "node server.mjs",
     "test": "node --test test/*.test.mjs",
-    "roster": "node scripts/roster.mjs"
+    "roster": "node scripts/roster.mjs",
+    "demo": "node scripts/demo-local.mjs"
   }
 }
