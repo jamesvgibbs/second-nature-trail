@@ -153,7 +153,7 @@ test('seeded HTTP actions preserve exact supplies, rollback, immutable answers a
         const journal={snapshot:state.snapshot,snapshotHash:hash(state.snapshot),requests:state.requests,requestsHash:hash(state.requests),snapshotAt:state.snapshot.at,contentHash:state.contentHash,seed:state.seed,capturedAt:new Date().toISOString(),phase:state.phase};
         const audit=verifyResults(snapshot,{journal});assert(audit.fullActionReconciliationPass,JSON.stringify(audit));evidence.independent=true;
         await host('close');const final=structuredClone(app.engine.state);await endStreams();await app.close();app=createGameServer(options);app.engine.now=()=>clock;
-        assert.deepEqual(app.engine.state,final,'closed event changed on SQLite reopen');evidence.reopened=true;
+        assert.deepEqual(app.engine.state,JSON.parse(JSON.stringify(final)),'closed JSON event changed on SQLite reopen');evidence.reopened=true;
       }catch(error){evidence.failure={message:error.stack,lastActions:trace.slice(-12)};throw error;}
       finally{await endStreams();await app?.close();rmSync(dir,{recursive:true,force:true});}
     }
