@@ -444,7 +444,7 @@ test("help/emote/assist UI registers the intended peer and only completed recipi
     }
   assert.equal(f.context.state.me.progress[1].score, RULES.assistPoints);
 });
-test("practice callbacks cannot close a newly opened dialog; failed help does not mark tutorial complete", async () => {
+test("practice callbacks cannot close a newly opened dialog or continue its request chain", async () => {
   for (const step of ["interact", "collect", "answer", "help"]) {
     const f = fixture(0, (engine) => {
       engine.state.phase = "lobby";
@@ -588,4 +588,32 @@ test("a delayed accepted assist cannot put feedback in a newly opened Help dialo
   assert.equal(f.context.panel, "help");
   assert.equal(f.document.activeElement, focus);
   assert.equal(f.ids.has("#dialog-feedback"), false);
+});
+test("failed practice help remains retryable and does not submit or complete the tutorial step", async () => {
+  const f = fixture(0, (engine) => {
+    engine.state.phase = "lobby";
+    engine.state.deadline = null;
+  });
+  f.body.innerHTML =
+    '<div id="tutorial-actions"></div><div id="ready-action"></div>';
+  f.context.renderTutorial();
+  f.ids.get("#tutorial-actions").children[4].onclick();
+  const submit = f.ids.get("#practice-action").children[0].onclick;
+  const pending = submit();
+  f.requests[0].reject(new Error("Temporary connection failure"));
+  await pending;
+  assert.equal(f.requests.length, 1);
+  assert.equal(f.context.state.me.tutorial.includes("help"), false);
+  assert.equal(f.modal.open, true);
+  const retry = submit();
+  assert.equal(f.requests.length, 2);
+  f.resolve();
+  await flush();
+  await flush();
+  assert.equal(f.requests.length, 3);
+  assert.equal(f.requests[2].action.type, "tutorial");
+  f.resolve();
+  await retry;
+  assert.equal(f.context.state.me.tutorial.includes("help"), true);
+  assert.equal(f.modal.open, false);
 });
