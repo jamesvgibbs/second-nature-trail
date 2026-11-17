@@ -1357,7 +1357,8 @@ export class Engine {
           break;
         case "endScoring":
           assert(
-            ["chapter", "brag", "paused"].includes(s.phase),
+            ["chapter", "brag"].includes(s.phase) ||
+              (s.phase === "paused" && ["chapter", "brag"].includes(s.pause.phase)),
             "Scoring has not started or is already frozen",
           );
           this.freeze();
