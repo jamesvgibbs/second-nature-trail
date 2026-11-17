@@ -107,9 +107,9 @@ export function deliveryReceipt(before, after, action, result) {
   const deltas = [
     { label: "Deliveries", value: `${current.step}/${model.totalDeliveries}` },
     { label: "Score now", value: current.score },
-    { label: "Useful value delivered", value: current.primary },
+    { label: "Total useful value", value: current.primary },
   ];
-  if (consistent) deltas.push({ label: "Score change", value: current.score - previous.score });
+  if (consistent) deltas.push({ label: "Points this trip", value: current.score - previous.score });
   if (outcome) for (const kind of Object.keys(model.loaded)) {
     deltas.push({ label: `Stored ${kind} now`, value: actualStorage[kind] });
     deltas.push({ label: `Reserve ${kind} now`, value: actualReserve[kind] });

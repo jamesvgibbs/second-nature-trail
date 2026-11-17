@@ -98,7 +98,7 @@ test('concurrent learning score is reported as observed total without attributin
   assert.equal(r.receipt.deltaStatus, 'concurrent');
   assert(r.receipt.details.some(text => text.includes('Delivery points') && text.includes('20')));
   assert(r.receipt.details.some(text => text.includes('Current totals are shown below')));
-  assert.equal(r.receipt.deltas.find(d => d.label === 'Score change'), undefined);
+  assert.equal(r.receipt.deltas.find(d => d.label === 'Points this trip'), undefined);
   assert.equal(r.receipt.deltas.find(d => d.label === 'Score now').value, 30);
 });
 
@@ -155,7 +155,7 @@ test('generic spatial receipts cover evidence inspection, incorrect decisions an
     const correct = CHAPTERS[chapter].tasks[0].answer;
     r = f.perform('task', { choice: (correct + 1) % CHAPTERS[chapter].tasks[0].options.length });
     assert.equal(r.receipt.title, 'This site still needs help');
-    assert.equal(r.receipt.deltas.some(d => d.label === 'Score change'), false);
+    assert.equal(r.receipt.deltas.some(d => d.label === 'Points this trip'), false);
     r = f.perform('task', { choice: correct });
     assert.equal(r.receipt.title, 'Work completed');
     assert.equal(r.receipt.deltas.find(d => d.label === 'Objective progress').value, `1/${r.before.chapter.taskCount}`);
