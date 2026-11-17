@@ -163,6 +163,23 @@ async function command(line) {
   if (!word || closing) return;
   if (word === 'quit') return close();
   if (['square','depot','spread','district','optional'].includes(word)) { await arrange(word); return; }
+  if (word === 'contribute') {
+    const n = Number(argument || 1);
+    assert(Number.isInteger(n) && n >= 1 && n <= clients.length, 'Choose one to all simulated neighbors');
+    const current = await status(); assert.equal(current.summary.phase, 'finale', 'Contributions require the finale');
+    const waitingAt = Date.now();
+    while (clients.some(client => client.state.event.phase !== 'finale')) {
+      assert(Date.now() - waitingAt < 15000, 'Finale projection did not arrive'); await sleep(100);
+    }
+    const selected = clients.filter(client => !current.data.event.finale.contributors.includes(client.id)).slice(0, n);
+    assert.equal(selected.length, n, 'Not enough neighbors remain to contribute');
+    const { operationalAudit: beforeOperations, ...before } = (await http('/api/host/export', undefined, hostCookie)).data;
+    await Promise.all(selected.map(client => action(client, 'finale')));
+    const { operationalAudit: afterOperations, ...after } = (await http('/api/host/export', undefined, hostCookie)).data;
+    assert.deepEqual(after, before, 'Finale contributions must not change frozen scores or awards');
+    console.log(`CONTRIBUTED ${selected.length}: existing neighbors used the normal finale API; frozen results unchanged.`);
+    await status(); return;
+  }
   if (word === 'repair') {
     const n = Number(argument || 5); assert(Number.isInteger(n) && n >= 1 && n <= clients.length, 'repair count must select1..all simulated neighbors');
     const current = await status(); assert.equal(current.summary.phase, 'chapter', 'repair requires an active chapter');
@@ -171,7 +188,7 @@ async function command(line) {
     await Promise.all(selected.map(deliveries)); await status(); return;
   }
   if (['start','pause','resume'].includes(word)) await host(word);
-  else if (word !== 'status') throw Error('Commands: square, depot, spread, district, optional, start, pause, resume, repair [count], status, quit.');
+  else if (word !== 'status') throw Error('Commands: square, depot, spread, district, optional, start, pause, resume, repair [count], contribute [count], status, quit.');
   await status();
 }
 try {
@@ -221,7 +238,7 @@ try {
       console.log(`PRIMARY TOKEN ${hostTokens[0]}`);
     } else console.log(`ATTACHED: ${clients.length} simulated identities reconnected through invitation takeover; human identity untouched. No position, score or progress assigned.`);
     console.log(`VISUAL REVIEW: ${clients.length} simulated neighbors; the human browser makes ${count} real connected participants. Bots remain idle until commanded. No objective completion is fabricated.`);
-    console.log('Commands: square, depot, spread, district, optional, start, pause, resume, repair [count], status, quit. repair plays three real deliveries per selected bot.');
+    console.log('Commands: square, depot, spread, district, optional, start, pause, resume, repair [count], contribute [count], status, quit. repair plays three real deliveries per selected bot.');
     input = createInterface({ input: process.stdin, crlfDelay: Infinity, terminal: false });
     input.on('line', line => { sequence = sequence.then(() => command(line)).catch(error => console.log('COMMAND ERROR: ' + error.message)); });
     input.on('close', () => { if (!closing) console.log('Input closed; review remains available. SIGTERM stops this isolated server.'); });

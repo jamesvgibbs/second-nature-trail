@@ -81,6 +81,14 @@ test('visual review reserves one human identity; real peers can move between cro
     current = await state(); assert(current.players.filter(p => p.id !== 'review-1').every(p => Math.hypot(p.position.x - 160, p.position.y - 160) < 1));
     replacement.child.stdin.write('optional\n'); await replacement.waitFor(text => text.includes('ARRANGEMENT optional:'));
     current = await state(); assert(current.players.filter(p => p.id !== 'review-1').every(p => Math.hypot(p.position.x - 300, p.position.y - 160) < 1));
+    for (const type of ['start','advance','endScoring']) await post('/api/host/action', {type,reason:'Finale command regression',requestId:'finale-test-'+type},operator.cookie);
+    const frozen = (await fetch(origin+'/api/host/export',{headers:{Cookie:operator.cookie}})).json();
+    const beforeFinale = await frozen;
+    replacement.child.stdin.write('contribute 1\n'); await replacement.waitFor(text => text.includes('CONTRIBUTED 1:'));
+    current = await state(); assert.equal(current.event.finale.contributors.length,1); assert.equal(current.event.finale.ending,null);
+    replacement.child.stdin.write('contribute 1\n'); await replacement.waitFor(text => text.split('CONTRIBUTED 1:').length===3);
+    current = await state(); assert.equal(current.event.finale.contributors.length,2); assert(current.event.finale.ending);
+    assert.deepEqual(await (await fetch(origin+'/api/host/export',{headers:{Cookie:operator.cookie}})).json(),beforeFinale);
     run.child.stdin.end(); await wait(100); assert.equal(run.child.exitCode, null); assert.equal((await state()).connections.length, 3);
   } finally { controller?.abort(); await replacement?.stop(); await run.stop(); }
 });

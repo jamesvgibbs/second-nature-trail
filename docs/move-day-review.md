@@ -21,6 +21,7 @@ The terminal prints the player URL, host URL and a fresh local operator token. U
 | `start` | Ordinary host start, including the normal ten-second countdown |
 | `pause` / `resume` | Normal host pause and resume |
 | `repair 5` | Five unfinished bots play three real deliveries each; use only after unrepaired captures |
+| `contribute 59` | During finale, 59 existing bots contribute through the normal API; frozen results are checked unchanged |
 | `status` | Print phase, exact connected-participant count and completed objectives |
 | `quit` | Close this isolated server and discard its walkthrough |
 
@@ -28,7 +29,7 @@ Movement commands obey normal phase rules. Arrange the crowd while in the lobby 
 
 A review controller can reconnect simulated identities to an already-running fixture with `--attach http://127.0.0.1:4182` and its local operator token in `MOVE_REVIEW_HOST_TOKEN`. This uses normal invitation takeover for bots 2–100; it preserves the human identity and existing state. It does not open a new server or database. The replacement controller must be stopped before the original server. These bot reconnects are review activity and must be disclosed in screenshots/evidence.
 
-The optional repair sequence uses a protected repair kit, shortcut essentials, then a protected connection kit. Each bot earns 45 delivery points and 27 useful delivered value, finishes with 0 parts / 3 filters / 1 food / 1 cable, and consumes no personal reserve. Those values are checked against real accepted actions. A completed bot contributes one actual district repair; with 100 invitations that is 1% of the district. No roster denominator is rewritten for the screenshot.
+The optional repair sequence uses a protected repair kit, shortcut essentials, then a protected connection kit. Each bot earns 45 delivery points and 27 useful delivered value, finishes with 0 parts / 3 filters / 1 food / 1 cable, and consumes no personal reserve. Those values are checked against real accepted actions. A completed bot contributes one actual district repair; with 100 invitations that is 1% of the district. No roster denominator is rewritten for the screenshot. In a finale with 100 connected setup participants, the target is 60: 59 bot contributions plus the native reviewer can earn success. Capture unmet progress before contributing. Advancing an unmet finale fixes its fallback ending; success and fallback cannot be earned sequentially in one immutable event.
 
 ## Bounded server check
 
