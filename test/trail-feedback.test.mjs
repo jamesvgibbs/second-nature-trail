@@ -63,7 +63,7 @@ for (const plan of [0, 1, 2]) for (const route of [0, 1]) {
         last = f.step(choice); const receipt = last.receipt;
         assert(receipt, stage); assert.equal(receipt.stage, stage); assert.equal(receipt.id, last.action.requestId);
         assert.equal(receipt.deltaStatus, 'consistent'); assert.equal(receipt.completed, trip === 2 && stage === 'deliver');
-        assert.equal(receipt.deltas.find(d => d.label === 'Current chapter score').value, last.after.me.progress[0].score);
+        assert.equal(receipt.deltas.find(d => d.label === 'Score now').value, last.after.me.progress[0].score);
       }
     }
     assert.match(last.receipt.details.at(-1), /All 3 deliveries are complete/);
@@ -95,16 +95,33 @@ test('concurrent learning score is reported as observed total without attributin
   const f = fixture(); f.step(2); f.step(0); f.step(0);
   const r = f.step(0, engine => { const p = engine.get('tester').progress[0]; p.score += 10; p.quiz[0] = { correct: true }; });
   assert.equal(r.receipt.deltaStatus, 'concurrent');
-  assert(r.receipt.details.some(text => text.includes('Published delivery points') && text.includes('20')));
-  assert(r.receipt.details.some(text => text.includes('not an action-only breakdown')));
-  assert.equal(r.receipt.deltas.find(d => d.label === 'Observed score change').value, 30);
+  assert(r.receipt.details.some(text => text.includes('Delivery points') && text.includes('20')));
+  assert(r.receipt.details.some(text => text.includes('Current totals are shown below')));
+  assert.equal(r.receipt.deltas.find(d => d.label === 'Score change'), undefined);
+  assert.equal(r.receipt.deltas.find(d => d.label === 'Score now').value, 30);
 });
 
 test('concurrent trade/resource changes are not presented as an exclusive consumption receipt', () => {
   const f = fixture(); f.step(0); f.step(1); f.step(0);
   const r = f.step(0, engine => { engine.get('tester').items.pop(); });
   assert.equal(r.receipt.deltaStatus, 'concurrent');
-  assert.equal(r.receipt.title, 'Delivery saved');
+  assert.equal(r.receipt.title, 'Delivery complete');
   assert.equal(r.receipt.deltas.find(d => d.label === 'Stored parts now').value, 1);
   assert.equal(r.receipt.deltas.find(d => d.label === 'Reserve parts now').value, 6);
+});
+
+test('feedback never reads or leaks quiz, challenge or private authored answers', () => {
+  const f = fixture(), accepted = f.step(0);
+  for (const object of [accepted.before.chapter, accepted.after.chapter]) {
+    for (const field of ['questions', 'challenge', 'answer', 'explanation']) {
+      Object.defineProperty(object, field, { get() { throw Error(`Must not read ${field}`); }, enumerable: true });
+    }
+  }
+  accepted.before.rules.privateAnswer = 'DO-NOT-EXPOSE-THIS-ANSWER';
+  const model = deliveryModel(accepted.before);
+  const receipt = deliveryReceipt(accepted.before, accepted.after, accepted.action, accepted.result);
+  assert(model); assert(receipt);
+  const serialized = JSON.stringify({ model, receipt });
+  assert.equal(serialized.includes('DO-NOT-EXPOSE-THIS-ANSWER'), false);
+  assert.equal(/"(?:answer|questions|challenge|explanation)":/.test(serialized), false);
 });

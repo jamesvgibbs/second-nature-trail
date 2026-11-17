@@ -86,8 +86,8 @@ export function deliveryReceipt(before, after, action, result) {
   } else {
     outcome = model.routes.find(route => route.id === model.selectedRoute);
     if (action.choice !== 0 || !previous.delivery.visited || !outcome || nextCart.stage !== "load" || nextCart.loaded !== null || nextCart.route !== null || nextCart.visited !== false) return null;
-    title = "Delivery saved";
-    details = [`${cargoText(model.loaded)} delivered.`, `Delivered useful value: ${outcome.value}.${outcome.damageValue ? ` The shortcut cost ${outcome.damageValue} value.` : " The paved route protected the cargo."}`, `Published delivery points for this load and route: ${outcome.points}.`];
+    title = "Delivery complete";
+    details = [`${cargoText(model.loaded)} delivered.`, `Delivered useful value: ${outcome.value}.${outcome.damageValue ? ` The shortcut cost ${outcome.damageValue} value.` : " The paved route protected the cargo."}`, `Delivery points: ${outcome.points}.`];
   }
   const expectedStep = previous.step + (stage === "deliver" ? 1 : 0);
   const completed = expectedStep === model.totalDeliveries;
@@ -102,14 +102,14 @@ export function deliveryReceipt(before, after, action, result) {
   if (![...Object.values(actualStorage), ...Object.values(actualReserve)].every(value => Number.isSafeInteger(value) && value >= 0)) return null;
   const changedElsewhere = !equal(previous.quiz, current.quiz) || previous.challenge !== current.challenge || previous.mistakes !== current.mistakes || !equal(previous.assists, current.assists);
   const consistent = current.score - previous.score === (outcome?.points || 0) && sameCargo(actualStorage, expectedStorage, keys) && sameCargo(actualReserve, expectedReserve, keys) && !changedElsewhere;
-  if (!consistent) details.push("Other saved changes may be included. The totals below are your current state, not an action-only breakdown.");
+  if (!consistent) details.push("Your supplies or score also changed while you were delivering. Current totals are shown below.");
   if (completed) details.push(`All ${model.totalDeliveries} deliveries are complete. Your completed objective contributes to shared neighborhood restoration.`);
   const deltas = [
-    { label: "Saved delivery progress", value: `${current.step}/${model.totalDeliveries}` },
-    { label: "Current chapter score", value: current.score },
-    { label: "Observed score change", value: current.score - previous.score },
-    { label: "Current useful value delivered", value: current.primary },
+    { label: "Deliveries", value: `${current.step}/${model.totalDeliveries}` },
+    { label: "Score now", value: current.score },
+    { label: "Useful value delivered", value: current.primary },
   ];
+  if (consistent) deltas.push({ label: "Score change", value: current.score - previous.score });
   if (outcome) for (const kind of Object.keys(model.loaded)) {
     deltas.push({ label: `Stored ${kind} now`, value: actualStorage[kind] });
     deltas.push({ label: `Reserve ${kind} now`, value: actualReserve[kind] });
