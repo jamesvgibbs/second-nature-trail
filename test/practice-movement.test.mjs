@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import { readFileSync } from 'node:fs';
+import { overviewCrowd } from '../public/crowd-view.mjs';
 import { Engine } from '../engine.mjs';
 import { clipMove, waypointReached, stepToward, isWalkable, findPath, OBSTACLES, DOORS } from '../public/world.mjs';
 
@@ -31,7 +32,7 @@ function fixture({ seen = true, modalOpen = false, presentation = false, editing
     movementKeys: () => 'WASD', keyLabel: (x) => x, esc: (x) => x,
     localStorage: { getItem: () => seen ? '1' : null, setItem() {} },
     open() { modal.open = true; document.activeElement = { id: 'close-modal' }; },
-    clipMove, waypointReached, stepToward, isWalkable, findPath, OBSTACLES, DOORS,
+    overviewCrowd, clipMove, waypointReached, stepToward, isWalkable, findPath, OBSTACLES, DOORS,
     tutorialDone: (step) => context.state.me.tutorial.includes(step),
     act(type, fields) {
       calls.push(type);
