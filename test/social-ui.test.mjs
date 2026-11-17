@@ -42,6 +42,8 @@ function fixture() {
   document.createElement = (tag) => new Element(tag);
   const context = vm.createContext({
     document, body, $: (id) => ids.get(id) || null,
+    // Retained Neighbors dialog; focused-scene sidebar has separate adapter tests.
+    isMoveDayFocused: () => false,
     projection: createProjection(), reduceProjection, state: null,
     modal: { open: true }, panel: "neighbors", currentPhase: "chapter", currentChapter: 0,
     forceSafe: true, isPresentation: false, serverOffset: 0, safe: true, target: null,

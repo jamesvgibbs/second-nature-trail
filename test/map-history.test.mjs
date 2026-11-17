@@ -63,6 +63,8 @@ test("actual Map rendering exposes history in button text and preserves current-
   const context = vm.createContext({
     state: { event: { ...event, chapter: 1 }, me: { progress: [untouched(), { ...untouched(), step: 1, score: 10 }] } },
     districts: Array.from({ length: 8 }, (_, i) => [`District ${i + 1}`, "First", "Second"]),
+    // History rows in the explicit neighborhood overview.
+    isMoveDayAvailable: () => false,
     chapterMapStatus, panel: "", document: { activeElement: focus, createElement: () => ({}) },
     $: () => holder, open() {}, close() {},
     btn: (textContent, onclick, className) => ({ textContent, onclick, className, children: [], append(...nodes) { this.children.push(...nodes); } }),

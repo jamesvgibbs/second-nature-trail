@@ -172,6 +172,9 @@ function fixture(chapter = 0, configure = () => {}) {
     forceSafe: true,
     safe: true,
     isPresentation: false,
+    // This fixture covers the retained overview/modal controls; focused scene has its own adapter tests.
+    moveDayOverview: true,
+    isMoveDayFocused: () => false,
     serverOffset: 0,
     prefs: {},
     keys: {},

@@ -24,6 +24,7 @@ const section = (start, end) =>
 function renderSurface(state, isPresentation = false) {
   const mission = {
     innerHTML: "",
+    classList: { toggle() {} },
     dataset: {},
     contains: () => false,
     querySelectorAll: () => [],
@@ -51,6 +52,10 @@ function renderSurface(state, isPresentation = false) {
   const context = vm.createContext({
     state,
     isPresentation,
+    // Retained overview controls; focused Move Day pause is tested separately.
+    isMoveDayFocused: () => false,
+    app: {},
+    updateControlHints() {},
     FIELD_NOTES,
     DELIVERY_STAGES,
     stageLabel,
@@ -314,6 +319,7 @@ test("frame labels a closed event ENDED while paused clocks remain fixed", () =>
     target: null,
     measureFrame() {},
     drawMap() {},
+    isMoveDayFocused: () => false,
     requestAnimationFrame() {},
     serverOffset: 0,
     $: (selector) => (selector === "#timer" ? timer : null),

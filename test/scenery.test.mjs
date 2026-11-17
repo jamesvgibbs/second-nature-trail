@@ -11,6 +11,7 @@ import {
 } from "../public/scenery.mjs";
 import { restorationProgress } from "../public/helpers.mjs";
 import { SITE_LABELS } from "../public/trail-visuals.mjs";
+import { moveDaySceneModel } from "../public/move-day-scene.mjs";
 import { RULES } from "../content.mjs";
 
 const source = readFileSync(
@@ -75,6 +76,7 @@ function renderer(restored = 0, self = "p0", chapter = -1) {
     SQUARE_TREES,
     ROAD_BANDS,
     SITE_LABELS,
+    moveDaySceneModel,
     restorationProgress,
     target: null,
     state: {
