@@ -172,9 +172,15 @@ test('budget receipts use the actual recorded payment cycle for on-time and inco
     assert.equal(r.receipt.title, choice === 2 ? 'Payment cycle recorded' : 'Payment made on time');
     assert.equal(r.receipt.deltas.find(d => d.label === 'Fictional budget retained').value, [40,20,0][choice]);
     assert.equal(r.receipt.deltas.find(d => d.label === 'Score now').value, choice === 2 ? 0 : 20);
+    assert.equal(r.receipt.details.some(d => d.includes('No on-time points earned')), choice === 2);
   }
   const late = chapterFixture(5); late.setTime(145001);
-  assert.equal(late.perform('task', { choice: 0 }).receipt.title, 'Payment cycle recorded');
+  const recorded = late.perform('task', { choice: 0 });
+  assert.equal(recorded.receipt.title, 'Payment cycle recorded');
+  assert.equal(recorded.after.me.progress[5].cycles.at(-1).onTime, false);
+  assert.match(recorded.receipt.details.join(' '), /No on-time points earned/);
+  delete recorded.after.me.progress[5].cycles.at(-1).onTime;
+  assert.equal(actionReceipt(recorded.before, recorded.after, recorded.action, recorded.result), null, 'An absent onTime field cannot imply failure or manufacture a receipt');
 });
 
 test('routing receipts report a valid route and a failed attempt without revealing a solution', () => {

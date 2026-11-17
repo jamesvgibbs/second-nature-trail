@@ -155,7 +155,7 @@ export function actionReceipt(before, after, action, result) {
     const cycle = current.cycles?.at(-1);
     if (typeof result.correct !== "boolean" || current.step !== previous.step + 1 || current.cycles?.length !== previous.cycles?.length + 1 || !cycle || cycle.onTime !== result.correct || cycle.retained !== current.budget) return null;
     title = cycle.onTime ? "Payment made on time" : "Payment cycle recorded";
-    details = [`Paid ${cycle.payment}; spent ${cycle.expense}; kept ${cycle.retained}.`, cycle.onTime ? "This fictional payment met the amount and deadline." : "This fictional payment did not meet both the required amount and deadline."];
+    details = [`Paid ${cycle.payment}; spent ${cycle.expense}; kept ${cycle.retained}.`, cycle.onTime ? "This fictional payment met the amount and deadline." : "No on-time points earned. This fictional payment did not meet both the required amount and deadline."];
     deltas.push({ label: "Fictional budget retained", value: current.budget });
     stage = "budget";
   } else if (task?.kind === "routing") {
