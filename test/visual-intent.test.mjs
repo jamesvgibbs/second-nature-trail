@@ -37,6 +37,7 @@ function fixture() {
     chosen: 0,
     swatch: 0,
     panel: "",
+    modal: { open: false, trailRevision: 0 },
     app: {},
     localStorage: {},
     requests: [],
@@ -55,10 +56,15 @@ function fixture() {
   c.readSettings = () => ({});
   c.serverSettings = (x) => x;
   c.updateControlHints = () => {};
-  c.open = () => {};
+  c.open = () => {
+    c.modal.open = true;
+    c.modal.trailRevision++;
+  };
   c.toast = () => {};
   c.close = () => {
     c.closes++;
+    c.modal.open = false;
+    c.modal.trailRevision++;
   };
   c.game = () => {
     c.games++;
@@ -176,4 +182,22 @@ test("automatic replacement persistence cannot supersede an explicit pending ena
   c.requests[0].resolve({ ok: true });
   await pending;
   assert.equal(c.replacementSavePending, false);
+});
+test("settings acknowledgement saves latest intent without closing a newer dialog", async () => {
+  const { c, get } = fixture();
+  c.settings();
+  get("#safe-select").value = "false";
+  const submit = get("#settings-save").children[0].onclick;
+  const pending = submit();
+  await submit();
+  assert.equal(c.requests.length, 1);
+  c.panel = "help";
+  c.open();
+  const revision = c.modal.trailRevision;
+  c.requests[0].resolve({ ok: true });
+  await pending;
+  assert.equal(c.closes, 0);
+  assert.equal(c.panel, "help");
+  assert.equal(c.modal.open, true);
+  assert.equal(c.modal.trailRevision, revision);
 });

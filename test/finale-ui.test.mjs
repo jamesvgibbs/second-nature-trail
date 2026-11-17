@@ -105,6 +105,8 @@ function renderSurface(state, isPresentation = false) {
   );
   vm.runInContext("renderMission()", context);
   return {
+    context,
+    mission,
     html: mission.innerHTML,
     finaleButton: finaleActions.children[0],
     chapterButtons: [
@@ -339,4 +341,29 @@ test("frame labels a closed event ENDED while paused clocks remain fixed", () =>
   };
   vm.runInContext("frame(999999)", context);
   assert.equal(timer.textContent, "02:03");
+});
+test("actual phase/chapter transition resets sidebar scroll without stealing modal focus; same-phase updates retain scroll", () => {
+  const f = finaleFixture("chapter");
+  const surface = renderSurface(f.engine.view("neighbor"));
+  const { context, mission } = surface;
+  mission.scrollTop = 240;
+  context.state.event.broadcast = "A same-phase update";
+  context.renderMission();
+  assert.equal(mission.scrollTop, 240);
+  const editing = { tagName: "INPUT" };
+  context.document.activeElement = editing;
+  context.modal.open = true;
+  f.boundary();
+  context.state = f.engine.view("neighbor");
+  context.renderMission();
+  assert.equal(context.state.event.phase, "brag");
+  assert.equal(mission.scrollTop, 0);
+  assert.equal(context.document.activeElement, editing);
+  mission.scrollTop = 170;
+  f.boundary();
+  context.state = f.engine.view("neighbor");
+  context.renderMission();
+  assert.equal(context.state.event.chapter, 1);
+  assert.equal(mission.scrollTop, 0);
+  assert.equal(context.document.activeElement, editing);
 });

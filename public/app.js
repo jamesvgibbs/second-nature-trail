@@ -1,3 +1,4 @@
+import { overviewCrowd } from "/crowd-view.mjs";
 import { createProjection, reduceProjection } from "/projection.mjs";
 import { districtScenery, SQUARE_TREES, ROAD_BANDS } from "/scenery.mjs";
 import { deliveryModel, actionReceipt } from "/trail-feedback.mjs";
@@ -237,6 +238,7 @@ async function act(type, fields = {}, observe = null) {
   const requestGeneration = streamGeneration;
   const expectedChapter = fields.expectedChapter ?? state?.event?.chapter;
   const requestPhase = state?.event?.phase;
+  const requestModalRevision = modal.trailRevision;
   const competitive = [
     "task",
     "challenge",
@@ -301,7 +303,7 @@ async function act(type, fields = {}, observe = null) {
   } catch (e) {
     if (requestGeneration === streamGeneration) {
       if (e.status === 401) loseAuthorization();
-      else toast(e.message);
+      else if (modal.trailRevision === requestModalRevision) toast(e.message);
     }
     return null;
   }
@@ -711,6 +713,7 @@ function accept(s, kind = "full", allowEpoch = false) {
   }
   projection = next;
   state = next.state;
+  reconcileTravelRoute();
   if (
     isMoveDayFocused() &&
     moveDayCompanionSignature(previous) !== moveDayCompanionSignature(state)
@@ -770,6 +773,7 @@ function accept(s, kind = "full", allowEpoch = false) {
       neighborListSignature(previous) !== neighborListSignature(state))
   )
     preservePanelFocus(() => neighbors(true));
+  refreshNeighborEmotes();
   if (
     panel === "inventory" &&
     modal.open &&
@@ -787,6 +791,19 @@ function accept(s, kind = "full", allowEpoch = false) {
       "A neighbor offered a trade. Open Neighbors to review and confirm it.",
     );
   return true;
+}
+function reconcileTravelRoute() {
+  const position = state?.me?.position,
+    waypoint = target?.path?.[0] || target;
+  if (!position || !waypoint) return;
+  const visible = clipMove(position, waypoint);
+  if (Math.hypot(visible.x - waypoint.x, visible.y - waypoint.y) < 0.01) return;
+  const path = findPath(position, target);
+  if (path?.length) target = { ...target, path };
+  else {
+    target = null;
+    toast("Your position changed. Choose a destination to continue.");
+  }
 }
 function game() {
   app.innerHTML = `<main class="game ${
@@ -860,8 +877,7 @@ function renderSupplyHUD() {
   const hud = $("#supply-hud");
   if (!hud) return;
   if (isPresentation || !state?.me) {
-    hud.innerHTML =
-      '<span class="hud-caption">NEIGHBORHOOD FIELD REPORT</span><span class="hud-safe">Friendly robot visuals</span>';
+    hud.innerHTML = `<span class="hud-caption">NEIGHBORHOOD FIELD REPORT</span><span class="hud-safe">${overviewCrowd(state, { presentation: true }).total} neighbors connected · Friendly robots</span>`;
     return;
   }
   if (isMoveDayFocused()) {
@@ -887,6 +903,8 @@ function renderSupplyHUD() {
         }</strong><span>${item}</span></span>`,
     )
     .join("")}</div>`;
+  const crowd = overviewCrowd(state);
+  hud.innerHTML += `<span class="hud-safe overview-presence">${crowd.nearby} nearby · ${crowd.total} connected · Meet everyone in Neighbors</span>`;
 }
 function deliveryTrailHTML(task, progress) {
   const stage = DELIVERY_STAGES.findIndex(([key]) => key === task?.stage);
@@ -1475,6 +1493,7 @@ function renderMission() {
   if (isMoveDayFocused()) renderMoveDaySidebar();
   updateControlHints();
   mission.dataset.phase = `${e.phase}:${displayPhase}:${e.chapter}`;
+  if (previousPhase !== mission.dataset.phase) mission.scrollTop = 0;
   $("#map-label").textContent = isMoveDayFocused()
     ? "MOVE DAY · THE CROSSING"
     : e.finale?.contributors?.includes(me.id)
@@ -1752,14 +1771,20 @@ function renderTutorial() {
             "A quick practice question",
             '<p>Which supply repairs a broken sign?</p><div class="choice-list" id="practice-answers"></div>',
           );
+          let pending = false;
           ["Repair parts", "A robot compliment"].forEach((v, i) =>
             $("#practice-answers").append(
               btn(v, async () => {
+                if (pending) return;
                 if (i === 0) {
+                  pending = true;
+                  const revision = modal.trailRevision;
                   const r = await act("tutorial", {
                     step: "answer",
                     choice: 0,
                   });
+                  pending = false;
+                  if (modal.trailRevision !== revision || !modal.open) return;
                   if (r !== null) {
                     close();
                     toast("Exactly. Repair parts belong in a useful cart.");
@@ -1770,6 +1795,7 @@ function renderTutorial() {
           );
         } else {
           open(t, `<p>${desc}</p><div id="practice-action"></div>`);
+          let pending = false;
           $("#practice-action").append(
             btn(
               s === "help"
@@ -1778,9 +1804,28 @@ function renderTutorial() {
                   ? "Collect practice parcel"
                   : "Say hello",
               async () => {
-                if (s === "help") await act("help", { preset: 0 });
+                if (pending) return;
+                pending = true;
+                const revision = modal.trailRevision;
+                if (s === "help") {
+                  const helped = await act("help", { preset: 0 });
+                  if (
+                    helped === null ||
+                    modal.trailRevision !== revision ||
+                    !modal.open
+                  ) {
+                    pending = false;
+                    return;
+                  }
+                }
                 const r = await act("tutorial", { step: s });
-                if (r === null) return;
+                pending = false;
+                if (
+                  r === null ||
+                  modal.trailRevision !== revision ||
+                  !modal.open
+                )
+                  return;
                 close();
                 toast(
                   s === "interact"
@@ -1849,18 +1894,27 @@ function showActivity(kind) {
           "A curious detail is tucked near this location.",
       )}</p><div id="secret-action"></div>`,
     );
+    let pending = false;
     $("#secret-action").append(
       btn(
         "Inspect this spot",
         async () => {
+          if (pending) return;
+          pending = true;
+          const revision = modal.trailRevision;
+          const confirm = $("#secret-action").children[0];
+          confirm.disabled = true;
           const r = await act("secret", { expectedChapter: chapterIndex });
+          pending = false;
+          if (modal.trailRevision !== revision || !modal.open) return;
+          confirm.disabled = false;
           if (r !== null) {
+            close();
             toast(
               typeof r === "string"
                 ? r
                 : r.clue || r.message || "A clue is saved in your journal.",
             );
-            close();
           }
         },
         "primary",
@@ -2307,20 +2361,29 @@ function quiz(index, result = null) {
   q.options.forEach((o, i) =>
     $("#task-choices").append(btn(`${i + 1}. ${o}`, () => choose(i), "choice")),
   );
+  let pending = false;
   $("#quiz-confirm").append(
     btn(
       a ? "Try again, unscored" : "Confirm answer",
       async () => {
+        if (pending) return;
         if (selection === null) {
           toast("Choose an answer first.");
           return;
         }
         const choice = selection;
+        pending = true;
+        const revision = modal.trailRevision;
+        const confirm = $("#quiz-confirm").children[0];
+        confirm.disabled = true;
         const r = await act("quiz", {
           index,
           choice,
           expectedChapter: chapterIndex,
         });
+        pending = false;
+        if (modal.trailRevision !== revision || !modal.open) return;
+        confirm.disabled = false;
         if (r !== null) {
           quiz(index, { ...r, choice });
           if (!r.correct && r.explanation)
@@ -2410,14 +2473,19 @@ function neighbors(refresh = false) {
           ? '<br><span class="badge">Asked for help</span>'
           : ""
       }</strong>`;
+      const emote = document.createElement("span");
+      emote.className = "neighbor-emote small";
+      emote.dataset.emotePeer = p.id;
+      d.append(emote);
       const r = document.createElement("div");
       r.className = "row";
       const assistButton = btn("Help", async () => {
+        const revision = modal.trailRevision;
         const v = await act("assist", {
           target: p.id,
           expectedChapter: chapterIndex,
         });
-        if (v !== null)
+        if (v !== null && modal.open && modal.trailRevision === revision)
           toast(
             "Assist registered. It counts when the unfinished task is completed.",
           );
@@ -2454,6 +2522,23 @@ function neighbors(refresh = false) {
     d.append(confirmButton, cancelButton);
     $("#trade-list").append(d);
   });
+  refreshNeighborEmotes();
+}
+function refreshNeighborEmotes() {
+  if (panel !== "neighbors" || !modal.open) return;
+  const list = $("#neighbor-list");
+  if (!list) return;
+  const now = Date.now() + serverOffset;
+  for (const label of list.querySelectorAll("span")) {
+    if (!label.dataset.emotePeer) continue;
+    const player = state.players?.find((p) => p.id === label.dataset.emotePeer);
+    const emote = player?.emote;
+    const text =
+      emote && emote.until > now
+        ? state.rules?.emotes?.[emote.index] || ""
+        : "";
+    if (label.textContent !== text) label.textContent = text;
+  }
 }
 function trade(p) {
   const chapterIndex = state.event.chapter;
@@ -2472,10 +2557,16 @@ function trade(p) {
       .map((k) => `<option>${esc(k)}</option>`)
       .join(
         "",
-      )}</select></label><label>Quantity<input id="receive-qty" type="number" min="1" max="3" value="1" required></label></div><button class="primary">Propose this trade</button></form>`,
+      )}</select></label><label>Quantity<input id="receive-qty" type="number" min="1" max="3" value="1" required></label></div><button id="trade-submit" class="primary">Propose this trade</button></form>`,
   );
+  let pending = false;
   $("#trade-form").onsubmit = async (e) => {
     e.preventDefault();
+    if (pending) return;
+    pending = true;
+    const revision = modal.trailRevision;
+    const submit = $("#trade-submit");
+    submit.disabled = true;
     const r = await act("tradeOffer", {
       target: p.id,
       expectedChapter: chapterIndex,
@@ -2485,6 +2576,9 @@ function trade(p) {
         qty: Number($("#receive-qty").value),
       },
     });
+    pending = false;
+    if (modal.trailRevision !== revision || !modal.open) return;
+    submit.disabled = false;
     if (r !== null) neighbors();
   };
 }
@@ -2543,7 +2637,7 @@ function mystery() {
       )
       .join(
         " ",
-      )}</div><form id="mystery-form"><label>Your answer<input id="mystery-answer" autocomplete="off" maxlength="64" required></label><p class="small">Type your answer or click your discovered letters. Both submit the same answer.</p><div id="mystery-letters" class="row" role="group" aria-label="Discovered clue letters"></div><div id="mystery-edit" class="row" style="margin:16px 0"></div><p id="mystery-entry-status" class="small" role="status" aria-live="polite"></p><button class="primary">Reveal the message</button></form>`,
+      )}</div><form id="mystery-form"><label>Your answer<input id="mystery-answer" autocomplete="off" maxlength="64" required></label><p class="small">Type your answer or click your discovered letters. Both submit the same answer.</p><div id="mystery-letters" class="row" role="group" aria-label="Discovered clue letters"></div><div id="mystery-edit" class="row" style="margin:16px 0"></div><p id="mystery-entry-status" class="small" role="status" aria-live="polite"></p><button id="mystery-submit" class="primary">Reveal the message</button></form>`,
   );
   const input = $("#mystery-answer");
   const announce = () => {
@@ -2585,12 +2679,21 @@ function mystery() {
       "quiet",
     ),
   );
+  let pending = false;
   $("#mystery-form").onsubmit = async (e) => {
     e.preventDefault();
+    if (pending) return;
+    pending = true;
+    const revision = modal.trailRevision;
+    const submit = $("#mystery-submit");
+    submit.disabled = true;
     const r = await act("mystery", {
       answer: input.value,
       expectedChapter: chapterIndex,
     });
+    pending = false;
+    if (modal.trailRevision !== revision || !modal.open) return;
+    submit.disabled = false;
     if (r !== null) {
       if (r.correct) close();
       toast(
@@ -2648,10 +2751,12 @@ function settings() {
     l.append(i);
     $("#remap").append(l);
   });
+  let pending = false;
   $("#settings-save").append(
     btn(
       "Save settings",
       async () => {
+        if (pending) return;
         const vals = [...$("#remap").querySelectorAll("input")].map((i) =>
           i.value.toLowerCase(),
         );
@@ -2668,15 +2773,18 @@ function settings() {
         const insects = $("#safe-select").value === "true";
         const intent = noteVisualIntent(insects);
         const settings = readSettings();
+        pending = true;
+        const revision = modal.trailRevision;
         const result = await act("setup", {
           character: state.me.character,
           palette: state.me.palette,
           insects,
           settings: serverSettings(settings),
         });
+        pending = false;
         if (result !== null && commitVisualIntent(intent, insects)) {
           updateControlHints();
-          close();
+          if (modal.open && modal.trailRevision === revision) close();
         }
       },
       "primary",
@@ -3218,13 +3326,6 @@ function drawMap(ctx, live) {
       state?.chapter?.task?.target || state?.chapter?.locations?.[0],
       state?.chapter?.locations?.[1],
     ].filter(Boolean);
-    loc.forEach((l, i) => {
-      rect(ctx, l.x - 13, l.y - 35, 26, 24, i ? "#b9e5a5" : "#ed825e");
-      ctx.fillStyle = "#142b35";
-      ctx.font = "bold 13px monospace";
-      ctx.fillText(i ? "?" : "!", l.x, l.y - 18);
-      rect(ctx, l.x - 3, l.y - 11, 6, 5, i ? "#b9e5a5" : "#ed825e");
-    });
     if (
       state?.event?.chapter === 0 &&
       state.me?.progress?.[0]?.delivery?.loaded &&
@@ -3237,62 +3338,24 @@ function drawMap(ctx, live) {
       rect(ctx, p.x - 23, p.y + 17, 5, 4, "#20343c");
       rect(ctx, p.x - 10, p.y + 17, 5, 4, "#20343c");
     }
-    const chapterOnePeers =
-      state?.event?.chapter === 0
-        ? new Set(
-            moveDaySceneModel(state)
-              .teammates.map((p) => p.id)
-              .concat(state.me?.id),
-          )
-        : null;
-    (state?.players || [])
-      .filter((p) => !chapterOnePeers || chapterOnePeers.has(p.id))
-      .filter(
-        (p) =>
-          p.connected !== false && (p.setup !== false || p.id === state.me?.id),
-      )
-      .sort(
-        (a, b) => Number(a.id === state.me?.id) - Number(b.id === state.me?.id),
-      )
-      .forEach((p) => {
-        const pos = p.position || { x: 600, y: 430 };
-        rect(ctx, pos.x - 9, pos.y + 6, 18, 5, "#698768");
-        drawAvatar(ctx, pos.x, pos.y, p.character || 0, p.palette || 0, 1.5);
-        if (chapterOnePeers) return;
-        ctx.font = "bold 11px monospace";
-        const label = p.name || "Neighbor",
-          width = ctx.measureText(label).width + 10;
-        rect(
-          ctx,
-          pos.x - width / 2,
-          pos.y - 48,
-          width,
-          16,
-          p.id === state.me?.id ? "#142b35" : "#f7f2df",
-        );
-        ctx.fillStyle = p.id === state.me?.id ? "#f7f2df" : "#142b35";
-        ctx.fillText(label, pos.x, pos.y - 36);
-        if (
-          p.emote !== undefined &&
-          p.emote !== null &&
-          (!p.emote.until || p.emote.until > Date.now() + serverOffset)
-        ) {
-          ctx.font = "10px monospace";
-          ctx.fillStyle = "#142b35";
-          ctx.fillText(
-            (state.rules?.emotes || [
-              "Wave",
-              "Cheer",
-              "Thanks",
-              "Thinking",
-              "Ready",
-              "Robot dance",
-            ])[typeof p.emote === "object" ? p.emote.index : p.emote] || "",
-            pos.x,
-            pos.y - 56,
-          );
-        }
-      });
+    const crowd = overviewCrowd(state, { presentation: isPresentation });
+    crowd.players.forEach((p) => {
+      const pos = p.position;
+      if (p.id === crowd.selfId) {
+        ctx.strokeStyle = "#fff6ce";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(pos.x - 12, pos.y + 6, 24, 9);
+      }
+      rect(ctx, pos.x - 9, pos.y + 6, 18, 5, "#698768");
+      drawAvatar(ctx, pos.x, pos.y, p.character || 0, p.palette || 0, 1.5);
+    });
+    loc.forEach((l, i) => {
+      rect(ctx, l.x - 13, l.y - 65, 26, 24, i ? "#b9e5a5" : "#ed825e");
+      ctx.fillStyle = "#142b35";
+      ctx.font = "bold 13px monospace";
+      ctx.fillText(i ? "?" : "!", l.x, l.y - 48);
+      rect(ctx, l.x - 3, l.y - 41, 6, 5, i ? "#b9e5a5" : "#ed825e");
+    });
     if (target) {
       ctx.strokeStyle = "#fff6ce";
       ctx.lineWidth = 3;
@@ -3356,7 +3419,7 @@ async function hostCommand(type, extra = {}) {
     hostState = hostProjection.state;
     hostDashboard();
   } catch (e) {
-    toast(e.message);
+    if (generation === hostGeneration) toast(e.message);
   }
 }
 function hostDashboard() {
@@ -4173,6 +4236,7 @@ modal.addEventListener("keydown", (e) => {
   }
 });
 setInterval(() => {
+  refreshNeighborEmotes();
   if (panel === "targeting" && modal.open) {
     const task = state.chapter?.task;
     if (task?.kind !== "targeting") {
@@ -4224,7 +4288,7 @@ function startAudio() {
       musicGain.connect(audioContext.destination);
       effectsGain.connect(audioContext.destination);
     }
-    audioContext.resume();
+    audioContext.resume()?.catch(() => {});
     musicGain.gain.value = ((prefs.music || 0) / 100) * 0.045;
     effectsGain.gain.value = ((prefs.effects || 0) / 100) * 0.04;
     if (!musicInterval)

@@ -43,8 +43,13 @@ function environment() {
     autoTargetRound: null,
     targetRequestPending: false,
     panel: "",
-    open(title, html) { this.dialog = { title, html }; },
-    btn(label, action) { return { label, action }; },
+    modal: { open: false, trailRevision: 0 },
+    open(title, html) {
+      this.dialog = { title, html };
+    },
+    btn(label, action) {
+      return { label, action };
+    },
     location: { assign() {} },
     startAudio() {},
     soundEffect() {},
@@ -53,13 +58,23 @@ function environment() {
     crypto: { randomUUID: () => String(Math.random()) },
   };
   const nodes = new Map();
-  const node = () => ({ children: [], replaceChildren() { this.children = []; }, append(...items) { this.children.push(...items); } });
+  const node = () => ({
+    children: [],
+    replaceChildren() {
+      this.children = [];
+    },
+    append(...items) {
+      this.children.push(...items);
+    },
+  });
   c.$ = (id) => {
     if (!nodes.has(id)) nodes.set(id, node());
     return nodes.get(id);
   };
   c.document = { createElement: node, createTextNode: (value) => value };
-  c.open = (title, html) => { c.dialog = { title, html }; };
+  c.open = (title, html) => {
+    c.dialog = { title, html };
+  };
   c.persistReplacement = () => {
     c.persistCalls++;
   };
@@ -94,7 +109,10 @@ function environment() {
     c,
   );
   vm.runInContext(section("async function act(", "function applyPrefs()"), c);
-  vm.runInContext(section("function updateConnection()", "function setup()"), c);
+  vm.runInContext(
+    section("function updateConnection()", "function setup()"),
+    c,
+  );
   return c;
 }
 
@@ -252,7 +270,6 @@ test("every setup gets an independent settings sequence retained across reconnec
   );
 });
 
-
 test("player action 401 stops gameplay and stale stream callbacks cannot restore CONNECTED", async () => {
   const c = environment();
   await c.connect();
@@ -266,7 +283,10 @@ test("player action 401 stops gameplay and stale stream callbacks cannot restore
   c.autoTargetRound = "0:0:1";
   c.panel = "targeting";
   let calls = 0;
-  c.api = async () => { calls++; throw Object.assign(Error("Wrong role"), { status: 401 }); };
+  c.api = async () => {
+    calls++;
+    throw Object.assign(Error("Wrong role"), { status: 401 });
+  };
   assert.equal(await c.act("task", { choice: 1 }), null);
   assert.equal(c.connected, false);
   assert.equal(c.authorizationLost, true);
@@ -282,18 +302,27 @@ test("player action 401 stops gameplay and stale stream callbacks cannot restore
   assert.equal(c.dialog.title, "Player sign-in required");
   assert.match(c.dialog.html, /different browser or profile/);
   assert.ok(c.$("#connection").children.includes("SIGN-IN REQUIRED"));
-  assert.equal(c.$("#connection").children.some((n) => n.label === "Resume here"), false);
+  assert.equal(
+    c.$("#connection").children.some((n) => n.label === "Resume here"),
+    false,
+  );
   stream.onopen();
   stream.listeners.state({ data: JSON.stringify(snapshot(2)) });
   assert.equal(c.connected, false);
   assert.equal(await c.act("move", { x: 1, y: 1 }), null);
   assert.equal(await c.act("task", { choice: 1 }), null);
-  assert.equal(calls, 1, "No later movement or scoring request may leave the signed-out tab");
+  assert.equal(
+    calls,
+    1,
+    "No later movement or scoring request may leave the signed-out tab",
+  );
 });
 
 test("unauthorized lease probe does not open a stream using a different role", async () => {
   const c = environment();
-  c.api = async () => { throw Object.assign(Error("Wrong role"), { status: 401 }); };
+  c.api = async () => {
+    throw Object.assign(Error("Wrong role"), { status: 401 });
+  };
   await c.connect();
   assert.equal(c.sources.length, 0);
   assert.equal(c.authorizationLost, true);
@@ -305,7 +334,10 @@ test("late action 401 from a replaced connection does not sign out the current p
   await c.connect();
   c.stream.listeners.state({ data: JSON.stringify(snapshot(1)) });
   let rejectOld;
-  c.api = () => new Promise((_, reject) => { rejectOld = reject; });
+  c.api = () =>
+    new Promise((_, reject) => {
+      rejectOld = reject;
+    });
   const pending = c.act("task", { choice: 0 });
   c.api = async () => ({ otherClient: false });
   await c.connect();
@@ -316,32 +348,49 @@ test("late action 401 from a replaced connection does not sign out the current p
   assert.equal(c.authorizationLost, false);
 });
 
-
 test("cross-role join failure shows role guidance instead of invitation takeover", async () => {
   const c = environment();
   let shown;
   c.fetch = async () => ({
-    ok: false, status: 409,
-    json: async () => ({ error: "Use a separate browser or profile", code: "PROFILE_ROLE_CONFLICT" }),
+    ok: false,
+    status: 409,
+    json: async () => ({
+      error: "Use a separate browser or profile",
+      code: "PROFILE_ROLE_CONFLICT",
+    }),
   });
-  c.landing = (message) => { shown = message; };
+  c.landing = (message) => {
+    shown = message;
+  };
   vm.runInContext(section("async function api(", "async function act("), c);
-  vm.runInContext(section("async function join(", "async function loadPlayer("), c);
+  vm.runInContext(
+    section("async function join(", "async function loadPlayer("),
+    c,
+  );
   await c.join("demo-1");
   assert.equal(shown, "Use a separate browser or profile");
-  assert.equal(c.dialog, undefined, "Cross-role conflict must not offer invitation takeover");
+  assert.equal(
+    c.dialog,
+    undefined,
+    "Cross-role conflict must not offer invitation takeover",
+  );
 });
-
 
 test("expired player authorization stops explicit takeover before opening SSE", async () => {
   const c = environment();
   await c.connect();
   const previous = c.stream;
   previous.listeners.state({ data: JSON.stringify(snapshot(1)) });
-  c.api = async () => { throw Object.assign(Error("Expired session"), { status: 401 }); };
+  c.api = async () => {
+    throw Object.assign(Error("Expired session"), { status: 401 });
+  };
   await c.connect(true);
   assert.equal(previous.closed, true);
-  assert.equal(c.sources.length, 1, "No takeover stream may open with an expired cookie");
+  assert.equal(
+    c.sources.length,
+    1,
+    "No takeover stream may open with an expired cookie",
+  );
   assert.equal(c.authorizationLost, true);
   assert.equal(c.connected, false);
   assert.ok(c.$("#connection").children.includes("SIGN-IN REQUIRED"));
@@ -353,13 +402,20 @@ test("expired player authorization stops explicit takeover before opening SSE", 
 test("authorized explicit takeover probes authentication and permits another client lease", async () => {
   const c = environment();
   const paths = [];
-  c.api = async (path) => { paths.push(path); return { otherClient: true }; };
+  c.api = async (path) => {
+    paths.push(path);
+    return { otherClient: true };
+  };
   await c.connect(true);
   assert.equal(paths.length, 1);
   assert.equal(paths[0], "/api/lease?client=tab");
   assert.equal(c.sources.length, 1);
   assert.equal(c.stream.url, "/api/events?client=tab&takeover=1");
-  assert.equal(c.connected, false, "Await the accepted current-stream snapshot");
+  assert.equal(
+    c.connected,
+    false,
+    "Await the accepted current-stream snapshot",
+  );
   c.stream.listeners.state({ data: JSON.stringify(snapshot(1)) });
   assert.equal(c.connected, true);
   assert.equal(c.authorizationLost, false);

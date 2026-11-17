@@ -1,3 +1,4 @@
+import { overviewCrowd } from "../public/crowd-view.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import vm from "node:vm";
@@ -152,6 +153,7 @@ function fixture(chapter = 0, configure = () => {}) {
         : ids.get(selector) || null,
     projection: createProjection(),
     reduceProjection,
+    overviewCrowd,
     deliveryModel,
     deliveryReceipt,
     actionReceipt,
@@ -184,6 +186,7 @@ function fixture(chapter = 0, configure = () => {}) {
     crypto: { randomUUID: () => `request-${++requestId}` },
     startAudio() {},
     soundEffect() {},
+    refreshNeighborEmotes() {},
     updateConnection() {},
     updateControlHints() {},
     normalizedSettings: (settings) => settings,
