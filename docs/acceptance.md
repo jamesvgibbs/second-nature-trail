@@ -2,13 +2,15 @@
 
 Status: not release-approved. Updated 2026-11-17. This checklist records evidence; the presence of code is not a passing test. Automated tests cannot replace employee rehearsals, content approval, or hardware/browser measurements.
 
+Latest developer evidence (2026-11-17): **275/275 tests passed**, followed by the [current whole-game simulation](#current-whole-game-simulation-november-17-2026), [feature-to-evidence coverage](simulation-coverage.md), and [native review ledger](simulation-native-review.md). Earlier test counts and source labels below are retained as historical evidence; they are not the latest package result.
+
 ## Build and real-testing sequence
 
 Jim clarified on 2026-11-10: “We can do real testing after you are finished.” Complete implementation and developer checks first, then run the employee, device/network, and event rehearsal checks below. Those later checks are not prerequisites for finishing the build. Record them honestly as pending; do not claim release approval or successful real testing from the local automated evidence.
 
 Hosting details are needed when publishing the game. Review of the drafted benefit copy can happen with the finished game before the employee event. Neither is an unresolved game mechanic. A failed browser-control connection is a developer-tool limitation, not evidence that the game is broken.
 
-## Current verified build
+## Earlier Move Day review baseline
 
 **Move Day is a representative chapter for Jim’s art-direction review.** The 2026-11-17 direction replaces the sixteen-building directory as chapter one’s primary player view with a depot, loaded cart, clear paved/damaged fork and one roadside home. The overview remains available for navigation. Other chapters retain their existing views; this scene has not been approved for replication.
 
@@ -22,17 +24,17 @@ Seven current static assets match the existing local 4175 game server byte for b
 
 Earlier package `1154c82` passed production startup and all seven asset byte checks; its backend matched `9939a98`, which passed container restart and fresh-volume backup restoration. Those historical container checks do not include this draft-movement change: [packaging evidence](../test-results/container-1154c82-static.json), [durability evidence](../test-results/container-9939a98.json).
 
-The full 100-player performance and award evidence remains tied to **`d042570`**, before the later sign-in, finale display, paused display, and shutdown fixes. The controls ledger likewise retains each reviewed source/browser boundary. A passing current test suite does not silently recertify those earlier rendered or load measurements.
+At this earlier baseline, the full 100-player performance and award evidence was tied to **`d042570`**, before the later sign-in, finale display, paused display, and shutdown fixes. The controls ledger likewise retains each reviewed source/browser boundary. A passing current test suite does not silently recertify those earlier rendered or load measurements.
 
 ## Evidence register
 
 | Scope requirement | Evidence needed | Current status |
 | --- | --- | --- |
 | Ready within three minutes | Ten representative employees, at least nine successful unassisted; start/end times | Pending human test |
-| 100-player capacity | Full 60-minute active run, 100 joins over 60 seconds, two operators, presentation, trades, submissions, reconnects | Frozen d042570 full localhost scenario and latency check passed; representative network still pending |
+| 100-player capacity | Full 60-minute active run, 100 joins over 60 seconds, two operators, presentation, trades, submissions, reconnects | Frozen f7ea6a8 full localhost scenario and event-wide latency check passed; representative network still pending |
 | Meeting operation | Full 95-minute dress rehearsal, attendee/input-method record, host commentary, awards | Pending human rehearsal |
 | Rendering | Lowest-spec agreed laptop and browser; >=30 FPS for 95% of measured play | Hardware baseline and measurement pending |
-| Action latency | Representative network profile; p95 confirmed inventory/scoring <=500 ms; sampling method | Frozen d042570 scoring p95 231.08 ms independently recomputed; representative network pending |
+| Action latency | Representative network profile; p95 confirmed inventory/scoring <=500 ms; sampling method | Frozen f7ea6a8 event-wide scoring p95 251.86 ms independently recomputed; chapter-6 hotspot retained; representative network pending |
 | Clock | Phase transitions within one second of server under agreed network | Frozen d042570: 103×18 transitions verified, max 392 ms; representative network pending |
 | Browser support | Current and previous Chrome, Edge, Firefox, Safari, exact versions and OS | Pending matrix |
 | Recovery | Refresh, duplicate requests, two tabs/takeover, host loss, 30-second player outage, server restart | Disk/crash, transport, and shutdown regressions pass; `9939a98` container restart/backup restore passed. Bounded native sign-in and pause/reload checks are recorded. Human/network rehearsal pending. |
