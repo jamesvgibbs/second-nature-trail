@@ -1,5 +1,7 @@
 import { createProjection, reduceProjection } from "/projection.mjs";
-import { districtScenery, SQUARE_TREES } from "/scenery.mjs";
+import { districtScenery, SQUARE_TREES, ROAD_BANDS } from "/scenery.mjs";
+import { deliveryModel, actionReceipt } from "/trail-feedback.mjs";
+import { FIELD_NOTES, fitWorld, DELIVERY_STAGES, stageLabel, SITE_LABELS } from "/trail-visuals.mjs";
 import { localFrameMeasurement } from "/performance.mjs";
 const measureFrame = localFrameMeasurement();
 import {
@@ -88,6 +90,7 @@ let state = null,
   lastMove = 0,
   activeCanvas = null,
   activeCtx = null,
+  canvasObserver = null,
   displayPosition = null,
   panel = "",
   chosen = 0,
@@ -171,6 +174,7 @@ function toast(text) {
   toast.timer = setTimeout(() => ($("#toast").style.display = "none"), 4500);
 }
 function open(title, html = "") {
+  modal.trailRevision = (modal.trailRevision || 0) + 1;
   target = null;
   $("#modal-title").textContent = title;
   body.innerHTML = html;
@@ -178,6 +182,7 @@ function open(title, html = "") {
   else $("#close-modal").focus({ preventScroll: true });
 }
 function close() {
+  modal.trailRevision = (modal.trailRevision || 0) + 1;
   modal.close();
   panel = "";
   selection = null;
@@ -207,7 +212,7 @@ async function api(path, data) {
     });
   return v;
 }
-async function act(type, fields = {}) {
+async function act(type, fields = {}, observe = null) {
   const requestGeneration = streamGeneration;
   const expectedChapter = fields.expectedChapter ?? state?.event?.chapter;
   const requestPhase = state?.event?.phase;
@@ -232,7 +237,11 @@ async function act(type, fields = {}) {
     return null;
   }
   try {
-    const v = await api("/api/action", {
+    const before = observe ? structuredClone({
+      projectionEpoch: state.projectionEpoch, projectionVersion: state.projectionVersion,
+      event: state.event, me: state.me, chapter: state.chapter, rules: state.rules,
+    }) : null;
+    const action = {
       type,
       requestId: crypto.randomUUID(),
       expectedChapter,
@@ -245,7 +254,8 @@ async function act(type, fields = {}) {
       ...fields,
       ...(type === "move" ? { movementSequence: ++movementSequence } : {}),
       ...(type === "setup" ? { settingsSequence: ++settingsSequence } : {}),
-    });
+    };
+    const v = await api("/api/action", action);
     if (requestGeneration !== streamGeneration) return null;
     const response = v.state || v.patch || v;
     if (response.projectionEpoch !== projection.epoch) return null;
@@ -259,6 +269,7 @@ async function act(type, fields = {}) {
     )
       return null;
     if (type !== "move" && type !== "tutorial") soundEffect();
+    if (observe) observe({ before, after: response, action, result: v.result });
     return v.result;
   } catch (e) {
     if (requestGeneration === streamGeneration) {
@@ -634,10 +645,17 @@ function accept(s, kind = "full", allowEpoch = false) {
   const coreChanged =
     next.epoch !== projection.epoch ||
     next.coreVersion !== projection.coreVersion;
-  if (next.epoch !== projection.epoch) target = null;
+  if (next.epoch !== projection.epoch) {
+    target = null;
+    if (previous && modal.open && ["receipt", "activity", "challenge", "quiz", "secret", "targeting", "routing"].includes(panel)) {
+      close();
+      toast("The connection has refreshed. Open the current activity to continue.");
+    }
+  }
   projection = next;
   state = next.state;
   if (kind === "move") return true;
+  if ($("#supply-hud")) renderSupplyHUD();
   if (state.me?.settings) {
     prefs = { ...prefs, ...normalizedSettings(state.me.settings) };
     keys = { ...defaultKeys, ...prefs.keys };
@@ -658,6 +676,7 @@ function accept(s, kind = "full", allowEpoch = false) {
         "secret",
         "targeting",
         "routing",
+        "receipt",
       ].includes(panel)
     ) {
       close();
@@ -705,9 +724,16 @@ function accept(s, kind = "full", allowEpoch = false) {
   return true;
 }
 function game() {
-  app.innerHTML = `<main class="game ${isPresentation ? "presentation" : ""}">${topbar(`<div class="row"><span id="connection" class="pill"></span><div style="text-align:right"><div class="phase-label" id="phase-label"></div><div class="timer" id="timer">--:--</div></div></div>`)}<div class="game-main"><section class="world-wrap"><canvas class="world" id="world" width="1200" height="800" tabindex="0" role="application" aria-label="Shared neighborhood. Move with arrow keys or WASD, or click a destination. Press E to interact. Tab reaches all menus."></canvas><div class="world-legend"><div class="map-label" id="map-label">BRAGGING SQUARE</div><div class="world-hint" id="world-hint">Click to walk · WASD / arrows to move · E to interact</div></div></section><aside class="mission" id="mission"></aside></div><footer class="game-footer"><div class="row" id="toolbar"></div><span class="small">One neighborhood. Everyone belongs.</span><span class="small" id="player-name"></span></footer></main>`;
+  app.innerHTML = `<main class="game ${isPresentation ? "presentation" : ""}">${topbar(`<div class="row"><span id="connection" class="pill"></span><div style="text-align:right"><div class="phase-label" id="phase-label"></div><div class="timer" id="timer">--:--</div></div></div>`)}<div class="game-main"><section class="world-wrap"><div id="supply-hud" class="supply-hud"></div><div class="map-viewport"><canvas class="world" id="world" width="1200" height="800" tabindex="0" role="application" aria-label="Shared neighborhood. Move with arrow keys or WASD, or click a destination. Press E to interact. Tab reaches all menus."></canvas></div><div class="world-legend"><div class="map-label" id="map-label">BRAGGING SQUARE</div><div class="world-hint" id="world-hint">Click to walk · WASD / arrows to move · E to interact</div></div></section><aside class="mission" id="mission"></aside></div><footer class="game-footer"><div class="row" id="toolbar"></div><span class="small">One neighborhood. Everyone belongs.</span><span class="small" id="player-name"></span></footer></main>`;
   activeCanvas = $("#world");
   activeCtx = activeCanvas.getContext("2d");
+  if (typeof canvasObserver !== "undefined") canvasObserver?.disconnect();
+  if (typeof ResizeObserver !== "undefined" && activeCanvas.parentElement) {
+    canvasObserver = new ResizeObserver(sizeWorldCanvas);
+    canvasObserver.observe(activeCanvas.parentElement);
+  }
+  sizeWorldCanvas();
+  renderSupplyHUD();
   if (!isPresentation) {
     const bar = $("#toolbar");
     bar.append(
@@ -745,6 +771,28 @@ function game() {
       focused.isContentEditable);
   if (!isPresentation && !modal.open && !editing)
     activeCanvas.focus({ preventScroll: true });
+}
+function sizeWorldCanvas() {
+  const viewport = activeCanvas?.parentElement;
+  if (!viewport) return;
+  const size = fitWorld(viewport.clientWidth, viewport.clientHeight);
+  activeCanvas.style.width = `${size.width}px`;
+  activeCanvas.style.height = `${size.height}px`;
+}
+function renderSupplyHUD() {
+  const hud = $("#supply-hud");
+  if (!hud) return;
+  if (isPresentation || !state?.me) {
+    hud.innerHTML = '<span class="hud-caption">NEIGHBORHOOD FIELD REPORT</span><span class="hud-safe">Friendly robot visuals</span>';
+    return;
+  }
+  const inventory = state.me.inventory || {};
+  const used = Object.values(inventory).reduce((sum, n) => sum + n, 0);
+  hud.innerHTML = `<div class="supply-total"><span class="hud-caption">YOUR SUPPLIES</span><strong>${used}<small> / ${state.rules?.storageLimit || 12} stored</small></strong></div><div class="supply-counts">${['parts', 'filters', 'food', 'cable'].map((item) => `<span class="supply-count"><i class="supply-icon ${item}" aria-hidden="true"></i><strong>${inventory[item] || 0}</strong><span>${item}</span></span>`).join('')}</div>`;
+}
+function deliveryTrailHTML(task, progress) {
+  const stage = DELIVERY_STAGES.findIndex(([key]) => key === task?.stage);
+  return `<div class="delivery-trail" aria-label="Delivery stages">${DELIVERY_STAGES.map(([key, label], i) => `<span class="${progress?.complete ? 'done' : i === stage ? 'current' : i < stage ? 'done' : ''}"${i === stage && !progress?.complete ? ' aria-current="step"' : ''}><b>${i + 1}</b>${label}</span>`).join('')}</div>`;
 }
 function firstUseControls() {
   if (isPresentation || !state.me || state.me.tutorial?.length >= 5) return;
@@ -806,7 +854,7 @@ function renderMission() {
       '<p>For the fixers, the thinkers, and the people who stopped to help.</p>' +
       awardsHTML();
   } else {
-    html += `<span class="chapter-count">CHAPTER ${Number(e.chapter) + 1} / 08 ${e.ranked?.[e.chapter] === false ? "· UNRANKED" : ""}</span><h2>${esc(ch?.title || districts[e.chapter]?.[0] || "The adventure")}</h2><p>${esc(ch?.objective || "Help your neighbors restore the district.")}</p>`;
+    html += `<span class="chapter-count">CHAPTER ${Number(e.chapter) + 1} / 08 ${e.ranked?.[e.chapter] === false ? "· UNRANKED" : ""}</span><h2>${esc(ch?.title || districts[e.chapter]?.[0] || "The adventure")}</h2><p>${esc(ch?.objective || FIELD_NOTES[e.chapter] || "Help your neighbors restore the district.")}</p>`;
     if (displayPhase === "brag" || displayPhase === "brag_break") {
       html +=
         '<div class="phase-banner"><strong>Bragging rights.</strong><p class="small" style="margin:8px 0 0">Supplies and scoring are frozen. Tell us how you did it.</p></div>' +
@@ -815,13 +863,13 @@ function renderMission() {
         awardsHTML() +
         nextChapterHTML();
     } else if (!isPresentation) {
-      html += `<div class="stat-row"><span>Your chapter score</span><strong>${progress?.score || 0}</strong></div><div class="stat-row"><span>Objective progress</span><strong>${progress?.step || 0} / ${ch?.taskCount || ch?.task?.totalSteps || 3}</strong></div><div class="progress-track"><div class="progress-fill" style="width:${progress?.complete ? 100 : Math.min(100, (100 * (progress?.step || 0)) / (ch?.taskCount || ch?.task?.totalSteps || 3))}%"></div></div><div id="chapter-actions"></div>`;
+      html += `<div class="stat-row"><span>Your chapter score</span><strong>${progress?.score || 0}</strong></div><div class="stat-row"><span>Objective progress</span><strong>${progress?.step || 0} / ${ch?.taskCount || ch?.task?.totalSteps || 3}</strong></div><div class="progress-track"><div class="progress-fill" style="width:${progress?.complete ? 100 : Math.min(100, (100 * (progress?.step || 0)) / (ch?.taskCount || ch?.task?.totalSteps || 3))}%"></div></div>${e.chapter === 0 ? deliveryTrailHTML(ch?.task, progress) : ""}<div id="chapter-actions"></div><div class="secondary-heading">FIELD NOTES & EXPLORATION</div><div id="secondary-actions" class="secondary-actions"></div>`;
     }
     html += "<hr><h3>Neighborhood restoration</h3>" + contributionsHTML();
   }
   $("#mission").innerHTML = html;
   mission.dataset.phase = `${e.phase}:${displayPhase}:${e.chapter}`;
-  $("#map-label").textContent = (ch?.title || "Bragging Square").toUpperCase();
+  $("#map-label").textContent = e.finale?.contributors?.includes(me.id) ? "YOUR REPAIR · AMBER MARKER" : (ch?.task?.target?.name || ch?.title || "Bragging Square").toUpperCase();
   if ($("#tutorial-actions")) renderTutorial();
   if ($("#chapter-actions")) {
     const n = $("#chapter-actions");
@@ -830,34 +878,44 @@ function renderMission() {
         progress?.complete
           ? "✓ Main objective complete"
           : ch?.task?.target
-            ? "Go to " + ch.task.target.name + " →"
+            ? stageLabel(ch.task) + " →"
             : "Go to main objective →",
         () => travel(0, "activity"),
-        "primary",
+        "primary task-primary",
       ),
-      btn("Learning encounters", learning),
+    );
+    if (progress?.complete) n.querySelectorAll("button").forEach((b) => b.disabled = true);
+    if (!progress?.complete && ch?.task?.target) {
+      const destination = document.createElement("p");
+      destination.className = "task-destination";
+      destination.textContent = "Destination: " + ch.task.target.name;
+      n.append(destination);
+    }
+    const secondary = $("#secondary-actions") || n;
+    secondary.append(
+      btn("Learning encounters", learning, progress?.complete ? "primary" : "quiet"),
       btn(
         progress?.challenge
           ? "✓ Challenge complete"
           : "Try the harder challenge",
         () => travel(1, "challenge"),
+        "quiet",
       ),
-      btn(progress?.secret ? "✓ Clue discovered" : "Look for a secret", () =>
-        travel(1, "secret"),
-      ),
+      btn(progress?.secret ? "✓ Clue discovered" : "Look for a secret", () => travel(1, "secret"), "quiet"),
       btn(
         me.mystery ? "✓ Mystery solved" : "The neighborhood mystery",
         mystery,
+        "quiet",
       ),
     );
     if (ch?.rewardShop)
-      n.append(
+      secondary.append(
         btn("Rewards: " + ch.rewardShop.balance + " tokens", () =>
           travel(1, "rewards"),
         ),
       );
     if (e.paused) {
-      n.querySelectorAll("button").forEach((b) => (b.disabled = true));
+      [n, secondary].forEach((group) => group.querySelectorAll("button").forEach((b) => (b.disabled = true)));
       n.prepend(
         Object.assign(document.createElement("p"), {
           className: "notice",
@@ -914,18 +972,23 @@ function rewardsShop() {
     "Turn rewards into a neighborhood repair",
     `<p class="notice">${shop.balance} tokens available · ${shop.earned} earned from completed jobs</p><p class="small">Finish all six jobs to use reward tokens. Tokens cannot be traded. Choose a different project for each redemption. These repairs do not add award points.</p><div class="choice-list" id="reward-projects"></div>`,
   );
+  let pending = false;
   for (const [i, project] of shop.options.entries()) {
     const used = shop.uses.includes(project.id);
     const b = btn(
       `${used ? "✓ " : ""}${project.label} · ${project.cost} tokens — ${project.outcome}`,
       async () => {
-        const r = await act("rewardRedeem", {
-          choice: i,
-          expectedChapter: chapterIndex,
-        });
+        if (pending) return;
+        pending = true; b.disabled = true;
+        const revision = modal.trailRevision;
+        let accepted = null;
+        const r = await act("rewardRedeem", { choice: i, expectedChapter: chapterIndex }, (record) => { accepted = record; });
+        pending = false;
+        if (modal.trailRevision !== revision || !modal.open) return;
+        b.disabled = false;
         if (r !== null) {
-          rewardsShop();
-          toast(r.message || project.outcome);
+          if (presentAcceptedAction(accepted, "rewards")) return;
+          rewardsShop(); toast(r.message || project.outcome);
         }
       },
     );
@@ -940,7 +1003,7 @@ function contributionsHTML() {
   const c = state.event?.contributions || [];
   const restoration = restorationProgress(state.event);
   return (
-    `<p class="small">${restoration.completed} completed objectives · AI control ${100 - restoration.percent}%</p><div class="progress-track" aria-label="Neighborhood restored ${restoration.percent}%"><div class="progress-fill" style="width:${restoration.percent}%"></div></div><p class="small muted">Completed objectives remove AI beacons and clear debris along the roads. Road centers remain open to everyone.</p>` +
+    `<p class="small">${restoration.completed} completed objectives · AI control ${100 - restoration.percent}%</p><div class="progress-track" aria-label="Neighborhood restored ${restoration.percent}%"><div class="progress-fill" style="width:${restoration.percent}%"></div></div><p class="small muted">Completed objectives restore the district’s homes. Mint foundations show shared progress; warm windows mark a fully restored district.</p>` +
     districts
       .map(
         (d, i) =>
@@ -1142,66 +1205,120 @@ function showActivity(kind) {
       : task.target?.name || c.locations[0].name,
     `${task.kind === "rewards" ? `<div class="notice">${c.rewardShop?.balance || 0} reward tokens available · ${c.rewardShop?.earned || 0} earned. Choose a neighborhood repair to finish your main objective. Tokens are nontradable; repairs add no award points.</div>` : ""}${task.kind === "budget" ? `<div class="notice">Fictional cycle ${(prog?.step || 0) + 1} of 3<br>Income ${task.income} + retained ${task.retained} = ${task.budget}<br>Payment due: ${task.due}. This budget cannot be traded.<br><span id="budget-clock"></span></div>` : ""}${
       chapterIndex === 0 && task.kind === "delivery"
-        ? `<div class="notice">Cart: ${Object.entries(state.me.inventory)
-            .map(([k, v]) => `${v} ${k}`)
-            .join(" · ")}<br>Personal reserve: ${Object.entries(
-            prog?.reserve || {},
-          )
-            .map(([k, v]) => `${v} ${k}`)
-            .join(
-              " · ",
-            )}<br>Delivery ${(prog?.step || 0) + 1} of 3 · ${esc(task.stage || "load")}</div>`
+        ? deliveryPanelHTML(deliveryModel(state))
         : ""
-    }<span class="eyebrow">${esc(task.kind || "NEIGHBORHOOD TASK")} · ${kind === "challenge" ? "OPTIONAL CHALLENGE" : "STEP " + ((prog?.step || 0) + 1) + " OF " + (c.taskCount || task.totalSteps || 3)}</span>${task.evidence ? `<section class="evidence-card" aria-label="Evidence from your inspection"><span class="eyebrow">YOUR INSPECTION</span><p>${esc(task.evidence)}</p></section>` : ""}<h3 id="activity-prompt" tabindex="-1" style="margin-top:18px">${esc(task.prompt)}</h3><p class="small muted">Choose an action, then confirm. Keyboard and pointer use the same rules.</p><div class="choice-list" id="task-choices"></div><div class="row" id="task-confirm"></div>`,
+    }<span class="eyebrow">${chapterIndex === 0 && task.kind === "delivery" ? esc(stageLabel(task)) : esc(task.kind || "NEIGHBORHOOD TASK") + " · " + (kind === "challenge" ? "OPTIONAL CHALLENGE" : "STEP " + ((prog?.step || 0) + 1) + " OF " + (c.taskCount || task.totalSteps || 3))}</span>${task.evidence ? `<section class="evidence-card" aria-label="Evidence from your inspection"><span class="eyebrow">YOUR INSPECTION</span><p>${esc(task.evidence)}</p></section>` : ""}<h3 id="activity-prompt" tabindex="-1" style="margin-top:18px">${esc(chapterIndex === 0 && task.kind === "delivery" ? deliveryPrompt(task) : task.prompt)}</h3>${chapterIndex === 0 && task.kind === "delivery" ? "" : '<p class="small muted">Choose an action, then confirm.</p>'}<div class="choice-list" id="task-choices"></div><div class="row" id="task-confirm"></div>`,
   );
   selection = null;
-  task.options.forEach((o, i) =>
-    $("#task-choices").append(
-      btn(
-        `${i + 1}. ${typeof o === "string" ? o : o.label || o.text}`,
-        () => choose(i),
-        "choice",
-      ),
-    ),
-  );
-  $("#task-confirm").append(
-    btn(
-      "Confirm action",
-      async () => {
-        if (selection === null) {
-          toast("Choose an action first.");
-          return;
-        }
-        const r = await act(kind === "challenge" ? "challenge" : "task", {
-          choice: selection,
-          expectedChapter: chapterIndex,
-          expectedStep: task.step,
-          expectedStage: task.stage || null,
-        });
-        if (r !== null) {
-          if (r.message) toast(r.message);
-          if (
-            state.me.progress?.[state.event.chapter]?.complete ||
-            kind === "challenge"
-          )
-            close();
-          else if (
-            kind === "activity" &&
-            state.chapter.task?.target &&
-            Math.hypot(
-              state.me.position.x - state.chapter.task.target.x,
-              state.me.position.y - state.chapter.task.target.y,
-            ) >= 60
-          ) {
-            close();
-            travel(0, "activity");
-          } else showActivity(kind);
-        }
-      },
-      "primary",
-    ),
-  );
+  const delivery = chapterIndex === 0 && kind === "activity" ? deliveryModel(state) : null;
+  task.options.forEach((o, i) => {
+    const label = delivery?.stage === "load" ? delivery.plans[i]?.label : delivery?.stage === "route" ? delivery.routes[i]?.label : null;
+    const choice = btn(`${i + 1}. ${label || (typeof o === "string" ? o : o.label || o.text)}`, () => choose(i), "choice");
+    choice.trailLabel = choice.textContent;
+    const fact = deliveryChoiceDetail(delivery, i);
+    if (fact) {
+      const detail = document.createElement("span");
+      detail.className = "choice-detail";
+      detail.textContent = fact;
+      choice.append(detail);
+    }
+    $("#task-choices").append(choice);
+  });
+  let pending = false;
+  const confirm = btn("Confirm action", async () => {
+    if (pending) return;
+    if (selection === null) { toast("Choose an action first."); return; }
+    pending = true;
+    confirm.disabled = true;
+    confirm.trailPending = true;
+    confirm.textContent = "Recording…";
+    const revision = modal.trailRevision;
+    let accepted = null;
+    const r = await act(kind === "challenge" ? "challenge" : "task", {
+      choice: selection, expectedChapter: chapterIndex,
+      expectedStep: task.step, expectedStage: task.stage || null,
+    }, (record) => { accepted = record; });
+    pending = false;
+    confirm.trailPending = false;
+    if (modal.trailRevision !== revision || !modal.open) return;
+    confirm.disabled = !!state.event.paused || (task.kind === "budget" && Date.now() + serverOffset < state.chapter.task?.opensAt);
+    confirm.textContent = "Confirm action";
+    if (r === null) return;
+    if (presentAcceptedAction(accepted, kind)) return;
+    if (r.message) toast(r.message);
+    if (state.me.progress?.[state.event.chapter]?.complete || kind === "challenge") close();
+    else if (state.chapter.task?.target && Math.hypot(
+      state.me.position.x - state.chapter.task.target.x,
+      state.me.position.y - state.chapter.task.target.y,
+    ) >= 60) { close(); travel(0, "activity"); }
+    else showActivity(kind);
+  }, "primary");
+  confirm.disabled = !!state.event.paused || (task.kind === "budget" && Date.now() + serverOffset < task.opensAt);
+  $("#task-confirm").append(confirm);
   $("#activity-prompt")?.focus({ preventScroll: true });
+}
+function deliveryPanelHTML(model) {
+  if (!model) return "";
+  return `<section class="cargo-panel"><div class="cargo-heading"><span class="eyebrow">TRIP ${model.deliveryNumber} / ${model.totalDeliveries}</span><div class="cart-slots" aria-label="${model.slots} of ${model.maxSlots} cart slots packed">${Array.from({ length: model.maxSlots }, (_, i) => `<span class="${i < model.slots ? 'filled' : ''}" aria-hidden="true"></span>`).join('')}<strong>${model.slots}/${model.maxSlots} slots</strong></div></div><div class="cargo-manifest"><span>${model.loaded ? Object.entries(model.loaded).map(([kind, qty]) => `${qty} ${esc(kind)}`).join(' + ') : 'Cart empty'} · separate from ${model.storageLimit}-item storage</span><details><summary>Personal reserve</summary><span>${Object.entries(model.reserve).map(([kind, qty]) => `${qty} ${esc(kind)}`).join(' · ')}</span></details></div></section>`;
+}
+function deliveryPrompt(task) {
+  return ({ load: "What will you take?", route: "Which crossing will you use?", travel: "Check the crossing.", deliver: "Unload at the highway." })[task?.stage] || task?.prompt || "Choose an action.";
+}
+function deliveryChoiceDetail(model, index) {
+  if (!model) return "";
+  if (model.stage === "load") {
+    const plan = model.plans[index];
+    return plan ? `${Object.entries(plan.cargo).map(([kind, qty]) => `${qty} ${kind}`).join(' + ')} · ${plan.slots}/${model.maxSlots} slots · ${plan.safe.points} points via paved route${plan.available ? '' : ' · Supplies unavailable'}` : "";
+  }
+  if (model.stage === "route") {
+    const route = model.routes[index];
+    return route ? `${route.value} useful value · ${route.points} delivery points · ${route.damageValue ? `loses ${route.damageValue} cargo value` : 'cargo protected'}` : "";
+  }
+  return "";
+}
+function presentAcceptedAction(accepted, kind = "activity") {
+  if (!accepted) return false;
+  const receipt = actionReceipt(accepted.before, accepted.after, accepted.action, accepted.result);
+  if (!receipt || receipt.stage === "inspect") return false;
+  if (!receiptMatchesState(accepted.after)) {
+    close();
+    toast("Your action is recorded. The field panel shows your latest supplies and score.");
+    return true;
+  }
+  return showActionReceipt(receipt, {
+    epoch: accepted.after.projectionEpoch, chapter: accepted.after.event.chapter,
+    phase: accepted.after.event.phase, kind,
+  });
+}
+function receiptMatchesState(after) {
+  const chapter = after?.event?.chapter;
+  return after?.projectionEpoch === state?.projectionEpoch && after?.me?.id === state?.me?.id &&
+    JSON.stringify([after?.me?.progress?.[chapter], after?.me?.inventory]) ===
+      JSON.stringify([state?.me?.progress?.[chapter], state?.me?.inventory]);
+}
+function receiptCurrent(context) {
+  return state?.projectionEpoch === context.epoch && state?.event?.chapter === context.chapter &&
+    state?.event?.phase === context.phase && context.phase === "chapter";
+}
+function showActionReceipt(receipt, context) {
+  if (!receiptCurrent(context)) return false;
+  panel = "receipt";
+  const allTotals = ["load", "route", "travel", "inspect"].includes(receipt.stage) ? [] : receipt.deltas;
+  const totals = allTotals.filter((delta) => !/^(Stored|Reserve) /.test(delta.label));
+  const supplies = allTotals.filter((delta) => /^(Stored|Reserve) /.test(delta.label));
+  const label = (text) => text === "Score now" ? "Chapter score" : text.replace(/ now$/, "");
+  open("Field report", `<section class="action-receipt"><span class="eyebrow">${receipt.stage === 'challenge' ? 'OPTIONAL CHALLENGE' : receipt.stage === 'redeem' ? 'NEIGHBORHOOD PROJECT' : receipt.completed ? 'YOUR OBJECTIVE IS COMPLETE' : 'EXPEDITION UPDATE'}</span><h3>${esc(receipt.title)}</h3>${allTotals.length ? '<p class="small receipt-caption">After this action</p>' : ''}<div class="receipt-stats">${totals.map((delta) => `<div><strong>${esc(delta.value)}</strong><span>${esc(label(delta.label))}</span></div>`).join('')}</div>${supplies.length ? `<div class="receipt-supplies">${supplies.map((delta) => `<span><strong>${esc(delta.value)}</strong> ${esc(label(delta.label))}</span>`).join('')}</div>` : ''}${receipt.details.map((detail) => `<p>${esc(detail)}</p>`).join('')}<div id="receipt-next"></div></section>`);
+  const next = btn(context.kind === "rewards" ? "Back to rewards" : receipt.completed ? "Back to the neighborhood" : "Continue →", () => {
+    if (!receiptCurrent(context)) { close(); return; }
+    close();
+    if (context.kind === "rewards") rewardsShop();
+    else if (context.kind === "challenge") {
+      if (!state.me.progress?.[context.chapter]?.challenge) travel(1, "challenge");
+    } else if (!state.me.progress?.[context.chapter]?.complete) travel(0, "activity");
+  }, "primary");
+  $("#receipt-next").append(next);
+  next.focus({ preventScroll: true });
+  return true;
 }
 function choose(i) {
   if (!$("#task-choices")?.children[i]) return;
@@ -1222,7 +1339,7 @@ function choose(i) {
     status.setAttribute("aria-live", "polite");
     $("#task-choices").after(status);
   }
-  status.textContent = `Selected: ${$("#task-choices").children[i].textContent}. Confirm when ready.`;
+  status.textContent = `Selected: ${$("#task-choices").children[i].trailLabel || $("#task-choices").children[i].textContent}. Confirm when ready.`;
 }
 function learning() {
   panel = "learning";
@@ -1827,106 +1944,141 @@ function drawAvatar(ctx, x, y, character = 0, color = 0, scale = 1) {
   ctx.restore();
 }
 function tree(ctx, x, y, type = 0) {
-  rect(ctx, x - 18, y + 23, 36, 6, "#6b895f");
-  rect(ctx, x - 4, y + 9, 8, 18, "#84684c");
-  rect(ctx, x - 14, y - 7, 28, 23, type ? "#537c58" : "#416e52");
-  rect(ctx, x - 10, y - 15, 20, 12, "#5b8b59");
-  rect(ctx, x - 17, y, 7, 13, "#5b8b59");
-  rect(ctx, x - 8, y - 12, 8, 6, "#7b9c65");
+  rect(ctx, x - 18, y + 23, 36, 6, "#263f3b");
+  rect(ctx, x - 4, y + 9, 8, 18, "#796e53");
+  rect(ctx, x - 14, y - 7, 28, 23, type ? "#4e755b" : "#3d6556");
+  rect(ctx, x - 10, y - 15, 20, 12, "#668468");
+  rect(ctx, x - 17, y, 7, 13, "#668468");
+  rect(ctx, x - 8, y - 12, 8, 6, "#94a774");
 }
-function drawBeacon(ctx, x, y, restored) {
-  const activeLights = 4 - Math.floor(restored * 4);
-  // Four orange control lamps turn mint as residents reclaim this district.
-  rect(ctx, x - 22, y + 22, 44, 8, "#6b895f");
-  rect(ctx, x - 18, y - 3, 36, 31, "#4c6967");
-  rect(ctx, x - 15, y, 30, 25, "#203f49");
-  rect(ctx, x - 2, y - 10, 4, 10, "#4c6967");
-  rect(ctx, x - 5, y - 13, 10, 5, activeLights ? "#ed996c" : "#b9e5a5");
-  for (let n = 0; n < 4; n++) {
-    rect(ctx, x - 11 + (n % 2) * 13, y + 4 + Math.floor(n / 2) * 10, 9, 7,
-      n < activeLights ? "#ed996c" : "#a9d9bd");
+function building(ctx, x, y, w, h, color, index, lit, recovery = 0) {
+  const wall = lit ? color : ['#71827c', '#657d7c', '#7b8580', '#6b7b83'][index % 4];
+  const roof = '#263f48', edge = lit ? '#c9d5b5' : '#9ba994';
+  const light = lit ? '#f2d28a' : '#385456';
+  rect(ctx, x + 7, y + 8, w, h, '#233d3d');
+  rect(ctx, x, y, w, h, wall);
+  rect(ctx, x, y + h - 5, w, 5, '#3a5555');
+  if (recovery > 0) rect(ctx, x, y + h - 4, Math.round(w * recovery), 3, '#b9d9b0');
+  // Three original roof profiles share the established footprint.
+  rect(ctx, x - 5, y - 5, w + 10, 14, roof);
+  if (index % 3 === 0) {
+    for (let n = 0; n < 3; n++) rect(ctx, x + n * 30, y - 12, 25, 9, roof);
+  } else if (index % 3 === 1) {
+    rect(ctx, x + 9, y - 12, w - 18, 9, roof);
+    rect(ctx, x + 13, y - 10, w - 26, 3, edge);
+  } else {
+    rect(ctx, x, y - 12, w, 9, roof);
+    rect(ctx, x + 8, y - 10, 28, 3, edge);
+    rect(ctx, x + 54, y - 10, 28, 3, edge);
   }
-  rect(ctx, x - 61, y + 32, 122, 24, "#203f49");
-  rect(ctx, x - 59, y + 34, 118, 20, "#f7f2df");
-  ctx.font = "bold 18px monospace";
-  ctx.textAlign = "center";
-  ctx.fillStyle = "#203f49";
-  ctx.fillText(activeLights ? "AI BEACON" : "RESTORED", x, y + 52);
-}
-function building(ctx, x, y, w, h, color, index, lit) {
-  rect(ctx, x + 7, y + 8, w, h, "#52764f");
-  rect(ctx, x, y, w, h, color);
-  rect(ctx, x - 5, y - 5, w + 10, 14, "#334d4b");
-  rect(ctx, x, y - 12, w, 9, index % 2 ? "#c78059" : "#476c65");
-  rect(ctx, x + 8, y - 9, w - 16, 3, index % 2 ? "#e9ab78" : "#729789");
-  rect(ctx, x + w / 2 - 8, y + h - 25, 16, 25, "#3d534b");
-  rect(ctx, x + w / 2 + 3, y + h - 14, 2, 2, "#e7ca82");
-  for (let i = 12; i < w - 12; i += 26) {
-    rect(ctx, x + i, y + 22, 15, 21, "#426358");
-    rect(ctx, x + i + 2, y + 24, 11, 17, lit ? "#f5d889" : "#9bb9a0");
-    rect(ctx, x + i + 7, y + 24, 2, 17, "#426358");
-    rect(ctx, x + i + 2, y + 31, 11, 2, "#426358");
+  rect(ctx, x - 2, y + 7, w + 4, 3, edge);
+  // Keep the center doorway separate from every facade detail.
+  rect(ctx, x + 37, y + h - 25, 16, 25, '#1c373e');
+  rect(ctx, x + 49, y + h - 14, 2, 2, '#e9c477');
+  for (const wx of [10, 63]) {
+    rect(ctx, x + wx, y + 20, 17, 19, '#263f48');
+    rect(ctx, x + wx + 2, y + 22, 13, 15, light);
+    rect(ctx, x + wx + 8, y + 22, 2, 15, '#263f48');
   }
-  if (h > 85)
-    for (let i = 12; i < w - 12; i += 26) {
-      rect(ctx, x + i, y + 57, 15, 15, lit ? "#f5d889" : "#9bb9a0");
-      rect(ctx, x + i + 6, y + 57, 2, 15, "#426358");
+  const kind = Math.floor(index / 2);
+  if (kind === 0) {
+    // Freight depot: loading bay, stacked parcels and a highway maintenance stripe.
+    rect(ctx, x + 31, y + 18, 28, 19, '#35505a');
+    for (let n = 0; n < 4; n++) rect(ctx, x + 33, y + 20 + n * 4, 24, 1, '#9ca58d');
+    for (const [cx, cy] of [[9, 44], [23, 48], [65, 45]]) {
+      rect(ctx, x + cx, y + cy, 13, 12, '#b89460');
+      rect(ctx, x + cx + 5, y + cy, 3, 12, '#ddc387');
     }
+    if (index % 2) for (let n = 0; n < 5; n++) rect(ctx, x + 8 + n * 16, y + 12, 10, 4, '#e9a667');
+  } else if (kind === 1) {
+    // Ductwork and filter grilles.
+    rect(ctx, x + 32, y + 15, 26, 21, '#243f46');
+    for (let n = 0; n < 5; n++) rect(ctx, x + 35 + n * 4, y + 18, 2, 15, edge);
+    rect(ctx, x + 7, y + 44, 20, 5, '#abb8a8');
+    rect(ctx, x + 21, y + 44, 6, 16, '#abb8a8');
+  } else if (kind === 2) {
+    // Civic archive: shallow pillars and a lit verification terminal.
+    for (const px of [3, 29, 58, 84]) rect(ctx, x + px, y + 15, 3, 44, edge);
+    rect(ctx, x + 37, y + 14, 16, 20, '#203b43');
+    rect(ctx, x + 40, y + 18, 10, 9, lit ? '#b9d9b0' : '#e9a667');
+  } else if (kind === 3) {
+    // Weather damage is visible until the shared district repair advances.
+    rect(ctx, x + 35, y + 14, 20, 21, '#ddd3b2');
+    for (let n = 0; n < 3; n++) rect(ctx, x + 39, y + 19 + n * 5, 12, 2, '#617978');
+    if (!lit) for (const [cx, cy] of [[12, 21], [17, 26], [22, 31], [67, 47], [72, 52]]) rect(ctx, x + cx, y + cy, 9, 3, '#304b4b');
+  } else if (kind === 4) {
+    // Apartment balconies / service HQ. No insect imagery in the scenery.
+    rect(ctx, x + 5, y + 39, 26, 4, roof);
+    rect(ctx, x + 59, y + 39, 26, 4, roof);
+    rect(ctx, x + 35, y + 17, 20, 17, '#263f48');
+    rect(ctx, x + 39, y + 21, 4, 4, '#e9a667');
+    rect(ctx, x + 47, y + 21, 4, 4, '#b9d9b0');
+  } else if (kind === 5) {
+    // Trading desk and the payment cycle terminal.
+    rect(ctx, x + 7, y + 12, 76, 8, '#a59777');
+    for (let n = 0; n < 5; n++) rect(ctx, x + 9 + n * 15, y + 12, 8, 8, '#d9c28c');
+    rect(ctx, x + 34, y + 23, 22, 12, '#203b43');
+    rect(ctx, x + 38, y + 27, 14, 3, lit ? '#b9d9b0' : '#e9a667');
+  } else if (kind === 6) {
+    // Market stalls and an arcade marquee, contained inside the facade.
+    for (let n = 0; n < 6; n++) rect(ctx, x + 6 + n * 13, y + 11, 12, 9, n % 2 ? '#c5a469' : '#688d81');
+    rect(ctx, x + 34, y + 24, 22, 11, '#263f48');
+    rect(ctx, x + 42, y + 26, 6, 7, '#e9c477');
+  } else {
+    // Network exchange / AI headquarters: visible server racks and cable trunk.
+    for (const rx of [8, 62]) {
+      rect(ctx, x + rx, y + 16, 20, 29, '#203b43');
+      for (let n = 0; n < 4; n++) {
+        rect(ctx, x + rx + 3, y + 19 + n * 6, 12, 2, '#778f8c');
+        rect(ctx, x + rx + 16, y + 19 + n * 6, 2, 2, lit ? '#b9d9b0' : '#e9a667');
+      }
+    }
+    rect(ctx, x + 33, y + 14, 3, 23, '#c4b88f');
+    rect(ctx, x + 33, y + 14, 25, 3, '#c4b88f');
+  }
+  if (!lit) {
+    // An amber lock plate identifies occupied infrastructure, without animation.
+    rect(ctx, x + 73, y + 51, 10, 9, '#203b43');
+    rect(ctx, x + 76, y + 53, 4, 5, '#e9a667');
+  }
+}
+function drawRoads(ctx) {
+  ROAD_BANDS.forEach((road) => {
+    rect(ctx, road.x, road.y, road.width, road.height, "#a9ac91");
+    rect(ctx, road.x + (road.width < road.height ? 2 : 0), road.y + (road.width > road.height ? 2 : 0),
+      road.width - (road.width < road.height ? 4 : 0), road.height - (road.width > road.height ? 4 : 0), "#717f78");
+  });
+  for (let x = 0; x < 1200; x += 38) {
+    rect(ctx, x, 243, 14, 2, "#c9c8a5");
+    rect(ctx, x, 489, 14, 2, "#c9c8a5");
+  }
+  for (let y = 0; y < 800; y += 38) {
+    rect(ctx, 394, y, 2, Math.min(14, 800 - y), "#c9c8a5");
+    rect(ctx, 809, y, 2, Math.min(14, 800 - y), "#c9c8a5");
+  }
 }
 function drawMap(ctx, live) {
   ctx.clearRect(0, 0, 1200, 800);
-  rect(ctx, 0, 0, 1200, 800, "#86a77a");
+  rect(ctx, 0, 0, 1200, 800, "#304b4b");
   for (let x = 0; x < 1200; x += 20)
     for (let y = 0; y < 800; y += 20) {
-      if ((x * 13 + y * 7) % 93 < 20) rect(ctx, x + 3, y + 4, 3, 2, "#7b9d70");
-      if ((x * 3 + y * 17) % 137 < 12)
-        rect(ctx, x + 10, y + 12, 2, 3, "#a9bb84");
+      if ((x * 13 + y * 7) % 93 < 20) rect(ctx, x + 3, y + 4, 3, 2, "#385650");
+      if ((x * 3 + y * 17) % 137 < 12) rect(ctx, x + 10, y + 12, 2, 3, "#526950");
     }
-  const road = "#c5b991";
-  rect(ctx, 0, 245, 1200, 55, road);
-  rect(ctx, 0, 505, 1200, 55, road);
-  rect(ctx, 365, 0, 55, 800, road);
-  rect(ctx, 780, 0, 55, 800, road);
-  for (let x = 0; x < 1200; x += 38) {
-    rect(ctx, x, 270, 14, 2, "#e3d8b4");
-    rect(ctx, x, 530, 14, 2, "#e3d8b4");
-  }
-  for (let y = 0; y < 800; y += 38) {
-    rect(ctx, 390, y, 2, 14, "#e3d8b4");
-    rect(ctx, 805, y, 2, 14, "#e3d8b4");
-  }
   const restoration = restorationProgress(state?.event);
-  const roadSections = [
-    [80, 251],
-    [490, 251],
-    [900, 251],
-    [80, 511],
-    [900, 511],
-    [80, 550],
-    [490, 550],
-    [900, 550],
-  ];
-  roadSections.forEach(([x, y], i) => {
-    const cleared = Math.floor(restoration.districts[i] * 4);
-    for (let j = 0; j < 4; j++) {
-      const bx = x + j * 49;
-      if (j < cleared) {
-        rect(ctx, bx, y, 31, 4, "#709989");
-      } else {
-        // Decorative shoulder debris leaves the traversable road center open.
-        rect(ctx, bx, y - 2, 19, 7, "#756c65");
-        rect(ctx, bx + 10, y - 6, 14, 8, "#989083");
-        rect(ctx, bx + 5, y - 3, 4, 3, "#dfb67f");
-      }
-    }
+  // District grounds are painted first. Roads remain continuous clear corridors.
+  cells.forEach(([col, row], i) => {
+    const recovered = restoration.districts[i], active = live && state?.event?.chapter === i;
+    rect(ctx, col * 415 + 24, row * 260 + 19, 305, row === 1 ? 185 : 205,
+      recovered >= 1 ? "#657c61" : recovered > 0 ? "#435c55" : active ? "#49665d" : "#3b5552");
   });
+  drawRoads(ctx);
   cells.forEach(([col, row], i) => {
     const x = col * 415 + 34,
       y = row * 260 + 35,
       active = live && state?.event?.chapter === i;
     const districtRestored = restoration.districts[i];
-    const lit = districtRestored > 0;
-    rect(ctx, x - 10, y - 16, 305, 205, active ? "#a7bd7e" : "#8eac79");
+    const lit = districtRestored >= 1;
     const a = DOORS[i * 2],
       b = DOORS[i * 2 + 1];
     building(
@@ -1936,8 +2088,9 @@ function drawMap(ctx, live) {
       90,
       65,
       ["#dfc799", "#b6c7a6", "#c4b8a8", "#d5b495"][i % 4],
-      i,
+      i * 2,
       lit,
+      districtRestored,
     );
     building(
       ctx,
@@ -1946,31 +2099,42 @@ function drawMap(ctx, live) {
       90,
       65,
       ["#c9d2b2", "#e0c29d", "#b6c7bd", "#ccc1a6"][i % 4],
-      i + 1,
+      i * 2 + 1,
       lit,
+      districtRestored,
     );
     rect(ctx, a[0] - 6, a[1] - 20, 12, 35, "#d9ccaa");
     rect(ctx, b[0] - 6, b[1] - 20, 12, 35, "#d9ccaa");
+    if (i === 0) {
+      // The two inspectable crossings are landmarks, not additional collisions.
+      rect(ctx, 224, 60, 12, 104, "#8c9987");
+      rect(ctx, 224, 164, 12, 66, "#8c9987");
+      rect(ctx, 166, 156, 128, 8, "#8c9987");
+      rect(ctx, 220, 52, 20, 16, "#b7b49a");
+      for (let n = 0; n < 3; n++) rect(ctx, 222, 54 + n * 5, 16, 2, "#526c67");
+      rect(ctx, 219, 55, 2, 12, "#d4b777");
+      rect(ctx, 239, 55, 2, 12, "#d4b777");
+      for (const [rx, ry] of [[220, 155], [230, 160], [235, 154]]) {
+        rect(ctx, rx, ry, 8, 5, "#4c5c58");
+        rect(ctx, rx + 1, ry, 5, 2, "#9a9a7e");
+      }
+    }
     const scenery = districtScenery(a, b);
     scenery.trees.forEach(([tx, ty], n) => tree(ctx, tx, ty, (i + n) % 2));
-    drawBeacon(ctx, scenery.beacon.x, scenery.beacon.y, districtRestored);
-    ctx.font = "bold 11px monospace";
-    ctx.textAlign = "center";
-    ctx.fillStyle = "#233e3b";
-    ctx.fillText(districts[i][1].toUpperCase(), a[0], a[1] - 108);
-    ctx.font = "10px monospace";
-    ctx.fillText(districts[i][2], b[0], b[1] - 108);
-    if (active) {
-      rect(ctx, x + 13, y - 11, 18, 18, "#ed825e");
-      ctx.fillStyle = "#142b35";
-      ctx.font = "bold 12px monospace";
-      ctx.fillText(String(i + 1), x + 22, y + 2);
-    }
+    [a, b].forEach((door, site) => {
+      const label = SITE_LABELS[i][site];
+      const width = label.length * 9 + 12;
+      rect(ctx, door[0] - width / 2, door[1] + 24, width, 21, "#203a40");
+      ctx.font = "bold 15px monospace";
+      ctx.textAlign = "center";
+      ctx.fillStyle = site === 0 ? "#f3e6bc" : "#c6ddc1";
+      ctx.fillText(label, door[0], door[1] + 40);
+    });
   });
   // The central square remains open, with no collisions between players.
-  rect(ctx, 433, 314, 330, 175, "#ddd1a8");
+  rect(ctx, 433, 314, 330, 150, "#ddd1a8");
   for (let x = 440; x < 760; x += 20)
-    for (let y = 320; y < 485; y += 20) rect(ctx, x, y, 18, 18, "#d0c29a");
+    for (let y = 320; y < 460; y += 20) rect(ctx, x, y, 18, 18, "#d0c29a");
   rect(ctx, 563, 355, 70, 66, "#6d9790");
   rect(ctx, 570, 362, 56, 52, "#a6c9b6");
   rect(ctx, 579, 372, 38, 32, "#78aba1");
@@ -1990,7 +2154,7 @@ function drawMap(ctx, live) {
   ctx.textAlign = "center";
   ctx.font = "bold 16px monospace";
   ctx.fillStyle = "#35544c";
-  ctx.fillText("BRAGGING SQUARE", 600, 470);
+  ctx.fillText("BRAGGING SQUARE", 600, 462);
   ctx.font = "10px monospace";
   ctx.fillText("PLEASE DO NOT FEED THE ALGORITHM", 600, 337);
   const projects = state?.event?.rewardProjects || {};
@@ -2012,19 +2176,10 @@ function drawMap(ctx, live) {
     ctx.fillText("HELLO", 701, 395);
   }
   if (projects.festival) {
-    rect(ctx, 575, 424, 53, 15, "#af8960");
-    for (let n = 0; n < 5; n++) rect(ctx, 577 + n * 10, 418, 6, 6, palette[n]);
+    rect(ctx, 575, 428, 53, 15, "#af8960");
+    for (let n = 0; n < 5; n++) rect(ctx, 577 + n * 10, 422, 6, 6, palette[n]);
   }
   if (live) {
-    rect(ctx, 444, 481, 310, 20, "#294450");
-    ctx.fillStyle = "#f7f2df";
-    ctx.font = "bold 11px monospace";
-    ctx.textAlign = "center";
-    ctx.fillText(
-      `AI CONTROL ${100 - restoration.percent}% · ${restoration.completed} REPAIRS`,
-      600,
-      495,
-    );
     drawRepairs(ctx);
     const loc = [
       state?.chapter?.task?.target || state?.chapter?.locations?.[0],
@@ -2037,6 +2192,14 @@ function drawMap(ctx, live) {
       ctx.fillText(i ? "?" : "!", l.x, l.y - 18);
       rect(ctx, l.x - 3, l.y - 11, 6, 5, i ? "#b9e5a5" : "#ed825e");
     });
+    if (state?.event?.chapter === 0 && state.me?.progress?.[0]?.delivery?.loaded && state.me?.position) {
+      const p = state.me.position;
+      rect(ctx, p.x - 25, p.y + 5, 21, 13, "#997d55");
+      rect(ctx, p.x - 23, p.y + 2, 7, 10, "#cbb17a");
+      rect(ctx, p.x - 14, p.y + 4, 8, 8, "#b9d2a3");
+      rect(ctx, p.x - 23, p.y + 17, 5, 4, "#20343c");
+      rect(ctx, p.x - 10, p.y + 17, 5, 4, "#20343c");
+    }
     (state?.players || [])
       .filter(
         (p) =>
@@ -2636,15 +2799,19 @@ async function resolveTarget() {
   const shown = presentedTarget;
   targetRequestPending = true;
   autoTargetRound = `${shown.chapter}:${shown.step}:${shown.round}`;
+  const revision = modal.trailRevision;
+  let accepted = null;
   const r = await act("task", {
     choice: selection,
     expectedChapter: shown.chapter,
     expectedStep: shown.step,
     expectedStage: shown.stage || null,
     expectedRound: shown.round,
-  });
+  }, (record) => { accepted = record; });
   targetRequestPending = false;
+  if (modal.trailRevision !== revision || !modal.open) return;
   if (r !== null) {
+    if (presentAcceptedAction(accepted)) return;
     if (state.me.progress[state.event.chapter].complete) {
       close();
       toast("All outbreaks resolved.");
@@ -2670,40 +2837,29 @@ function routing(task) {
     `<div class="notice">Required relays: ${(task.requiredNodes || []).map(esc).join(", ") || "None"}. Cable budget: ${task.budget ?? "unlimited"} units.</div><div class="eyebrow">ROUTE PLANNING · NO DRAGGING REQUIRED</div><h3 style="margin-top:16px">Connect ${esc(task.destination)} to the exchange.</h3><p class="small">Build a path by selecting connected nodes. Broken links cannot carry the signal. Start at the exchange and finish at the home.</p><canvas id="routing-canvas" width="540" height="250" style="width:100%;border:2px solid var(--ink);background:#dce6cf" aria-label="Network diagram; the same connections are described by the node buttons below"></canvas><p class="small">Broken links: ${(task.blockedEdges || []).map((e) => e.map(esc).join(" ↔ ")).join("; ") || "None"}. Dashed lines show these breaks.</p><div id="route-nodes" class="choice-list"></div><p id="route-path" class="notice"></p><div class="row" id="route-actions"></div>`,
   );
   drawRouting(task);
-  $("#route-actions").append(
-    btn(
-      "Connect this route",
-      async () => {
-        const r = await act("task", {
-          path: routePath,
-          expectedChapter: chapterIndex,
-          expectedStep: task.step,
-          expectedStage: task.stage || null,
-        });
-        if (r !== null) {
-          if (state.me.progress[state.event.chapter].complete) {
-            close();
-            toast("Every home is connected.");
-          } else if (
-            state.chapter.task.target &&
-            state.chapter.task.step !== task.step
-          ) {
-            close();
-            travel(0, "activity");
-          } else routing(state.chapter.task);
-        }
-      },
-      "primary",
-    ),
-    btn(
-      "Reset path",
-      () => {
-        routePath = [task.source];
-        drawRouting(state.chapter.task);
-      },
-      "quiet",
-    ),
-  );
+  let pending = false;
+  const submit = btn("Connect this route", async () => {
+    if (pending) return;
+    pending = true; submit.disabled = true;
+    const revision = modal.trailRevision;
+    let accepted = null;
+    const r = await act("task", {
+      path: [...routePath], expectedChapter: chapterIndex,
+      expectedStep: task.step, expectedStage: task.stage || null,
+    }, (record) => { accepted = record; });
+    pending = false;
+    if (modal.trailRevision !== revision || !modal.open) return;
+    submit.disabled = false;
+    if (r === null) return;
+    if (presentAcceptedAction(accepted)) return;
+    if (state.me.progress[state.event.chapter].complete) { close(); toast("Every home is connected."); }
+    else if (state.chapter.task.target && state.chapter.task.step !== task.step) { close(); travel(0, "activity"); }
+    else routing(state.chapter.task);
+  }, "primary");
+  $("#route-actions").append(submit, btn("Reset path", () => {
+    if (pending) return;
+    routePath = [task.source]; drawRouting(state.chapter.task);
+  }, "quiet"));
 }
 function drawRouting(task) {
   const c = $("#routing-canvas"),
@@ -3015,22 +3171,15 @@ function setDestination(x, y, arrival) {
 function drawRepairs(ctx) {
   const contributors = state?.event?.finale?.contributors || [];
   contributors.forEach((id, i) => {
-    const district = i % 8,
-      slot = Math.floor(i / 8),
-      door = DOORS[district * 2],
-      x = door[0] - 47 + (slot % 7) * 14,
-      y = door[1] + 23 + Math.floor(slot / 7) * 14;
-    rect(ctx, x, y, 10, 10, id === state.me?.id ? "#fff2ab" : "#b9e5a5");
-    rect(ctx, x + 3, y + 2, 2, 6, "#43755b");
-    rect(ctx, x + 1, y + 4, 6, 2, "#43755b");
+    const district = i % 8, slot = Math.floor(i / 8), door = DOORS[district * 2];
+    const x = door[0] - 27 + (slot % 7) * 8, y = door[1] + 49 + Math.floor(slot / 7) * 9;
+    rect(ctx, x, y, 6, 6, id === state.me?.id ? "#fff2ab" : "#b9e5a5");
+    rect(ctx, x + 2, y + 1, 1, 4, "#43755b");
+    rect(ctx, x + 1, y + 3, 4, 1, "#43755b");
     if (id === state.me?.id) {
       ctx.strokeStyle = "#142b35";
       ctx.lineWidth = 2;
-      ctx.strokeRect(x - 3, y - 3, 16, 16);
-      ctx.fillStyle = "#142b35";
-      ctx.font = "bold 10px monospace";
-      ctx.textAlign = "center";
-      ctx.fillText("YOUR REPAIR", door[0] - 31, door[1] + 80);
+      ctx.strokeRect(x - 2, y - 2, 10, 10);
     }
   });
 }
@@ -3044,7 +3193,7 @@ setInterval(() => {
       : now > t.dueAt
         ? "This cycle’s deadline has passed. A late payment is still recorded."
         : `Payment due in ${Math.max(0, Math.ceil((t.dueAt - now) / 1000))}s`;
-    if ($("#task-confirm button")) $("#task-confirm button").disabled = waiting;
+    if ($("#task-confirm button")) $("#task-confirm button").disabled = waiting || !!state.event.paused || !!$("#task-confirm button").trailPending;
   }
 }, 250);
 async function presentation() {
