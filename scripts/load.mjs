@@ -1,5 +1,8 @@
 // Local capacity exercise. This imports authored answers only in the test process.
 // A shortened run is a smoke test, never the scope's one-hour capacity evidence.
+import { execFileSync } from "node:child_process";
+import { exportAudit } from "./export-audit.mjs";
+import { verifyResults, auditPhases } from "./verify-results.mjs";
 import { performance } from "node:perf_hooks";
 import { createHash } from "node:crypto";
 import {
@@ -47,12 +50,16 @@ const sourceHashes = Object.fromEntries(
       .digest("hex"),
   ]),
 );
+const sourceCommit = execFileSync("git", ["rev-parse", "HEAD"], { cwd: new URL("../", import.meta.url), encoding: "utf8" }).trim();
+const expectFull = process.env.LOAD_EXPECT_FULL === "1";
 const duration = Number(process.env.LOAD_SECONDS || 3605);
 const joinWindow = Number(process.env.LOAD_JOIN_SECONDS || 60);
 const count = Number(process.env.LOAD_PLAYERS || 100);
 const out = resolve(process.env.LOAD_OUTPUT || "test-results/load-latest.json");
+const journalOut = out.replace(/\.json$/, "") + ".journal.json";
+const auditOut = out.replace(/\.json$/, "") + ".audit.json";
 const timingOut = out.replace(/\.json$/, "") + ".timings.json";
-if (existsSync(timingOut))
+if ([out, timingOut, journalOut, auditOut].some(existsSync))
   throw Error("Choose a fresh LOAD_OUTPUT; raw timings already exist");
 const startChapter = Number(process.env.LOAD_START_CHAPTER || 0);
 const variedStarts = process.env.LOAD_VARIED_STARTS === "1";
@@ -650,6 +657,7 @@ try {
   }
 } finally {
   exported = app.engine.state.snapshot ? app.engine.exportResults() : null;
+  if (exported) exportAudit(join(dir, "event.sqlite"), journalOut, { sourceCommit });
   stopping = true;
   clearInterval(movementTimer);
   for (const c of streams) c.abort();
@@ -661,6 +669,7 @@ try {
   const elapsed = (Date.now() - started) / 1000;
   const timingArtifact = timings.export({
     sourceHashes,
+    sourceCommit,
     nodeVersion: process.version,
     rulesVersion: RULES.version,
     contentHash: app.engine.state.contentHash,
@@ -689,7 +698,9 @@ try {
     syntheticVariedNearSiteStarts: variedStarts,
     rulesVersion: RULES.version,
     contentHash: app.engine.state.contentHash,
+    sourceCommit,
     sourceHashes,
+    sourceCommit,
     nodeVersion: process.version,
     platform: process.platform,
     memoryBytes: process.memoryUsage(),
@@ -790,5 +801,12 @@ try {
       2,
     ),
   );
+  if (exported) {
+    const journal = JSON.parse(readFileSync(journalOut, "utf8"));
+    const verification = { ...verifyResults(exported, { requireFifteen: expectFull, journal }), phases: auditPhases(result, exported.rules) };
+    writeFileSync(auditOut, JSON.stringify(verification, null, 2) + "\n", { flag: "wx", mode: 0o600 });
+    if (expectFull && (!verification.rankingPass || !verification.inventoryReplayPass || !verification.recordedOutcomeReplayPass || !verification.fullActionReconciliationPass)) process.exitCode = 1;
+  }
+  if (expectFull && (result.finalPhase !== "awards" || result.chapterCompletionCounts.some(n => n !== count) || result.awardCount !== 15 || result.distinctWinners !== 15 || Object.keys(errors).length || !result.tradeCompletions || result.reconnectsAfterThirtySecondOutage !== 1)) process.exitCode = 1;
   rmSync(dir, { recursive: true, force: true });
 }
