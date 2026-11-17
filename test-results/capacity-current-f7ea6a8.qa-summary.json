@@ -1,0 +1,221 @@
+{
+  "checkedAt": "2026-11-17T21:45:55.676Z",
+  "sourceCommit": "f7ea6a873badbe290680aa3a220a0181acbe2ff5",
+  "method": "Independent raw-record quantiles, feature enumeration, source/blob and journal SHA256 binding, explicit per-identity phase schedule assertions; reran independent results verifier.",
+  "pass": true,
+  "sourceHashesVerified": 14,
+  "artifactHashes": {
+    ".json": "0578a6c1317544ae45be322ffe40d36706ebbe144fa42294801f38d8b7c209c7",
+    ".timings.json": "c8584b8ccdad9e26777985d16029449b48e9b6a9e434a34d1b6226c2914f8da7",
+    ".export.json": "3ddb8083f4a31d66c597a871e9ed92df42742098c74da5dbde2620bf7832cf75",
+    ".journal.json": "8937d68357c3f9dd13bb5f25d78c30ac5ea2f877e23dd10ada5fe272873684fc",
+    ".audit.json": "693900cbffe241e3aff6501410f07eed3eae5272de994d06ce8ba2872ed4d461",
+    ".log": "da63b296c781ac32ba04ac0a688e89901ee771b67cf81d8dc8216dbd8151f032"
+  },
+  "eventPlaySeconds": 3607.001,
+  "elapsedSeconds": 3669.408,
+  "rawConfirmedActions": 75944,
+  "rawTimingDropped": 0,
+  "scoringInventorySamples": 12452,
+  "scoringInventoryLatencyMs": {
+    "p50": 124.63829200016335,
+    "p95": 251.85695899976417,
+    "p99": 333.20770800020546
+  },
+  "allActionLatencyMs": {
+    "p50": 11.691042000078596,
+    "p95": 155.96704099979252,
+    "p99": 245.2505419999361
+  },
+  "perChapterScoring": [
+    {
+      "chapter": 1,
+      "samples": 1800,
+      "p50": 72.41962500000955,
+      "p95": 136.83091699999932,
+      "p99": 140.19704199999978
+    },
+    {
+      "chapter": 2,
+      "samples": 1701,
+      "p50": 84.35591699997894,
+      "p95": 187.08083300001454,
+      "p99": 203.78187499998603
+    },
+    {
+      "chapter": 3,
+      "samples": 1701,
+      "p50": 106.23945899994578,
+      "p95": 196.98891700000968,
+      "p99": 218.69220799999312
+    },
+    {
+      "chapter": 4,
+      "samples": 1650,
+      "p50": 124.2961250001099,
+      "p95": 199.11045900010504,
+      "p99": 211.08587500010617
+    },
+    {
+      "chapter": 5,
+      "samples": 2250,
+      "p50": 123.84083300014026,
+      "p95": 218.04629199998453,
+      "p99": 255.05924999993294
+    },
+    {
+      "chapter": 6,
+      "samples": 750,
+      "p50": 133.1020829998888,
+      "p95": 612.4274999997579,
+      "p99": 731.0031249998137
+    },
+    {
+      "chapter": 7,
+      "samples": 1750,
+      "p50": 167.59120799973607,
+      "p95": 303.7782080001198,
+      "p99": 332.75491600017995
+    },
+    {
+      "chapter": 8,
+      "samples": 850,
+      "p50": 164.41433400008827,
+      "p95": 379.5317910001613,
+      "p99": 701.9853329998441
+    }
+  ],
+  "chapters": [
+    {
+      "chapter": 1,
+      "completed": 100,
+      "challenges": 100,
+      "secrets": 100,
+      "learning": 200,
+      "correctFirstLearning": 200,
+      "earnedAssists": 50
+    },
+    {
+      "chapter": 2,
+      "completed": 100,
+      "challenges": 100,
+      "secrets": 100,
+      "learning": 200,
+      "correctFirstLearning": 200,
+      "earnedAssists": 50
+    },
+    {
+      "chapter": 3,
+      "completed": 100,
+      "challenges": 100,
+      "secrets": 100,
+      "learning": 200,
+      "correctFirstLearning": 200,
+      "earnedAssists": 50
+    },
+    {
+      "chapter": 4,
+      "completed": 100,
+      "challenges": 100,
+      "secrets": 100,
+      "learning": 200,
+      "correctFirstLearning": 200,
+      "earnedAssists": 50
+    },
+    {
+      "chapter": 5,
+      "completed": 100,
+      "challenges": 100,
+      "secrets": 100,
+      "learning": 200,
+      "correctFirstLearning": 200,
+      "earnedAssists": 50
+    },
+    {
+      "chapter": 6,
+      "completed": 100,
+      "challenges": 100,
+      "secrets": 100,
+      "learning": 200,
+      "correctFirstLearning": 200,
+      "earnedAssists": 50
+    },
+    {
+      "chapter": 7,
+      "completed": 100,
+      "challenges": 100,
+      "secrets": 100,
+      "learning": 200,
+      "correctFirstLearning": 200,
+      "earnedAssists": 50
+    },
+    {
+      "chapter": 8,
+      "completed": 100,
+      "challenges": 100,
+      "secrets": 100,
+      "learning": 200,
+      "correctFirstLearning": 200,
+      "earnedAssists": 50
+    }
+  ],
+  "mysteries": 100,
+  "clueSets": 100,
+  "targetHits": 1800,
+  "paymentCycles": 300,
+  "rewardProjects": {
+    "garden": 34,
+    "welcome": 33,
+    "festival": 33
+  },
+  "actionTypes": {
+    "join": 100,
+    "phase": 16,
+    "assistStarted": 400,
+    "tradeCompleted": 84,
+    "quiz": 1600,
+    "consume": 3999,
+    "delivery": 300,
+    "qualifyingTrade": 168,
+    "objectiveCompleted": 800,
+    "assistCompleted": 400,
+    "secret": 800,
+    "challenge": 800,
+    "inspection": 2400,
+    "spatialTask": 2400,
+    "target": 1800,
+    "payment": 300,
+    "rewardEarned": 600,
+    "rewardRedeemed": 100,
+    "route": 300
+  },
+  "tradeCompletionsReported": 84,
+  "outagesReported": 1,
+  "awardCount": 15,
+  "distinctWinners": 15,
+  "verification": {
+    "rankingPass": true,
+    "inventoryReplayPass": true,
+    "recordedOutcomeReplayPass": true,
+    "fullActionReconciliationPass": true,
+    "fifteenQualifyingDistinctRecipients": true,
+    "journalBound": true,
+    "evidenceGaps": []
+  },
+  "phases": {
+    "connections": 103,
+    "boundariesEach": 18,
+    "observations": 1854,
+    "maxLagMs": 376,
+    "negativeLags": 0,
+    "maxRecordedVsRecomputedLagDifferenceMs": 1,
+    "nonidenticalRecordedLagSamples": 1,
+    "pass": true
+  },
+  "limitations": [
+    "Localhost Node HTTP/SSE clients and server share one process on a development machine; concurrent native review and combined suite activity are not an isolated benchmark.",
+    "Timing covers successful player POST response JSON parsing, not browser painting, failed requests, login/host calls, external network or device FPS.",
+    "Frozen f7ea6a8 runtime predates paused-host guard509854b and later UI fixes;275-test final suite/native review provide separate evidence.",
+    "Automated authored-answer scenarios are not human balance or benefit-content approval."
+  ]
+}
