@@ -357,6 +357,7 @@ export function fixture(chapter = 0, configure = () => {}) {
   send();
   return {
     engine,
+    persistent,
     context,
     document,
     body,

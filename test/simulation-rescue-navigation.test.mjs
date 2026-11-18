@@ -61,6 +61,9 @@ function fixture() {
       currentPhase: "chapter",
       currentChapter: 0,
       isMoveDayFocused: () => false,
+    // This fixture exercises the retained overview; focused filter behavior has its own adapter.
+    isFilterFocused: () => false,
+    isFilterAvailable: () => false,
       isPresentation: false,
       forceSafe: true,
       safe: true,

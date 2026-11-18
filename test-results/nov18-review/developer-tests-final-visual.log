@@ -1,0 +1,47 @@
+✔ six real filter work orders inspect, reject wrong choice, install and retain the completed home until Next (17.224542ms)
+✔ pointer cards and keyboard numbers select the same authored IDs; only confirmation sends a task (3.091458ms)
+✔ pending confirmation deduplicates; pause, phase and epoch changes cannot publish a stale installed home (9.095291ms)
+✔ newer Help/overview focus is never hijacked by accepted installation (2.083041ms)
+✔ 100 peers and unrelated score updates preserve selected option and deliberate companion names (2.4905ms)
+✔ movement reveals the real overview; Escape returns, and arrival clears only its travel toast (1.641625ms)
+✔ number-key selection keeps E confirmation working from the now-focused choice button (2.452292ms)
+✔ inspection gates all filter evidence and authored options; private answers are never read (3.392584ms)
+✔ six accepted repairs rebuild from saved state; wrong attempts never warm a home or inflate shared restoration (6.911958ms)
+✔ semantic card selection exposes authored IDs; pause, pending and other phases have no active hotspots (0.480125ms)
+✔ solo and100person distributions retain stable at-most-three safe companion anchors and no automatic names (1.300042ms)
+✔ scene rendering is deterministic, read-only and keeps all authored option text available in its model (3.910375ms)
+✔ Cedar direction cue appears only after public inspection and points into the cabinet (1.052417ms)
+✔ distant windows reflect bounded shared completions without repairing the current personal home (0.6375ms)
+✔ all16 front walks connect the fixed collision edge to a continuous street without crossing a sign or house (1.857625ms)
+✔ all three actual tree variants and16 yard props fit their reserved bounds and avoid roads, signs and walks (5.01975ms)
+✔ actual final paint preserves every front-walk centerline and threshold above foundations for all restoration states (51.852959ms)
+✔ saved preexisting facade and road-intersection edits remain byte-for-byte intact (2.20025ms)
+✔ focused cargo choices and journal use accepted actions and prevent double confirmation (6.6315ms)
+✔ peer movement and joins preserve inline selection and keyboard focus (1.839459ms)
+✔ an accepted action cannot reopen focused view or steal a notes dialog focus (2.110459ms)
+✔ paused play rejects inline submissions and epoch replacement rejects pending journal (2.448625ms)
+✔ scene route hotspots select a choice without treating picture coordinates as world movement (2.140708ms)
+✔ three focused deliveries keep accepted route, score and personal completion authoritative (9.835625ms)
+✔ nearby roster changes update companion controls without resetting cargo choice (1.546792ms)
+✔ free movement switches to the real overview and Escape restores the focused scene (1.236417ms)
+✔ a task response projected into a later phase cannot publish an active-stage journal (1.222ms)
+✔ accepted inline confirmation restores intent when DOM replacement drops focus to the page (1.411208ms)
+✔ Safari-style pointer activation without button focus still announces its accepted journal (1.219833ms)
+✔ a shared district completion preserves the focused journal and accepted local selection (1.744917ms)
+✔ all road and shoulder pixels inside playable world bounds are traversable with unchanged collision geometry (1.277417ms)
+✔ actual plots, roofs, signs, trees, projects and repairs never repaint streets in any active district or recovery state (47.38925ms)
+✔ all one hundred individual finale outlines clear roads and destination labels including stroke width (114.239625ms)
+✔ actual tree canopy, trunk and shadow clear every home, entrance and street (6.229584ms)
+✔ all sixteen service facades retain their footprint and leave doors unobscured (22.8705ms)
+✔ destination signs stay readable in every active district and recovery state (32.336208ms)
+✔ plaza tree beds clear its fountain, benches, reward projects, signs and streets (1.596208ms)
+✔ one completed objective cannot paint a twenty-participant district as fully restored (3.690375ms)
+✔ immutable cargo crossings and their between-home corridor remain walkable (1.295417ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 476.321792

@@ -1,0 +1,165 @@
+{
+  "startedAt": "2026-11-18T16:56:08.899Z",
+  "label": "Three existing simulated neighbors complete six Filter jobs through normal HTTP actions and real-time movement; authored-answer test oracle; no score or clock fixtures",
+  "errors": [],
+  "players": [
+    {
+      "id": "review-2",
+      "progress": {
+        "step": 6,
+        "score": 60,
+        "mistakes": 0,
+        "complete": true,
+        "timeMs": 134234,
+        "challenge": false,
+        "quiz": [
+          null,
+          null
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 6,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 3,
+          "food": 6,
+          "cable": 6
+        }
+      },
+      "inventory": {
+        "parts": 3,
+        "filters": 0,
+        "food": 3,
+        "cable": 3
+      },
+      "position": {
+        "x": 530,
+        "y": 140
+      }
+    },
+    {
+      "id": "review-3",
+      "progress": {
+        "step": 6,
+        "score": 60,
+        "mistakes": 0,
+        "complete": true,
+        "timeMs": 134348,
+        "challenge": false,
+        "quiz": [
+          null,
+          null
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 6,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 3,
+          "food": 6,
+          "cable": 6
+        }
+      },
+      "inventory": {
+        "parts": 3,
+        "filters": 0,
+        "food": 3,
+        "cable": 3
+      },
+      "position": {
+        "x": 530,
+        "y": 140
+      }
+    },
+    {
+      "id": "review-4",
+      "progress": {
+        "step": 6,
+        "score": 60,
+        "mistakes": 0,
+        "complete": true,
+        "timeMs": 134589,
+        "challenge": false,
+        "quiz": [
+          null,
+          null
+        ],
+        "secret": false,
+        "assists": [],
+        "pendingAssist": null,
+        "lastTaskAt": null,
+        "budget": 0,
+        "primary": 6,
+        "falseAccusations": 0,
+        "rewardBalance": 0,
+        "rewardEarned": 0,
+        "rewardUses": [],
+        "inspected": false,
+        "targetRound": null,
+        "siteHits": 0,
+        "targetHits": 0,
+        "cycles": [],
+        "delivery": {
+          "stage": "load",
+          "loaded": null,
+          "route": null,
+          "visited": false
+        },
+        "reserve": {
+          "parts": 6,
+          "filters": 3,
+          "food": 6,
+          "cable": 6
+        }
+      },
+      "inventory": {
+        "parts": 3,
+        "filters": 0,
+        "food": 3,
+        "cable": 3
+      },
+      "position": {
+        "x": 530,
+        "y": 140
+      }
+    }
+  ],
+  "finishedAt": "2026-11-18T16:56:45.451Z",
+  "passed": true
+}

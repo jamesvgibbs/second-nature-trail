@@ -54,6 +54,9 @@ function renderSurface(state, isPresentation = false) {
     isPresentation,
     // Retained overview controls; focused Move Day pause is tested separately.
     isMoveDayFocused: () => false,
+    // This fixture exercises the retained overview; focused filter behavior has its own adapter.
+    isFilterFocused: () => false,
+    isFilterAvailable: () => false,
     app: {},
     updateControlHints() {},
     FIELD_NOTES,
@@ -322,6 +325,9 @@ test("frame labels a closed event ENDED while paused clocks remain fixed", () =>
     measureFrame() {},
     drawMap() {},
     isMoveDayFocused: () => false,
+    // This fixture exercises the retained overview; focused filter behavior has its own adapter.
+    isFilterFocused: () => false,
+    isFilterAvailable: () => false,
     requestAnimationFrame() {},
     serverOffset: 0,
     $: (selector) => (selector === "#timer" ? timer : null),

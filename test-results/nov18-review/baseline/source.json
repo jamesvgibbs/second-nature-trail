@@ -1,0 +1,10 @@
+{
+  "capturedAt": "2026-11-18T16:42:49.880Z",
+  "sourceCommit": "bf91cb595c0c23f4112ccd15a0cb0478dc16d6ab",
+  "note": "Includes user-authorized uncommitted Nov18 intersections, curb grass and16 building silhouettes. No render edits by this agent yet.",
+  "hashes": {
+    "public/app.js": "bd71dffab4678c6cc72a9d0085a9defa38f2255a5475405212abe14c4973e4af",
+    "public/scenery.mjs": "8f93c22c649c3aa4ec183ad64d21cb929ac7b118c38d3d286feb269af6875ddb",
+    "public/style.css": "b46c16731b00e25d928b778c893f1b679e83ce21f7ffd856597aec551c1f9674"
+  }
+}

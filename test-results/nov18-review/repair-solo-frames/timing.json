@@ -1,0 +1,165 @@
+{
+  "method": "Actual native Safari screenshot sequence; keyboard E submits installation at frame10; original elapsed timings",
+  "frames": [
+    {
+      "file": "000.png",
+      "ms": 78
+    },
+    {
+      "file": "001.png",
+      "ms": 138
+    },
+    {
+      "file": "002.png",
+      "ms": 204
+    },
+    {
+      "file": "003.png",
+      "ms": 269
+    },
+    {
+      "file": "004.png",
+      "ms": 325
+    },
+    {
+      "file": "005.png",
+      "ms": 388
+    },
+    {
+      "file": "006.png",
+      "ms": 462
+    },
+    {
+      "file": "007.png",
+      "ms": 524
+    },
+    {
+      "file": "008.png",
+      "ms": 583
+    },
+    {
+      "file": "009.png",
+      "ms": 649
+    },
+    {
+      "file": "010.png",
+      "ms": 1349
+    },
+    {
+      "file": "011.png",
+      "ms": 1408
+    },
+    {
+      "file": "012.png",
+      "ms": 1468
+    },
+    {
+      "file": "013.png",
+      "ms": 1526
+    },
+    {
+      "file": "014.png",
+      "ms": 1588
+    },
+    {
+      "file": "015.png",
+      "ms": 1657
+    },
+    {
+      "file": "016.png",
+      "ms": 1717
+    },
+    {
+      "file": "017.png",
+      "ms": 1779
+    },
+    {
+      "file": "018.png",
+      "ms": 1839
+    },
+    {
+      "file": "019.png",
+      "ms": 1905
+    },
+    {
+      "file": "020.png",
+      "ms": 1968
+    },
+    {
+      "file": "021.png",
+      "ms": 2040
+    },
+    {
+      "file": "022.png",
+      "ms": 2105
+    },
+    {
+      "file": "023.png",
+      "ms": 2173
+    },
+    {
+      "file": "024.png",
+      "ms": 2241
+    },
+    {
+      "file": "025.png",
+      "ms": 2305
+    },
+    {
+      "file": "026.png",
+      "ms": 2370
+    },
+    {
+      "file": "027.png",
+      "ms": 2436
+    },
+    {
+      "file": "028.png",
+      "ms": 2494
+    },
+    {
+      "file": "029.png",
+      "ms": 2556
+    },
+    {
+      "file": "030.png",
+      "ms": 2617
+    },
+    {
+      "file": "031.png",
+      "ms": 2683
+    },
+    {
+      "file": "032.png",
+      "ms": 2743
+    },
+    {
+      "file": "033.png",
+      "ms": 2806
+    },
+    {
+      "file": "034.png",
+      "ms": 2874
+    },
+    {
+      "file": "035.png",
+      "ms": 2938
+    },
+    {
+      "file": "036.png",
+      "ms": 3012
+    },
+    {
+      "file": "037.png",
+      "ms": 3075
+    },
+    {
+      "file": "038.png",
+      "ms": 3137
+    },
+    {
+      "file": "039.png",
+      "ms": 3198
+    }
+  ]
+}

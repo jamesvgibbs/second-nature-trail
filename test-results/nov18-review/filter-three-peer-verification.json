@@ -1,0 +1,16 @@
+{
+  "verifiedAt": "2026-11-18T16:58:14.036Z",
+  "scope": "Bounded three-peer developer review through normal HTTP/SSE; not a full-event audit or native human acceptance",
+  "reportHash": "c4401f6ea3b7aadc87ebe28cf0020ec4f7131be1ce6298bd602e5d6725b41dee",
+  "workerHash": "0ccc45f20e570e7359f7dbcdb997102a2811160a0337af420e773df3ae7a7065",
+  "assertions": {
+    "threeCompletedSixJobs": true,
+    "sixtyPointsAndSixPrimaryEach": true,
+    "zeroMistakes": true,
+    "threeStoredAndThreeReserveFiltersConsumedEach": true,
+    "exactOtherInventoryPreserved": true,
+    "returnedWithinHalfPixelOfFilterDepot": true
+  },
+  "requestJournalCaptured": false,
+  "note": "Worker asserts every HTTP response and uses normal invitation takeover for three existing peers. Completion report records authoritative returned projections; individual request chronology was not saved."
+}

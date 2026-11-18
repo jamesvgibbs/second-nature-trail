@@ -65,6 +65,9 @@ test("actual Map rendering exposes history in button text and preserves current-
     districts: Array.from({ length: 8 }, (_, i) => [`District ${i + 1}`, "First", "Second"]),
     // History rows in the explicit neighborhood overview.
     isMoveDayAvailable: () => false,
+    // This fixture exercises the retained overview; focused filter behavior has its own adapter.
+    isFilterFocused: () => false,
+    isFilterAvailable: () => false,
     chapterMapStatus, panel: "", document: { activeElement: focus, createElement: () => ({}) },
     $: () => holder, open() {}, close() {},
     btn: (textContent, onclick, className) => ({ textContent, onclick, className, children: [], append(...nodes) { this.children.push(...nodes); } }),

@@ -1,0 +1,713 @@
+{
+  "at": "2026-11-18T17:02:15.232Z",
+  "label": "99simulated peers walked to native human position through normalAPI; no phase or scoring changes",
+  "phase": "chapter",
+  "chapter": 2,
+  "connected": 100,
+  "human": {
+    "id": "review-1",
+    "position": {
+      "x": 920,
+      "y": 370
+    }
+  },
+  "peerCount": 99,
+  "maxDistanceFromHuman": 0.40762530298231403,
+  "chapterContributions": 3,
+  "controllerHash": "188179a5598c1092da75f6a78a155022561d52b71f2adb4b8a2aa84293b5b53e",
+  "peers": [
+    {
+      "id": "review-2",
+      "position": {
+        "x": 919.7853357234661,
+        "y": 369.9642226205777
+      }
+    },
+    {
+      "id": "review-3",
+      "position": {
+        "x": 919.7853357234661,
+        "y": 369.9642226205777
+      }
+    },
+    {
+      "id": "review-4",
+      "position": {
+        "x": 919.597920877938,
+        "y": 369.93298681298967
+      }
+    },
+    {
+      "id": "review-5",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-6",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-7",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-8",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-9",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-10",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-11",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-12",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-13",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-14",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-15",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-16",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-17",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-18",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-19",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-20",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-21",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-22",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-23",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-24",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-25",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-26",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-27",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-28",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-29",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-30",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-31",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-32",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-33",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-34",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-35",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-36",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-37",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-38",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-39",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-40",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-41",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-42",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-43",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-44",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-45",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-46",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-47",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-48",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-49",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-50",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-51",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-52",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-53",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-54",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-55",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-56",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-57",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-58",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-59",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-60",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-61",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-62",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-63",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-64",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-65",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-66",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-67",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-68",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-69",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-70",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-71",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-72",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-73",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-74",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-75",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-76",
+      "position": {
+        "x": 919.7853357234661,
+        "y": 369.9642226205777
+      }
+    },
+    {
+      "id": "review-77",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-78",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-79",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-80",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-81",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-82",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-83",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-84",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-85",
+      "position": {
+        "x": 919.9727505689942,
+        "y": 369.9954584281657
+      }
+    },
+    {
+      "id": "review-86",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-87",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-88",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-89",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-90",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-91",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-92",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-93",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-94",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-95",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-96",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-97",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-98",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-99",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    },
+    {
+      "id": "review-100",
+      "position": {
+        "x": 920,
+        "y": 370
+      }
+    }
+  ]
+}

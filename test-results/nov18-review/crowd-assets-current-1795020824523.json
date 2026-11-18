@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-18T16:53:44.523Z",
+  "mode": "current",
+  "fixtureDirectory": "/Users/jgibbs/Code/second-nature-trail/data/nov18-crowd-review-6if7xe8j",
+  "phase": "paused",
+  "chapter": 1,
+  "hashes": {
+    "app.js": "11c01055d53d804fd5fb2499a578e26df8c640cfa92a95680b77c5afd7c1329e",
+    "crowd-view.mjs": "d69f819492387f00bc7872cc293f79a45e5e79b8a66b883a03d57871d2241ae2",
+    "filter-scene.mjs": "2957e3226b11ce6132e23e128e7c9f275757ef767de641bb69e61b122070d5eb",
+    "helpers.mjs": "8aaafb2ece299ce54821745a0a2be07c754793c9229f3166092d05771718249a",
+    "index.html": "d1ec19805d30903b41253a794bcd85533bf85dd9b8dd51e2567b542ee66189f0",
+    "move-day-scene.mjs": "512311ada7279b3d922882a4d80e5563851e806f3d9fca8690d2089d34b262ef",
+    "performance.mjs": "090cdd66c6b421fa0265b76aad7fa59738486fcd498110d87c60303cf78d4898",
+    "projection.mjs": "90b19560a0e02a7b9d19d69e567d2ef332526f351b2370040a5d7e60a47d6b79",
+    "scenery.mjs": "5fbf4c1a01fb4062cd79e082bbf28bec1e2ab814cf10778f428f1b2be2974361",
+    "style.css": "c3e895ea4acf416c893ab56e7de4416bdfccb9b7b2bdbbc9d6e1983870e6ea36",
+    "trail-feedback.mjs": "08e44cc0c354bd668cdeea0867e008404bc74030e1a297c85867226a8d182d8f",
+    "trail-visuals.mjs": "a72a7c38cb300c5943f489b25dbbe3641c926f07dd36628582eb0dc80050b414",
+    "world.mjs": "d412a2dee8b4b1dc3779d1dabc46561383646ac63651dcf7cd30eeba8bd063a0"
+  }
+}

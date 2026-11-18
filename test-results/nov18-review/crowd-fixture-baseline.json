@@ -1,0 +1,10 @@
+{
+  "fixtureDirectory": "/Users/jgibbs/Code/second-nature-trail/data/nov18-crowd-review-6if7xe8j",
+  "port": 4188,
+  "mode": "isolated memory100roster; baseline static copy; no scores seeded",
+  "hashes": {
+    "app.js": "bd71dffab4678c6cc72a9d0085a9defa38f2255a5475405212abe14c4973e4af",
+    "scenery.mjs": "8f93c22c649c3aa4ec183ad64d21cb929ac7b118c38d3d286feb269af6875ddb",
+    "style.css": "b46c16731b00e25d928b778c893f1b679e83ce21f7ffd856597aec551c1f9674"
+  }
+}

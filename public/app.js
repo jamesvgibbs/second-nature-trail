@@ -1,3 +1,4 @@
+import { filterSceneModel, drawFilterScene, hitFilterHotspot } from "/filter-scene.mjs";
 import { overviewCrowd } from "/crowd-view.mjs";
 import { createProjection, reduceProjection } from "/projection.mjs";
 import { districtScenery, SQUARE_TREES, ROAD_BANDS } from "/scenery.mjs";
@@ -94,6 +95,8 @@ let projection = createProjection(),
   settingsSequence = 0,
   visualIntentGeneration = 0,
   latestVisualIntentInsects = false;
+let filterState = { epoch:null, key:"", selection:null, pending:false, token:0, overview:false, completedHome:null, journal:null, focusedPeerId:null };
+let travelToastText = null;
 let moveDayOverview = false;
 let moveDayState = {
   epoch: null,
@@ -692,6 +695,7 @@ function accept(s, kind = "full", allowEpoch = false) {
     next.coreVersion !== projection.coreVersion;
   if (next.epoch !== projection.epoch) {
     target = null;
+    if (typeof filterState !== "undefined") { filterState.completedHome=null; filterState.journal=null; }
     if (
       previous &&
       modal.open &&
@@ -719,6 +723,7 @@ function accept(s, kind = "full", allowEpoch = false) {
     moveDayCompanionSignature(previous) !== moveDayCompanionSignature(state)
   )
     renderMoveDayCompanions();
+  if (isFilterFocused() && filterCompanionSignature(previous) !== filterCompanionSignature(state)) renderFilterCompanions();
   if (kind === "move") return true;
   if ($("#supply-hud")) renderSupplyHUD();
   if (state.me?.settings) {
@@ -731,6 +736,7 @@ function accept(s, kind = "full", allowEpoch = false) {
   const e = state.event || {};
   if (currentPhase !== e.phase || currentChapter !== e.chapter) {
     target = null;
+    if (typeof filterState !== "undefined" && filterState.pending) { filterState.token++; filterState.pending=false; }
     if (
       currentPhase &&
       modal.open &&
@@ -747,6 +753,7 @@ function accept(s, kind = "full", allowEpoch = false) {
       close();
       toast("The neighborhood has moved to the next phase.");
     }
+    if (typeof filterState !== "undefined" && (e.chapter !== 1 || !["chapter", "paused"].includes(e.phase))) { filterState.completedHome=null; filterState.journal=null; filterState.token++; filterState.pending=false; }
     currentPhase = e.phase;
     currentChapter = e.chapter;
   }
@@ -829,9 +836,9 @@ function game() {
       btn("Help [H]", help),
       btn("Settings", settings),
     );
-    const notes = btn("Field notes", moveDayFieldNotes);
+    const notes = btn("Field notes", () => isFilterAvailable() ? filterFieldNotes() : moveDayFieldNotes());
     notes.id = "field-notes-menu";
-    const back = btn("Return to Move Day", () => setMoveDayOverview(false));
+    const back = btn("Return to Move Day", () => isFilterAvailable() ? setFilterOverview(false) : setMoveDayOverview(false));
     back.id = "move-day-return";
     bar.append(notes, back);
     $("#player-name").textContent = state.me?.name || "";
@@ -839,7 +846,8 @@ function game() {
       const r = activeCanvas.getBoundingClientRect();
       const x = ((e.clientX - r.left) / r.width) * 1200,
         y = ((e.clientY - r.top) / r.height) * 800;
-      if (isMoveDayFocused()) moveDaySceneClick(x, y);
+      if (isFilterFocused()) filterSceneClick(x, y);
+      else if (isMoveDayFocused()) moveDaySceneClick(x, y);
       else {
         setDestination(x, y);
         activeCanvas.focus();
@@ -878,6 +886,11 @@ function renderSupplyHUD() {
   if (!hud) return;
   if (isPresentation || !state?.me) {
     hud.innerHTML = `<span class="hud-caption">NEIGHBORHOOD FIELD REPORT</span><span class="hud-safe">${overviewCrowd(state, { presentation: true }).total} neighbors connected · Friendly robots</span>`;
+    return;
+  }
+  if (isFilterFocused()) {
+    const model=syncFilterState();
+    hud.innerHTML=`<span class="hud-caption">FILTER SHORTAGE · HOME VISITS</span><strong>${model.step}/6 homes helped</strong><span class="hud-safe">District: ${model.sharedRecovery.completed}/${model.sharedRecovery.total} neighbors finished</span>`;
     return;
   }
   if (isMoveDayFocused()) {
@@ -1204,6 +1217,7 @@ async function submitMoveDayChoice() {
       accepted.result,
     );
   if (receipt && receiptMatchesState(accepted.after)) {
+    clearTravelToast();
     const points = receipt.deltas.find(
       (item) => item.label === "Points this trip",
     );
@@ -1305,8 +1319,8 @@ function renderMoveDayCompanions() {
   const label = document.createElement("p");
   label.className = "small";
   label.textContent = `${model.nearbyCount || 0} nearby · ${
-    model.teammateCount || 0
-  } others on the trail`;
+    (model.teammateCount || 0) + 1
+  } connected`;
   holder.replaceChildren(label);
   (model.teammates || []).slice(0, 3).forEach((peer, i) => {
     const b = btn(
@@ -1357,6 +1371,370 @@ function moveDaySceneClick(x, y) {
     else moveDayPrimary();
   }
 }
+function isFilterAvailable() {
+  return (
+    typeof filterState !== "undefined" &&
+    !isPresentation &&
+    state?.event?.chapter === 1 &&
+    (state.event.phase === "chapter" ||
+      (state.event.phase === "paused" && state.event.pausedPhase === "chapter"))
+  );
+}
+function isFilterFocused() {
+  return isFilterAvailable() && !filterState.overview;
+}
+function syncFilterState() {
+  if (!isFilterAvailable()) return null;
+  const epoch = state.projectionEpoch;
+  if (filterState.epoch !== epoch)
+    filterState = {
+      epoch,
+      key: "",
+      selection: null,
+      pending: false,
+      token: filterState.token + 1,
+      overview: filterState.overview,
+      completedHome: null,
+      journal: null,
+      focusedPeerId: null,
+    };
+  const key = `${epoch}:${state.me.progress[1].step}:${state.chapter.task?.stage || "complete"}`;
+  if (key !== filterState.key) {
+    filterState.key = key;
+    filterState.selection = null;
+  }
+  if (filterState.completedHome?.step !== state.me.progress[1].step)
+    filterState.completedHome = null;
+  return filterSceneModel(state, {
+    selectedChoice: filterState.selection,
+    completedHome: filterState.completedHome,
+    focusedPeerId: filterState.focusedPeerId,
+    pending: filterState.pending,
+  });
+}
+function filterNearTarget() {
+  const p = state?.me?.position,
+    destination = state?.chapter?.task?.target;
+  return (
+    !!p &&
+    !!destination &&
+    Math.hypot(p.x - destination.x, p.y - destination.y) < 60
+  );
+}
+function filterSidebarHTML() {
+  const model = syncFilterState();
+  if (!model) return "";
+  const inventory = state.me.inventory?.filters || 0,
+    reserve = state.me.progress[1].reserve?.filters || 0;
+  return `<div class="filter-sidebar"><span class="chapter-count">CHAPTER 2 · HOME ${Math.min(6, model.stage === "installed" ? model.step : model.step + 1)} OF 6</span><h2>Filter shortage</h2><section class="travel-journal" aria-live="polite" aria-atomic="true"><h3 id="filter-result" tabindex="-1">${esc(filterState.journal?.title || (model.complete ? "Six homes breathing easier." : model.homeName))}</h3><p>${esc(filterState.journal?.text || (model.stage === "decide" ? "The equipment label is your reference." : "A resident needs help restoring airflow."))}</p></section><div class="filter-supply-line"><strong>${inventory} filters carried</strong><span>${reserve} in personal reserve</span></div>${model.evidence && model.stage === "decide" ? `<section class="filter-evidence"><span class="eyebrow">INSPECTED EQUIPMENT</span><p>${esc(model.evidence)}</p></section>` : ""}<div id="filter-actions"></div><div id="filter-companions" class="move-day-companions"></div></div>`;
+}
+function renderFilterSidebar() {
+  const model = syncFilterState(),
+    holder = $("#filter-actions");
+  if (!model || !holder) return;
+  if (model.stage === "decide") {
+    const heading = document.createElement("h3");
+    heading.textContent = "Choose the installation";
+    holder.append(heading);
+    const choices = document.createElement("div");
+    choices.className = "move-day-choices filter-choices";
+    model.options.forEach((option) => {
+      const b = btn(
+        `${option.id + 1}. ${option.label}`,
+        () => selectFilterChoice(option.id),
+        `move-day-choice${filterState.selection === option.id ? " selected" : ""}`,
+      );
+      b.dataset.focusKey = `filter:choice:${option.id}`;
+      b.onkeydown = filterControlKeys;
+      b.setAttribute(
+        "aria-pressed",
+        String(filterState.selection === option.id),
+      );
+      b.disabled = model.paused || filterState.pending;
+      choices.append(b);
+    });
+    holder.append(choices);
+  }
+  const near = filterNearTarget(),
+    traveling = target?.arrival === "activity";
+  const label =
+    model.stage === "installed"
+      ? model.complete
+        ? "Open field notes"
+        : "Next home"
+      : model.complete
+        ? "Open field notes"
+        : filterState.pending
+          ? "Recording…"
+          : !near
+            ? traveling
+              ? "On the way…"
+              : `Visit ${model.homeName}`
+            : model.stage === "inspect"
+              ? "Inspect the unit"
+              : "Install this choice";
+  const primary = btn(label, filterPrimary, "primary move-day-primary");
+  primary.id = "filter-primary";
+  primary.onkeydown = filterControlKeys;
+  const outcome = $("#filter-result");
+  if (outcome) outcome.onkeydown = filterControlKeys;
+  primary.dataset.focusKey = "filter:primary";
+  primary.disabled =
+    model.paused ||
+    filterState.pending ||
+    (!["installed", "complete"].includes(model.stage) && !near && traveling);
+  const controls = document.createElement("div");
+  controls.className = "move-day-controls";
+  controls.append(primary);
+  holder.append(controls);
+  const status = document.createElement("p");
+  status.className = "small filter-status";
+  status.textContent = model.paused
+    ? "The expedition is paused."
+    : model.stage === "installed"
+      ? "Repair recorded. Stay a moment, or continue."
+      : model.complete
+        ? "Every work order is complete."
+        : traveling
+          ? "Walking to the resident’s home…"
+          : model.stage === "decide"
+            ? `Correct installation: ${state.rules?.spatialTaskPoints || 10} points.`
+            : "Read the equipment label before choosing.";
+  holder.append(status);
+  renderFilterCompanions();
+}
+function filterControlKeys(event) {
+  if (!isFilterFocused() || event.ctrlKey || event.metaKey || event.altKey) return;
+  const key=event.key.toLowerCase();
+  if (key === keys.interact) { event.preventDefault(); return filterPrimary(); }
+  if (/^[1-3]$/.test(key)) { event.preventDefault(); selectFilterChoice(Number(key)-1); }
+}
+function selectFilterChoice(index) {
+  const model = syncFilterState();
+  if (
+    !model ||
+    model.paused ||
+    filterState.pending ||
+    !model.options.some((o) => o.id === index)
+  )
+    return;
+  filterState.selection = index;
+  renderMission();
+  [...($("#filter-actions")?.querySelectorAll("button") || [])]
+    .find((b) => b.dataset.focusKey === `filter:choice:${index}`)
+    ?.focus({ preventScroll: true });
+}
+function filterPrimary() {
+  const model = syncFilterState();
+  if (!model || model.paused || filterState.pending) return;
+  if (model.complete) {
+    filterFieldNotes();
+    return;
+  }
+  if (model.stage === "installed") {
+    filterState.completedHome = null;
+    filterState.journal = null;
+    filterState.selection = null;
+    renderMission();
+  }
+  if (!filterNearTarget()) {
+    travel(0, "activity");
+    renderMission();
+    return;
+  }
+  return submitFilterChoice();
+}
+async function submitFilterChoice() {
+  const model = syncFilterState();
+  if (
+    !model ||
+    model.paused ||
+    model.complete ||
+    filterState.pending ||
+    !filterNearTarget() ||
+    model.stage === "installed"
+  )
+    return;
+  const choice = model.stage === "inspect" ? 0 : filterState.selection;
+  if (choice === null) {
+    toast("Choose an installation first.");
+    return;
+  }
+  const epoch = state.projectionEpoch,
+    token = ++filterState.token,
+    revision = modal.trailRevision,
+    origin = document.activeElement;
+  const intent =
+    origin === activeCanvas ||
+    origin === document.body ||
+    origin === document.documentElement ||
+    $("#mission")?.contains(origin);
+  filterState.pending = true;
+  renderMission();
+  let accepted = null;
+  const result = await act(
+    "task",
+    {
+      choice,
+      expectedChapter: 1,
+      expectedStep: model.step,
+      expectedStage: model.stage,
+    },
+    (record) => {
+      accepted = record;
+    },
+  );
+  if (token !== filterState.token) return;
+  filterState.pending = false;
+  if (
+    result === null ||
+    state.projectionEpoch !== epoch ||
+    state.event.chapter !== 1 ||
+    state.event.phase !== "chapter" ||
+    !accepted
+  ) {
+    if ($("#mission")) renderMission();
+    return;
+  }
+  const after = accepted.after.me?.progress?.[1];
+  if (receiptMatchesState(accepted.after)) {
+    clearTravelToast();
+    if (result.inspected)
+      filterState.journal = {
+        title: "Equipment inspected.",
+        text: "Read the plate, then match your installation.",
+      };
+    else if (result.correct && after?.step === model.step + 1) {
+      filterState.completedHome = {
+        epoch,
+        step: after.step,
+        name: model.homeName,
+        evidence: model.evidence,
+        choiceLabel: model.options.find((o) => o.id === choice)?.label || "",
+      };
+      filterState.journal = {
+        title: "Airflow restored.",
+        text: `${model.homeName} is complete. ${after.step}/6 homes helped · Chapter score ${after.score}.`,
+      };
+    } else if (result.correct === false)
+      filterState.journal = {
+        title: "This installation needs another look.",
+        text: `The home is not repaired yet. Check the equipment label and try again. Chapter score ${after?.score || 0}.`,
+      };
+  }
+  const current = document.activeElement;
+  const restore =
+    intent &&
+    !modal.open &&
+    modal.trailRevision === revision &&
+    isFilterFocused() &&
+    !current?.dataset?.peerId &&
+    (current === activeCanvas ||
+      current === document.body ||
+      current === document.documentElement ||
+      $("#mission")?.contains(current));
+  renderMission();
+  if (restore) $("#filter-result")?.focus({ preventScroll: true });
+}
+function setFilterOverview(overview) {
+  filterState.overview = !!overview;
+  if (modal.open) close();
+  renderSupplyHUD();
+  renderMission();
+  updateControlHints();
+  activeCanvas?.focus({ preventScroll: true });
+}
+function filterFieldNotes() {
+  panel = "field-notes";
+  const progress = state.me.progress[1];
+  open(
+    "Filter shortage · Field notes",
+    `<p>Homes helped: <strong>${progress.step}/6</strong> · Chapter score: <strong>${progress.score}</strong></p><div id="filter-notes" class="stack"></div><hr>${contributionsHTML()}`,
+  );
+  $("#filter-notes").append(
+    btn("Learning encounters", learning, "primary"),
+    btn(
+      progress.challenge ? "✓ Challenge complete" : "Try the harder challenge",
+      () => {
+        close();
+        travel(1, "challenge");
+      },
+    ),
+    btn(progress.secret ? "✓ Clue discovered" : "Look for a secret", () => {
+      close();
+      travel(1, "secret");
+    }),
+    btn("The neighborhood mystery", mystery),
+    btn("Inventory & reserves", () => inventory()),
+    btn("Rules & scoring", rules),
+  );
+}
+function filterCompanionSignature(view) {
+  if (!view) return "";
+  const model = filterSceneModel(view, {
+    focusedPeerId: filterState.focusedPeerId,
+  });
+  return JSON.stringify([
+    model.nearbyCount,
+    model.teammateCount,
+    model.teammates.map((p) => [p.id, p.name]),
+  ]);
+}
+function renderFilterCompanions() {
+  const holder = $("#filter-companions");
+  if (!holder || !isFilterFocused()) return;
+  const model = syncFilterState(),
+    focused = holder.contains(document.activeElement)
+      ? document.activeElement?.dataset?.peerId
+      : null;
+  const label = document.createElement("p");
+  label.textContent = `${model.nearbyCount} nearby · ${model.teammateCount + 1} connected`;
+  holder.replaceChildren(label);
+  model.teammates.forEach((peer, i) => {
+    const b = btn(
+      peer.name || `Nearby companion ${i + 1}`,
+      () => {
+        filterState.focusedPeerId =
+          filterState.focusedPeerId === peer.id ? null : peer.id;
+        renderFilterCompanions();
+        [...holder.querySelectorAll("button")]
+          .find((b) => b.dataset.peerId === peer.id)
+          ?.focus({ preventScroll: true });
+      },
+      "quiet",
+    );
+    b.dataset.peerId = peer.id;
+    b.setAttribute(
+      "aria-pressed",
+      String(filterState.focusedPeerId === peer.id),
+    );
+    holder.append(b);
+  });
+  if (focused && !modal.open)
+    (
+      [...holder.querySelectorAll("button")].find(
+        (b) => b.dataset.peerId === focused,
+      ) || activeCanvas
+    )?.focus({ preventScroll: true });
+}
+function filterSceneClick(x, y) {
+  const model = syncFilterState();
+  if (!model) return;
+  const hit = hitFilterHotspot(model, x, y);
+  if (!hit) return;
+  if (hit.action === "choice") selectFilterChoice(hit.choice);
+  else if (hit.action === "objective") filterPrimary();
+}
+function clearTravelToast() {
+  if (typeof travelToastText === "undefined" || !travelToastText) return;
+  const notice = $("#toast");
+  if (notice?.textContent === travelToastText) {
+    notice.style.display = "none";
+    clearTimeout(toast.timer);
+  }
+  travelToastText = null;
+}
+
 function firstUseControls() {
   if (isPresentation || !state.me || state.me.tutorial?.length >= 5) return;
   const key = "trail-controls-seen:" + state.me.id;
@@ -1406,7 +1784,7 @@ function renderMission() {
   ).replaceAll("_", " ");
   let html = "";
   if (e.broadcast)
-    html += isMoveDayFocused()
+    html += (isMoveDayFocused() || isFilterFocused())
       ? `<details class="move-day-broadcast"><summary>Message from the host</summary><p>${esc(
           e.broadcast,
         )}</p></details>`
@@ -1443,6 +1821,8 @@ function renderMission() {
         : "") +
       "<p>For the fixers, the thinkers, and the people who stopped to help.</p>" +
       awardsHTML();
+  } else if (isFilterFocused()) {
+    html += filterSidebarHTML();
   } else if (isMoveDayFocused()) {
     html += moveDaySidebarHTML();
   } else {
@@ -1486,15 +1866,17 @@ function renderMission() {
     html += "<hr><h3>Neighborhood restoration</h3>" + contributionsHTML();
   }
   $("#mission").innerHTML = html;
-  mission.classList.toggle("move-day-mission", isMoveDayFocused());
+  mission.classList.toggle("move-day-mission", isMoveDayFocused() || isFilterFocused());
+  mission.classList.toggle("filter-mission", isFilterFocused());
   app
     .querySelector?.(".game")
-    ?.classList.toggle("move-day-game", isMoveDayFocused());
-  if (isMoveDayFocused()) renderMoveDaySidebar();
+    ?.classList.toggle("move-day-game", isMoveDayFocused() || isFilterFocused());
+  if (isFilterFocused()) renderFilterSidebar();
+  else if (isMoveDayFocused()) renderMoveDaySidebar();
   updateControlHints();
   mission.dataset.phase = `${e.phase}:${displayPhase}:${e.chapter}`;
   if (previousPhase !== mission.dataset.phase) mission.scrollTop = 0;
-  $("#map-label").textContent = isMoveDayFocused()
+  $("#map-label").textContent = isFilterFocused() ? "FILTER SHORTAGE · THE HOME VISIT" : isMoveDayFocused()
     ? "MOVE DAY · THE CROSSING"
     : e.finale?.contributors?.includes(me.id)
       ? "YOUR REPAIR · AMBER MARKER"
@@ -1595,14 +1977,14 @@ function renderMission() {
     const buttons = [...mission.querySelectorAll("button")];
     const replacement =
       previousPhase === mission.dataset.phase
-        ? (isMoveDayFocused() &&
+        ? (isFilterFocused() && focused.id === "filter-result" && $("#filter-result")) || (isMoveDayFocused() &&
             focused.id === "move-day-result" &&
             $("#move-day-result")) ||
           buttons.find(
             (b) =>
               focusedKey && b.dataset.focusKey === focusedKey && !b.disabled,
           ) ||
-          (!isMoveDayFocused() &&
+          (!isMoveDayFocused() && !isFilterFocused() &&
             (buttons.find(
               (b) => b.textContent === focusedText && !b.disabled,
             ) ||
@@ -1853,6 +2235,7 @@ function renderTutorial() {
   );
 }
 function travel(index, kind) {
+  if (isFilterFocused() && kind !== "activity") setFilterOverview(true);
   if (isMoveDayFocused() && kind !== "activity") setMoveDayOverview(true);
   if (!state.chapter?.locations?.[index]) return;
   const l =
@@ -1867,14 +2250,19 @@ function travel(index, kind) {
     return;
   }
   setDestination(l.x, l.y, kind);
-  toast(
-    isMoveDayFocused()
+  travelToastText = isMoveDayFocused()
       ? `Heading to ${kind === "activity" && state.chapter.task?.stage === "deliver" ? "the roadside home" : l.name}.`
-      : `Walking to ${l.name}. You can also use the keyboard.`,
-  );
+      : isFilterFocused() ? `Visiting ${l.name}.` : `Walking to ${l.name}. You can also use the keyboard.`;
+  toast(travelToastText);
   activeCanvas.focus();
 }
 function showActivity(kind) {
+  clearTravelToast();
+  if (kind === "activity" && isFilterFocused()) {
+    renderMission();
+    if (!modal.open) $("#filter-primary")?.focus({ preventScroll: true });
+    return;
+  }
   if (kind === "activity" && isMoveDayFocused()) {
     renderMission();
     if (!modal.open) $("#move-day-primary")?.focus({ preventScroll: true });
@@ -2592,6 +2980,10 @@ function map() {
     "One shared neighborhood",
     `<p class="small">Eight districts around Bragging Square. The active chapter’s locations are open to everyone at once.</p><p class="small muted">Unplayed means no objective, learning, clue, or assist progress is recorded; moving and socializing do not count as chapter progress. Complete means the main objective is finished.</p><div class="chapter-map" id="map-districts"></div>`,
   );
+  if (isFilterAvailable()) $("#map-districts").append(
+    btn("Explore the neighborhood overview", () => setFilterOverview(true)),
+    btn("Return to Filter shortage", () => setFilterOverview(false), "primary"),
+  );
   if (isMoveDayAvailable())
     $("#map-districts").append(
       btn("Explore the neighborhood overview", () => setMoveDayOverview(true)),
@@ -2812,17 +3204,21 @@ function worldKeys(e) {
             : null;
   if (vector) {
     e.preventDefault();
+    if (isFilterFocused()) setFilterOverview(true);
     if (isMoveDayFocused()) setMoveDayOverview(true);
     const next = clipMove(pos, {
       x: Math.max(30, Math.min(1170, pos.x + vector[0] * 35)),
       y: Math.max(30, Math.min(770, pos.y + vector[1] * 35)),
     });
     target = { ...next, path: [next] };
+  } else if (k === "escape" && isFilterAvailable() && filterState.overview) {
+    e.preventDefault();setFilterOverview(false);
   } else if (k === "escape" && isMoveDayAvailable() && moveDayOverview) {
     e.preventDefault();
     setMoveDayOverview(false);
   } else if (k === keys.interact || k === "enter") {
     e.preventDefault();
+    if (isFilterFocused()) { filterPrimary(); return; }
     if (isMoveDayFocused()) {
       moveDayPrimary();
       return;
@@ -2841,6 +3237,8 @@ function worldKeys(e) {
       act("tutorial", { step: "interact" });
       toast("Guide: “Welcome. The robots rearranged the signs again.”");
     } else toast("Walk to one of the current chapter’s marked locations.");
+  } else if (isFilterFocused() && /^[1-3]$/.test(k)) {
+    e.preventDefault();selectFilterChoice(Number(k)-1);
   } else if (k === keys.inventory) {
     e.preventDefault();
     inventory();
@@ -2869,7 +3267,8 @@ modal.addEventListener("keydown", (e) => {
 function frame(now) {
   if (!activeCanvas?.isConnected) return;
   measureFrame(now, state?.event?.phase);
-  if (isMoveDayFocused())
+  if (isFilterFocused()) drawFilterScene(activeCtx, state, { selectedChoice:filterState.selection, completedHome:filterState.completedHome, focusedPeerId:filterState.focusedPeerId, pending:filterState.pending });
+  else if (isMoveDayFocused())
     drawMoveDayScene(activeCtx, state, {
       focusedPeerId: moveDayState.focusedPeerId,
     });
@@ -3037,78 +3436,173 @@ function drawAvatar(ctx, x, y, character = 0, color = 0, scale = 1) {
 }
 function tree(ctx, x, y, type = 0) {
   rect(ctx, x - 18, y + 23, 36, 6, "#263f3b");
-  rect(ctx, x - 4, y + 9, 8, 18, "#796e53");
-  rect(ctx, x - 14, y - 7, 28, 23, type ? "#4e755b" : "#3d6556");
-  rect(ctx, x - 10, y - 15, 20, 12, "#668468");
-  rect(ctx, x - 17, y, 7, 13, "#668468");
-  rect(ctx, x - 8, y - 12, 8, 6, "#94a774");
+  rect(ctx, x - 4, y + 9, 8, 18, type === 2 ? "#b6b59c" : "#796e53");
+  if (type === 1) {
+    // A narrow spruce with stepped boughs; the same bounded shadow as an oak.
+    rect(ctx, x - 3, y - 15, 6, 7, "#87a278");
+    rect(ctx, x - 7, y - 9, 14, 8, "#668468");
+    rect(ctx, x - 11, y - 2, 22, 8, "#4e755b");
+    rect(ctx, x - 15, y + 5, 30, 10, "#3d6556");
+    rect(ctx, x - 11, y + 6, 9, 3, "#668468");
+  } else if (type === 2) {
+    // Light-barked fruit tree, with separate rounded clusters.
+    rect(ctx, x - 12, y - 11, 24, 22, "#658267");
+    rect(ctx, x - 17, y - 4, 34, 12, "#658267");
+    rect(ctx, x - 8, y - 15, 16, 7, "#8da474");
+    rect(ctx, x - 14, y - 5, 9, 6, "#8da474");
+    for (const [dx, dy] of [[-9, 2], [7, -6], [6, 7]]) rect(ctx, x + dx, y + dy, 3, 3, "#d4ab65");
+    rect(ctx, x - 3, y + 17, 5, 2, "#68776a");
+  } else {
+    rect(ctx, x - 14, y - 7, 28, 23, "#3d6556");
+    rect(ctx, x - 10, y - 15, 20, 12, "#668468");
+    rect(ctx, x - 17, y, 7, 13, "#668468");
+    rect(ctx, x - 8, y - 12, 8, 6, "#94a774");
+  }
+}
+function drawFrontWalks(ctx, scenery) {
+  for (const r of [...scenery.walks, ...scenery.thresholds])
+    rect(ctx, r.x, r.y, r.width, r.height, "#cbbf9d");
+  // Small inset pavers keep the threshold legible above the foundation shadow.
+  for (const r of scenery.thresholds) rect(ctx, r.x + 1, r.y, r.width - 2, 3, "#e3d7b8");
+}
+function yardProp(ctx, prop) {
+  const { x, y, width: w, kind } = prop;
+  const p = (dx, dy, width, height, ink) => rect(ctx, x + dx, y + dy, width, height, ink);
+  const wood = "#9b8057", pale = "#d1bc87", dark = "#344f49";
+  if (["herb-bed", "flower-bed", "planters", "produce"].includes(kind)) {
+    p(0, 0, w, 14, wood); p(2, 2, w - 4, 10, "#685b42");
+    for (let n = 4; n < w - 4; n += 8) {
+      p(n, 3, 5, 3, "#90a36c"); p(n + 1, 8, 4, 3, "#6b8c5c");
+      if (kind === "flower-bed" || kind === "produce") p(n + 1, 2, 3, 2, "#ddb477");
+    }
+  } else if (["parcels", "barrels", "rain-barrels", "cable-spools"].includes(kind)) {
+    const barrel = kind.includes("barrel");
+    for (const dx of [2, 16, 29]) {
+      p(dx, 2, 11, 11, kind === "rain-barrels" ? "#7b9990" : wood);
+      p(dx + 1, 3, 9, 2, pale); p(dx + 1, 10, 9, 2, barrel ? dark : pale);
+      if (!barrel) p(dx + 4, 3, 2, 9, kind === "cable-spools" ? dark : pale);
+    }
+  } else if (kind === "handcart" || kind === "bicycle") {
+    p(5, 9, 7, 5, dark); p(w - 12, 9, 7, 5, dark);
+    p(8, 5, w - 17, 5, kind === "handcart" ? wood : "#a1b2a4");
+    p(3, 1, 3, 9, pale); p(1, 1, 7, 2, pale);
+    if (kind === "bicycle") { p(w - 11, 2, 3, 8, pale); p(w - 14, 1, 8, 3, dark); }
+  } else if (kind === "laundry") {
+    p(1, 0, 2, 14, wood); p(w - 3, 0, 2, 14, wood); p(3, 1, w - 6, 1, pale);
+    for (let dx = 7; dx < w - 6; dx += 9) p(dx, 3, 6, 8, dx % 2 ? "#d4c8a6" : "#87a99b");
+  } else if (kind === "noticeboard") {
+    p(3, 0, w - 6, 10, wood); p(5, 2, w - 10, 6, pale);
+    p(7, 10, 3, 4, dark); p(w - 10, 10, 3, 4, dark);
+    for (let dx = 9; dx < w - 8; dx += 8) p(dx, 3, 4, 3, "#eee0b7");
+  } else if (kind === "bench" || kind === "picnic-table") {
+    p(3, 2, w - 6, 3, wood); p(1, 7, w - 2, 4, pale);
+    p(6, 11, 3, 3, dark); p(w - 9, 11, 3, 3, dark);
+    if (kind === "picnic-table") p(7, 0, w - 14, 5, wood);
+  } else {
+    p(2, 1, w - 4, 12, "#8e9e8d"); p(4, 3, w - 8, 8, dark);
+    for (let dx = 6; dx < w - 5; dx += 5) p(dx, 4, 2, 6, kind === "solar-panel" ? "#799caa" : "#b4bda4");
+  }
 }
 function building(ctx, x, y, w, h, color, index, lit, recovery = 0) {
-  const wall = lit
-    ? color
-    : ["#71827c", "#657d7c", "#7b8580", "#6b7b83"][index % 4];
-  const roof = "#263f48",
-    edge = lit ? "#c9d5b5" : "#9ba994";
-  const light = lit ? "#f2d28a" : "#385456";
-  rect(ctx, x + 7, y + 8, w, h, "#233d3d");
-  rect(ctx, x, y, w, h, wall);
-  rect(ctx, x, y + h - 5, w, 5, "#3a5555");
-  if (recovery > 0)
-    rect(ctx, x, y + h - 4, Math.round(w * recovery), 3, "#b9d9b0");
-  // Three original roof profiles share the established footprint.
-  rect(ctx, x - 5, y - 5, w + 10, 14, roof);
-  if (index % 3 === 0) {
-    for (let n = 0; n < 3; n++) rect(ctx, x + n * 30, y - 12, 25, 9, roof);
-  } else if (index % 3 === 1) {
-    rect(ctx, x + 9, y - 12, w - 18, 9, roof);
-    rect(ctx, x + 13, y - 10, w - 26, 3, edge);
+  // Each landmark has its own eaves, roof pitch and siding. Keep the
+  // thresholds on the walkable map even when the upper stories step back.
+  const [inset, eaves, profile, siding, roofing] = [
+    [0, 21, "monitor", "#977754", "#4d5756"],     // freight shed
+    [8, 30, "shed", "#819292", "#4a666d"],       // highway works
+    [0, 18, "sawtooth", "#82938b", "#47676a"],
+    [8, 22, "vent", "#86918c", "#56626c"],
+    [5, 22, "gable", "#bc9d79", "#695752"],
+    [0, 15, "tower", "#c0aa86", "#4a6365"],
+    [7, 23, "hip", "#b29d82", "#6a615b"],
+    [3, 29, "gable", "#97947e", "#675b50"],
+    [5, 1, "parapet", "#a57f6f", "#574d4d"],
+    [3, 23, "shed", "#7b998d", "#415f58"],
+    [0, 25, "false front", "#a2815d", "#69513f"], // frontier trading post
+    [10, 29, "hip", "#b3a58a", "#425e66"],       // payment kiosk
+    [1, 17, "marquee", "#939099", "#504b60"],
+    [4, 31, "canopy", "#ac9064", "#805c4c"],
+    [1, 13, "vent", "#83939a", "#47596b"],
+    [10, 12, "tower", "#77868c", "#3d505c"],
+  ][index];
+  const wall = lit ? color : siding, roof = roofing;
+  const edge = lit ? "#e0d1a9" : "#b9b19a";
+  const light = lit ? "#ffd588" : "#405b5b";
+  const left = x + inset, width = w - 2 * inset, top = y + eaves;
+  rect(ctx, left + 5, top + 6, width, h - eaves, "#29433e");
+  rect(ctx, left, top, width, h - eaves, wall);
+  const strip = (offset, rise, height) =>
+    rect(ctx, left - 3 + offset, top - rise, width + 6 - 2 * offset, height, roof);
+  if (["gable", "hip", "canopy"].includes(profile)) {
+    const tiers = profile === "gable" ? 7 : 5;
+    for (let n = 0; n < tiers; n++) strip(n * 5, 4 + n * 4, 4);
+  } else if (profile === "shed" || profile === "sawtooth") {
+    for (let n = 0; n < width; n += 6) {
+      const rise = 6 + 3 * (profile === "shed" ? Math.floor(n / 16) : Math.floor(n / 6) % 5);
+      rect(ctx, left + n, top - rise, Math.min(6,width-n), rise, roof);
+    }
   } else {
-    rect(ctx, x, y - 12, w, 9, roof);
-    rect(ctx, x + 8, y - 10, 28, 3, edge);
-    rect(ctx, x + 54, y - 10, 28, 3, edge);
+    strip(0, 7, 8);
+    if (profile === "false front" || profile === "marquee") {
+      strip(4, 24, 18); strip(12, 29, 6);
+      rect(ctx, left + 8, top - 20, width - 16, 9, edge);
+    } else if (profile === "tower" || profile === "monitor") {
+      const span = profile === "tower" ? 20 : width - 32;
+      rect(ctx, x + (w-span)/2, top - 20, span, 14, wall);
+      rect(ctx, x + (w-span)/2 - 2, top - 23, span + 4, 4, roof);
+    } else if (profile === "vent") {
+      rect(ctx, left + 12, top - 21, 14, 15, roof);
+      rect(ctx, left + 9, top - 22, 20, 4, edge);
+    }
   }
-  rect(ctx, x - 2, y + 7, w + 4, 3, edge);
-  // Keep the center doorway separate from every facade detail.
-  rect(ctx, x + 37, y + h - 25, 16, 25, "#1c373e");
-  rect(ctx, x + 49, y + h - 14, 2, 2, "#e9c477");
+  rect(ctx, left - 2, top, width + 4, 3, edge);
+  rect(ctx, left, y + h - 4, width, 4, "#40554b");
+  if (recovery > 0) rect(ctx, left, y + h - 4, Math.round(width * recovery), 3, "#b9d9b0");
+  function detail(px, py, pw, ph, ink) {
+    const dx = left + Math.round((px - x) * width / w);
+    const dy = top + Math.round((py - y) * (h - eaves) / h);
+    const dw = Math.max(1, Math.round(pw * width / w));
+    const dh = Math.max(1, Math.round(ph * (h - eaves) / h));
+    // Paint the doorway last so shutters and service counters never hide it.
+    rect(ctx, dx, dy, dw, dh, ink);
+  }
   for (const wx of [10, 63]) {
-    rect(ctx, x + wx, y + 20, 17, 19, "#263f48");
-    rect(ctx, x + wx + 2, y + 22, 13, 15, light);
-    rect(ctx, x + wx + 8, y + 22, 2, 15, "#263f48");
+    detail( x + wx, y + 20, 17, 19, "#263f48");
+    detail( x + wx + 2, y + 22, 13, 15, light);
+    detail( x + wx + 8, y + 22, 2, 15, "#263f48");
   }
   const kind = Math.floor(index / 2);
   if (kind === 0) {
     // Freight depot: loading bay, stacked parcels and a highway maintenance stripe.
-    rect(ctx, x + 31, y + 18, 28, 19, "#35505a");
+    detail( x + 31, y + 18, 28, 19, "#35505a");
     for (let n = 0; n < 4; n++)
-      rect(ctx, x + 33, y + 20 + n * 4, 24, 1, "#9ca58d");
+      detail( x + 33, y + 20 + n * 4, 24, 1, "#9ca58d");
     for (const [cx, cy] of [
       [9, 44],
       [23, 48],
       [65, 45],
     ]) {
-      rect(ctx, x + cx, y + cy, 13, 12, "#b89460");
-      rect(ctx, x + cx + 5, y + cy, 3, 12, "#ddc387");
+      detail( x + cx, y + cy, 13, 12, "#b89460");
+      detail( x + cx + 5, y + cy, 3, 12, "#ddc387");
     }
     if (index % 2)
       for (let n = 0; n < 5; n++)
-        rect(ctx, x + 8 + n * 16, y + 12, 10, 4, "#e9a667");
+        detail( x + 8 + n * 16, y + 12, 10, 4, "#e9a667");
   } else if (kind === 1) {
     // Ductwork and filter grilles.
-    rect(ctx, x + 32, y + 15, 26, 21, "#243f46");
-    for (let n = 0; n < 5; n++) rect(ctx, x + 35 + n * 4, y + 18, 2, 15, edge);
-    rect(ctx, x + 7, y + 44, 20, 5, "#abb8a8");
-    rect(ctx, x + 21, y + 44, 6, 16, "#abb8a8");
+    detail( x + 32, y + 15, 26, 21, "#243f46");
+    for (let n = 0; n < 5; n++) detail( x + 35 + n * 4, y + 18, 2, 15, edge);
+    detail( x + 7, y + 44, 20, 5, "#abb8a8");
+    detail( x + 21, y + 44, 6, 16, "#abb8a8");
   } else if (kind === 2) {
     // Civic archive: shallow pillars and a lit verification terminal.
-    for (const px of [3, 29, 58, 84]) rect(ctx, x + px, y + 15, 3, 44, edge);
-    rect(ctx, x + 37, y + 14, 16, 20, "#203b43");
-    rect(ctx, x + 40, y + 18, 10, 9, lit ? "#b9d9b0" : "#e9a667");
+    for (const px of [3, 29, 58, 84]) detail( x + px, y + 15, 3, 44, edge);
+    detail( x + 37, y + 14, 16, 20, "#203b43");
+    detail( x + 40, y + 18, 10, 9, lit ? "#b9d9b0" : "#e9a667");
   } else if (kind === 3) {
     // Weather damage is visible until the shared district repair advances.
-    rect(ctx, x + 35, y + 14, 20, 21, "#ddd3b2");
+    detail( x + 35, y + 14, 20, 21, "#ddd3b2");
     for (let n = 0; n < 3; n++)
-      rect(ctx, x + 39, y + 19 + n * 5, 12, 2, "#617978");
+      detail( x + 39, y + 19 + n * 5, 12, 2, "#617978");
     if (!lit)
       for (const [cx, cy] of [
         [12, 21],
@@ -3117,35 +3611,34 @@ function building(ctx, x, y, w, h, color, index, lit, recovery = 0) {
         [67, 47],
         [72, 52],
       ])
-        rect(ctx, x + cx, y + cy, 9, 3, "#304b4b");
+        detail( x + cx, y + cy, 9, 3, "#304b4b");
   } else if (kind === 4) {
     // Apartment balconies / service HQ. No insect imagery in the scenery.
-    rect(ctx, x + 5, y + 39, 26, 4, roof);
-    rect(ctx, x + 59, y + 39, 26, 4, roof);
-    rect(ctx, x + 35, y + 17, 20, 17, "#263f48");
-    rect(ctx, x + 39, y + 21, 4, 4, "#e9a667");
-    rect(ctx, x + 47, y + 21, 4, 4, "#b9d9b0");
+    detail( x + 5, y + 39, 26, 4, roof);
+    detail( x + 59, y + 39, 26, 4, roof);
+    detail( x + 35, y + 17, 20, 17, "#263f48");
+    detail( x + 39, y + 21, 4, 4, "#e9a667");
+    detail( x + 47, y + 21, 4, 4, "#b9d9b0");
   } else if (kind === 5) {
     // Trading desk and the payment cycle terminal.
-    rect(ctx, x + 7, y + 12, 76, 8, "#a59777");
+    detail( x + 7, y + 12, 76, 8, "#a59777");
     for (let n = 0; n < 5; n++)
-      rect(ctx, x + 9 + n * 15, y + 12, 8, 8, "#d9c28c");
-    rect(ctx, x + 34, y + 23, 22, 12, "#203b43");
-    rect(ctx, x + 38, y + 27, 14, 3, lit ? "#b9d9b0" : "#e9a667");
+      detail( x + 9 + n * 15, y + 12, 8, 8, "#d9c28c");
+    detail( x + 34, y + 23, 22, 12, "#203b43");
+    detail( x + 38, y + 27, 14, 3, lit ? "#b9d9b0" : "#e9a667");
   } else if (kind === 6) {
     // Market stalls and an arcade marquee, contained inside the facade.
     for (let n = 0; n < 6; n++)
-      rect(ctx, x + 6 + n * 13, y + 11, 12, 9, n % 2 ? "#c5a469" : "#688d81");
-    rect(ctx, x + 34, y + 24, 22, 11, "#263f48");
-    rect(ctx, x + 42, y + 26, 6, 7, "#e9c477");
+      detail( x + 6 + n * 13, y + 11, 12, 9, n % 2 ? "#c5a469" : "#688d81");
+    detail( x + 34, y + 24, 22, 11, "#263f48");
+    detail( x + 42, y + 26, 6, 7, "#e9c477");
   } else {
     // Network exchange / AI headquarters: visible server racks and cable trunk.
     for (const rx of [8, 62]) {
-      rect(ctx, x + rx, y + 16, 20, 29, "#203b43");
+      detail( x + rx, y + 16, 20, 29, "#203b43");
       for (let n = 0; n < 4; n++) {
-        rect(ctx, x + rx + 3, y + 19 + n * 6, 12, 2, "#778f8c");
-        rect(
-          ctx,
+        detail( x + rx + 3, y + 19 + n * 6, 12, 2, "#778f8c");
+        detail(
           x + rx + 16,
           y + 19 + n * 6,
           2,
@@ -3154,45 +3647,45 @@ function building(ctx, x, y, w, h, color, index, lit, recovery = 0) {
         );
       }
     }
-    rect(ctx, x + 33, y + 14, 3, 23, "#c4b88f");
-    rect(ctx, x + 33, y + 14, 25, 3, "#c4b88f");
+    detail( x + 33, y + 14, 3, 23, "#c4b88f");
+    detail( x + 33, y + 14, 25, 3, "#c4b88f");
   }
   if (!lit) {
     // An amber lock plate identifies occupied infrastructure, without animation.
-    rect(ctx, x + 73, y + 51, 10, 9, "#203b43");
-    rect(ctx, x + 76, y + 53, 4, 5, "#e9a667");
+    detail( x + 73, y + 51, 10, 9, "#203b43");
+    detail( x + 76, y + 53, 4, 5, "#e9a667");
   }
+  // Keep the center doorway separate from every facade detail.
+  rect(ctx, x + 37, y + h - 25, 16, 25, "#1c373e");
+  rect(ctx, x + 49, y + h - 14, 2, 2, "#e9c477");
 }
 function drawRoads(ctx) {
-  ROAD_BANDS.forEach((road) => {
-    rect(ctx, road.x, road.y, road.width, road.height, "#a9ac91");
-    rect(
-      ctx,
-      road.x + (road.width < road.height ? 2 : 0),
-      road.y + (road.width > road.height ? 2 : 0),
-      road.width - (road.width < road.height ? 4 : 0),
-      road.height - (road.width > road.height ? 4 : 0),
-      "#717f78",
-    );
-  });
-  for (let x = 0; x < 1200; x += 38) {
-    rect(ctx, x, 243, 14, 2, "#c9c8a5");
-    rect(ctx, x, 489, 14, 2, "#c9c8a5");
+  const eastWest = ROAD_BANDS.filter(r => r.width > r.height);
+  const northSouth = ROAD_BANDS.filter(r => r.height > r.width);
+  const asphalt = "#454e50", curb = "#a7a394", paint = "#d9be78";
+  for (const r of ROAD_BANDS) rect(ctx, r.x, r.y, r.width, r.height, curb);
+  // Lay both carriageways after all curbs so intersections share one surface.
+  for (const r of eastWest) rect(ctx, r.x, r.y + 3, r.width, r.height - 6, asphalt);
+  for (const r of northSouth) rect(ctx, r.x + 3, r.y, r.width - 6, r.height, asphalt);
+  for (const h of eastWest) {
+    for (const v of northSouth) {
+      rect(ctx, v.x, h.y, v.width, h.height, asphalt);
+      // Short stop bars on the side street approaches leave the intersection open.
+      rect(ctx, v.x + 5, h.y - 7, v.width / 2 - 8, 3, "#ded7bd");
+      rect(ctx, v.x + v.width / 2 + 3, h.y + h.height + 4, v.width / 2 - 8, 3, "#ded7bd");
+    }
+    for (let x = 6; x + 13 <= h.width; x += 37)
+      if (!northSouth.some(v => x + 13 > v.x - 8 && x < v.x + v.width + 8))
+        rect(ctx, x, h.y + h.height / 2 - 1, 13, 2, paint);
   }
-  for (let y = 0; y < 800; y += 38) {
-    rect(ctx, 394, y, 2, Math.min(14, 800 - y), "#c9c8a5");
-    rect(ctx, 809, y, 2, Math.min(14, 800 - y), "#c9c8a5");
-  }
+  for (const v of northSouth)
+    for (let y = 6; y + 13 <= v.height; y += 37)
+      if (!eastWest.some(h => y + 13 > h.y - 12 && y < h.y + h.height + 12))
+        rect(ctx, v.x + v.width / 2 - 1, y, 2, 13, paint);
 }
 function drawMap(ctx, live) {
   ctx.clearRect(0, 0, 1200, 800);
   rect(ctx, 0, 0, 1200, 800, "#304b4b");
-  for (let x = 0; x < 1200; x += 20)
-    for (let y = 0; y < 800; y += 20) {
-      if ((x * 13 + y * 7) % 93 < 20) rect(ctx, x + 3, y + 4, 3, 2, "#385650");
-      if ((x * 3 + y * 17) % 137 < 12)
-        rect(ctx, x + 10, y + 12, 2, 3, "#526950");
-    }
   const restoration = restorationProgress(state?.event);
   // District grounds are painted first. Roads remain continuous clear corridors.
   cells.forEach(([col, row], i) => {
@@ -3200,19 +3693,28 @@ function drawMap(ctx, live) {
       active = live && state?.event?.chapter === i;
     rect(
       ctx,
-      col * 415 + 24,
-      row * 260 + 19,
-      305,
-      row === 1 ? 185 : 205,
+      [0, 415, 830][col],
+      [0, 258, 510][row],
+      [375, 375, 370][col],
+      [230, 212, 290][row],
       recovered >= 1
         ? "#657c61"
         : recovered > 0
           ? "#435c55"
           : active
-            ? "#49665d"
-            : "#3b5552",
+            ? "#556f55"
+            : "#4b644e",
     );
   });
+  // Sparse tufts use the same world grid across lot boundaries.
+  for (let y = 12; y < 800; y += 34)
+    for (let x = 8; x < 1200; x += 41) {
+      const offset = (x * 7 + y * 3) % 27;
+      if (offset % 3 === 0) {
+        rect(ctx, x + offset, y, 4, 2, "#617959");
+        rect(ctx, x + offset + 3, y - 2, 2, 3, "#617959");
+      }
+    }
   drawRoads(ctx);
   cells.forEach(([col, row], i) => {
     const x = col * 415 + 34,
@@ -3244,8 +3746,9 @@ function drawMap(ctx, live) {
       lit,
       districtRestored,
     );
-    rect(ctx, a[0] - 6, a[1] - 20, 12, 35, "#d9ccaa");
-    rect(ctx, b[0] - 6, b[1] - 20, 12, 35, "#d9ccaa");
+    const scenery = districtScenery(a, b, i);
+    drawFrontWalks(ctx, scenery);
+    scenery.props.forEach(prop => yardProp(ctx, prop));
     if (i === 0) {
       // The two inspectable crossings are landmarks, not additional collisions.
       rect(ctx, 224, 60, 12, 104, "#8c9987");
@@ -3264,8 +3767,7 @@ function drawMap(ctx, live) {
         rect(ctx, rx + 1, ry, 5, 2, "#9a9a7e");
       }
     }
-    const scenery = districtScenery(a, b);
-    scenery.trees.forEach(([tx, ty], n) => tree(ctx, tx, ty, (i + n) % 2));
+    scenery.trees.forEach(([tx, ty, kind]) => tree(ctx, tx, ty, kind));
     [a, b].forEach((door, site) => {
       const label = SITE_LABELS[i][site];
       const width = label.length * 9 + 12;
@@ -4550,7 +5052,7 @@ function updateControlHints() {
   }
   const hint = $("#world-hint");
   if (hint)
-    hint.textContent = isMoveDayFocused()
+    hint.textContent = (isMoveDayFocused() || isFilterFocused())
       ? `Choose beside the scene · ${keyLabel(
           "interact",
         )} continues · ${movementKeys()} / arrows switch to free walking`
@@ -4558,12 +5060,14 @@ function updateControlHints() {
           "interact",
         )} to interact`;
   if ($("#field-notes-menu"))
-    $("#field-notes-menu").hidden = !isMoveDayAvailable();
-  if ($("#move-day-return"))
-    $("#move-day-return").hidden = !isMoveDayAvailable() || isMoveDayFocused();
+    $("#field-notes-menu").hidden = !isMoveDayAvailable() && !isFilterAvailable();
+  if ($("#move-day-return")) {
+    $("#move-day-return").hidden = isFilterAvailable() ? isFilterFocused() : !isMoveDayAvailable() || isMoveDayFocused();
+    $("#move-day-return").textContent = isFilterAvailable() ? "Return to Filter shortage" : "Return to Move Day";
+  }
   activeCanvas?.setAttribute(
     "aria-label",
-    isMoveDayFocused()
+    isFilterFocused() ? `Filter shortage home visit. Tab reaches inspection and installation choices. Number keys select a choice. ${keyLabel("interact")} continues. Movement keys switch to the neighborhood overview.` : isMoveDayFocused()
       ? `Move Day delivery scene. Tab reaches cargo and route choices. ${keyLabel(
           "interact",
         )} continues the current stage. Movement keys switch to the neighborhood overview.`

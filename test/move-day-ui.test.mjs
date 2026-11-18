@@ -408,9 +408,17 @@ test("three focused deliveries keep accepted route, score and personal completio
       assert.equal(f.context.state.chapter.task.stage, stage);
       if (stage === "load" || stage === "route")
         f.context.selectMoveDayChoice(choice);
+      if (stage === "deliver") {
+        f.context.travelToastText = "Heading to the roadside home.";
+        f.context.toast(trip === 1 ? "A neighbor offered a trade." : f.context.travelToastText);
+      }
       const pending = f.context.submitMoveDayChoice();
       f.resolve();
       await pending;
+      if (stage === "deliver") {
+        assert.equal(f.ids.get("#toast").style.display, trip === 1 ? "block" : "none");
+        if (trip === 1) assert.equal(f.ids.get("#toast").textContent, "A neighbor offered a trade.");
+      }
       assert.equal(f.modal.open, false);
       assert.equal(f.context.moveDayOverview, false);
     }

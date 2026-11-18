@@ -1,0 +1,313 @@
+diff --git a/public/app.js b/public/app.js
+index 026df37..e73cf2b 100644
+--- a/public/app.js
++++ b/public/app.js
+@@ -3044,71 +3044,105 @@ function tree(ctx, x, y, type = 0) {
+   rect(ctx, x - 8, y - 12, 8, 6, "#94a774");
+ }
+ function building(ctx, x, y, w, h, color, index, lit, recovery = 0) {
+-  const wall = lit
+-    ? color
+-    : ["#71827c", "#657d7c", "#7b8580", "#6b7b83"][index % 4];
+-  const roof = "#263f48",
+-    edge = lit ? "#c9d5b5" : "#9ba994";
+-  const light = lit ? "#f2d28a" : "#385456";
+-  rect(ctx, x + 7, y + 8, w, h, "#233d3d");
+-  rect(ctx, x, y, w, h, wall);
+-  rect(ctx, x, y + h - 5, w, 5, "#3a5555");
+-  if (recovery > 0)
+-    rect(ctx, x, y + h - 4, Math.round(w * recovery), 3, "#b9d9b0");
+-  // Three original roof profiles share the established footprint.
+-  rect(ctx, x - 5, y - 5, w + 10, 14, roof);
+-  if (index % 3 === 0) {
+-    for (let n = 0; n < 3; n++) rect(ctx, x + n * 30, y - 12, 25, 9, roof);
+-  } else if (index % 3 === 1) {
+-    rect(ctx, x + 9, y - 12, w - 18, 9, roof);
+-    rect(ctx, x + 13, y - 10, w - 26, 3, edge);
++  // Each landmark has its own eaves, roof pitch and siding. Keep the
++  // thresholds on the walkable map even when the upper stories step back.
++  const [inset, eaves, profile, siding, roofing] = [
++    [0, 21, "monitor", "#977754", "#4d5756"],     // freight shed
++    [8, 30, "shed", "#819292", "#4a666d"],       // highway works
++    [0, 18, "sawtooth", "#82938b", "#47676a"],
++    [8, 22, "vent", "#86918c", "#56626c"],
++    [5, 22, "gable", "#bc9d79", "#695752"],
++    [0, 15, "tower", "#c0aa86", "#4a6365"],
++    [7, 23, "hip", "#b29d82", "#6a615b"],
++    [3, 29, "gable", "#97947e", "#675b50"],
++    [5, 1, "parapet", "#a57f6f", "#574d4d"],
++    [3, 23, "shed", "#7b998d", "#415f58"],
++    [0, 25, "false front", "#a2815d", "#69513f"], // frontier trading post
++    [10, 29, "hip", "#b3a58a", "#425e66"],       // payment kiosk
++    [1, 17, "marquee", "#939099", "#504b60"],
++    [4, 31, "canopy", "#ac9064", "#805c4c"],
++    [1, 13, "vent", "#83939a", "#47596b"],
++    [10, 12, "tower", "#77868c", "#3d505c"],
++  ][index];
++  const wall = lit ? color : siding, roof = roofing;
++  const edge = lit ? "#e0d1a9" : "#b9b19a";
++  const light = lit ? "#ffd588" : "#405b5b";
++  const left = x + inset, width = w - 2 * inset, top = y + eaves;
++  rect(ctx, left + 5, top + 6, width, h - eaves, "#29433e");
++  rect(ctx, left, top, width, h - eaves, wall);
++  const strip = (offset, rise, height) =>
++    rect(ctx, left - 3 + offset, top - rise, width + 6 - 2 * offset, height, roof);
++  if (["gable", "hip", "canopy"].includes(profile)) {
++    const tiers = profile === "gable" ? 7 : 5;
++    for (let n = 0; n < tiers; n++) strip(n * 5, 4 + n * 4, 4);
++  } else if (profile === "shed" || profile === "sawtooth") {
++    for (let n = 0; n < width; n += 6) {
++      const rise = 6 + 3 * (profile === "shed" ? Math.floor(n / 16) : Math.floor(n / 6) % 5);
++      rect(ctx, left + n, top - rise, Math.min(6,width-n), rise, roof);
++    }
+   } else {
+-    rect(ctx, x, y - 12, w, 9, roof);
+-    rect(ctx, x + 8, y - 10, 28, 3, edge);
+-    rect(ctx, x + 54, y - 10, 28, 3, edge);
++    strip(0, 7, 8);
++    if (profile === "false front" || profile === "marquee") {
++      strip(4, 24, 18); strip(12, 29, 6);
++      rect(ctx, left + 8, top - 20, width - 16, 9, edge);
++    } else if (profile === "tower" || profile === "monitor") {
++      const span = profile === "tower" ? 20 : width - 32;
++      rect(ctx, x + (w-span)/2, top - 20, span, 14, wall);
++      rect(ctx, x + (w-span)/2 - 2, top - 23, span + 4, 4, roof);
++    } else if (profile === "vent") {
++      rect(ctx, left + 12, top - 21, 14, 15, roof);
++      rect(ctx, left + 9, top - 22, 20, 4, edge);
++    }
++  }
++  rect(ctx, left - 2, top, width + 4, 3, edge);
++  rect(ctx, left, y + h - 4, width, 4, "#40554b");
++  if (recovery > 0) rect(ctx, left, y + h - 4, Math.round(width * recovery), 3, "#b9d9b0");
++  function detail(px, py, pw, ph, ink) {
++    const dx = left + Math.round((px - x) * width / w);
++    const dy = top + Math.round((py - y) * (h - eaves) / h);
++    const dw = Math.max(1, Math.round(pw * width / w));
++    const dh = Math.max(1, Math.round(ph * (h - eaves) / h));
++    // Paint the doorway last so shutters and service counters never hide it.
++    rect(ctx, dx, dy, dw, dh, ink);
+   }
+-  rect(ctx, x - 2, y + 7, w + 4, 3, edge);
+-  // Keep the center doorway separate from every facade detail.
+-  rect(ctx, x + 37, y + h - 25, 16, 25, "#1c373e");
+-  rect(ctx, x + 49, y + h - 14, 2, 2, "#e9c477");
+   for (const wx of [10, 63]) {
+-    rect(ctx, x + wx, y + 20, 17, 19, "#263f48");
+-    rect(ctx, x + wx + 2, y + 22, 13, 15, light);
+-    rect(ctx, x + wx + 8, y + 22, 2, 15, "#263f48");
++    detail( x + wx, y + 20, 17, 19, "#263f48");
++    detail( x + wx + 2, y + 22, 13, 15, light);
++    detail( x + wx + 8, y + 22, 2, 15, "#263f48");
+   }
+   const kind = Math.floor(index / 2);
+   if (kind === 0) {
+     // Freight depot: loading bay, stacked parcels and a highway maintenance stripe.
+-    rect(ctx, x + 31, y + 18, 28, 19, "#35505a");
++    detail( x + 31, y + 18, 28, 19, "#35505a");
+     for (let n = 0; n < 4; n++)
+-      rect(ctx, x + 33, y + 20 + n * 4, 24, 1, "#9ca58d");
++      detail( x + 33, y + 20 + n * 4, 24, 1, "#9ca58d");
+     for (const [cx, cy] of [
+       [9, 44],
+       [23, 48],
+       [65, 45],
+     ]) {
+-      rect(ctx, x + cx, y + cy, 13, 12, "#b89460");
+-      rect(ctx, x + cx + 5, y + cy, 3, 12, "#ddc387");
++      detail( x + cx, y + cy, 13, 12, "#b89460");
++      detail( x + cx + 5, y + cy, 3, 12, "#ddc387");
+     }
+     if (index % 2)
+       for (let n = 0; n < 5; n++)
+-        rect(ctx, x + 8 + n * 16, y + 12, 10, 4, "#e9a667");
++        detail( x + 8 + n * 16, y + 12, 10, 4, "#e9a667");
+   } else if (kind === 1) {
+     // Ductwork and filter grilles.
+-    rect(ctx, x + 32, y + 15, 26, 21, "#243f46");
+-    for (let n = 0; n < 5; n++) rect(ctx, x + 35 + n * 4, y + 18, 2, 15, edge);
+-    rect(ctx, x + 7, y + 44, 20, 5, "#abb8a8");
+-    rect(ctx, x + 21, y + 44, 6, 16, "#abb8a8");
++    detail( x + 32, y + 15, 26, 21, "#243f46");
++    for (let n = 0; n < 5; n++) detail( x + 35 + n * 4, y + 18, 2, 15, edge);
++    detail( x + 7, y + 44, 20, 5, "#abb8a8");
++    detail( x + 21, y + 44, 6, 16, "#abb8a8");
+   } else if (kind === 2) {
+     // Civic archive: shallow pillars and a lit verification terminal.
+-    for (const px of [3, 29, 58, 84]) rect(ctx, x + px, y + 15, 3, 44, edge);
+-    rect(ctx, x + 37, y + 14, 16, 20, "#203b43");
+-    rect(ctx, x + 40, y + 18, 10, 9, lit ? "#b9d9b0" : "#e9a667");
++    for (const px of [3, 29, 58, 84]) detail( x + px, y + 15, 3, 44, edge);
++    detail( x + 37, y + 14, 16, 20, "#203b43");
++    detail( x + 40, y + 18, 10, 9, lit ? "#b9d9b0" : "#e9a667");
+   } else if (kind === 3) {
+     // Weather damage is visible until the shared district repair advances.
+-    rect(ctx, x + 35, y + 14, 20, 21, "#ddd3b2");
++    detail( x + 35, y + 14, 20, 21, "#ddd3b2");
+     for (let n = 0; n < 3; n++)
+-      rect(ctx, x + 39, y + 19 + n * 5, 12, 2, "#617978");
++      detail( x + 39, y + 19 + n * 5, 12, 2, "#617978");
+     if (!lit)
+       for (const [cx, cy] of [
+         [12, 21],
+@@ -3117,35 +3151,34 @@ function building(ctx, x, y, w, h, color, index, lit, recovery = 0) {
+         [67, 47],
+         [72, 52],
+       ])
+-        rect(ctx, x + cx, y + cy, 9, 3, "#304b4b");
++        detail( x + cx, y + cy, 9, 3, "#304b4b");
+   } else if (kind === 4) {
+     // Apartment balconies / service HQ. No insect imagery in the scenery.
+-    rect(ctx, x + 5, y + 39, 26, 4, roof);
+-    rect(ctx, x + 59, y + 39, 26, 4, roof);
+-    rect(ctx, x + 35, y + 17, 20, 17, "#263f48");
+-    rect(ctx, x + 39, y + 21, 4, 4, "#e9a667");
+-    rect(ctx, x + 47, y + 21, 4, 4, "#b9d9b0");
++    detail( x + 5, y + 39, 26, 4, roof);
++    detail( x + 59, y + 39, 26, 4, roof);
++    detail( x + 35, y + 17, 20, 17, "#263f48");
++    detail( x + 39, y + 21, 4, 4, "#e9a667");
++    detail( x + 47, y + 21, 4, 4, "#b9d9b0");
+   } else if (kind === 5) {
+     // Trading desk and the payment cycle terminal.
+-    rect(ctx, x + 7, y + 12, 76, 8, "#a59777");
++    detail( x + 7, y + 12, 76, 8, "#a59777");
+     for (let n = 0; n < 5; n++)
+-      rect(ctx, x + 9 + n * 15, y + 12, 8, 8, "#d9c28c");
+-    rect(ctx, x + 34, y + 23, 22, 12, "#203b43");
+-    rect(ctx, x + 38, y + 27, 14, 3, lit ? "#b9d9b0" : "#e9a667");
++      detail( x + 9 + n * 15, y + 12, 8, 8, "#d9c28c");
++    detail( x + 34, y + 23, 22, 12, "#203b43");
++    detail( x + 38, y + 27, 14, 3, lit ? "#b9d9b0" : "#e9a667");
+   } else if (kind === 6) {
+     // Market stalls and an arcade marquee, contained inside the facade.
+     for (let n = 0; n < 6; n++)
+-      rect(ctx, x + 6 + n * 13, y + 11, 12, 9, n % 2 ? "#c5a469" : "#688d81");
+-    rect(ctx, x + 34, y + 24, 22, 11, "#263f48");
+-    rect(ctx, x + 42, y + 26, 6, 7, "#e9c477");
++      detail( x + 6 + n * 13, y + 11, 12, 9, n % 2 ? "#c5a469" : "#688d81");
++    detail( x + 34, y + 24, 22, 11, "#263f48");
++    detail( x + 42, y + 26, 6, 7, "#e9c477");
+   } else {
+     // Network exchange / AI headquarters: visible server racks and cable trunk.
+     for (const rx of [8, 62]) {
+-      rect(ctx, x + rx, y + 16, 20, 29, "#203b43");
++      detail( x + rx, y + 16, 20, 29, "#203b43");
+       for (let n = 0; n < 4; n++) {
+-        rect(ctx, x + rx + 3, y + 19 + n * 6, 12, 2, "#778f8c");
+-        rect(
+-          ctx,
++        detail( x + rx + 3, y + 19 + n * 6, 12, 2, "#778f8c");
++        detail(
+           x + rx + 16,
+           y + 19 + n * 6,
+           2,
+@@ -3154,45 +3187,45 @@ function building(ctx, x, y, w, h, color, index, lit, recovery = 0) {
+         );
+       }
+     }
+-    rect(ctx, x + 33, y + 14, 3, 23, "#c4b88f");
+-    rect(ctx, x + 33, y + 14, 25, 3, "#c4b88f");
++    detail( x + 33, y + 14, 3, 23, "#c4b88f");
++    detail( x + 33, y + 14, 25, 3, "#c4b88f");
+   }
+   if (!lit) {
+     // An amber lock plate identifies occupied infrastructure, without animation.
+-    rect(ctx, x + 73, y + 51, 10, 9, "#203b43");
+-    rect(ctx, x + 76, y + 53, 4, 5, "#e9a667");
++    detail( x + 73, y + 51, 10, 9, "#203b43");
++    detail( x + 76, y + 53, 4, 5, "#e9a667");
+   }
++  // Keep the center doorway separate from every facade detail.
++  rect(ctx, x + 37, y + h - 25, 16, 25, "#1c373e");
++  rect(ctx, x + 49, y + h - 14, 2, 2, "#e9c477");
+ }
+ function drawRoads(ctx) {
+-  ROAD_BANDS.forEach((road) => {
+-    rect(ctx, road.x, road.y, road.width, road.height, "#a9ac91");
+-    rect(
+-      ctx,
+-      road.x + (road.width < road.height ? 2 : 0),
+-      road.y + (road.width > road.height ? 2 : 0),
+-      road.width - (road.width < road.height ? 4 : 0),
+-      road.height - (road.width > road.height ? 4 : 0),
+-      "#717f78",
+-    );
+-  });
+-  for (let x = 0; x < 1200; x += 38) {
+-    rect(ctx, x, 243, 14, 2, "#c9c8a5");
+-    rect(ctx, x, 489, 14, 2, "#c9c8a5");
+-  }
+-  for (let y = 0; y < 800; y += 38) {
+-    rect(ctx, 394, y, 2, Math.min(14, 800 - y), "#c9c8a5");
+-    rect(ctx, 809, y, 2, Math.min(14, 800 - y), "#c9c8a5");
++  const eastWest = ROAD_BANDS.filter(r => r.width > r.height);
++  const northSouth = ROAD_BANDS.filter(r => r.height > r.width);
++  const asphalt = "#454e50", curb = "#a7a394", paint = "#d9be78";
++  for (const r of ROAD_BANDS) rect(ctx, r.x, r.y, r.width, r.height, curb);
++  // Lay both carriageways after all curbs so intersections share one surface.
++  for (const r of eastWest) rect(ctx, r.x, r.y + 3, r.width, r.height - 6, asphalt);
++  for (const r of northSouth) rect(ctx, r.x + 3, r.y, r.width - 6, r.height, asphalt);
++  for (const h of eastWest) {
++    for (const v of northSouth) {
++      rect(ctx, v.x, h.y, v.width, h.height, asphalt);
++      // Short stop bars on the side street approaches leave the intersection open.
++      rect(ctx, v.x + 5, h.y - 7, v.width / 2 - 8, 3, "#ded7bd");
++      rect(ctx, v.x + v.width / 2 + 3, h.y + h.height + 4, v.width / 2 - 8, 3, "#ded7bd");
++    }
++    for (let x = 6; x + 13 <= h.width; x += 37)
++      if (!northSouth.some(v => x + 13 > v.x - 8 && x < v.x + v.width + 8))
++        rect(ctx, x, h.y + h.height / 2 - 1, 13, 2, paint);
+   }
++  for (const v of northSouth)
++    for (let y = 6; y + 13 <= v.height; y += 37)
++      if (!eastWest.some(h => y + 13 > h.y - 12 && y < h.y + h.height + 12))
++        rect(ctx, v.x + v.width / 2 - 1, y, 2, 13, paint);
+ }
+ function drawMap(ctx, live) {
+   ctx.clearRect(0, 0, 1200, 800);
+   rect(ctx, 0, 0, 1200, 800, "#304b4b");
+-  for (let x = 0; x < 1200; x += 20)
+-    for (let y = 0; y < 800; y += 20) {
+-      if ((x * 13 + y * 7) % 93 < 20) rect(ctx, x + 3, y + 4, 3, 2, "#385650");
+-      if ((x * 3 + y * 17) % 137 < 12)
+-        rect(ctx, x + 10, y + 12, 2, 3, "#526950");
+-    }
+   const restoration = restorationProgress(state?.event);
+   // District grounds are painted first. Roads remain continuous clear corridors.
+   cells.forEach(([col, row], i) => {
+@@ -3200,19 +3233,28 @@ function drawMap(ctx, live) {
+       active = live && state?.event?.chapter === i;
+     rect(
+       ctx,
+-      col * 415 + 24,
+-      row * 260 + 19,
+-      305,
+-      row === 1 ? 185 : 205,
++      [0, 415, 830][col],
++      [0, 258, 510][row],
++      [375, 375, 370][col],
++      [230, 212, 290][row],
+       recovered >= 1
+         ? "#657c61"
+         : recovered > 0
+           ? "#435c55"
+           : active
+-            ? "#49665d"
+-            : "#3b5552",
++            ? "#556f55"
++            : "#4b644e",
+     );
+   });
++  // Sparse tufts use the same world grid across lot boundaries.
++  for (let y = 12; y < 800; y += 34)
++    for (let x = 8; x < 1200; x += 41) {
++      const offset = (x * 7 + y * 3) % 27;
++      if (offset % 3 === 0) {
++        rect(ctx, x + offset, y, 4, 2, "#617959");
++        rect(ctx, x + offset + 3, y - 2, 2, 3, "#617959");
++      }
++    }
+   drawRoads(ctx);
+   cells.forEach(([col, row], i) => {
+     const x = col * 415 + 34,

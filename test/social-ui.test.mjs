@@ -71,6 +71,9 @@ function fixture() {
     $: (id) => ids.get(id) || null,
     // Retained Neighbors dialog; focused-scene sidebar has separate adapter tests.
     isMoveDayFocused: () => false,
+    // This fixture exercises the retained overview; focused filter behavior has its own adapter.
+    isFilterFocused: () => false,
+    isFilterAvailable: () => false,
     projection: createProjection(),
     reduceProjection,
     state: null,

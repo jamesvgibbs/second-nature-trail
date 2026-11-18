@@ -1,0 +1,52 @@
+{
+  "capturedAt": "2026-11-18T17:02:54.757868+00:00",
+  "window": [
+    1366,
+    768
+  ],
+  "capture": "Native Safari via CUA. Original screen frames, no generated artwork in evidence. MP4 uses original elapsed frame timings.",
+  "finalNative": "Solo Cedar correct pointer repair 1/6\u21922/6, chapter score10\u219220, filters2\u21921. Crowd Willow keyboard3\u2192E with99colocated peers:2/6\u21923/6, score15\u219225, filters1\u21920; shared3/100 separate. Both paused after capture.",
+  "artifactHashes": {
+    "chapter2-final-direction-solo.png": "b3ce6d6546ae2b2eb6687fc39b953d83ee9543e446760f91ff7ac6f029558e55",
+    "chapter2-before-size-solo.png": "9997a1cd9ce0e47170eb80b9054ce5535497f50369ebbcb27c1674eaefd805a4",
+    "chapter2-before-arrival-solo.png": "264acee987af95e0a215c5443fb192f07ba5c649be86659520518b4596ff6f8f",
+    "review-gallery-laptop.png": "b2f83918520c6174555533cf1c0480ca7808e43b0f09b97f18c928ee8bb0f2c5",
+    "chapter2-after-repair-solo.png": "f02c519d81354663a074f80bb2e68ee77cf36ab47b409c7cce526214e98929cf",
+    "chapter2-repair-final-solo.mp4": "5441dfe0b3d9b0f4d76dac4bb807ff7f5bdd0370965a402fcc9421fd4c079fe4",
+    "chapter2-final-decision-crowd.png": "bce1e7e9dcd5ed11128984fee6b642b9748b40e189c665ce219501f94656d369",
+    "chapter2-after-decision-crowd.png": "21a9589bbb8ddb8857cb729cf01125764050044b72a9ae39ffc2b60ecc60bce0",
+    "chapter2-final-repair-solo.png": "423d0ee258708e29f766efdc8bd9a6f58b203f464eab2fef1836c3de488ea8a2",
+    "chapter2-after-repair-crowd.png": "5fb009411091a5b8d837d3cf0b072aa0be504a6966516ce1fa99d035fd5d54ef",
+    "overview-before-matched.png": "8952af15fe61ec07c3e03cd6a730cd83d0b67bb2b4e1e2dd56817aa65493b68a",
+    "chapter2-rejected-choice-crowd.png": "4d2f874d74afadb22a161a28c21af9b71c40e03a95183802ef822fa4218196ee",
+    "overview-after-matched.png": "e35152e2944f544439dfcf42e53171ab284e9431f88590e2a7d37c87510df15c",
+    "overview-before-crowd-matched.png": "fd91face0236ef9d4e38f2aa1df0deb2d6eabc9c9f5ff40f068efc5cbfcb8a47",
+    "chapter2-repair-crowd.mp4": "c381117aa576ca73b70eaf99a60298bbc520638ada52a1133aaeee7243f0ef33",
+    "chapter2-repair-final-crowd.mp4": "64ac53d22e4a0d6a2b07182984d5d27332a3779fc96a4b43004da9ceaa3c2b8f",
+    "chapter2-after-decision-solo.png": "eb0e1402a0c1c7d4d0a9249bda7dab40b78807f6544110484ab325f6e2a2489e",
+    "overview-after-crowd-matched.png": "007b4c0282d331505026eb9b39eb6cb3dc3f5c2ffec51af0c1519a4325ba27c0",
+    "overview-before-solo.png": "264acee987af95e0a215c5443fb192f07ba5c649be86659520518b4596ff6f8f",
+    "chapter2-repair-solo.mp4": "892b51b1bc14aa713d6bfb85de5cf969a7a8ffd49b01bf0c04eb5b58e7043ac3",
+    "review-clip-playback.png": "5da4224a4b5b88d8ad0fee9ddfc0a76226e63441579970ebb66ff2a4694a8d24",
+    "chapter2-final-repair-crowd.png": "a034f1cf0ea888a3ee42c7bc0c464e3c29fe74498571a7c81787200daf04e88e",
+    "chapter2-shared-recovery-crowd.png": "9a18e5c084f8cd2c983336b388a9e6287d681c30fbdbb0afd37939be6bc0f4e2",
+    "chapter2-before-decision-crowd.png": "e1aec252e3f6a8b69be1075a6589ebf75c5e7b9d9ef7595e5209c2aec266deef",
+    "overview-before-lobby.png": "18842af8c6d47b933ee4a5cef0ad6bc0e303f396af5f99ae40c7df02cdbe1f29",
+    "chapter2-reloaded-progress-crowd.png": "42978f6f7979315f959e4d3aeccf53f9698ba15b3e538222c7306576e197d894"
+  },
+  "sourceHashes": {
+    "public/projection.mjs": "90b19560a0e02a7b9d19d69e567d2ef332526f351b2370040a5d7e60a47d6b79",
+    "public/index.html": "d1ec19805d30903b41253a794bcd85533bf85dd9b8dd51e2567b542ee66189f0",
+    "public/helpers.mjs": "8aaafb2ece299ce54821745a0a2be07c754793c9229f3166092d05771718249a",
+    "public/crowd-view.mjs": "d69f819492387f00bc7872cc293f79a45e5e79b8a66b883a03d57871d2241ae2",
+    "public/performance.mjs": "090cdd66c6b421fa0265b76aad7fa59738486fcd498110d87c60303cf78d4898",
+    "public/scenery.mjs": "5fbf4c1a01fb4062cd79e082bbf28bec1e2ab814cf10778f428f1b2be2974361",
+    "public/trail-feedback.mjs": "08e44cc0c354bd668cdeea0867e008404bc74030e1a297c85867226a8d182d8f",
+    "public/trail-visuals.mjs": "a72a7c38cb300c5943f489b25dbbe3641c926f07dd36628582eb0dc80050b414",
+    "public/move-day-scene.mjs": "512311ada7279b3d922882a4d80e5563851e806f3d9fca8690d2089d34b262ef",
+    "public/filter-scene.mjs": "23d17c0548386d4b9bac4b3a371f47c7cd6f5879e7aa797315e0ebfd675253e4",
+    "public/world.mjs": "d412a2dee8b4b1dc3779d1dabc46561383646ac63651dcf7cd30eeba8bd063a0",
+    "public/style.css": "c3e895ea4acf416c893ab56e7de4416bdfccb9b7b2bdbbc9d6e1983870e6ea36",
+    "public/app.js": "5e66bb6b9f7201a3d40f5ae77bb35d3214420d1fb67c9efe7c05bd97b3817995"
+  }
+}
