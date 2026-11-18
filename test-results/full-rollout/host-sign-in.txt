@@ -1,0 +1,63 @@
+Window: "Second Nature Trail", App: Safari.
+0 standard window Second Nature Trail, ID: SafariWindow?IsSecure=false&UUID=48BFC54F-3E6F-4C44-985F-0ED3AC8E327A, Secondary Actions: Raise
+	1 split group
+		2 tab group
+			3 scroll area
+				4 HTML content Description: Second Nature Trail, URL: host-soloentry.localhost:4200/host
+					5 container
+						6 text sn SECOND NATURE TRAIL A NEIGHBORHOOD WORTH SAVING
+					7 container
+						8 text EVENT OPERATIONS
+						9 heading Welcome, operator., Value: 1
+							10 text Welcome, operator.
+						11 text Use your private operator access token. Employee invitations do not grant host access.
+						12 container
+							13 text Operator access token
+							14 secure text field (settable) Operator access token
+						15 button Open event controls
+	16 image WindowControlShadowView._shadowImageView
+	17 toolbar
+		18 container Secondary Actions: Move next, Remove from toolbar
+			19 button Description: show sidebar, Help: Show sidebar, ID: SidebarButton
+			20 menu button Description: Tab Group picker, ID: TabGroupPickerButton?TabGroup=
+		21 container BackForwardSegmentedControl
+			22 button Description: Go back, Help: Show the previous page, ID: BackButton
+			23 button (disabled) Description: Go forward, Help: Show the next page, ID: ForwardButton
+		24 container Secondary Actions: Move previous, Move next, Remove from toolbar
+			25 button Page Menu, ID: AssistantButton
+			26 button Add page to Reading List, ID: OneStepBookmarkingButton
+			27 text field (settable) Description: smart search field, Value: host-soloentry.localhost:4200/host, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			28 button Reload this page, ID: ReloadButton
+		29 button Description: Share, ID: ShareButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		30 button Description: New Tab, ID: NewTabButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		31 button Description: Tab Overview, ID: TabOverviewButton, Secondary Actions: Move previous, Remove from toolbar
+	32 tab group Description: Tab bar, 5 tabs, ID: TabBar?isSeparate=false
+		33 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			34 image FaviconImageView
+			35 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		36 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			37 image FaviconImageView
+			38 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		39 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			40 image FaviconImageView
+			41 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		42 tab Second Nature Trail · Chapter 2 review, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			43 image FaviconImageView
+			44 text Value: Second Nature Trail · Chapter 2 review, ID: UnifiedTabBarButton._titleTextField
+		45 tab Second Nature Trail, Help: To interact with the items in this button, press Control-Option-Shift-Down Arrow., Value: on, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=true, Secondary Actions: close tab
+			46 image FaviconImageView
+			47 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+	48 close button
+	49 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	50 minimize button
+51 menu bar
+	52 Safari
+	53 File
+	54 Edit
+	55 View, ID: SafariViewMenu
+	56 History
+	57 Bookmarks, ID: SafariBookmarksMenu
+	58 Window, ID: SafariWindowMenu
+	59 Help, ID: SafariHelpMenu
+
+The focused UI element is 4 HTML content Description: Second Nature Trail, URL: host-soloentry.localhost:4200/host

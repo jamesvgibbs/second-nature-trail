@@ -1,0 +1,84 @@
+Window: "Second Nature Trail", App: Safari.
+0 standard window Second Nature Trail, ID: SafariWindow?IsSecure=false&UUID=48BFC54F-3E6F-4C44-985F-0ED3AC8E327A, Secondary Actions: Raise
+	1 split group
+		2 tab group
+			3 scroll area
+				4 HTML content Description: Second Nature Trail, URL: crowdentry.localhost:4210/
+					5 container
+						6 text sn SECOND NATURE TRAIL CONNECTED
+						7 text LOBBY
+						8 text LOBBY
+						9 text YOUR SUPPLIES 12  / 12 stored 3 Parts 3 Filters 3 Food 3 Cable 99 nearby · 100 connected · Meet everyone in Neighbors
+						10 container Shared neighborhood. Move with arrow keys or WASD, or click a destination. Press E to interact. Tab reaches all menus.
+						11 text MOVING DEPOT Click to walk · WASD / arrows to move · E to interact
+						12 text LOCAL REVIEW · Earlier chapters are unplayed. Your actions and supplies are real.
+						13 text BEFORE THE ADVENTURE
+						14 heading Value: 2, Welcome to
+Bragging Square.
+							15 text Welcome to Bragging Square.
+						16 text The AI has put the neighborhood on “permanent optimization.” Meet your neighbors and get ready to put things right.
+						17 text 5 / 5 practice steps
+						18 text Ready for the trail
+						19 heading Your first five steps, Value: 3
+							20 text Your first five steps
+						21 button ✓ Move around
+						22 button ✓ Meet your guide
+						23 button ✓ Collect a practice supply
+						24 button ✓ Answer a practice question
+						25 button ✓ Ask a neighbor for help
+						26 button ✓ You’re ready
+						27 button Inventory [I]
+						28 button Map [M]
+						29 button Neighbors
+						30 button Help [H]
+						31 button Settings
+						32 text One neighborhood. Everyone belongs. Your review neighbor
+	33 image WindowControlShadowView._shadowImageView
+	34 toolbar
+		35 container Secondary Actions: Move next, Remove from toolbar
+			36 button Description: show sidebar, Help: Show sidebar, ID: SidebarButton
+			37 menu button Description: Tab Group picker, ID: TabGroupPickerButton?TabGroup=
+		38 container BackForwardSegmentedControl
+			39 button Description: Go back, Help: Show the previous page, ID: BackButton
+			40 button (disabled) Description: Go forward, Help: Show the next page, ID: ForwardButton
+		41 container Secondary Actions: Move previous, Move next, Remove from toolbar
+			42 button Page Menu, ID: AssistantButton
+			43 button Add page to Reading List, ID: OneStepBookmarkingButton
+			44 text field (settable) Description: smart search field, Value: crowdentry.localhost:4210, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			45 button Reload this page, ID: ReloadButton
+		46 button Description: Share, ID: ShareButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		47 button Description: New Tab, ID: NewTabButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		48 button Description: Tab Overview, ID: TabOverviewButton, Secondary Actions: Move previous, Remove from toolbar
+	49 tab group Description: Tab bar, 6 tabs, ID: TabBar?isSeparate=false
+		50 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			51 image FaviconImageView
+			52 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		53 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			54 image FaviconImageView
+			55 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		56 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			57 image FaviconImageView
+			58 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		59 tab Second Nature Trail · Chapter 2 review, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			60 image FaviconImageView
+			61 text Value: Second Nature Trail · Chapter 2 review, ID: UnifiedTabBarButton._titleTextField
+		62 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			63 image FaviconImageView
+			64 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		65 tab Second Nature Trail, Help: To interact with the items in this button, press Control-Option-Shift-Down Arrow., Value: on, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=true, Secondary Actions: close tab
+			66 image FaviconImageView
+			67 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+	68 close button
+	69 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	70 minimize button
+71 menu bar
+	72 Safari
+	73 File
+	74 Edit
+	75 View, ID: SafariViewMenu
+	76 History
+	77 Bookmarks, ID: SafariBookmarksMenu
+	78 Window, ID: SafariWindowMenu
+	79 Help, ID: SafariHelpMenu
+
+The focused UI element is 10 container Shared neighborhood. Move with arrow keys or WASD, or click a destination. Press E to interact. Tab reaches all menus.

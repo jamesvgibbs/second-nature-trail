@@ -1,3 +1,5 @@
+import { eventSceneModel, drawEventScene } from "/event-scenes.mjs";
+import { chapterSceneModel, drawChapterScene, hitChapterHotspot, CHAPTER_SCENE_TITLES } from "/chapter-scenes.mjs";
 import { filterSceneModel, drawFilterScene, hitFilterHotspot } from "/filter-scene.mjs";
 import { overviewCrowd } from "/crowd-view.mjs";
 import { createProjection, reduceProjection } from "/projection.mjs";
@@ -97,6 +99,7 @@ let projection = createProjection(),
   latestVisualIntentInsects = false;
 let filterState = { epoch:null, key:"", selection:null, pending:false, token:0, overview:false, completedHome:null, journal:null, focusedPeerId:null };
 let travelToastText = null;
+let chapterSceneState = {epoch:null,chapter:null,key:"",round:null,selection:null,pending:false,token:0,overview:false,held:null,journal:null,focusedPeerId:null,route:[],auto:false,autoRound:null};
 let moveDayOverview = false;
 let moveDayState = {
   epoch: null,
@@ -389,8 +392,8 @@ function windowCheck() {
 function landing(error = "") {
   app.innerHTML = `<div class="landing">${topbar()}<main class="hero"><section class="hero-copy"><div class="pill"><span class="dot"></span> 100 NEIGHBORS · ONE SHARED WORLD</div><h1>The machines<br>lost the plot.<br><span>We’ve got this.</span></h1><p>Pack your cart. Find your people. Bring a neighborhood back to life, one very human decision at a time.</p><form class="join-form"><label for="invite">Your private invitation code</label><div class="row"><input id="invite" name="invite" placeholder="Paste your invitation code" required autocomplete="off"><button class="primary">Set out →</button></div></form>${
     error ? `<p class="error">${esc(error)}</p>` : ""
-  }<p class="small entry-note">Laptop or desktop · Keyboard or mouse · No install</p></section><section class="hero-art"><canvas id="hero-map" width="1200" height="800" aria-label="Original pixel neighborhood with houses, parks, and a central meeting square"></canvas><div class="art-caption">EST. BEFORE THE ROBOTS GOT IDEAS &nbsp; / &nbsp; BRAGGING SQUARE</div></section></main><footer class="landing-bottom"><div><strong>08 chapters</strong><p>A fresh district. A different kind of trouble.</p></div><div><strong>15 ways to shine</strong><p>Find your edge. Help a neighbor find theirs.</p></div><div><strong>01 neighborhood</strong><p>Every repair makes this place a little more human.</p></div></footer></div>`;
-  drawMap($("#hero-map").getContext("2d"), false);
+  }<p class="small entry-note">Laptop or desktop · Keyboard or mouse · No install</p></section><section class="hero-art"><canvas id="hero-map" width="1200" height="800" aria-label="An arrival scene with a supply cart, neighbors and a neighborhood noticeboard"></canvas><div class="art-caption">EST. BEFORE THE ROBOTS GOT IDEAS &nbsp; / &nbsp; BRAGGING SQUARE</div></section></main><footer class="landing-bottom"><div><strong>08 chapters</strong><p>A fresh district. A different kind of trouble.</p></div><div><strong>15 ways to shine</strong><p>Find your edge. Help a neighbor find theirs.</p></div><div><strong>01 neighborhood</strong><p>Every repair makes this place a little more human.</p></div></footer></div>`;
+  drawEventScene($("#hero-map").getContext("2d"), {}, { mode: "arrival" });
   $(".join-form").onsubmit = (e) => {
     e.preventDefault();
     join($("#invite").value);
@@ -597,9 +600,10 @@ function updateConnection() {
 function setup() {
   app.innerHTML =
     topbar() +
-    `<main class="setup"><div class="eyebrow safe">YOUR NEIGHBORHOOD NEEDS YOU</div><h1>Make yourself at home.</h1><p class="intro">Hi, ${esc(
+    `<main class="setup"><div class="setup-welcome"><div><div class="eyebrow safe">YOUR NEIGHBORHOOD NEEDS YOU</div><h1>Make yourself at home.</h1><p class="intro">Hi, ${esc(
       state.me.name,
-    )}. Pick your look and how you’d like to play.</p><form id="setup-form"><div class="grid2"><section class="card"><h2>Choose your character</h2><div class="avatar-grid" id="avatars"></div><label>Pick a palette</label><div class="palette-grid" id="palettes"></div><p class="small muted">Same abilities. Same chances. Entirely your style.</p></section><section class="card"><h2>Show spiders and insects?</h2><p class="small">Choose before entering the world. Both versions play exactly the same.</p><label class="radio-choice"><input type="radio" name="insects" value="false" required> Replace with friendly robots</label><label class="radio-choice"><input type="radio" name="insects" value="true" required> Show spiders and insects</label><div id="setup-settings"></div></section></div><div class="row spread" style="margin-top:24px;color:var(--paper)"><span class="small">You can change these settings during play.</span><button class="primary">Enter Bragging Square →</button></div></form></main>`;
+    )}. Pick your look and how you’d like to play.</p></div><canvas id="setup-art" width="1200" height="800" aria-hidden="true"></canvas></div><form id="setup-form"><div class="grid2"><section class="card"><h2>Choose your character</h2><div class="avatar-grid" id="avatars"></div><label>Pick a palette</label><div class="palette-grid" id="palettes"></div><p class="small muted">Same abilities. Same chances. Entirely your style.</p></section><section class="card"><h2>Show spiders and insects?</h2><p class="small">Choose before entering the world. Both versions play exactly the same.</p><label class="radio-choice"><input type="radio" name="insects" value="false" required> Replace with friendly robots</label><label class="radio-choice"><input type="radio" name="insects" value="true" required> Show spiders and insects</label><div id="setup-settings"></div></section></div><div class="row spread" style="margin-top:24px;color:var(--paper)"><span class="small">You can change these settings during play.</span><button class="primary">Enter Bragging Square →</button></div></form></main>`;
+  drawEventScene($("#setup-art").getContext("2d"), state, { mode: "setup" });
   avatarOptions();
   settingsFields($("#setup-settings"));
   $("#setup-form")
@@ -695,6 +699,7 @@ function accept(s, kind = "full", allowEpoch = false) {
     next.coreVersion !== projection.coreVersion;
   if (next.epoch !== projection.epoch) {
     target = null;
+    if (typeof chapterSceneState !== "undefined") {chapterSceneState.held=null;chapterSceneState.journal=null;chapterSceneState.token++;chapterSceneState.pending=false;}
     if (typeof filterState !== "undefined") { filterState.completedHome=null; filterState.journal=null; }
     if (
       previous &&
@@ -717,6 +722,7 @@ function accept(s, kind = "full", allowEpoch = false) {
   }
   projection = next;
   state = next.state;
+  if (sceneAvailable() && (chapterSceneState.epoch !== state.projectionEpoch || chapterSceneState.chapter !== state.event.chapter)) syncChapterSceneState();
   reconcileTravelRoute();
   if (
     isMoveDayFocused() &&
@@ -724,6 +730,7 @@ function accept(s, kind = "full", allowEpoch = false) {
   )
     renderMoveDayCompanions();
   if (isFilterFocused() && filterCompanionSignature(previous) !== filterCompanionSignature(state)) renderFilterCompanions();
+  if (sceneFocused() && sceneCompanionSignature(previous) !== sceneCompanionSignature(state)) renderSceneCompanions();
   if (kind === "move") return true;
   if ($("#supply-hud")) renderSupplyHUD();
   if (state.me?.settings) {
@@ -736,6 +743,8 @@ function accept(s, kind = "full", allowEpoch = false) {
   const e = state.event || {};
   if (currentPhase !== e.phase || currentChapter !== e.chapter) {
     target = null;
+    if (typeof chapterSceneState !== "undefined" && ["finale","awards","closed"].includes(e.phase)) chapterSceneState.overview=false;
+    if (typeof chapterSceneState !== "undefined") { chapterSceneState.token++;chapterSceneState.pending=false;if(!["chapter","paused"].includes(e.phase)||e.chapter!==chapterSceneState.chapter){chapterSceneState.held=null;chapterSceneState.journal=null;} }
     if (typeof filterState !== "undefined" && filterState.pending) { filterState.token++; filterState.pending=false; }
     if (
       currentPhase &&
@@ -836,9 +845,9 @@ function game() {
       btn("Help [H]", help),
       btn("Settings", settings),
     );
-    const notes = btn("Field notes", () => isFilterAvailable() ? filterFieldNotes() : moveDayFieldNotes());
+    const notes = btn("Field notes", () => sceneAvailable() ? sceneFieldNotes() : isFilterAvailable() ? filterFieldNotes() : moveDayFieldNotes());
     notes.id = "field-notes-menu";
-    const back = btn("Return to Move Day", () => isFilterAvailable() ? setFilterOverview(false) : setMoveDayOverview(false));
+    const back = btn("Return to Move Day", () => sceneAvailable() ? setChapterOverview(false) : isFilterAvailable() ? setFilterOverview(false) : setMoveDayOverview(false));
     back.id = "move-day-return";
     bar.append(notes, back);
     $("#player-name").textContent = state.me?.name || "";
@@ -846,7 +855,8 @@ function game() {
       const r = activeCanvas.getBoundingClientRect();
       const x = ((e.clientX - r.left) / r.width) * 1200,
         y = ((e.clientY - r.top) / r.height) * 800;
-      if (isFilterFocused()) filterSceneClick(x, y);
+      if (sceneFocused()) sceneClick(x, y);
+      else if (isFilterFocused()) filterSceneClick(x, y);
       else if (isMoveDayFocused()) moveDaySceneClick(x, y);
       else {
         setDestination(x, y);
@@ -855,6 +865,9 @@ function game() {
     });
     activeCanvas.addEventListener("keydown", worldKeys);
   } else {
+    activeCanvas.setAttribute("role", "img");
+    activeCanvas.setAttribute("tabindex", "-1");
+    activeCanvas.setAttribute("aria-label", "Live read-only neighborhood illustration. Friendly robot visuals. Phase, shared progress and results are available in the adjacent event report.");
     $("#toolbar").innerHTML =
       '<span class="pill">FRIENDLY ROBOT VISUALS · PRESENTATION</span>';
     $("#world-hint").textContent =
@@ -884,9 +897,16 @@ function sizeWorldCanvas() {
 function renderSupplyHUD() {
   const hud = $("#supply-hud");
   if (!hud) return;
+  if (state?.event?.archive?.finaleRecorded === false) {
+    hud.innerHTML=`<span class="hud-caption">ARCHIVED RESULTS</span><strong>${(state.event.awards || state.awards || []).length} recorded awards</strong><span class="hud-safe">Finale outcome not retained</span>`;return;
+  }
   if (isPresentation || !state?.me) {
     hud.innerHTML = `<span class="hud-caption">NEIGHBORHOOD FIELD REPORT</span><span class="hud-safe">${overviewCrowd(state, { presentation: true }).total} neighbors connected · Friendly robots</span>`;
     return;
+  }
+  if (sceneFocused()) {
+    const model=syncChapterSceneState();
+    hud.innerHTML=`<span class="hud-caption">${esc(model.title.toUpperCase())}</span><strong>${['finale','awards','closed'].includes(model.phase)?(model.ownRepair?'Your home restored':model.phase==='finale'?'Your repair awaits':'Event complete'):`${model.step}/${model.total} steps · Chapter score ${model.personalScore}`}</strong><span class="hud-safe">${model.shared.completed}/${model.shared.total} shared ${model.phase==='chapter'?'completions':'repairs'}</span>`;return;
   }
   if (isFilterFocused()) {
     const model=syncFilterState();
@@ -1735,6 +1755,828 @@ function clearTravelToast() {
   travelToastText = null;
 }
 
+function sceneAvailable() {
+  if (typeof chapterSceneState === "undefined" || isPresentation) return false;
+  const event = state?.event,
+    phase = event?.phase === "paused" ? event.pausedPhase : event?.phase;
+  return (
+    !!event &&
+    ((phase === "chapter" && event.chapter >= 2 && event.chapter <= 7) ||
+      ["finale", "awards", "closed"].includes(phase))
+  );
+}
+function sceneFocused() {
+  return sceneAvailable() && !chapterSceneState.overview;
+}
+function syncChapterSceneState() {
+  if (!sceneAvailable()) return null;
+  const epoch = state.projectionEpoch,
+    chapter = state.event.chapter,
+    task = state.chapter?.task;
+  if (
+    chapterSceneState.epoch !== epoch ||
+    chapterSceneState.chapter !== chapter
+  )
+    chapterSceneState = {
+      epoch,
+      chapter,
+      key: "",
+      round: null,
+      selection: null,
+      pending: false,
+      token: chapterSceneState.token + 1,
+      overview: false,
+      held: null,
+      journal: null,
+      focusedPeerId: null,
+      route: [],
+      auto: false,
+      autoRound: null,
+    };
+  const progress = state.me?.progress?.[chapter],
+    key = `${epoch}:${chapter}:${progress?.step}:${task?.stage || task?.kind || "complete"}`;
+  if (chapterSceneState.key !== key) {
+    chapterSceneState.key = key;
+    chapterSceneState.selection = null;
+    chapterSceneState.route = task?.source ? [task.source] : [];
+  }
+  if (task?.kind === "targeting" && chapterSceneState.round !== task.round) {
+    chapterSceneState.round = task.round;
+    chapterSceneState.selection = null;
+  }
+  if (
+    chapterSceneState.held?.step !== progress?.step ||
+    !["chapter", "paused"].includes(state.event.phase)
+  )
+    chapterSceneState.held = null;
+  return chapterSceneModel(state, chapterSceneOptions());
+}
+function chapterSceneOptions() {
+  return {
+    selection: chapterSceneState.selection,
+    route: chapterSceneState.route,
+    held: chapterSceneState.held,
+    focusedPeerId: chapterSceneState.focusedPeerId,
+    pending: chapterSceneState.pending,
+    safe,
+    now: Date.now() + serverOffset,
+  };
+}
+function sceneNearTarget(shop = false) {
+  const destination = shop
+      ? state.chapter?.locations?.[1]
+      : state.chapter?.task?.target || state.chapter?.locations?.[0],
+    p = state.me?.position;
+  return (
+    !!p &&
+    !!destination &&
+    Math.hypot(p.x - destination.x, p.y - destination.y) <
+      (shop ? 100 : state.chapter?.task?.target ? 60 : 100)
+  );
+}
+function sceneShopAvailable() {
+  return (
+    state.event.chapter === 6 &&
+    state.me.progress[6].step >= 6 &&
+    !!state.chapter.rewardShop
+  );
+}
+function sceneAffordableProjects() {
+  if (!sceneShopAvailable()) return [];
+  const shop=state.chapter.rewardShop;
+  return shop.options.flatMap((project,index)=>!shop.uses.includes(project.id)&&shop.balance>=project.cost?[index]:[]);
+}
+function sceneRewardNeedsSelection(model) {
+  const available=sceneAffordableProjects();
+  return !model.held && sceneShopAvailable() && sceneNearTarget(true) && available.length>0 && !available.includes(chapterSceneState.selection);
+}
+function sceneSidebarHTML() {
+  const m = syncChapterSceneState();
+  if (!m) return "";
+  const journal = chapterSceneState.journal,
+    shop = state.chapter.rewardShop;
+  const resources =
+    m.chapter === 2 || m.chapter === 4
+      ? ["parts"]
+      : m.chapter === 5
+        ? ["food"]
+        : m.chapter === 7
+          ? ["cable"]
+          : ["parts", "food", "cable"];
+  return `<section class="chapter-scene-sidebar"><span class="chapter-count">CHAPTER ${m.chapter + 1} · ${m.step}/${m.total} ${m.chapter === 5 ? "CYCLES" : "STEPS"}</span><h2>${esc(m.title)}</h2><section class="travel-journal" aria-live="polite" aria-atomic="true"><h3 id="scene-result" tabindex="-1">${esc(journal?.title || (m.completed ? "Chapter complete." : m.siteName))}</h3><p>${esc(journal?.text || (m.completed ? `Your main objective is complete. Chapter score ${m.personalScore}.` : m.story))}</p></section>${`<div class="scene-supplies">${resources.map((resource) => `<span><strong>${state.me.inventory?.[resource] || 0} ${esc(resource)}</strong><small>+ ${state.me.progress[m.chapter].reserve?.[resource] || 0} reserve</small></span>`).join("")}</div>`}${shop ? `<p class="scene-balance"><strong>${shop.balance} tokens</strong> · ${shop.earned} earned</p>` : ""}${m.evidence && !m.held ? `<section class="filter-evidence"><span class="eyebrow">INSPECTED EVIDENCE</span><p>${esc(m.evidence)}</p></section>` : ""}<div id="scene-actions"></div><div id="scene-companions" class="move-day-companions"></div></section>`;
+}
+function renderChapterSceneSidebar() {
+  const m = syncChapterSceneState(),
+    holder = $("#scene-actions");
+  if (!m || !holder) return;
+  const task = state.chapter.task,
+    locked = m.paused || chapterSceneState.pending,
+    shop = sceneShopAvailable() && !m.held;
+  const result = $("#scene-result");
+  if (result) result.onkeydown = sceneKeys;
+  if (!m.held && (!m.completed || shop)) {
+    if (task?.kind === "targeting") {
+      const status = document.createElement("p");
+      status.id = "scene-clock";
+      status.className = "notice scene-clock";
+      holder.append(status);
+      const controls = document.createElement("div");
+      controls.className = "move-day-choices scene-targets";
+      (task.targets || []).forEach((t, i) => {
+        const b = sceneChoiceButton(
+          `${i + 1}. ${t.label}${t.marked ? " · WARNING" : ""}`,
+          t.id,
+          locked,
+        );
+        b.dataset.focusKey = `scene:choice:${t.id}`;
+        controls.append(b);
+      });
+      holder.append(controls);
+      const label = document.createElement("label");
+      label.className = "scene-auto";
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.id = "scene-auto";
+      input.dataset.focusKey = "scene:auto";
+      input.checked = chapterSceneState.auto;
+      input.disabled = locked;
+      input.onchange = () => {
+        chapterSceneState.auto = input.checked;
+      };
+      label.append(
+        input,
+        document.createTextNode(
+          "Confirm my selected target when the signal opens",
+        ),
+      );
+      holder.append(label);
+      const count = document.createElement("p");
+      count.className = "small";
+      count.textContent = `${task.siteHits}/${task.hitsRequired} resolved here · One action per round`;
+      holder.append(count);
+    } else if (task?.kind === "routing") {
+      const summary = routeSummary(task, chapterSceneState.route);
+      const info = document.createElement("p");
+      info.className = "scene-route-summary";
+      info.textContent = `Required: ${task.requiredNodes.join(", ")} · Cable ${summary.cost}/${task.budget}${summary.invalid ? " · Broken or missing link" : ""}`;
+      holder.append(info);
+      const nodes = document.createElement("div");
+      nodes.className = "scene-node-grid";
+      task.nodes.forEach((n) => {
+        const b = btn(
+          n.label || n.id,
+          () => selectSceneNode(n.id),
+          chapterSceneState.route.at(-1) === n.id ? "selected" : "",
+        );
+        b.dataset.focusKey = `scene:node:${n.id}`;
+        b.setAttribute(
+          "aria-pressed",
+          String(chapterSceneState.route.at(-1) === n.id),
+        );
+        b.disabled = locked;
+        b.onkeydown = sceneKeys;
+        nodes.append(b);
+      });
+      holder.append(nodes);
+      const path = document.createElement("p");
+      path.className = "small scene-path";
+      path.textContent = chapterSceneState.route.join(" → ");
+      holder.append(path);
+      const current = chapterSceneState.route.at(-1),
+        links = document.createElement("p");
+      links.className = "small scene-links";
+      links.textContent =
+        "From " +
+        current +
+        ": " +
+        task.edges
+          .filter((e) => e.includes(current))
+          .map((e) => {
+            const other = e.find((n) => n !== current),
+              cost = task.edgeCosts.find(
+                (c) =>
+                  [c.from, c.to].includes(current) &&
+                  [c.from, c.to].includes(other),
+              )?.cost;
+            const broken = task.blockedEdges.some(
+              (b) => b.includes(current) && b.includes(other),
+            );
+            return `${other} (${cost}${broken ? ", broken" : ""})`;
+          })
+          .join(" · ");
+      holder.append(links);
+      const reset = btn(
+        "Reset path",
+        () => {
+          if (chapterSceneState.pending) return;
+          chapterSceneState.route = [task.source];
+          noteSceneRouteEdit();
+          renderMission();
+          $("#scene-primary")?.focus({ preventScroll: true });
+        },
+        "quiet",
+      );
+      reset.disabled = locked;
+      holder.append(reset);
+    } else if (task?.stage !== "inspect") {
+      if (task?.kind === "budget") {
+        const budget = document.createElement("p");
+        budget.className = "scene-balance";
+        budget.textContent = `${task.budget} available · ${task.due} due · ${task.retained} retained`;
+        holder.append(budget);
+        const clock = document.createElement("p");
+        clock.id = "scene-clock";
+        clock.className = "notice scene-clock";
+        holder.append(clock);
+      }
+      const choices = document.createElement("div");
+      choices.className = "move-day-choices scene-choices";
+      const options = shop
+        ? state.chapter.rewardShop.options.map(
+            (p) => `${p.label} · ${p.cost} tokens`,
+          )
+        : task?.options || [];
+      options.forEach((label, i) => {
+        const project = shop ? state.chapter.rewardShop.options[i] : null,
+          used = project && state.chapter.rewardShop.uses.includes(project.id),
+          unaffordable =
+            project && state.chapter.rewardShop.balance < project.cost;
+        const b = sceneChoiceButton(
+          `${i + 1}. ${used ? "✓ " : ""}${label}`,
+          i,
+          locked || !!used || !!unaffordable,
+        );
+        choices.append(b);
+      });
+      holder.append(choices);
+    }
+  }
+  const controls = document.createElement("div");
+  controls.className = "move-day-controls scene-primary-wrap";
+  const primary = btn(
+    scenePrimaryLabel(m),
+    scenePrimary,
+    "primary move-day-primary",
+  );
+  primary.id = "scene-primary";
+  primary.dataset.focusKey = "scene:primary";
+  primary.onkeydown = sceneKeys;
+  primary.disabled = chapterSceneState.pending || (m.paused && !m.completed) || (!(m.paused && m.completed) && sceneRewardNeedsSelection(m));
+  controls.append(primary);
+  holder.append(controls);
+  renderSceneCompanions();
+  updateSceneClock();
+}
+function sceneChoiceButton(label, id, disabled) {
+  const b = btn(
+    label,
+    () => selectSceneChoice(id),
+    `move-day-choice${chapterSceneState.selection === id ? " selected" : ""}`,
+  );
+  b.dataset.focusKey = `scene:choice:${id}`;
+  b.setAttribute("aria-pressed", String(chapterSceneState.selection === id));
+  b.disabled = disabled;
+  b.onkeydown = sceneKeys;
+  return b;
+}
+function scenePrimaryLabel(m) {
+  if (chapterSceneState.pending) return "Recording…";
+  if (m.completed && m.paused) return "Open field notes";
+  if (m.held)
+    return m.completed
+      ? m.chapter === 6
+        ? "Review reward projects"
+        : "Open field notes"
+      : "Continue to the next stop";
+  const task = state.chapter?.task;
+  if (m.completed && !sceneShopAvailable()) return "Open field notes";
+  const shopping = sceneShopAvailable();
+  if (shopping && !sceneAffordableProjects().length) return "Open field notes";
+  if (!sceneNearTarget(shopping))
+    return target?.arrival === "activity"
+      ? "On the way…"
+      : shopping
+        ? "Visit the night market"
+        : `Visit ${m.siteName}`;
+  if (shopping) return "Fund this project";
+  return task?.stage === "inspect"
+    ? "Inspect this site"
+    : task?.kind === "targeting"
+      ? "Resolve selected target"
+      : task?.kind === "routing"
+        ? "Connect this route"
+        : task?.kind === "budget"
+          ? "Record this payment"
+          : "Confirm this choice";
+}
+function selectSceneChoice(index) {
+  const m = syncChapterSceneState();
+  if (!m || m.paused || m.held || chapterSceneState.pending) return;
+  const task = state.chapter?.task;
+  const possible = sceneShopAvailable()
+    ? state.chapter.rewardShop.options.map((p, i) => ({
+        id: i,
+        disabled:
+          state.chapter.rewardShop.uses.includes(p.id) ||
+          state.chapter.rewardShop.balance < p.cost,
+      }))
+    : task?.kind === "targeting"
+      ? task.targets
+      : (task?.options || []).map((_, i) => ({ id: i }));
+  if (!possible?.some((p) => p.id === index && !p.disabled)) return;
+  chapterSceneState.selection = index;
+  renderMission();
+  [...($("#scene-actions")?.querySelectorAll("button") || [])]
+    .find((b) => b.dataset.focusKey === `scene:choice:${index}`)
+    ?.focus({ preventScroll: true });
+}
+function noteSceneRouteEdit() {
+  if (chapterSceneState.journal) chapterSceneState.journal = { title:"Route updated.", text:"Review the links, required relays and cable budget before connecting." };
+}
+function selectSceneNode(id) {
+  const m = syncChapterSceneState();
+  if (
+    !m ||
+    m.paused ||
+    m.held ||
+    chapterSceneState.pending ||
+    !state.chapter.task?.nodes?.some((n) => n.id === id)
+  )
+    return;
+  chapterSceneState.route.push(id);
+  noteSceneRouteEdit();
+  renderMission();
+  [...($("#scene-actions")?.querySelectorAll("button") || [])]
+    .find((b) => b.dataset.focusKey === `scene:node:${id}`)
+    ?.focus({ preventScroll: true });
+}
+async function contributeFinale() {
+  if (
+    contributeFinale.pending ||
+    state.event.phase !== "finale" ||
+    state.event.paused ||
+    state.event.finale?.contributors?.includes(state.me.id)
+  )
+    return;
+  const epoch = state.projectionEpoch,
+    revision = modal.trailRevision;
+  contributeFinale.pending = true;
+  renderMission();
+  const result = await act("finale");
+  contributeFinale.pending = false;
+  if (
+    result !== null &&
+    state.projectionEpoch === epoch &&
+    state.event.phase === "finale" &&
+    modal.trailRevision === revision &&
+    state.event.finale?.contributors?.includes(state.me.id)
+  )
+    toast(
+      `Repair ${state.event.finale.contributors.indexOf(state.me.id) + 1} is yours. Your marker is lit in the neighborhood.`,
+    );
+  if ($("#mission")) renderMission();
+}
+function scenePrimary() {
+  const m = syncChapterSceneState();
+  if (!m || chapterSceneState.pending) return;
+  if (m.completed && m.paused && m.phase === "chapter") {
+    sceneFieldNotes();
+    return;
+  }
+  if (m.paused) return;
+  if (m.phase === "finale") {
+    const b = $("#finale-action button");
+    if (b && !b.disabled) return b.onclick();
+    return;
+  }
+  if (["awards", "closed"].includes(m.phase)) return;
+  if (m.held) {
+    chapterSceneState.held = null;
+    chapterSceneState.journal = null;
+    renderMission();
+    if (m.completed && !sceneShopAvailable()) {
+      sceneFieldNotes();
+      return;
+    }
+    return;
+  }
+  if (m.completed && !sceneShopAvailable()) {
+    sceneFieldNotes();
+    return;
+  }
+  const shop = sceneShopAvailable();
+  if (shop && !sceneAffordableProjects().length) { sceneFieldNotes(); return; }
+  if (!sceneNearTarget(shop)) {
+    if (shop) {
+      const l = state.chapter.locations[1];
+      setDestination(l.x, l.y, "activity");
+      travelToastText = "Walking to the night market.";
+      toast(travelToastText);
+      activeCanvas?.focus();
+    } else travel(0, "activity");
+    renderMission();
+    return;
+  }
+  const task = state.chapter.task;
+  if (task?.kind === "routing")
+    return submitSceneAction("task", { path: [...chapterSceneState.route] });
+  const choice = task?.stage === "inspect" ? 0 : chapterSceneState.selection;
+  if (shop && !sceneAffordableProjects().includes(choice)) { toast("Choose an available reward project first."); return; }
+  if (choice === null) {
+    toast(
+      task?.kind === "targeting"
+        ? "Select a warning-marked target first."
+        : "Choose an option first.",
+    );
+    return;
+  }
+  if (task?.kind === "targeting") {
+    if (
+      task.actedThisRound ||
+      Date.now() + serverOffset < task.actionAllowedAt
+    ) {
+      toast(
+        task.actedThisRound
+          ? "Your action is recorded for this round."
+          : "Wait for the action signal.",
+      );
+      return;
+    }
+    return submitSceneAction("task", { choice, expectedRound: task.round });
+  }
+  if (task?.kind === "budget" && Date.now() + serverOffset < task.opensAt) {
+    toast("This payment cycle has not opened yet.");
+    return;
+  }
+  return submitSceneAction(shop && m.completed ? "rewardRedeem" : "task", {
+    choice,
+  });
+}
+async function submitSceneAction(type, fields) {
+  const m = syncChapterSceneState();
+  if (
+    !m ||
+    m.paused ||
+    m.held ||
+    chapterSceneState.pending ||
+    !sceneNearTarget(sceneShopAvailable())
+  )
+    return;
+  const task = state.chapter.task,
+    token = ++chapterSceneState.token,
+    epoch = state.projectionEpoch,
+    chapter = state.event.chapter,
+    revision = modal.trailRevision,
+    route = [...chapterSceneState.route];
+  const origin = document.activeElement,
+    intent =
+      origin === activeCanvas ||
+      origin === document.body ||
+      origin === document.documentElement ||
+      $("#mission")?.contains(origin);
+  chapterSceneState.pending = true;
+  if (task?.kind === "targeting")
+    chapterSceneState.autoRound = `${chapter}:${task.step}:${task.round}`;
+  renderMission();
+  let accepted = null;
+  const result = await act(
+    type,
+    {
+      ...fields,
+      expectedChapter: chapter,
+      ...(type === "task"
+        ? { expectedStep: task.step, expectedStage: task.stage || null }
+        : {}),
+    },
+    (record) => {
+      accepted = record;
+    },
+  );
+  if (token !== chapterSceneState.token) return;
+  chapterSceneState.pending = false;
+  if (
+    result === null ||
+    !accepted ||
+    state.projectionEpoch !== epoch ||
+    state.event.chapter !== chapter ||
+    state.event.phase !== "chapter"
+  ) {
+    if ($("#mission")) renderMission();
+    return;
+  }
+  if (receiptMatchesState(accepted.after)) {
+    clearTravelToast();
+    const after = accepted.after.me.progress[chapter],
+      receipt = actionReceipt(
+        accepted.before,
+        accepted.after,
+        accepted.action,
+        accepted.result,
+      );
+    if (result.inspected)
+      chapterSceneState.journal = {
+        title: "Evidence inspected.",
+        text: "Read the details before choosing your next step.",
+      };
+    else {
+      const advanced = after.step > m.step;
+      let title =
+        receipt?.title ||
+        (result.correct
+          ? "Action recorded."
+          : "That choice needs another look.");
+      let text =
+        (receipt?.details || []).slice(0, 2).join(" ") ||
+        `Chapter score ${after.score}. ${result.correct ? "Your action is saved." : "The current site is still unresolved."}`;
+      if (task?.stage === "decide" && [2, 3, 6].includes(chapter)) {
+        const prior = accepted.before.me.progress[chapter];
+        const changes = ["parts", "food", "cable"]
+          .map((item) => {
+            const delta =
+              (accepted.after.me.inventory?.[item] || 0) +
+              (after.reserve?.[item] || 0) -
+              (accepted.before.me.inventory?.[item] || 0) -
+              (prior.reserve?.[item] || 0);
+            return delta ? `${item} ${delta > 0 ? "+" : ""}${delta}` : null;
+          })
+          .filter(Boolean);
+        title = result.correct
+          ? {
+              2: "Contact checked.",
+              3: "Recovery action recorded.",
+              6: "Job complete.",
+            }[chapter]
+          : "This choice needs another look.";
+        text = `${result.correct ? "+" + (state.rules.spatialTaskPoints || 10) + " task points. " : ""}Chapter score ${after.score}.${chapter === 6 && result.correct ? " +" + (after.rewardEarned - prior.rewardEarned) + " reward tokens." : ""}${changes.length ? " Supply change: " + changes.join(", ") + "." : ""}${!result.correct ? " Read the evidence and try again." : ""}`;
+      } else if (task?.kind === "routing") {
+        title = result.correct
+          ? "Home connected."
+          : "This route needs another look.";
+        text = `${result.correct ? "+" + (state.rules.taskPoints || 20) + " task points. " : ""}Chapter score ${after.score}. ${receipt?.details?.[0] || ""}`;
+      } else if (task?.kind === "budget") {
+        title = result.correct
+          ? "On-time payment recorded."
+          : "Payment recorded · no on-time points.";
+        text = `${receipt?.details?.slice(0, 2).join(" ") || ""}${result.correct ? " +" + (state.rules.taskPoints || 20) + " task points." : ""} Chapter score ${after.score}.`;
+      } else if (task?.kind === "targeting" && advanced) {
+        title = "Site cleared.";
+        text = `${m.siteName} is clear. +${state.rules.taskPoints || 20} task points. Chapter score ${after.score}.`;
+      } else if (type === "rewardRedeem" || task?.kind === "rewards") {
+        title = "Project funded.";
+        text = `${result.message || receipt?.details?.[0] || ""} ${after.rewardBalance} tokens remain. Chapter score ${after.score}.`;
+      }
+
+      if (task?.stage !== "decide") {
+        const prior = accepted.before.me.progress[chapter];
+        const changes = ["parts", "food", "cable"]
+          .map((item) => {
+            const delta =
+              (accepted.after.me.inventory?.[item] || 0) +
+              (after.reserve?.[item] || 0) -
+              (accepted.before.me.inventory?.[item] || 0) -
+              (prior.reserve?.[item] || 0);
+            return delta ? `${item} ${delta > 0 ? "+" : ""}${delta}` : null;
+          })
+          .filter(Boolean);
+        if (changes.length)
+          text += " Supply change: " + changes.join(", ") + ".";
+      }
+      chapterSceneState.journal = { title, text };
+      if (advanced || type === "rewardRedeem") {
+        chapterSceneState.selection = null;
+        chapterSceneState.held = {
+          epoch,
+          chapter,
+          step: after.step,
+          siteName: m.siteName,
+          task: structuredClone(task),
+          route,
+          success: result.correct === true || type === "rewardRedeem",
+          title,
+          text,
+        };
+      }
+      if (task?.kind === "targeting" && !advanced)
+        chapterSceneState.journal = {
+          title: result.correct ? "Outbreak resolved." : "That was a decoy.",
+          text: `${after.siteHits}/${task.hitsRequired} at this site. Wait for the next round. Chapter score ${after.score}.`,
+        };
+    }
+  }
+  const current = document.activeElement,
+    restore =
+      intent &&
+      !modal.open &&
+      modal.trailRevision === revision &&
+      sceneFocused() &&
+      !current?.dataset?.peerId &&
+      (current === activeCanvas ||
+        current === document.body ||
+        current === document.documentElement ||
+        $("#mission")?.contains(current));
+  renderMission();
+  if (restore) $("#scene-result")?.focus({ preventScroll: true });
+}
+function updateSceneClock() {
+  if (!sceneFocused()) return;
+  const task = state.chapter?.task,
+    clock = $("#scene-clock"),
+    button = $("#scene-primary"),
+    m = syncChapterSceneState();
+  if (!m || m.held || m.completed) return;
+  const now = Date.now() + serverOffset;
+  if (clock && task?.kind === "targeting")
+    clock.textContent = m.paused
+      ? "Paused"
+      : task.actedThisRound
+        ? `Action recorded · next round in ${Math.max(0, Math.ceil((task.nextRoundAt - now) / 1000))}s`
+        : now < task.actionAllowedAt
+          ? `Prepare · signal in ${Math.max(0, Math.ceil((task.actionAllowedAt - now) / 1000))}s`
+          : `Signal open · ${Math.max(0, Math.ceil((task.nextRoundAt - now) / 1000))}s left`;
+  if (clock && task?.kind === "budget")
+    clock.textContent = m.paused
+      ? "Paused"
+      : now < task.opensAt
+        ? `Next cycle opens in ${Math.ceil((task.opensAt - now) / 1000)}s`
+        : now <= task.dueAt
+          ? `Payment due in ${Math.ceil((task.dueAt - now) / 1000)}s`
+          : "Deadline passed · late payments earn no on-time points";
+  if (button)
+    button.disabled =
+      m.paused ||
+      chapterSceneState.pending ||
+      (!sceneNearTarget(sceneShopAvailable()) &&
+        target?.arrival === "activity") ||
+      (sceneNearTarget() &&
+        task?.kind === "targeting" &&
+        (task.actedThisRound || now < task.actionAllowedAt)) ||
+      (sceneNearTarget() && task?.kind === "budget" && now < task.opensAt) ||
+      sceneRewardNeedsSelection(m);
+}
+function chapterSceneTick() {
+  if (!sceneFocused()) return;
+  const oldRound = chapterSceneState.round,
+    m = syncChapterSceneState();
+  if (!m) return;
+  if (oldRound !== chapterSceneState.round && $("#scene-actions"))
+    renderMission();
+  updateSceneClock();
+  const task = state.chapter?.task;
+  if (
+    task?.kind === "targeting" &&
+    !m.held &&
+    !modal.open &&
+    !m.paused &&
+    sceneNearTarget() &&
+    chapterSceneState.auto &&
+    chapterSceneState.selection !== null &&
+    !chapterSceneState.pending &&
+    !task.actedThisRound &&
+    Date.now() + serverOffset >= task.actionAllowedAt &&
+    chapterSceneState.autoRound !==
+      `${state.event.chapter}:${task.step}:${task.round}`
+  )
+    scenePrimary();
+}
+function sceneKeys(event) {
+  if (
+    !sceneFocused() ||
+    event.ctrlKey ||
+    event.metaKey ||
+    event.altKey ||
+    ["INPUT", "SELECT", "TEXTAREA"].includes(event.target?.tagName)
+  )
+    return;
+  const key = event.key.toLowerCase(),
+    task = state.chapter?.task;
+  if (key === keys.interact || (task?.kind === "targeting" && key === " ")) {
+    event.preventDefault();
+    return scenePrimary();
+  }
+  if (/^[1-3]$/.test(key)) {
+    event.preventDefault();
+    const id =
+      task?.kind === "targeting"
+        ? task.targets[Number(key) - 1]?.id
+        : Number(key) - 1;
+    selectSceneChoice(id);
+  } else if (task?.kind === "targeting" && key.startsWith("arrow")) {
+    event.preventDefault();
+    const ids = task.targets.map((t) => t.id),
+      index = ids.indexOf(chapterSceneState.selection),
+      delta = ["arrowright", "arrowdown"].includes(key) ? 1 : ids.length - 1;
+    selectSceneChoice(ids[(index + delta + ids.length) % ids.length]);
+  }
+}
+function setChapterOverview(value) {
+  chapterSceneState.overview = !!value;
+  if (modal.open) close();
+  renderSupplyHUD();
+  renderMission();
+  updateControlHints();
+  activeCanvas?.focus({ preventScroll: true });
+}
+function sceneFieldNotes() {
+  const phase =
+    state.event.phase === "paused"
+      ? state.event.pausedPhase
+      : state.event.phase;
+  if (["finale", "awards", "closed"].includes(phase)) {
+    panel = "field-notes";
+    open(
+      "The neighborhood · Field notes",
+      `<p>${esc(state.event.finale?.ending || "Every neighbor can contribute one final repair.")}</p>${contributionsHTML()}<div id="scene-notes" class="stack"></div>`,
+    );
+    $("#scene-notes").append(
+      btn("Map and chapter history", map),
+      btn("Meet the neighbors", () => neighbors()),
+      btn("Rules & scoring", rules),
+    );
+    return;
+  }
+  panel = "field-notes";
+  const c = state.event.chapter,
+    p = state.me.progress[c];
+  open(
+    `${CHAPTER_SCENE_TITLES[c] || "The neighborhood"} · Field notes`,
+    `<p>Chapter score: <strong>${p.score}</strong> · Main progress ${p.step}/${state.chapter.taskCount}</p><div id="scene-notes" class="stack"></div><hr>${contributionsHTML()}`,
+  );
+  $("#scene-notes").append(
+    btn("Learning encounters", learning, "primary"),
+    btn(
+      p.challenge ? "✓ Challenge complete" : "Try the harder challenge",
+      () => {
+        close();
+        travel(1, "challenge");
+      },
+    ),
+    btn(p.secret ? "✓ Clue discovered" : "Look for a secret", () => {
+      close();
+      travel(1, "secret");
+    }),
+    btn("The neighborhood mystery", mystery),
+    btn("Inventory & reserves", () => inventory()),
+    btn("Rules & scoring", rules),
+  );
+}
+function sceneCompanionSignature(view) {
+  if (!view) return "";
+  const m = chapterSceneModel(view, {
+    focusedPeerId: chapterSceneState.focusedPeerId,
+  });
+  return JSON.stringify([
+    m.nearbyCount,
+    m.teammateCount,
+    m.teammates.map((p) => [p.id, p.name]),
+  ]);
+}
+function renderSceneCompanions() {
+  const holder = $("#scene-companions");
+  if (!holder || !sceneFocused()) return;
+  const m = syncChapterSceneState(),
+    focused = holder.contains(document.activeElement)
+      ? document.activeElement?.dataset?.peerId
+      : null;
+  const label = document.createElement("p");
+  label.textContent = `${m.nearbyCount} nearby · ${m.teammateCount + 1} connected`;
+  holder.replaceChildren(label);
+  m.teammates.forEach((peer, i) => {
+    const b = btn(
+      peer.name || `Nearby companion ${i + 1}`,
+      () => {
+        chapterSceneState.focusedPeerId =
+          chapterSceneState.focusedPeerId === peer.id ? null : peer.id;
+        renderSceneCompanions();
+        [...holder.querySelectorAll("button")]
+          .find((b) => b.dataset.peerId === peer.id)
+          ?.focus({ preventScroll: true });
+      },
+      "quiet",
+    );
+    b.dataset.peerId = peer.id;
+    b.setAttribute(
+      "aria-pressed",
+      String(chapterSceneState.focusedPeerId === peer.id),
+    );
+    holder.append(b);
+  });
+  if (focused && !modal.open)
+    (
+      [...holder.querySelectorAll("button")].find(
+        (b) => b.dataset.peerId === focused,
+      ) || activeCanvas
+    )?.focus({ preventScroll: true });
+}
+function sceneClick(x, y) {
+  const m = syncChapterSceneState();
+  if (!m) return;
+  const hit = hitChapterHotspot(m, x, y);
+  if (!hit) return;
+  if (hit.action === "choice") selectSceneChoice(hit.choice);
+  else if (hit.action === "node") selectSceneNode(hit.node);
+  else if (hit.action === "objective") scenePrimary();
+}
+
 function firstUseControls() {
   if (isPresentation || !state.me || state.me.tutorial?.length >= 5) return;
   const key = "trail-controls-seen:" + state.me.id;
@@ -1784,22 +2626,22 @@ function renderMission() {
   ).replaceAll("_", " ");
   let html = "";
   if (e.broadcast)
-    html += (isMoveDayFocused() || isFilterFocused())
+    html += (isMoveDayFocused() || isFilterFocused() || sceneFocused())
       ? `<details class="move-day-broadcast"><summary>Message from the host</summary><p>${esc(
           e.broadcast,
         )}</p></details>`
       : `<div class="notice">${esc(e.broadcast)}</div>`;
   if (displayPhase === "lobby" || displayPhase === "draft") {
-    html += `<span class="chapter-count">BEFORE THE ADVENTURE</span><h2>Welcome to<br>Bragging Square.</h2><p>The AI has put the neighborhood on “permanent optimization.” Let’s remind it who lives here.</p>`;
+    html += `<span class="chapter-count">BEFORE THE ADVENTURE</span><h2>Welcome to<br>Bragging Square.</h2><p>The AI has put the neighborhood on “permanent optimization.” Meet your neighbors and get ready to put things right.</p>`;
     if (!isPresentation) {
-      const t = me.tutorial || [];
-      html += `<hr><h3>Your first five steps</h3><div id="tutorial-actions"></div><hr><div id="ready-action"></div>`;
+      const done = ["move", "interact", "collect", "answer", "help"].filter(tutorialDone).length;
+      html += `<div class="practice-progress"><strong>${done} / 5 practice steps</strong><span>${me.ready ? "Ready for the trail" : "Practice freely. No points or supplies are at risk."}</span></div><h3>Your first five steps</h3><div id="tutorial-actions"></div><hr><div id="ready-action"></div>`;
     } else
       html +=
         '<div class="notice">Open your private invitation on a laptop or desktop. Choose a character, practice, and mark yourself ready.</div>';
   } else if (displayPhase === "countdown") {
     html +=
-      '<span class="chapter-count">HERE WE GO</span><h2>The trail<br>starts here.</h2><p>Pack some patience. The machines packed none.</p><div class="notice">The shared countdown is part of the first chapter’s five minutes.</div>';
+      '<span class="chapter-count">HERE WE GO</span><h2>The trail<br>starts here.</h2><p>Your neighbors are setting out with you. The Moving Depot is our first stop.</p><div class="notice">Watch the shared clock. The first chapter opens for everyone together; these ten seconds are part of its five minutes.</div>';
   } else if (displayPhase === "finale") {
     html += `<span class="chapter-count">THE NEIGHBORHOOD FINALE</span><h2>Bring the<br>lights home.</h2><p>One last repair. One home at a time. Every neighbor gets a turn.</p><div class="progress-track"><div class="progress-fill" style="width:${Math.min(
       100,
@@ -1809,18 +2651,20 @@ function renderMission() {
         ? `<div class="notice" role="status">${esc(e.finale.ending)}</div>`
         : `<p class="small">${
             e.finale?.contributors?.length || 0
-          } neighbors have contributed toward ${
+          } ${(e.finale?.contributors?.length || 0) === 1 ? "neighbor has" : "neighbors have"} contributed toward ${
             e.finale?.target || 1
-          } repairs.</p>`
+          } ${(e.finale?.target || 1) === 1 ? "repair" : "repairs"}.</p>`
     }<p class="small">Award results are locked. This moment belongs to everyone.</p><div id="finale-action"></div>`;
   } else if (["awards", "closed"].includes(displayPhase)) {
     html +=
       '<span class="chapter-count">HUMANS: STILL PRETTY GOOD</span><h2>The end of<br>the trail.</h2>' +
-      (e.finale?.ending
-        ? `<div class="notice" role="status">${esc(e.finale.ending)}</div>`
-        : "") +
+      (e.archive?.finaleRecorded === false
+        ? `<div class="notice" role="status">Archived chapter awards. The finale outcome was not retained in this archive.</div>`
+        : e.finale?.ending ? `<div class="notice" role="status">${esc(e.finale.ending)}</div>` : "") +
       "<p>For the fixers, the thinkers, and the people who stopped to help.</p>" +
       awardsHTML();
+  } else if (sceneFocused()) {
+    html += sceneSidebarHTML();
   } else if (isFilterFocused()) {
     html += filterSidebarHTML();
   } else if (isMoveDayFocused()) {
@@ -1839,7 +2683,7 @@ function renderMission() {
     )}</p>`;
     if (displayPhase === "brag" || displayPhase === "brag_break") {
       html +=
-        '<div class="phase-banner"><strong>Bragging rights.</strong><p class="small" style="margin:8px 0 0">Supplies and scoring are frozen. Tell us how you did it.</p></div>' +
+        '<div class="phase-banner"><strong>Meet back at the square.</strong><p class="small" style="margin:8px 0 0">Supplies and scoring are frozen. Share the choice you made, then see where the trail goes next.</p></div>' +
         verifiedHighlightHTML() +
         standingsHTML() +
         awardsHTML() +
@@ -1866,17 +2710,19 @@ function renderMission() {
     html += "<hr><h3>Neighborhood restoration</h3>" + contributionsHTML();
   }
   $("#mission").innerHTML = html;
-  mission.classList.toggle("move-day-mission", isMoveDayFocused() || isFilterFocused());
-  mission.classList.toggle("filter-mission", isFilterFocused());
+  mission.classList.toggle("move-day-mission", isMoveDayFocused() || isFilterFocused() || sceneFocused());
+  mission.classList.toggle("filter-mission", isFilterFocused() || sceneFocused());
+  mission.classList.toggle("chapter-scene-mission", sceneFocused());
   app
     .querySelector?.(".game")
-    ?.classList.toggle("move-day-game", isMoveDayFocused() || isFilterFocused());
-  if (isFilterFocused()) renderFilterSidebar();
+    ?.classList.toggle("move-day-game", isMoveDayFocused() || isFilterFocused() || sceneFocused());
+  if (sceneFocused() && $("#scene-actions")) renderChapterSceneSidebar();
+  else if (isFilterFocused()) renderFilterSidebar();
   else if (isMoveDayFocused()) renderMoveDaySidebar();
   updateControlHints();
   mission.dataset.phase = `${e.phase}:${displayPhase}:${e.chapter}`;
   if (previousPhase !== mission.dataset.phase) mission.scrollTop = 0;
-  $("#map-label").textContent = isFilterFocused() ? "FILTER SHORTAGE · THE HOME VISIT" : isMoveDayFocused()
+  $("#map-label").textContent = (e.archive?.finaleRecorded === false ? "ARCHIVED RESULTS" : null) || ({countdown:"COUNTDOWN PREPARATIONS",brag:"CHAPTER BREAK",finale:"BRING THE LIGHTS HOME",awards:"NEIGHBORHOOD AWARDS",closed:"THE TRAIL IS COMPLETE"}[displayPhase]) || (sceneFocused() ? (CHAPTER_SCENE_TITLES[e.chapter] || "THE NEIGHBORHOOD").toUpperCase() : isFilterFocused() ? "FILTER SHORTAGE · THE HOME VISIT" : isMoveDayFocused()
     ? "MOVE DAY · THE CROSSING"
     : e.finale?.contributors?.includes(me.id)
       ? "YOUR REPAIR · AMBER MARKER"
@@ -1884,7 +2730,7 @@ function renderMission() {
           ch?.task?.target?.name ||
           ch?.title ||
           "Bragging Square"
-        ).toUpperCase();
+        ).toUpperCase());
   if ($("#tutorial-actions")) renderTutorial();
   if ($("#chapter-actions")) {
     const n = $("#chapter-actions");
@@ -1955,15 +2801,7 @@ function renderMission() {
     $("#finale-action").append(
       btn(
         "Restore a home",
-        async () => {
-          const r = await act("finale");
-          if (r !== null)
-            toast(
-              `Repair ${
-                state.event.finale.contributors.indexOf(state.me.id) + 1
-              } is yours. Your marker is lit in the neighborhood.`,
-            );
-        },
+        contributeFinale,
         "primary",
       ),
     );
@@ -1971,20 +2809,20 @@ function renderMission() {
   if (finaleButton) {
     const contributed = e.finale?.contributors?.includes(me.id);
     if (contributed) finaleButton.textContent = "✓ Your home is restored";
-    finaleButton.disabled = !!e.paused || !!contributed;
+    finaleButton.disabled = !!e.paused || !!contributed || !!contributeFinale.pending;
   }
   if (focused && !modal.open) {
     const buttons = [...mission.querySelectorAll("button")];
     const replacement =
       previousPhase === mission.dataset.phase
-        ? (isFilterFocused() && focused.id === "filter-result" && $("#filter-result")) || (isMoveDayFocused() &&
+        ? (sceneFocused() && focused.id === "scene-result" && $("#scene-result")) || (isFilterFocused() && focused.id === "filter-result" && $("#filter-result")) || (isMoveDayFocused() &&
             focused.id === "move-day-result" &&
             $("#move-day-result")) ||
           buttons.find(
             (b) =>
               focusedKey && b.dataset.focusKey === focusedKey && !b.disabled,
           ) ||
-          (!isMoveDayFocused() && !isFilterFocused() &&
+          (!isMoveDayFocused() && !isFilterFocused() && !sceneFocused() &&
             (buttons.find(
               (b) => b.textContent === focusedText && !b.disabled,
             ) ||
@@ -2235,6 +3073,7 @@ function renderTutorial() {
   );
 }
 function travel(index, kind) {
+  if (sceneFocused() && kind !== "activity") setChapterOverview(true);
   if (isFilterFocused() && kind !== "activity") setFilterOverview(true);
   if (isMoveDayFocused() && kind !== "activity") setMoveDayOverview(true);
   if (!state.chapter?.locations?.[index]) return;
@@ -2258,6 +3097,7 @@ function travel(index, kind) {
 }
 function showActivity(kind) {
   clearTravelToast();
+  if (kind === "activity" && sceneFocused()) {renderMission();if(!modal.open)$("#scene-primary")?.focus({preventScroll:true});return;}
   if (kind === "activity" && isFilterFocused()) {
     renderMission();
     if (!modal.open) $("#filter-primary")?.focus({ preventScroll: true });
@@ -2980,6 +3820,7 @@ function map() {
     "One shared neighborhood",
     `<p class="small">Eight districts around Bragging Square. The active chapter’s locations are open to everyone at once.</p><p class="small muted">Unplayed means no objective, learning, clue, or assist progress is recorded; moving and socializing do not count as chapter progress. Complete means the main objective is finished.</p><div class="chapter-map" id="map-districts"></div>`,
   );
+  if (sceneAvailable()) $("#map-districts").append(btn("Explore the neighborhood overview",()=>setChapterOverview(true)),btn("Return to the chapter scene",()=>setChapterOverview(false),"primary"));
   if (isFilterAvailable()) $("#map-districts").append(
     btn("Explore the neighborhood overview", () => setFilterOverview(true)),
     btn("Return to Filter shortage", () => setFilterOverview(false), "primary"),
@@ -3204,6 +4045,7 @@ function worldKeys(e) {
             : null;
   if (vector) {
     e.preventDefault();
+    if (sceneFocused()) setChapterOverview(true);
     if (isFilterFocused()) setFilterOverview(true);
     if (isMoveDayFocused()) setMoveDayOverview(true);
     const next = clipMove(pos, {
@@ -3211,6 +4053,8 @@ function worldKeys(e) {
       y: Math.max(30, Math.min(770, pos.y + vector[1] * 35)),
     });
     target = { ...next, path: [next] };
+  } else if (k === "escape" && sceneAvailable() && chapterSceneState.overview) {
+    e.preventDefault();setChapterOverview(false);
   } else if (k === "escape" && isFilterAvailable() && filterState.overview) {
     e.preventDefault();setFilterOverview(false);
   } else if (k === "escape" && isMoveDayAvailable() && moveDayOverview) {
@@ -3218,6 +4062,7 @@ function worldKeys(e) {
     setMoveDayOverview(false);
   } else if (k === keys.interact || k === "enter") {
     e.preventDefault();
+    if (sceneFocused()) { scenePrimary(); return; }
     if (isFilterFocused()) { filterPrimary(); return; }
     if (isMoveDayFocused()) {
       moveDayPrimary();
@@ -3237,6 +4082,8 @@ function worldKeys(e) {
       act("tutorial", { step: "interact" });
       toast("Guide: “Welcome. The robots rearranged the signs again.”");
     } else toast("Walk to one of the current chapter’s marked locations.");
+  } else if (sceneFocused() && (/^[1-3]$/.test(k) || k === " ")) {
+    sceneKeys(e);
   } else if (isFilterFocused() && /^[1-3]$/.test(k)) {
     e.preventDefault();selectFilterChoice(Number(k)-1);
   } else if (k === keys.inventory) {
@@ -3267,7 +4114,12 @@ modal.addEventListener("keydown", (e) => {
 function frame(now) {
   if (!activeCanvas?.isConnected) return;
   measureFrame(now, state?.event?.phase);
-  if (isFilterFocused()) drawFilterScene(activeCtx, state, { selectedChoice:filterState.selection, completedHome:filterState.completedHome, focusedPeerId:filterState.focusedPeerId, pending:filterState.pending });
+  const displayPhase = state?.event?.phase === "paused" ? state.event.pausedPhase : state?.event?.phase;
+  if (["countdown", "brag"].includes(displayPhase)) drawEventScene(activeCtx, state, {mode:displayPhase === "brag" ? "break" : "countdown"});
+  else if (isPresentation && ["draft","lobby"].includes(displayPhase)) drawEventScene(activeCtx, state, {mode:"gathering"});
+  else if (isPresentation && ((displayPhase === "chapter" && state.event.chapter >= 2) || ["finale","awards","closed"].includes(displayPhase))) drawChapterScene(activeCtx, state, {presentation:true,safe:true,now:Date.now()+serverOffset});
+  else if (sceneFocused()) drawChapterScene(activeCtx, state, chapterSceneOptions());
+  else if (isFilterFocused()) drawFilterScene(activeCtx, state, { selectedChoice:filterState.selection, completedHome:filterState.completedHome, focusedPeerId:filterState.focusedPeerId, pending:filterState.pending });
   else if (isMoveDayFocused())
     drawMoveDayScene(activeCtx, state, {
       focusedPeerId: moveDayState.focusedPeerId,
@@ -3326,7 +4178,7 @@ function frame(now) {
             .padStart(2, "0")}:${(seconds % 60).toString().padStart(2, "0")}`
         : e.phase === "closed"
           ? "ENDED"
-          : "LOBBY";
+          : e.phase === "awards" ? "RESULTS" : "LOBBY";
   }
   requestAnimationFrame(frame);
 }
@@ -3938,9 +4790,9 @@ function hostDashboard() {
     topbar(
       '<span id="host-connection" class="pill">PRIVATE OPERATOR CONTROLS · CONNECTING</span>',
     ) +
-    `<main class="host-shell"><div class="eyebrow safe">LIVE OPERATIONS</div><h1>${esc(
+    `<main class="host-shell"><div class="host-welcome"><canvas id="host-scene" width="1200" height="800" aria-hidden="true"></canvas><div><div class="eyebrow safe">NEIGHBORHOOD FIELD STATION</div><h1>${esc(
       e.name || "Second Nature Trail",
-    )}</h1><div class="host-stats">${[
+    )}</h1><p>Keep the group together. Every control below changes the shared event.</p></div></div><div class="host-stats">${[
       ["Players", ps.length],
       ["Connected", (raw.connections || []).length],
       [
@@ -4743,6 +5595,7 @@ modal.addEventListener("keydown", (e) => {
 });
 setInterval(() => {
   refreshNeighborEmotes();
+  chapterSceneTick();
   if (panel === "targeting" && modal.open) {
     const task = state.chapter?.task;
     if (task?.kind !== "targeting") {
@@ -4875,6 +5728,8 @@ function updateHostLive() {
   $("#host-connection").textContent =
     "PRIVATE OPERATOR CONTROLS · " +
     (hostConnected ? "CONNECTED" : "RECONNECTING");
+  const hostArt = $("#host-scene");
+  if (hostArt?.getContext) drawEventScene(hostArt.getContext("2d"), raw, { mode: "operator" });
   const context = $("#host-context");
   if (context)
     context.textContent = `Chapter ${
@@ -5051,23 +5906,26 @@ function updateControlHints() {
     buttons[3].textContent = `Help [${keyLabel("help")}]`;
   }
   const hint = $("#world-hint");
+  const phase = state?.event?.phase === "paused" ? state.event.pausedPhase : state?.event?.phase;
+  const nextDistrict = state?.world?.find((district)=>district.index===state.event.chapter+1)?.title || "The neighborhood finale";
+  const endingHint = state?.event?.archive?.finaleRecorded === false ? "Archived chapter awards · Finale outcome not retained" : phase === "countdown" ? "Countdown preparations · Walking and chapter actions resume when the chapter opens" : phase === "brag" ? `Chapter break · Scores are frozen · Next: ${nextDistrict}` : phase === "awards" ? "Results are recorded · Map reviews your chapters · Neighbors stays available" : phase === "closed" ? "Trail complete · Review awards and chapter history" : phase === "finale" && sceneFocused() ? (state.event.paused ? "The finale is paused · Your saved repair is safe" : state.event.finale?.contributors?.includes(state.me?.id) ? "Your home is restored · Review shared progress and chapter history" : `Restore a home beside the scene · ${keyLabel("interact")} contributes · Map opens the neighborhood`) : null;
   if (hint)
-    hint.textContent = (isMoveDayFocused() || isFilterFocused())
+    hint.textContent = endingHint || ((isMoveDayFocused() || isFilterFocused() || sceneFocused())
       ? `Choose beside the scene · ${keyLabel(
           "interact",
         )} continues · ${movementKeys()} / arrows switch to free walking`
       : `Click to walk · ${movementKeys()} / arrows to move · ${keyLabel(
           "interact",
-        )} to interact`;
+        )} to interact`);
   if ($("#field-notes-menu"))
-    $("#field-notes-menu").hidden = !isMoveDayAvailable() && !isFilterAvailable();
+    $("#field-notes-menu").hidden = !isMoveDayAvailable() && !isFilterAvailable() && !sceneAvailable();
   if ($("#move-day-return")) {
-    $("#move-day-return").hidden = isFilterAvailable() ? isFilterFocused() : !isMoveDayAvailable() || isMoveDayFocused();
-    $("#move-day-return").textContent = isFilterAvailable() ? "Return to Filter shortage" : "Return to Move Day";
+    $("#move-day-return").hidden = sceneAvailable() ? sceneFocused() : isFilterAvailable() ? isFilterFocused() : !isMoveDayAvailable() || isMoveDayFocused();
+    $("#move-day-return").textContent = sceneAvailable() ? "Return to chapter scene" : isFilterAvailable() ? "Return to Filter shortage" : "Return to Move Day";
   }
   activeCanvas?.setAttribute(
     "aria-label",
-    isFilterFocused() ? `Filter shortage home visit. Tab reaches inspection and installation choices. Number keys select a choice. ${keyLabel("interact")} continues. Movement keys switch to the neighborhood overview.` : isMoveDayFocused()
+    endingHint ? `Neighborhood ${phase} illustration. ${endingHint}. Tab reaches the event report and menus.` : sceneFocused() ? `Chapter scene. Tab reaches all choices. ${keyLabel("interact")} continues. Movement keys switch to the neighborhood overview.` : isFilterFocused() ? `Filter shortage home visit. Tab reaches inspection and installation choices. Number keys select a choice. ${keyLabel("interact")} continues. Movement keys switch to the neighborhood overview.` : isMoveDayFocused()
       ? `Move Day delivery scene. Tab reaches cargo and route choices. ${keyLabel(
           "interact",
         )} continues the current stage. Movement keys switch to the neighborhood overview.`

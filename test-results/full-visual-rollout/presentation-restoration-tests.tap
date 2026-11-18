@@ -1,0 +1,36 @@
+✔ chapter 3 six actual inspect/decision controls retain wrong retries, supplies and confirmed repair (18.135ms)
+✔ chapter 4 six actual inspect/decision controls retain wrong retries, supplies and confirmed repair (10.010708ms)
+✔ chapter 7 six actual inspect/decision controls retain wrong retries, supplies and confirmed repair (13.082875ms)
+✔ three actual route controls use public node IDs, reject broken paths, reset and complete constrained graphs (7.083ms)
+✔ payment controls enforce opening, retain late outcome and carry budgets through all three recorded cycles (3.910125ms)
+✔ targeting keyboard/manual resolves all18 rounds with six-hit site boundaries (16.077584ms)
+✔ targeting selected-auto resolves all18 rounds with six-hit site boundaries (19.622209ms)
+✔ pending actions stay single and cannot steal a new Help panel or show stale phase/epoch repair (11.371417ms)
+✔ target controls reject early/decoy/repeat and paused selection; a fresh round requires deliberate new choice (3.208083ms)
+✔ 100-peer updates preserve owned keyboard choice/result focus and reload reconstructs authoritative progress (23.752042ms)
+✔ finale focused semantic action reaches the same authoritative contribution and leaves frozen scores untouched (2.825334ms)
+✔ finale pending button and semantic key cannot duplicate, and newer dialogs/epochs cannot receive old repair feedback (9.68475ms)
+✔ remapped interact from the actual focused choice/result controls confirms then continues without a canvas focus requirement (2.815792ms)
+✔ completed reload retains chapter score; paused completion opens only read-only field notes (6.885042ms)
+✔ same-chapter overview preference survives snapshots but a new chapter or finale defaults to its focused scene (2.17925ms)
+✔ actual presentation frame uses only public safe scenes in all six chapters, breaks and finale, while player practice stays in its world (2.974542ms)
+✔ finale and result captions/hints follow phase rather than the last chapter (3.281125ms)
+✔ countdown and brag captions suppress frozen movement instructions, including paused equivalents (2.430459ms)
+✔ finale and results cannot expose invisible incomplete prior-chapter task hotspots (11.728916ms)
+✔ spatial identity/recovery/reward scenes gate evidence and preserve authored choices and actual six-job results (12.911959ms)
+✔ reward projects use canonical garden/welcome/festival IDs and preserve earned balances with no extra score (4.768958ms)
+✔ target scene preserves public IDs and all18 real round resolutions, with safe art and site-only credit (7.375167ms)
+✔ payment scenes retain actual late/incomplete cycle outcome and do not borrow next-cycle budget in held results (2.589708ms)
+✔ network model retains real public graph shapes/constraints and depicts each accepted path without inventing links (2.287208ms)
+✔ all six scenes have stable solo/100 crowd, no automatic names and no modal/phase mutation (5.11175ms)
+✔ network preview cannot light home windows; only accepted route steps survive continuation and reload (1.384417ms)
+✔ archive art preserves the actual fifteen award records and800 completions without inventing a finale outcome (16.653042ms)
+✔ public presentation distinguishes zero/partial/full shared restoration without borrowing personal progress or issuing commands (0.828166ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 411.552209

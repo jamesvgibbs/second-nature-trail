@@ -499,6 +499,16 @@ export function drawMoveDayScene(ctx, state, options = {}) {
     rect(976, 396, 36, 8, p.timber);
     rect(988, 392, 8, 20, p.timber);
   }
+  // A resident waits on the raised porch. Only a saved personal delivery fills
+  // the supply crate and changes their greeting; shared fence progress is separate.
+  rect(1080, 420, 76, 12, p.timber);
+  rect(1088, 432, 8, 16, p.timber);
+  rect(1140, 432, 8, 16, p.timber);
+  rect(1080, 400, 28, 20, p.timber);
+  rect(1084, 404, 20, 12, model.homeRestored ? p.paper : p.roof);
+  if (model.homeRestored) rect(1092, 400, 4, 20, p.amber);
+  person(1132, 404, model.homeRestored ? p.mint : p.amber);
+  rect(1148, model.homeRestored ? 380 : 396, 8, model.homeRestored ? 20 : 12, "#d8b88b");
   // Six fence spans are an illustration of the ratio, never additional awards.
   for (let i = 0; i < 6; i++) {
     const x = 908 + i * 44,

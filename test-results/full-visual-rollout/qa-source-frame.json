@@ -1,0 +1,37 @@
+{
+  "capturedAt": "2026-11-18T18:30:32.886Z",
+  "runtime": "v24.20.0",
+  "baseCommit": "6f2d19a9c3f9f2256fa34859b6f97c679aa651a0",
+  "qualification": "Uncommitted shared working-tree source captured immediately before final combined suite after client and engine reported source stable, including ordinary crowd launch and double-Play fixes. Not a final commit identifier or native screenshot attestation.",
+  "files": {
+    "public/app.js": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce",
+    "public/style.css": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac",
+    "public/chapter-scenes.mjs": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5",
+    "public/event-scenes.mjs": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586",
+    "public/move-day-scene.mjs": "760f5e5d8e4b926dc7b6a7497340c299805d325b8b6d5f924b26e4c1f51a7f31",
+    "public/filter-scene.mjs": "23d17c0548386d4b9bac4b3a371f47c7cd6f5879e7aa797315e0ebfd675253e4",
+    "public/world.mjs": "d412a2dee8b4b1dc3779d1dabc46561383646ac63651dcf7cd30eeba8bd063a0",
+    "engine.mjs": "adbb77be85fb3e09e331f55356a832218142ff9209f46fbedc9fed193d74969d",
+    "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+    "server.mjs": "3e0006a03cf775cf6fd6e0dd9847185a146c45d0e1fa1ba9c8cf52183d36df4f",
+    "scripts/review-events.mjs": "0dfa80a05017e1d17f267b175483f8873a8daeddfd55b4cef91fb1aa26c09304",
+    "scripts/review-setup.mjs": "957798f163c7c458a816f1fc2b23964dd7b503e4c2f878a271bc8970d6cfe9de",
+    "scripts/review-archive.mjs": "b43fdfea6e94d7c0d4458ba213aad895307f93c475f4608daa104bcf409b096d",
+    "test/chapter-scenes.test.mjs": "275e8cf0629c562c514d3de9f6b9acccbb9bdf43990ea48c2eea10986c1aede4",
+    "test/chapter-scenes-ui.test.mjs": "5ae55e3acdc3131365e3f6ea5917db503d2307824ec1c3e09c4303cc3a17da7f",
+    "test/finale-ui.test.mjs": "a9ce3dee29f23e0ed57fa6e6e4a62d49f7a21e83ef89b24343ad74367e6ceb1c",
+    "test/review-finale-launch.test.mjs": "a101cd1c1beb7e683c7806c0cba44399e52703b942dc6551f9cefb605b2b2030",
+    "test/review-setup.test.mjs": "ae8a292ebb50b3fc1bc67c0da20dcddd360ebdf9c6f39f116e3adfffe21ea372"
+  },
+  "verifiedAfterRunAt": "2026-11-18T18:31:37.583Z",
+  "sourceUnchanged": true,
+  "result": {
+    "tests": 335,
+    "passed": 335,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "durationMs": 42080.203125,
+    "log": "developer-suite-final.tap"
+  }
+}

@@ -130,10 +130,10 @@ test("100 peers at square, depot, or spread remain bounded to nearby stable safe
       }
       const painted = capture({ ...state, players });
       assert.equal(
-        painted.marks.filter((m) => m.type === "rect" && m.color === "#d8b88b")
+        painted.marks.filter((m) => m.type === "rect" && m.color === "#d8b88b" && m.width === 20 && m.height === 20 && !(m.x === 1124 && m.y === 364))
           .length,
         model.teammates.length + 1,
-        "Exactly own avatar plus bounded companions are painted",
+        "Exactly own avatar plus bounded companions are painted, apart from the fixed porch resident",
       );
       assert(
         !painted.marks.some(

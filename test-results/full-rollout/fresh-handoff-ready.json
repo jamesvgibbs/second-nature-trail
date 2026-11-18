@@ -1,0 +1,579 @@
+{
+  "checkedAt": "2026-11-18T18:30:01.994Z",
+  "label": "Fresh isolated review fixtures before any final native launch verification; no assigned progress. Normal setup-safe Play and current frontend verified.",
+  "pid": 88001,
+  "node": "v24.20.0",
+  "sourceHashes": {
+    "scripts/review-events.mjs": "0dfa80a05017e1d17f267b175483f8873a8daeddfd55b4cef91fb1aa26c09304",
+    "scripts/review-setup.mjs": "957798f163c7c458a816f1fc2b23964dd7b503e4c2f878a271bc8970d6cfe9de",
+    "test/review-finale-launch.test.mjs": "a101cd1c1beb7e683c7806c0cba44399e52703b942dc6551f9cefb605b2b2030",
+    "public/app.js": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce",
+    "public/style.css": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac",
+    "public/event-scenes.mjs": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586",
+    "public/chapter-scenes.mjs": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5"
+  },
+  "status": [
+    {
+      "key": "solo3",
+      "url": "http://solo3.localhost:4193/?invite=solo3-invite-1",
+      "chapter": 3,
+      "mode": "solo",
+      "roster": 1,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 299937,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "solo4",
+      "url": "http://solo4.localhost:4194/?invite=solo4-invite-1",
+      "chapter": 4,
+      "mode": "solo",
+      "roster": 1,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 299941,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "solo5",
+      "url": "http://solo5.localhost:4195/?invite=solo5-invite-1",
+      "chapter": 5,
+      "mode": "solo",
+      "roster": 1,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 299952,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "solo6",
+      "url": "http://solo6.localhost:4196/?invite=solo6-invite-1",
+      "chapter": 6,
+      "mode": "solo",
+      "roster": 1,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 299956,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "solo7",
+      "url": "http://solo7.localhost:4197/?invite=solo7-invite-1",
+      "chapter": 7,
+      "mode": "solo",
+      "roster": 1,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 299960,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "solo8",
+      "url": "http://solo8.localhost:4198/?invite=solo8-invite-1",
+      "chapter": 8,
+      "mode": "solo",
+      "roster": 1,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 299962,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "solofinale",
+      "url": "http://solofinale.localhost:4199/?invite=solofinale-invite-1",
+      "chapter": "finale",
+      "mode": "solo",
+      "roster": 1,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 299963,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "soloentry",
+      "url": "http://soloentry.localhost:4200/?invite=soloentry-invite-1",
+      "chapter": "entry",
+      "mode": "solo",
+      "roster": 1,
+      "phase": "lobby",
+      "pausedPhase": null,
+      "remainingMs": null,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "crowd3",
+      "url": "http://crowd3.localhost:4203/?invite=crowd3-invite-1",
+      "chapter": 3,
+      "mode": "crowd",
+      "roster": 100,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 299879,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "crowd4",
+      "url": "http://crowd4.localhost:4204/?invite=crowd4-invite-1",
+      "chapter": 4,
+      "mode": "crowd",
+      "roster": 100,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 299890,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "crowd5",
+      "url": "http://crowd5.localhost:4205/?invite=crowd5-invite-1",
+      "chapter": 5,
+      "mode": "crowd",
+      "roster": 100,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 299912,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "crowd6",
+      "url": "http://crowd6.localhost:4206/?invite=crowd6-invite-1",
+      "chapter": 6,
+      "mode": "crowd",
+      "roster": 100,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 299927,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "crowd7",
+      "url": "http://crowd7.localhost:4207/?invite=crowd7-invite-1",
+      "chapter": 7,
+      "mode": "crowd",
+      "roster": 100,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 299945,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "crowd8",
+      "url": "http://crowd8.localhost:4208/?invite=crowd8-invite-1",
+      "chapter": 8,
+      "mode": "crowd",
+      "roster": 100,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 299961,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "crowdfinale",
+      "url": "http://crowdfinale.localhost:4209/?invite=crowdfinale-invite-1",
+      "chapter": "finale",
+      "mode": "crowd",
+      "roster": 100,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 299977,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "crowdentry",
+      "url": "http://crowdentry.localhost:4210/?invite=crowdentry-invite-1",
+      "chapter": "entry",
+      "mode": "crowd",
+      "roster": 100,
+      "phase": "lobby",
+      "pausedPhase": null,
+      "remainingMs": null,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    }
+  ],
+  "checked": [
+    {
+      "key": "solo3",
+      "url": "http://solo3.localhost:4193/?invite=solo3-invite-1",
+      "assets": {
+        "app.js": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce",
+        "style.css": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac",
+        "event-scenes.mjs": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586",
+        "chapter-scenes.mjs": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5"
+      }
+    },
+    {
+      "key": "solo4",
+      "url": "http://solo4.localhost:4194/?invite=solo4-invite-1",
+      "assets": {
+        "app.js": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce",
+        "style.css": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac",
+        "event-scenes.mjs": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586",
+        "chapter-scenes.mjs": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5"
+      }
+    },
+    {
+      "key": "solo5",
+      "url": "http://solo5.localhost:4195/?invite=solo5-invite-1",
+      "assets": {
+        "app.js": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce",
+        "style.css": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac",
+        "event-scenes.mjs": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586",
+        "chapter-scenes.mjs": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5"
+      }
+    },
+    {
+      "key": "solo6",
+      "url": "http://solo6.localhost:4196/?invite=solo6-invite-1",
+      "assets": {
+        "app.js": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce",
+        "style.css": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac",
+        "event-scenes.mjs": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586",
+        "chapter-scenes.mjs": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5"
+      }
+    },
+    {
+      "key": "solo7",
+      "url": "http://solo7.localhost:4197/?invite=solo7-invite-1",
+      "assets": {
+        "app.js": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce",
+        "style.css": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac",
+        "event-scenes.mjs": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586",
+        "chapter-scenes.mjs": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5"
+      }
+    },
+    {
+      "key": "solo8",
+      "url": "http://solo8.localhost:4198/?invite=solo8-invite-1",
+      "assets": {
+        "app.js": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce",
+        "style.css": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac",
+        "event-scenes.mjs": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586",
+        "chapter-scenes.mjs": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5"
+      }
+    },
+    {
+      "key": "solofinale",
+      "url": "http://solofinale.localhost:4199/?invite=solofinale-invite-1",
+      "assets": {
+        "app.js": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce",
+        "style.css": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac",
+        "event-scenes.mjs": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586",
+        "chapter-scenes.mjs": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5"
+      }
+    },
+    {
+      "key": "soloentry",
+      "url": "http://soloentry.localhost:4200/?invite=soloentry-invite-1",
+      "assets": {
+        "app.js": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce",
+        "style.css": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac",
+        "event-scenes.mjs": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586",
+        "chapter-scenes.mjs": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5"
+      }
+    },
+    {
+      "key": "crowd3",
+      "url": "http://crowd3.localhost:4203/?invite=crowd3-invite-1",
+      "assets": {
+        "app.js": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce",
+        "style.css": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac",
+        "event-scenes.mjs": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586",
+        "chapter-scenes.mjs": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5"
+      }
+    },
+    {
+      "key": "crowd4",
+      "url": "http://crowd4.localhost:4204/?invite=crowd4-invite-1",
+      "assets": {
+        "app.js": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce",
+        "style.css": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac",
+        "event-scenes.mjs": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586",
+        "chapter-scenes.mjs": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5"
+      }
+    },
+    {
+      "key": "crowd5",
+      "url": "http://crowd5.localhost:4205/?invite=crowd5-invite-1",
+      "assets": {
+        "app.js": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce",
+        "style.css": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac",
+        "event-scenes.mjs": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586",
+        "chapter-scenes.mjs": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5"
+      }
+    },
+    {
+      "key": "crowd6",
+      "url": "http://crowd6.localhost:4206/?invite=crowd6-invite-1",
+      "assets": {
+        "app.js": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce",
+        "style.css": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac",
+        "event-scenes.mjs": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586",
+        "chapter-scenes.mjs": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5"
+      }
+    },
+    {
+      "key": "crowd7",
+      "url": "http://crowd7.localhost:4207/?invite=crowd7-invite-1",
+      "assets": {
+        "app.js": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce",
+        "style.css": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac",
+        "event-scenes.mjs": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586",
+        "chapter-scenes.mjs": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5"
+      }
+    },
+    {
+      "key": "crowd8",
+      "url": "http://crowd8.localhost:4208/?invite=crowd8-invite-1",
+      "assets": {
+        "app.js": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce",
+        "style.css": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac",
+        "event-scenes.mjs": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586",
+        "chapter-scenes.mjs": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5"
+      }
+    },
+    {
+      "key": "crowdfinale",
+      "url": "http://crowdfinale.localhost:4209/?invite=crowdfinale-invite-1",
+      "assets": {
+        "app.js": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce",
+        "style.css": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac",
+        "event-scenes.mjs": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586",
+        "chapter-scenes.mjs": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5"
+      }
+    },
+    {
+      "key": "crowdentry",
+      "url": "http://crowdentry.localhost:4210/?invite=crowdentry-invite-1",
+      "assets": {
+        "app.js": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce",
+        "style.css": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac",
+        "event-scenes.mjs": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586",
+        "chapter-scenes.mjs": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5"
+      }
+    }
+  ]
+}

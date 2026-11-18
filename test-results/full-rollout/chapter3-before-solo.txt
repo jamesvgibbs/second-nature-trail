@@ -1,0 +1,103 @@
+Window: "Second Nature Trail", App: Safari.
+0 standard window Second Nature Trail, ID: SafariWindow?IsSecure=false&UUID=48BFC54F-3E6F-4C44-985F-0ED3AC8E327A, Secondary Actions: Raise
+	1 split group
+		2 tab group
+			3 scroll area
+				4 HTML content Description: Second Nature Trail, URL: solo3.localhost:4193/
+					5 container
+						6 text sn SECOND NATURE TRAIL CONNECTED
+						7 text PAUSED
+						8 text 05:00
+						9 text YOUR SUPPLIES 12  / 12 stored 3 Parts 3 Filters 3 Food 3 Cable 0 nearby · 1 connected · Meet everyone in Neighbors
+						10 container Shared neighborhood. Move with arrow keys or WASD, or click a destination. Press E to interact. Tab reaches all menus.
+						11 text CEDAR HOME Click to walk · WASD / arrows to move · E to interact
+						12 text LOCAL REVIEW · Earlier chapters are unplayed. Your actions and supplies are real.
+						13 text CHAPTER 3 / 08
+						14 heading Attack of the clones, Value: 2
+							15 text Attack of the clones
+						16 text Investigate evidence at six homes. Identify impersonation attempts without falsely accusing legitimate neighbors.
+						17 text Your chapter score
+						18 text 0
+						19 text Objective progress
+						20 text 0 / 6
+						21 text The host paused play. Movement, supplies, and scoring are frozen.
+						22 button (disabled) Inspect the site →
+						23 text Destination: Cedar home
+						24 text FIELD NOTES & EXPLORATION
+						25 button (disabled) Learning encounters
+						26 button (disabled) Try the harder challenge
+						27 button (disabled) Look for a secret
+						28 button (disabled) The neighborhood mystery
+						29 heading Neighborhood restoration, Value: 3
+							30 text Neighborhood restoration
+						31 text 0 completed objectives · AI control 100%
+						32 container Neighborhood restored 0%
+						33 text Completed objectives restore the district’s homes. Mint foundations show shared progress; warm windows mark a fully restored district.
+						34 text 1. Moving depot
+						35 text 0
+						36 text 2. Filter warehouse
+						37 text 0
+						38 text 3. Identity bureau
+						39 text 0
+						40 text 4. Insurance office
+						41 text 0
+						42 text 5. Apartment block
+						43 text 0
+						44 text 6. Trading post
+						45 text 0
+						46 text 7. Rewards arcade
+						47 text 0
+						48 text 8. Internet exchange
+						49 text 0
+						50 button Inventory [I]
+						51 button Map [M]
+						52 button Neighbors
+						53 button Help [H]
+						54 button Settings
+						55 text One neighborhood. Everyone belongs. Your review neighbor
+	56 image WindowControlShadowView._shadowImageView
+	57 toolbar
+		58 container Secondary Actions: Move next, Remove from toolbar
+			59 button Description: show sidebar, Help: Show sidebar, ID: SidebarButton
+			60 menu button Description: Tab Group picker, ID: TabGroupPickerButton?TabGroup=
+		61 container BackForwardSegmentedControl
+			62 button Description: Go back, Help: Show the previous page, ID: BackButton
+			63 button (disabled) Description: Go forward, Help: Show the next page, ID: ForwardButton
+		64 container Secondary Actions: Move previous, Move next, Remove from toolbar
+			65 button Page Menu, ID: AssistantButton
+			66 button Add page to Reading List, ID: OneStepBookmarkingButton
+			67 text field (settable) Description: smart search field, Value: solo3.localhost:4193, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			68 button Reload this page, ID: ReloadButton
+		69 button Description: Share, ID: ShareButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		70 button Description: New Tab, ID: NewTabButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		71 button Description: Tab Overview, ID: TabOverviewButton, Secondary Actions: Move previous, Remove from toolbar
+	72 tab group Description: Tab bar, 5 tabs, ID: TabBar?isSeparate=false
+		73 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			74 image FaviconImageView
+			75 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		76 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			77 image FaviconImageView
+			78 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		79 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			80 image FaviconImageView
+			81 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		82 tab Second Nature Trail · Chapter 2 review, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			83 image FaviconImageView
+			84 text Value: Second Nature Trail · Chapter 2 review, ID: UnifiedTabBarButton._titleTextField
+		85 tab Second Nature Trail, Help: To interact with the items in this button, press Control-Option-Shift-Down Arrow., Value: on, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=true, Secondary Actions: close tab
+			86 image FaviconImageView
+			87 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+	88 close button
+	89 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	90 minimize button
+91 menu bar
+	92 Safari
+	93 File
+	94 Edit
+	95 View, ID: SafariViewMenu
+	96 History
+	97 Bookmarks, ID: SafariBookmarksMenu
+	98 Window, ID: SafariWindowMenu
+	99 Help, ID: SafariHelpMenu
+
+The focused UI element is 10 container Shared neighborhood. Move with arrow keys or WASD, or click a destination. Press E to interact. Tab reaches all menus.

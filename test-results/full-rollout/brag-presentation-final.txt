@@ -1,0 +1,104 @@
+Window: "Second Nature Trail", App: Safari.
+0 standard window Second Nature Trail, ID: SafariWindow?IsSecure=false&UUID=48BFC54F-3E6F-4C44-985F-0ED3AC8E327A, Secondary Actions: Raise
+	1 split group
+		2 tab group
+			3 scroll area
+				4 HTML content Description: Second Nature Trail, URL: host-soloentry.localhost:4200/presentation
+					5 container
+						6 text sn SECOND NATURE TRAIL CONNECTED
+						7 text PAUSED
+						8 text 01:39
+						9 text NEIGHBORHOOD FIELD REPORT 0 neighbors connected · Friendly robots
+						10 image Live read-only neighborhood illustration. Friendly robot visuals. Phase, shared progress and results are available in the adjacent event report.
+						11 text CHAPTER BREAK Repairs bring the whole neighborhood back to life.
+						12 text LOCAL REVIEW · Earlier chapters are unplayed. Your actions and supplies are real.
+						13 text CHAPTER 1 / 08
+						14 heading Move day mayhem, Value: 2
+							15 text Move day mayhem
+						16 text The AI has rerouted moving day into a dead end. Pack a delivery cart, inspect a route, and get useful supplies to the broken highway.
+						17 text Meet back at the square.
+						18 text Supplies and scoring are frozen. Share the choice you made, then see where the trail goes next.
+						19 text Chapter prize unawarded: No qualifying recipient.
+						20 heading Chapter standings, Value: 3
+							21 text Chapter standings
+						22 container
+							23 text 1 Your review neighbor 12
+						24 text Ranking uses recorded chapter performance. Prize eligibility is separate.
+						25 container
+							26 text 1 Move day mayhem Unawarded
+						27 text UP NEXT · CHAPTER 2
+						28 heading The great filter shortage, Value: 3
+							29 text The great filter shortage
+						30 text Inspect six homes, match each replacement to its equipment, and restore airflow.
+						31 text Start at Filter warehouse. Then explore Ventilation maze for a challenge and a hidden clue. The next chapter opens when this break ends.
+						32 heading Neighborhood restoration, Value: 3
+							33 text Neighborhood restoration
+						34 text 0 completed objectives · AI control 100%
+						35 container Neighborhood restored 0%
+						36 text Completed objectives restore the district’s homes. Mint foundations show shared progress; warm windows mark a fully restored district.
+						37 text 1. Moving depot
+						38 text 0
+						39 text 2. Filter warehouse
+						40 text 0
+						41 text 3. Identity bureau
+						42 text 0
+						43 text 4. Insurance office
+						44 text 0
+						45 text 5. Apartment block
+						46 text 0
+						47 text 6. Trading post
+						48 text 0
+						49 text 7. Rewards arcade
+						50 text 0
+						51 text 8. Internet exchange
+						52 text 0
+						53 text FRIENDLY ROBOT VISUALS · PRESENTATION One neighborhood. Everyone belongs.
+	54 image WindowControlShadowView._shadowImageView
+	55 toolbar
+		56 container Secondary Actions: Move next, Remove from toolbar
+			57 button Description: show sidebar, Help: Show sidebar, ID: SidebarButton
+			58 menu button Description: Tab Group picker, ID: TabGroupPickerButton?TabGroup=
+		59 container BackForwardSegmentedControl
+			60 button Description: Go back, Help: Show the previous page, ID: BackButton
+			61 button (disabled) Description: Go forward, Help: Show the next page, ID: ForwardButton
+		62 container Secondary Actions: Move previous, Move next, Remove from toolbar
+			63 button Show Reader, ID: AssistantButton
+			64 button Add page to Reading List, ID: OneStepBookmarkingButton
+			65 text field (settable) Description: smart search field, Value: host-soloentry.localhost:4200/presentation, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			66 button Reload this page, ID: ReloadButton
+		67 button Description: Share, ID: ShareButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		68 button Description: New Tab, ID: NewTabButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		69 button Description: Tab Overview, ID: TabOverviewButton, Secondary Actions: Move previous, Remove from toolbar
+	70 tab group Description: Tab bar, 6 tabs, ID: TabBar?isSeparate=false
+		71 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			72 image FaviconImageView
+			73 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		74 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			75 image FaviconImageView
+			76 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		77 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			78 image FaviconImageView
+			79 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		80 tab Second Nature Trail · Chapter 2 review, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			81 image FaviconImageView
+			82 text Value: Second Nature Trail · Chapter 2 review, ID: UnifiedTabBarButton._titleTextField
+		83 tab Second Nature Trail, Help: To interact with the items in this button, press Control-Option-Shift-Down Arrow., Value: on, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=true, Secondary Actions: close tab
+			84 image FaviconImageView
+			85 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		86 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			87 image FaviconImageView
+			88 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+	89 close button
+	90 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	91 minimize button
+92 menu bar
+	93 Safari
+	94 File
+	95 Edit
+	96 View, ID: SafariViewMenu
+	97 History
+	98 Bookmarks, ID: SafariBookmarksMenu
+	99 Window, ID: SafariWindowMenu
+	100 Help, ID: SafariHelpMenu
+
+The focused UI element is 4 HTML content Description: Second Nature Trail, URL: host-soloentry.localhost:4200/presentation

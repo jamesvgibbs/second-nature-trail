@@ -1,0 +1,289 @@
+Window: "Second Nature Trail", App: Safari.
+0 standard window Second Nature Trail, ID: SafariWindow?IsSecure=false&UUID=48BFC54F-3E6F-4C44-985F-0ED3AC8E327A, Secondary Actions: Raise
+	1 split group
+		2 tab group
+			3 scroll area
+				4 HTML content Description: Second Nature Trail, URL: host-crowdentry.localhost:4210/host
+					5 container
+						6 text sn SECOND NATURE TRAIL PRIVATE OPERATOR CONTROLS · CONNECTED
+					7 container
+						8 text NEIGHBORHOOD FIELD STATION
+						9 heading Second Nature Trail, Value: 1
+							10 text Second Nature Trail
+						11 text Keep the group together. Every control below changes the shared event. PLAYERS 100 CONNECTED 100 RECONNECTING 0 TUTORIAL COMPLETE 1 READY 1 EVENT STATE
+						12 heading lobby, Value: 2
+							13 text lobby
+						14 text Chapter 1 of 8. Control owner: operator-1.
+						15 button Open lobby
+						16 button Start event
+						17 button Cancel countdown
+						18 button Pause
+						19 button Resume
+						20 button Shorten current phase
+						21 button Advance to next phase
+						22 button Skip chapter
+						23 button End scoring
+						24 button Close event
+						25 container
+							26 text Message to all players
+							27 text field (settable) Message to all players
+						28 button Broadcast message
+						29 heading Operator log, Value: 2
+							30 text Operator log
+						31 text 12:37:48 PM · operator-1 · broadcast · Local visual review: normal operator action; earlier chapters intentionally unplayed 12:37:48 PM · operator-1 · lobby · Local visual review: normal operator action; earlier chapters intentionally unplayed
+						32 link Open safe presentation, Value: host-crowdentry.localhost:4210/presentation
+						33 button Review frozen content and rules
+						34 button Export results
+						35 button Refresh status
+						36 heading Participant status, Value: 2
+							37 text Participant status
+						38 text Your review neighbor Connected · Ready
+						39 button Rescue
+						40 text Simulated neighbor 2 Connected · Practicing
+						41 button Rescue
+						42 text Simulated neighbor 3 Connected · Practicing
+						43 button Rescue
+						44 text Simulated neighbor 4 Connected · Practicing
+						45 button Rescue
+						46 text Simulated neighbor 5 Connected · Practicing
+						47 button Rescue
+						48 text Simulated neighbor 6 Connected · Practicing
+						49 button Rescue
+						50 text Simulated neighbor 7 Connected · Practicing
+						51 button Rescue
+						52 text Simulated neighbor 8 Connected · Practicing
+						53 button Rescue
+						54 text Simulated neighbor 9 Connected · Practicing
+						55 button Rescue
+						56 text Simulated neighbor 10 Connected · Practicing
+						57 button Rescue
+						58 text Simulated neighbor 11 Connected · Practicing
+						59 button Rescue
+						60 text Simulated neighbor 12 Connected · Practicing
+						61 button Rescue
+						62 text Simulated neighbor 13 Connected · Practicing
+						63 button Rescue
+						64 text Simulated neighbor 14 Connected · Practicing
+						65 button Rescue
+						66 text Simulated neighbor 15 Connected · Practicing
+						67 button Rescue
+						68 text Simulated neighbor 16 Connected · Practicing
+						69 button Rescue
+						70 text Simulated neighbor 17 Connected · Practicing
+						71 button Rescue
+						72 text Simulated neighbor 18 Connected · Practicing
+						73 button Rescue
+						74 text Simulated neighbor 19 Connected · Practicing
+						75 button Rescue
+						76 text Simulated neighbor 20 Connected · Practicing
+						77 button Rescue
+						78 text Simulated neighbor 21 Connected · Practicing
+						79 button Rescue
+						80 text Simulated neighbor 22 Connected · Practicing
+						81 button Rescue
+						82 text Simulated neighbor 23 Connected · Practicing
+						83 button Rescue
+						84 text Simulated neighbor 24 Connected · Practicing
+						85 button Rescue
+						86 text Simulated neighbor 25 Connected · Practicing
+						87 button Rescue
+						88 text Simulated neighbor 26 Connected · Practicing
+						89 button Rescue
+						90 text Simulated neighbor 27 Connected · Practicing
+						91 button Rescue
+						92 text Simulated neighbor 28 Connected · Practicing
+						93 button Rescue
+						94 text Simulated neighbor 29 Connected · Practicing
+						95 button Rescue
+						96 text Simulated neighbor 30 Connected · Practicing
+						97 button Rescue
+						98 text Simulated neighbor 31 Connected · Practicing
+						99 button Rescue
+						100 text Simulated neighbor 32 Connected · Practicing
+						101 button Rescue
+						102 text Simulated neighbor 33 Connected · Practicing
+						103 button Rescue
+						104 text Simulated neighbor 34 Connected · Practicing
+						105 button Rescue
+						106 text Simulated neighbor 35 Connected · Practicing
+						107 button Rescue
+						108 text Simulated neighbor 36 Connected · Practicing
+						109 button Rescue
+						110 text Simulated neighbor 37 Connected · Practicing
+						111 button Rescue
+						112 text Simulated neighbor 38 Connected · Practicing
+						113 button Rescue
+						114 text Simulated neighbor 39 Connected · Practicing
+						115 button Rescue
+						116 text Simulated neighbor 40 Connected · Practicing
+						117 button Rescue
+						118 text Simulated neighbor 41 Connected · Practicing
+						119 button Rescue
+						120 text Simulated neighbor 42 Connected · Practicing
+						121 button Rescue
+						122 text Simulated neighbor 43 Connected · Practicing
+						123 button Rescue
+						124 text Simulated neighbor 44 Connected · Practicing
+						125 button Rescue
+						126 text Simulated neighbor 45 Connected · Practicing
+						127 button Rescue
+						128 text Simulated neighbor 46 Connected · Practicing
+						129 button Rescue
+						130 text Simulated neighbor 47 Connected · Practicing
+						131 button Rescue
+						132 text Simulated neighbor 48 Connected · Practicing
+						133 button Rescue
+						134 text Simulated neighbor 49 Connected · Practicing
+						135 button Rescue
+						136 text Simulated neighbor 50 Connected · Practicing
+						137 button Rescue
+						138 text Simulated neighbor 51 Connected · Practicing
+						139 button Rescue
+						140 text Simulated neighbor 52 Connected · Practicing
+						141 button Rescue
+						142 text Simulated neighbor 53 Connected · Practicing
+						143 button Rescue
+						144 text Simulated neighbor 54 Connected · Practicing
+						145 button Rescue
+						146 text Simulated neighbor 55 Connected · Practicing
+						147 button Rescue
+						148 text Simulated neighbor 56 Connected · Practicing
+						149 button Rescue
+						150 text Simulated neighbor 57 Connected · Practicing
+						151 button Rescue
+						152 text Simulated neighbor 58 Connected · Practicing
+						153 button Rescue
+						154 text Simulated neighbor 59 Connected · Practicing
+						155 button Rescue
+						156 text Simulated neighbor 60 Connected · Practicing
+						157 button Rescue
+						158 text Simulated neighbor 61 Connected · Practicing
+						159 button Rescue
+						160 text Simulated neighbor 62 Connected · Practicing
+						161 button Rescue
+						162 text Simulated neighbor 63 Connected · Practicing
+						163 button Rescue
+						164 text Simulated neighbor 64 Connected · Practicing
+						165 button Rescue
+						166 text Simulated neighbor 65 Connected · Practicing
+						167 button Rescue
+						168 text Simulated neighbor 66 Connected · Practicing
+						169 button Rescue
+						170 text Simulated neighbor 67 Connected · Practicing
+						171 button Rescue
+						172 text Simulated neighbor 68 Connected · Practicing
+						173 button Rescue
+						174 text Simulated neighbor 69 Connected · Practicing
+						175 button Rescue
+						176 text Simulated neighbor 70 Connected · Practicing
+						177 button Rescue
+						178 text Simulated neighbor 71 Connected · Practicing
+						179 button Rescue
+						180 text Simulated neighbor 72 Connected · Practicing
+						181 button Rescue
+						182 text Simulated neighbor 73 Connected · Practicing
+						183 button Rescue
+						184 text Simulated neighbor 74 Connected · Practicing
+						185 button Rescue
+						186 text Simulated neighbor 75 Connected · Practicing
+						187 button Rescue
+						188 text Simulated neighbor 76 Connected · Practicing
+						189 button Rescue
+						190 text Simulated neighbor 77 Connected · Practicing
+						191 button Rescue
+						192 text Simulated neighbor 78 Connected · Practicing
+						193 button Rescue
+						194 text Simulated neighbor 79 Connected · Practicing
+						195 button Rescue
+						196 text Simulated neighbor 80 Connected · Practicing
+						197 button Rescue
+						198 text Simulated neighbor 81 Connected · Practicing
+						199 button Rescue
+						200 text Simulated neighbor 82 Connected · Practicing
+						201 button Rescue
+						202 text Simulated neighbor 83 Connected · Practicing
+						203 button Rescue
+						204 text Simulated neighbor 84 Connected · Practicing
+						205 button Rescue
+						206 text Simulated neighbor 85 Connected · Practicing
+						207 button Rescue
+						208 text Simulated neighbor 86 Connected · Practicing
+						209 button Rescue
+						210 text Simulated neighbor 87 Connected · Practicing
+						211 button Rescue
+						212 text Simulated neighbor 88 Connected · Practicing
+						213 button Rescue
+						214 text Simulated neighbor 89 Connected · Practicing
+						215 button Rescue
+						216 text Simulated neighbor 90 Connected · Practicing
+						217 button Rescue
+						218 text Simulated neighbor 91 Connected · Practicing
+						219 button Rescue
+						220 text Simulated neighbor 92 Connected · Practicing
+						221 button Rescue
+						222 text Simulated neighbor 93 Connected · Practicing
+						223 button Rescue
+						224 text Simulated neighbor 94 Connected · Practicing
+						225 button Rescue
+						226 text Simulated neighbor 95 Connected · Practicing
+						227 button Rescue
+						228 text Simulated neighbor 96 Connected · Practicing
+						229 button Rescue
+						230 text Simulated neighbor 97 Connected · Practicing
+						231 button Rescue
+						232 text Simulated neighbor 98 Connected · Practicing
+						233 button Rescue
+						234 text Simulated neighbor 99 Connected · Practicing
+						235 button Rescue
+						236 text Simulated neighbor 100 Connected · Practicing
+						237 button Rescue
+				238 scroll bar (settable, float) 0
+	239 image WindowControlShadowView._shadowImageView
+	240 toolbar
+		241 container Secondary Actions: Move next, Remove from toolbar
+			242 button Description: show sidebar, Help: Show sidebar, ID: SidebarButton
+			243 menu button Description: Tab Group picker, ID: TabGroupPickerButton?TabGroup=
+		244 container BackForwardSegmentedControl
+			245 button Description: Go back, Help: Show the previous page, ID: BackButton
+			246 button (disabled) Description: Go forward, Help: Show the next page, ID: ForwardButton
+		247 container Secondary Actions: Move previous, Move next, Remove from toolbar
+			248 button Page Menu, ID: AssistantButton
+			249 button Add page to Reading List, ID: OneStepBookmarkingButton
+			250 text field (settable) Description: smart search field, Value: host-crowdentry.localhost:4210/host, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			251 button Reload this page, ID: ReloadButton
+		252 button Description: Share, ID: ShareButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		253 button Description: New Tab, ID: NewTabButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		254 button Description: Tab Overview, ID: TabOverviewButton, Secondary Actions: Move previous, Remove from toolbar
+	255 tab group Description: Tab bar, 6 tabs, ID: TabBar?isSeparate=false
+		256 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			257 image FaviconImageView
+			258 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		259 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			260 image FaviconImageView
+			261 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		262 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			263 image FaviconImageView
+			264 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		265 tab Second Nature Trail · Chapter 2 review, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			266 image FaviconImageView
+			267 text Value: Second Nature Trail · Chapter 2 review, ID: UnifiedTabBarButton._titleTextField
+		268 tab Second Nature Trail, Help: To interact with the items in this button, press Control-Option-Shift-Down Arrow., Value: on, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=true, Secondary Actions: close tab
+			269 image FaviconImageView
+			270 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		271 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			272 image FaviconImageView
+			273 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+	274 close button
+	275 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	276 minimize button
+277 menu bar
+	278 Safari
+	279 File
+	280 Edit
+	281 View, ID: SafariViewMenu
+	282 History
+	283 Bookmarks, ID: SafariBookmarksMenu
+	284 Window, ID: SafariWindowMenu
+	285 Help, ID: SafariHelpMenu
+
+The focused UI element is 4 HTML content Description: Second Nature Trail, URL: host-crowdentry.localhost:4210/host

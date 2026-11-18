@@ -52,10 +52,15 @@ function renderSurface(state, isPresentation = false) {
   const context = vm.createContext({
     state,
     isPresentation,
+    // Real contribution lifecycle is exercised in chapter-scenes-ui.test.mjs.
+    contributeFinale() {},
     // Retained overview controls; focused Move Day pause is tested separately.
     isMoveDayFocused: () => false,
     // This fixture exercises the retained overview; focused filter behavior has its own adapter.
     isFilterFocused: () => false,
+    // Focused chapter controller has independent actual-handler coverage.
+    sceneFocused: () => false,
+    sceneAvailable: () => false,
     isFilterAvailable: () => false,
     app: {},
     updateControlHints() {},
@@ -259,7 +264,7 @@ for (const phase of ["countdown", "chapter", "brag", "finale"]) {
         {
           countdown: /The trail<br>starts here/,
           chapter: /CHAPTER 1 \/ 08/,
-          brag: /Bragging rights/,
+          brag: /Meet back at the square/,
           finale: /Bring the<br>lights home/,
         }[phase],
       );
@@ -321,12 +326,16 @@ test("frame labels a closed event ENDED while paused clocks remain fixed", () =>
     state: { event: { phase: "closed", deadline: null, paused: false } },
     activeCanvas: { isConnected: true },
     activeCtx: {},
+    isPresentation: false,
     target: null,
     measureFrame() {},
     drawMap() {},
     isMoveDayFocused: () => false,
     // This fixture exercises the retained overview; focused filter behavior has its own adapter.
     isFilterFocused: () => false,
+    // Focused chapter controller has independent actual-handler coverage.
+    sceneFocused: () => false,
+    sceneAvailable: () => false,
     isFilterAvailable: () => false,
     requestAnimationFrame() {},
     serverOffset: 0,
@@ -338,6 +347,14 @@ test("frame labels a closed event ENDED while paused clocks remain fixed", () =>
   context.state.event = { phase: "lobby", deadline: null, paused: false };
   vm.runInContext("frame(200)", context);
   assert.equal(timer.textContent, "LOBBY");
+  context.state.event = {
+    phase: "awards",
+    deadline: null,
+    paused: false,
+    archive: { source: "f7ea6a8", finaleRecorded: false },
+  };
+  vm.runInContext("frame(300)", context);
+  assert.equal(timer.textContent, "RESULTS");
   context.state.event = {
     phase: "paused",
     pausedPhase: "finale",

@@ -63,6 +63,9 @@ function fixture() {
       isMoveDayFocused: () => false,
     // This fixture exercises the retained overview; focused filter behavior has its own adapter.
     isFilterFocused: () => false,
+    // Focused chapter controller has independent actual-handler coverage.
+    sceneFocused: () => false,
+    sceneAvailable: () => false,
     isFilterAvailable: () => false,
       isPresentation: false,
       forceSafe: true,

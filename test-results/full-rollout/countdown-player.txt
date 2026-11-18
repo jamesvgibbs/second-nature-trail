@@ -1,0 +1,75 @@
+Window: "Second Nature Trail", App: Safari.
+0 standard window Second Nature Trail, ID: SafariWindow?IsSecure=false&UUID=48BFC54F-3E6F-4C44-985F-0ED3AC8E327A, Secondary Actions: Raise
+	1 split group
+		2 tab group
+			3 scroll area
+				4 HTML content Description: Second Nature Trail, URL: soloentry.localhost:4200/
+					5 container
+						6 text sn SECOND NATURE TRAIL CONNECTED
+						7 text COUNTDOWN
+						8 text 00:07
+						9 text YOUR SUPPLIES 12  / 12 stored 3 Parts 3 Filters 3 Food 3 Cable 0 nearby · 1 connected · Meet everyone in Neighbors
+						10 container Shared neighborhood. Move with arrow keys or WASD, or click a destination. Press E to interact. Tab reaches all menus.
+						11 text MOVING DEPOT Click to walk · WASD / arrows to move · E to interact
+						12 text LOCAL REVIEW · Earlier chapters are unplayed. Your actions and supplies are real.
+						13 text HERE WE GO
+						14 heading Value: 2, The trail
+starts here.
+							15 text The trail starts here.
+						16 text Your neighbors are setting out with you. The Moving Depot is our first stop.
+						17 text Watch the shared clock. The first chapter opens for everyone together; these ten seconds are part of its five minutes.
+						18 button Inventory [I]
+						19 button Map [M]
+						20 button Neighbors
+						21 button Help [H]
+						22 button Settings
+						23 text One neighborhood. Everyone belongs. Your review neighbor
+	24 image WindowControlShadowView._shadowImageView
+	25 toolbar
+		26 container Secondary Actions: Move next, Remove from toolbar
+			27 button Description: show sidebar, Help: Show sidebar, ID: SidebarButton
+			28 menu button Description: Tab Group picker, ID: TabGroupPickerButton?TabGroup=
+		29 container BackForwardSegmentedControl
+			30 button Description: Go back, Help: Show the previous page, ID: BackButton
+			31 button (disabled) Description: Go forward, Help: Show the next page, ID: ForwardButton
+		32 container Secondary Actions: Move previous, Move next, Remove from toolbar
+			33 button Page Menu, ID: AssistantButton
+			34 button Add page to Reading List, ID: OneStepBookmarkingButton
+			35 text field (settable) Description: smart search field, Value: soloentry.localhost:4200, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			36 button Reload this page, ID: ReloadButton
+		37 button Description: Share, ID: ShareButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		38 button Description: New Tab, ID: NewTabButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		39 button Description: Tab Overview, ID: TabOverviewButton, Secondary Actions: Move previous, Remove from toolbar
+	40 tab group Description: Tab bar, 6 tabs, ID: TabBar?isSeparate=false
+		41 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			42 image FaviconImageView
+			43 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		44 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			45 image FaviconImageView
+			46 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		47 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			48 image FaviconImageView
+			49 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		50 tab Second Nature Trail · Chapter 2 review, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			51 image FaviconImageView
+			52 text Value: Second Nature Trail · Chapter 2 review, ID: UnifiedTabBarButton._titleTextField
+		53 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			54 image FaviconImageView
+			55 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		56 tab Second Nature Trail, Help: To interact with the items in this button, press Control-Option-Shift-Down Arrow., Value: on, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=true, Secondary Actions: close tab
+			57 image FaviconImageView
+			58 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+	59 close button
+	60 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	61 minimize button
+62 menu bar
+	63 Safari
+	64 File
+	65 Edit
+	66 View, ID: SafariViewMenu
+	67 History
+	68 Bookmarks, ID: SafariBookmarksMenu
+	69 Window, ID: SafariWindowMenu
+	70 Help, ID: SafariHelpMenu
+
+The focused UI element is 10 container Shared neighborhood. Move with arrow keys or WASD, or click a destination. Press E to interact. Tab reaches all menus.

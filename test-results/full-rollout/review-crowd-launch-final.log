@@ -1,0 +1,13 @@
+Command: /Users/jgibbs/.nvm/versions/node/v24.20.0/bin/node --test test/review-finale-launch.test.mjs
+Observed tool session: 28121
+Scope: isolated temporary memory events, real HTTP/SSE; finale, chapter3 and practice lobby. Includes a second Play explicitly observed during partial (1–98) bot connection.
+
+✔ crowd Play connects 99 neighbors after human setup for finale, chapter and practice lobby (33539.212584ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 33581.458916

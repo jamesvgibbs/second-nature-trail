@@ -1,0 +1,307 @@
+{
+  "assets": [
+    {
+      "port": 4175,
+      "asset": "app.js",
+      "matches": true,
+      "sha256": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce"
+    },
+    {
+      "port": 4175,
+      "asset": "style.css",
+      "matches": true,
+      "sha256": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac"
+    },
+    {
+      "port": 4175,
+      "asset": "chapter-scenes.mjs",
+      "matches": true,
+      "sha256": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5"
+    },
+    {
+      "port": 4175,
+      "asset": "event-scenes.mjs",
+      "matches": true,
+      "sha256": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586"
+    },
+    {
+      "port": 4175,
+      "asset": "move-day-scene.mjs",
+      "matches": true,
+      "sha256": "760f5e5d8e4b926dc7b6a7497340c299805d325b8b6d5f924b26e4c1f51a7f31"
+    },
+    {
+      "port": 4193,
+      "asset": "app.js",
+      "matches": true,
+      "sha256": "5e4b5f44a22e4bb30d140039b0189ec8b498321f6f1162c4b00530d0a42b60ce"
+    },
+    {
+      "port": 4193,
+      "asset": "style.css",
+      "matches": true,
+      "sha256": "0de900424b03d492d09b716038977dad7f24dde357b96f11a3d43eeec9fdacac"
+    },
+    {
+      "port": 4193,
+      "asset": "chapter-scenes.mjs",
+      "matches": true,
+      "sha256": "6f5c43b5d724369716bb803c1011977d3d9c762728e2b502398c497ae7cec7a5"
+    },
+    {
+      "port": 4193,
+      "asset": "event-scenes.mjs",
+      "matches": true,
+      "sha256": "3ad636f71647256e1083989ebf31e77b80c832167dcee6685606d5458b8df586"
+    },
+    {
+      "port": 4193,
+      "asset": "move-day-scene.mjs",
+      "matches": true,
+      "sha256": "760f5e5d8e4b926dc7b6a7497340c299805d325b8b6d5f924b26e4c1f51a7f31"
+    }
+  ],
+  "galleryAssets": [
+    {
+      "asset": "awards-archived-presentation-final-bottom.png",
+      "status": 200
+    },
+    {
+      "asset": "awards-archived-presentation-final-top.png",
+      "status": 200
+    },
+    {
+      "asset": "awards-fresh-crowd.png",
+      "status": 200
+    },
+    {
+      "asset": "brag-player-final.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter3-decision-crowd.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter3-decision-solo.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter3-outcome-crowd-final.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter3-outcome-solo-final.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter3-presentation.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter3-retry-crowd.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter4-decision-solo.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter4-outcome-crowd-final.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter4-outcome-solo-final.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter4-presentation.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter4-retry-solo.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter4-start-crowd.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter5-decision-solo.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter5-outcome-crowd-final.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter5-outcome-solo-final.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter5-presentation.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter5-retry-solo.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter5-start-crowd.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter6-decision-crowd-stacked.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter6-decision-solo-final.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter6-incomplete-solo.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter6-outcome-crowd.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter6-outcome-solo-final.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter6-presentation.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter7-decision-solo.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter7-outcome-crowd-final.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter7-outcome-solo.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter7-presentation.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter7-redemption-crowd-stacked.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter7-repair.mp4",
+      "status": 200
+    },
+    {
+      "asset": "chapter7-retry-solo.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter8-broken-link-solo.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter8-decision-crowd-stacked.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter8-decision-solo.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter8-outcome-crowd.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter8-outcome-solo-final.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter8-presentation.png",
+      "status": 200
+    },
+    {
+      "asset": "chapter8-repair.mp4",
+      "status": 200
+    },
+    {
+      "asset": "countdown-player.png",
+      "status": 200
+    },
+    {
+      "asset": "coverage.json",
+      "status": 200
+    },
+    {
+      "asset": "entry-after.png",
+      "status": 200
+    },
+    {
+      "asset": "entry-invalid-invitation-final.png",
+      "status": 200
+    },
+    {
+      "asset": "finale-decision-crowd.png",
+      "status": 200
+    },
+    {
+      "asset": "finale-decision-solo.png",
+      "status": 200
+    },
+    {
+      "asset": "finale-fallback-awards.png",
+      "status": 200
+    },
+    {
+      "asset": "finale-outcome-crowd-final.png",
+      "status": 200
+    },
+    {
+      "asset": "finale-outcome-solo-final.png",
+      "status": 200
+    },
+    {
+      "asset": "finale-repair.mp4",
+      "status": 200
+    },
+    {
+      "asset": "host-crowd-roster.png",
+      "status": 200
+    },
+    {
+      "asset": "host-crowd.png",
+      "status": 200
+    },
+    {
+      "asset": "lobby-crowd-ready.png",
+      "status": 200
+    },
+    {
+      "asset": "lobby-extra-large-crowd.png",
+      "status": 200
+    },
+    {
+      "asset": "lobby-presentation-crowd.png",
+      "status": 200
+    },
+    {
+      "asset": "lobby-solo-ready.png",
+      "status": 200
+    },
+    {
+      "asset": "move-day-resident-repair.png",
+      "status": 200
+    },
+    {
+      "asset": "neighbors-crowd-last.png",
+      "status": 200
+    }
+  ],
+  "oldReviewAvailable": true
+}

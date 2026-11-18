@@ -1,0 +1,110 @@
+Window: "Second Nature Trail", App: Safari.
+0 standard window Second Nature Trail, ID: SafariWindow?IsSecure=false&UUID=48BFC54F-3E6F-4C44-985F-0ED3AC8E327A, Secondary Actions: Raise
+	1 split group
+		2 tab group
+			3 scroll area
+				4 HTML content Description: Second Nature Trail, URL: soloentry.localhost:4200/
+					5 container
+						6 text sn SECOND NATURE TRAIL A NEIGHBORHOOD WORTH SAVING
+					7 container
+						8 text YOUR NEIGHBORHOOD NEEDS YOU
+						9 heading Make yourself at home., Value: 1
+							10 text Make yourself at home.
+						11 text Hi, Your review neighbor. Pick your look and how you’d like to play.
+						12 heading Choose your character, Value: 2
+							13 text Choose your character
+						14 toggle button The gardener, Value: on
+						15 toggle button The fixer, Value: off
+						16 toggle button The explorer, Value: off
+						17 toggle button The neighbor, Value: off
+						18 toggle button The courier, Value: off
+						19 toggle button The thinker, Value: off
+						20 toggle button The builder, Value: off
+						21 toggle button The ranger, Value: off
+						22 toggle button The inventor, Value: off
+						23 toggle button The navigator, Value: off
+						24 toggle button The optimist, Value: off
+						25 toggle button The original, Value: off
+						26 text Pick a palette
+						27 toggle button Palette 1, Value: on
+						28 toggle button Palette 2, Value: off
+						29 toggle button Palette 3, Value: off
+						30 toggle button Palette 4, Value: off
+						31 toggle button Palette 5, Value: off
+						32 toggle button Palette 6, Value: off
+						33 text Same abilities. Same chances. Entirely your style.
+						34 heading Show spiders and insects?, Value: 2
+							35 text Show spiders and insects?
+						36 text Choose before entering the world. Both versions play exactly the same.
+						37 container
+							38 radio button Replace with friendly robots, Value: 0
+							39 text Replace with friendly robots
+						40 container
+							41 radio button Show spiders and insects, Value: 0
+							42 text Show spiders and insects
+						43 container
+							44 text Text size
+							45 pop up button (collapsed) Text size, Value: Standard, Secondary Actions: Expand
+						46 container
+							47 text Control preference
+							48 pop up button (collapsed) Control preference, Value: Keyboard, Secondary Actions: Expand
+						49 container
+							50 checkbox Reduced motion, Value: 0
+							51 text Reduced motion
+						52 container
+							53 text Music volume
+							54 slider (settable, float) Music volume, Value: 0
+								55 value indicator 0
+						56 container
+							57 text Effects volume
+							58 slider (settable, float) Effects volume, Value: 0
+								59 value indicator 0
+						60 text You can change these settings during play.
+						61 button Enter Bragging Square →
+				62 scroll bar (settable, float) 0
+	63 image WindowControlShadowView._shadowImageView
+	64 toolbar
+		65 container Secondary Actions: Move next, Remove from toolbar
+			66 button Description: show sidebar, Help: Show sidebar, ID: SidebarButton
+			67 menu button Description: Tab Group picker, ID: TabGroupPickerButton?TabGroup=
+		68 container BackForwardSegmentedControl
+			69 button Description: Go back, Help: Show the previous page, ID: BackButton
+			70 button (disabled) Description: Go forward, Help: Show the next page, ID: ForwardButton
+		71 container Secondary Actions: Move previous, Move next, Remove from toolbar
+			72 button Page Menu, ID: AssistantButton
+			73 button Add page to Reading List, ID: OneStepBookmarkingButton
+			74 text field (settable) Description: smart search field, Value: soloentry.localhost:4200, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			75 button Reload this page, ID: ReloadButton
+		76 button Description: Share, ID: ShareButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		77 button Description: New Tab, ID: NewTabButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		78 button Description: Tab Overview, ID: TabOverviewButton, Secondary Actions: Move previous, Remove from toolbar
+	79 tab group Description: Tab bar, 5 tabs, ID: TabBar?isSeparate=false
+		80 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			81 image FaviconImageView
+			82 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		83 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			84 image FaviconImageView
+			85 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		86 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			87 image FaviconImageView
+			88 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		89 tab Second Nature Trail · Chapter 2 review, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			90 image FaviconImageView
+			91 text Value: Second Nature Trail · Chapter 2 review, ID: UnifiedTabBarButton._titleTextField
+		92 tab Second Nature Trail, Help: To interact with the items in this button, press Control-Option-Shift-Down Arrow., Value: on, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=true, Secondary Actions: close tab
+			93 image FaviconImageView
+			94 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+	95 close button
+	96 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	97 minimize button
+98 menu bar
+	99 Safari
+	100 File
+	101 Edit
+	102 View, ID: SafariViewMenu
+	103 History
+	104 Bookmarks, ID: SafariBookmarksMenu
+	105 Window, ID: SafariWindowMenu
+	106 Help, ID: SafariHelpMenu
+
+The focused UI element is 4 HTML content Description: Second Nature Trail, URL: soloentry.localhost:4200/

@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import { readFileSync } from 'node:fs';
+import { drawEventScene } from '../public/event-scenes.mjs';
 import { overviewCrowd } from '../public/crowd-view.mjs';
 import { Engine } from '../engine.mjs';
 import { clipMove, waypointReached, stepToward, isWalkable, findPath, OBSTACLES, DOORS } from '../public/world.mjs';
@@ -14,7 +15,7 @@ function fixture({ seen = true, modalOpen = false, presentation = false, editing
   engine.addPlayer('neighbor', 'Neighbor');
   engine.dispatch('neighbor', { type: 'setup', requestId: 'setup', character: 0, palette: 0, insects: false });
   const document = { activeElement: { tagName: 'INPUT', isConnected: editing } }, handlers = {};
-  const canvas = { isConnected: true, getContext() { return {}; },
+  const canvas = { isConnected: true, attributes: {}, setAttribute(name,value) { this.attributes[name]=value; }, getContext() { return new Proxy({}, {get: () => () => {}}); },
     getBoundingClientRect() { return { left: 0, top: 0, width: 1200, height: 800 }; },
     addEventListener(type, handler) { handlers[type] = handler; },
     focus() { document.activeElement = canvas; } };
@@ -28,7 +29,7 @@ function fixture({ seen = true, modalOpen = false, presentation = false, editing
     $: (selector) => selector === '#world' ? canvas : node,
     topbar: () => '', btn: () => ({}), inventory() {}, map() {}, neighbors() {}, help() {}, settings() {},
     renderMission() {}, updateConnection() {}, updateControlHints() {}, windowCheck() {},
-    requestAnimationFrame() {}, drawMap() {}, measureFrame() {}, toast() {}, showActivity() {}, close() {},
+    drawEventScene, requestAnimationFrame() {}, drawMap() {}, measureFrame() {}, toast() {}, showActivity() {}, close() {},
     movementKeys: () => 'WASD', keyLabel: (x) => x, esc: (x) => x,
     localStorage: { getItem: () => seen ? '1' : null, setItem() {} },
     open() { modal.open = true; document.activeElement = { id: 'close-modal' }; },
@@ -104,4 +105,13 @@ test('entry focuses the map on return but preserves intro, existing modal and pr
     const f = fixture(options);
     assert.equal(f.document.activeElement.tagName, 'INPUT');
   }
+});
+
+test('read-only presentation canvas announces an illustration without movement or keyboard focus', () => {
+  const f=fixture({presentation:true});
+  assert.equal(f.canvas.attributes.role,'img');
+  assert.equal(f.canvas.attributes.tabindex,'-1');
+  assert.match(f.canvas.attributes['aria-label'],/read-only/);
+  assert.doesNotMatch(f.canvas.attributes['aria-label'],/WASD|Press E|Move with/);
+  assert.notEqual(f.document.activeElement,f.canvas);
 });

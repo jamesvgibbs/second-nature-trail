@@ -67,6 +67,9 @@ test("actual Map rendering exposes history in button text and preserves current-
     isMoveDayAvailable: () => false,
     // This fixture exercises the retained overview; focused filter behavior has its own adapter.
     isFilterFocused: () => false,
+    // Focused chapter controller has independent actual-handler coverage.
+    sceneFocused: () => false,
+    sceneAvailable: () => false,
     isFilterAvailable: () => false,
     chapterMapStatus, panel: "", document: { activeElement: focus, createElement: () => ({}) },
     $: () => holder, open() {}, close() {},

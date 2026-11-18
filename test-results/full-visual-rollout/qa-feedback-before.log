@@ -1,0 +1,53 @@
+✔ finale and results cannot expose invisible incomplete prior-chapter task hotspots (14.562666ms)
+✔ spatial identity/recovery/reward scenes gate evidence and preserve authored choices and actual six-job results (14.13ms)
+✔ reward projects use canonical garden/welcome/festival IDs and preserve earned balances with no extra score (6.278708ms)
+✖ target scene preserves public IDs and all18 real round resolutions, with safe art and site-only credit (3.3415ms)
+✖ payment scenes retain actual late/incomplete cycle outcome and do not borrow next-cycle budget in held results (0.63475ms)
+✔ network model retains real public graph shapes/constraints and depicts each accepted path without inventing links (2.455959ms)
+✔ all six scenes have stable solo/100 crowd, no automatic names and no modal/phase mutation (5.30675ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 5
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 295.667333
+
+✖ failing tests:
+
+test at test/chapter-scenes.test.mjs:37:1
+✖ target scene preserves public IDs and all18 real round resolutions, with safe art and site-only credit (3.3415ms)
+  AssertionError [ERR_ASSERTION]: Cleared site must not display next-site zero hits
+      at TestContext.<anonymous> (file:///Users/jgibbs/Code/second-nature-trail/test/chapter-scenes.test.mjs:40:311)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test/chapter-scenes.test.mjs:44:1
+✖ payment scenes retain actual late/incomplete cycle outcome and do not borrow next-cycle budget in held results (0.63475ms)
+  AssertionError [ERR_ASSERTION]: Held receipt must not label next-cycle opening budget as this cycle
+      at TestContext.<anonymous> (file:///Users/jgibbs/Code/second-nature-trail/test/chapter-scenes.test.mjs:45:568)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

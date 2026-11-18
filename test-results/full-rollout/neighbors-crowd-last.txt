@@ -1,0 +1,154 @@
+Window: "Second Nature Trail", App: Safari.
+0 standard window Second Nature Trail, ID: SafariWindow?IsSecure=false&UUID=48BFC54F-3E6F-4C44-985F-0ED3AC8E327A, Secondary Actions: Raise
+	1 split group
+		2 tab group
+			3 scroll area
+				4 HTML content Description: Second Nature Trail, URL: crowdentry.localhost:4210/
+					5 container Good neighbors, good odds (showing 212-312 of 312 items)
+						6 button Trade
+						7 text Simulated neighbor 68
+						8 button Help
+						9 button Trade
+						10 text Simulated neighbor 69
+						11 button Help
+						12 button Trade
+						13 text Simulated neighbor 70
+						14 button Help
+						15 button Trade
+						16 text Simulated neighbor 71
+						17 button Help
+						18 button Trade
+						19 text Simulated neighbor 72
+						20 button Help
+						21 button Trade
+						22 text Simulated neighbor 73
+						23 button Help
+						24 button Trade
+						25 text Simulated neighbor 74
+						26 button Help
+						27 button Trade
+						28 text Simulated neighbor 75
+						29 button Help
+						30 button Trade
+						31 text Simulated neighbor 76
+						32 button Help
+						33 button Trade
+						34 text Simulated neighbor 77
+						35 button Help
+						36 button Trade
+						37 text Simulated neighbor 78
+						38 button Help
+						39 button Trade
+						40 text Simulated neighbor 79
+						41 button Help
+						42 button Trade
+						43 text Simulated neighbor 80
+						44 button Help
+						45 button Trade
+						46 text Simulated neighbor 81
+						47 button Help
+						48 button Trade
+						49 text Simulated neighbor 82
+						50 button Help
+						51 button Trade
+						52 text Simulated neighbor 83
+						53 button Help
+						54 button Trade
+						55 text Simulated neighbor 84
+						56 button Help
+						57 button Trade
+						58 text Simulated neighbor 85
+						59 button Help
+						60 button Trade
+						61 text Simulated neighbor 86
+						62 button Help
+						63 button Trade
+						64 text Simulated neighbor 87
+						65 button Help
+						66 button Trade
+						67 text Simulated neighbor 88
+						68 button Help
+						69 button Trade
+						70 text Simulated neighbor 89
+						71 button Help
+						72 button Trade
+						73 text Simulated neighbor 90
+						74 button Help
+						75 button Trade
+						76 text Simulated neighbor 91
+						77 button Help
+						78 button Trade
+						79 text Simulated neighbor 92
+						80 button Help
+						81 button Trade
+						82 text Simulated neighbor 93
+						83 button Help
+						84 button Trade
+						85 text Simulated neighbor 94
+						86 button Help
+						87 button Trade
+						88 text Simulated neighbor 95
+						89 button Help
+						90 button Trade
+						91 text Simulated neighbor 96
+						92 button Help
+						93 button Trade
+						94 text Simulated neighbor 97
+						95 button Help
+						96 button Trade
+						97 text Simulated neighbor 98
+						98 button Help
+						99 button Trade
+						100 text Simulated neighbor 99
+						101 button Help
+						102 button Trade
+						103 text Simulated neighbor 100
+						104 button Help
+						105 button Trade
+	106 image WindowControlShadowView._shadowImageView
+	107 toolbar
+		108 container Secondary Actions: Move next, Remove from toolbar
+			109 button Description: show sidebar, Help: Show sidebar, ID: SidebarButton
+			110 menu button Description: Tab Group picker, ID: TabGroupPickerButton?TabGroup=
+		111 container BackForwardSegmentedControl
+			112 button Description: Go back, Help: Show the previous page, ID: BackButton
+			113 button (disabled) Description: Go forward, Help: Show the next page, ID: ForwardButton
+		114 container Secondary Actions: Move previous, Move next, Remove from toolbar
+			115 button Page Menu, ID: AssistantButton
+			116 button Add page to Reading List, ID: OneStepBookmarkingButton
+			117 text field (settable) Description: smart search field, Value: crowdentry.localhost:4210, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			118 button Reload this page, ID: ReloadButton
+		119 button Description: Share, ID: ShareButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		120 button Description: New Tab, ID: NewTabButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		121 button Description: Tab Overview, ID: TabOverviewButton, Secondary Actions: Move previous, Remove from toolbar
+	122 tab group Description: Tab bar, 6 tabs, ID: TabBar?isSeparate=false
+		123 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			124 image FaviconImageView
+			125 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		126 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			127 image FaviconImageView
+			128 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		129 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			130 image FaviconImageView
+			131 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		132 tab Second Nature Trail · Chapter 2 review, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			133 image FaviconImageView
+			134 text Value: Second Nature Trail · Chapter 2 review, ID: UnifiedTabBarButton._titleTextField
+		135 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			136 image FaviconImageView
+			137 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		138 tab Second Nature Trail, Help: To interact with the items in this button, press Control-Option-Shift-Down Arrow., Value: on, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=true, Secondary Actions: close tab
+			139 image FaviconImageView
+			140 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+	141 close button
+	142 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	143 minimize button
+144 menu bar
+	145 Safari
+	146 File
+	147 Edit
+	148 View, ID: SafariViewMenu
+	149 History
+	150 Bookmarks, ID: SafariBookmarksMenu
+	151 Window, ID: SafariWindowMenu
+	152 Help, ID: SafariHelpMenu

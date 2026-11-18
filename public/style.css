@@ -1548,3 +1548,45 @@ dialog h2 {
 .filter-mission .filter-status { font-size:.68rem; line-height:1.3; margin:7px 0 0; }
 .filter-mission .travel-journal h3 { font-size:.9rem; }
 .filter-mission .move-day-companions { margin-top:8px; }
+
+/* Shared arrival and event surfaces; gameplay scene controls keep their own layout. */
+.setup-welcome,.host-welcome{display:flex;align-items:center;gap:24px;margin-bottom:24px;color:var(--paper)}
+.setup-welcome>div,.host-welcome>div{flex:1;min-width:0}
+.setup-welcome h1,.host-welcome h1{font-size:2.5rem;margin:10px 0}
+.setup-welcome canvas,.host-welcome canvas{display:block;width:180px;height:120px;flex:none;border:3px solid #80654b;image-rendering:pixelated;object-fit:contain;background:#789170}
+.setup-welcome .intro,.host-welcome p{margin:8px 0;font-family:system-ui,sans-serif}
+.practice-progress{border-left:4px solid #80654b;background:#e1e6cc;padding:12px;margin:16px 0}
+.practice-progress strong,.practice-progress span{display:block}
+.practice-progress span{font:0.85rem/1.4 system-ui,sans-serif;margin-top:6px}
+#tutorial-actions{display:grid;gap:8px}
+#tutorial-actions button{text-align:left;line-height:1.45;min-height:44px}
+.host-stats{grid-template-columns:repeat(5,minmax(0,1fr))}
+.host-actions button{min-height:44px}
+@media(max-width:1100px){.host-stats{grid-template-columns:repeat(3,minmax(0,1fr))}.setup-welcome canvas,.host-welcome canvas{width:144px;height:96px}.setup-welcome h1,.host-welcome h1{font-size:2rem}}
+@media(max-width:760px){.setup-welcome canvas,.host-welcome canvas{display:none}.host-grid{grid-template-columns:1fr}.host-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Every active chapter has a distinct worksite, sharing readable task controls. */
+.chapter-scene-mission h2 {font-size:1.55rem;line-height:1.12; margin:7px 0;}
+.chapter-scene-mission .travel-journal {margin-bottom:8px;}
+.chapter-scene-mission .scene-balance {font-size:.8rem; margin:7px 0;}
+.chapter-scene-mission .scene-clock {font-size:.76rem;padding:8px;margin:7px 0;}
+.chapter-scene-mission .scene-choices button {font-size:.79rem;line-height:1.2;min-height:44px;}
+.chapter-scene-mission .scene-targets button {min-height:44px;}
+.chapter-scene-mission .scene-node-grid {display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+.chapter-scene-mission .scene-node-grid button {font-size:.68rem;padding:7px 4px;min-height:35px;margin:0;box-shadow:none;border-width:1px;}
+.chapter-scene-mission .scene-node-grid button.selected {background:#ccdab6;outline:2px solid #365a43;}
+.chapter-scene-mission .scene-path,.chapter-scene-mission .scene-links {font-size:.65rem;line-height:1.3;overflow-wrap:anywhere;margin:7px 0;}
+.chapter-scene-mission .scene-route-summary {font-size:.76rem;line-height:1.3;margin:7px 0;}
+.chapter-scene-mission .scene-auto {display:flex;align-items:flex-start;gap:8px;font-size:.73rem;line-height:1.3;margin:10px 0;}
+.chapter-scene-mission .scene-auto input {width:auto;flex:0 0 auto;margin:2px 0;}
+.chapter-scene-mission .scene-primary-wrap {position:sticky;bottom:-12px;background:var(--paper);padding:7px 0;z-index:2;}
+/* Error copy must win over the pale hero paragraph rule. */
+.error,.hero-copy .error,.phone-screen .error{color:#6f281c;background:#f4d5c4}
+.chapter-scene-mission .scene-supplies {display:flex;gap:9px;justify-content:space-between;border-block:1px solid #b7c3a9;padding:7px 0;margin:8px 0;font-size:.74rem;}
+.chapter-scene-mission .scene-supplies span {display:flex;flex-direction:column;gap:3px;}
+.chapter-scene-mission .scene-supplies small {font-size:.65rem;color:#526557;}
+/* Long participant names stay inside standings and award columns. */
+.leaderboard li > span:not(.rank):not(.score) {min-width:0;overflow-wrap:anywhere;}
+.leaderboard .rank,.leaderboard .score {flex-shrink:0;}
+#host-players .player-item strong,#host-players .host-player-status{flex:1;min-width:0;overflow-wrap:anywhere}
+#host-players .player-item button{flex:none;min-height:44px}

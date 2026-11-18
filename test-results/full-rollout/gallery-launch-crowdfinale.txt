@@ -1,0 +1,82 @@
+Window: "Second Nature Trail", App: Safari.
+0 standard window Second Nature Trail, ID: SafariWindow?IsSecure=false&UUID=48BFC54F-3E6F-4C44-985F-0ED3AC8E327A, Secondary Actions: Raise
+	1 split group
+		2 tab group
+			3 scroll area
+				4 HTML content Description: Second Nature Trail, URL: crowdfinale.localhost:4209/
+					5 container
+						6 text sn SECOND NATURE TRAIL CONNECTED
+						7 text FINALE
+						8 text 03:55
+						9 text BRING THE LIGHTS HOME Your repair awaits 0/60 shared repairs
+						10 container Neighborhood finale illustration. Restore a home beside the scene · E contributes · Map opens the neighborhood. Tab reaches the event report and menus.
+						11 text BRING THE LIGHTS HOME Restore a home beside the scene · E contributes · Map opens the neighborhood
+						12 summary Message from the host, Value: off
+							13 text Message from the host
+						14 text THE NEIGHBORHOOD FINALE
+						15 heading Value: 2, Bring the
+lights home.
+							16 text Bring the lights home.
+						17 text One last repair. One home at a time. Every neighbor gets a turn.
+						18 text 0 neighbors have contributed toward 60 repairs.
+						19 text Award results are locked. This moment belongs to everyone.
+						20 button Restore a home
+						21 button Inventory [I]
+						22 button Map [M]
+						23 button Neighbors
+						24 button Help [H]
+						25 button Settings
+						26 button Field notes
+						27 text One neighborhood. Everyone belongs. Your review neighbor
+	28 image WindowControlShadowView._shadowImageView
+	29 toolbar
+		30 container Secondary Actions: Move next, Remove from toolbar
+			31 button Description: show sidebar, Help: Show sidebar, ID: SidebarButton
+			32 menu button Description: Tab Group picker, ID: TabGroupPickerButton?TabGroup=
+		33 container BackForwardSegmentedControl
+			34 button (disabled) Description: Go back, Help: Show the previous page, ID: BackButton
+			35 button (disabled) Description: Go forward, Help: Show the next page, ID: ForwardButton
+		36 container Secondary Actions: Move previous, Move next, Remove from toolbar
+			37 button Page Menu, ID: AssistantButton
+			38 button Add page to Reading List, ID: OneStepBookmarkingButton
+			39 text field (settable) Description: smart search field, Value: crowdfinale.localhost:4209, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			40 button Reload this page, ID: ReloadButton
+		41 button Description: Share, ID: ShareButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		42 button Description: New Tab, ID: NewTabButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		43 button Description: Tab Overview, ID: TabOverviewButton, Secondary Actions: Move previous, Remove from toolbar
+	44 tab group Description: Tab bar, 7 tabs, ID: TabBar?isSeparate=false
+		45 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			46 image FaviconImageView
+			47 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		48 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			49 image FaviconImageView
+			50 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		51 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			52 image FaviconImageView
+			53 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		54 tab Chapter 2 review, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			55 image FaviconImageView
+			56 text Value: Chapter 2 review, ID: UnifiedTabBarButton._titleTextField
+		57 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			58 image FaviconImageView
+			59 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		60 tab Full game review, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			61 image FaviconImageView
+			62 text Value: Full game review, ID: UnifiedTabBarButton._titleTextField
+		63 tab Second Nature Trail, Help: To interact with the items in this button, press Control-Option-Shift-Down Arrow., Value: on, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=true, Secondary Actions: close tab
+			64 image FaviconImageView
+			65 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+	66 close button
+	67 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	68 minimize button
+69 menu bar
+	70 Safari
+	71 File
+	72 Edit
+	73 View, ID: SafariViewMenu
+	74 History
+	75 Bookmarks, ID: SafariBookmarksMenu
+	76 Window, ID: SafariWindowMenu
+	77 Help, ID: SafariHelpMenu
+
+The focused UI element is 10 container Neighborhood finale illustration. Restore a home beside the scene · E contributes · Map opens the neighborhood. Tab reaches the event report and menus.

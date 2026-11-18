@@ -1,0 +1,61 @@
+Window: "Second Nature Trail", App: Safari.
+0 standard window Second Nature Trail, ID: SafariWindow?IsSecure=false&UUID=48BFC54F-3E6F-4C44-985F-0ED3AC8E327A, Secondary Actions: Raise
+	1 split group
+		2 tab group
+			3 scroll area
+				4 HTML content Description: Second Nature Trail, URL: soloentry.localhost:4200/
+					5 container A quick practice question
+						6 container
+							7 heading A quick practice question, Value: 2
+								8 text A quick practice question
+							9 button Close dialog
+						10 text Try again. There are no points in practice.
+						11 text Which supply repairs a broken sign?
+						12 button Repair parts
+						13 button A robot compliment
+	14 image WindowControlShadowView._shadowImageView
+	15 toolbar
+		16 container Secondary Actions: Move next, Remove from toolbar
+			17 button Description: show sidebar, Help: Show sidebar, ID: SidebarButton
+			18 menu button Description: Tab Group picker, ID: TabGroupPickerButton?TabGroup=
+		19 container BackForwardSegmentedControl
+			20 button Description: Go back, Help: Show the previous page, ID: BackButton
+			21 button (disabled) Description: Go forward, Help: Show the next page, ID: ForwardButton
+		22 container Secondary Actions: Move previous, Move next, Remove from toolbar
+			23 button Page Menu, ID: AssistantButton
+			24 button Add page to Reading List, ID: OneStepBookmarkingButton
+			25 text field (settable) Description: smart search field, Value: soloentry.localhost:4200, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			26 button Reload this page, ID: ReloadButton
+		27 button Description: Share, ID: ShareButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		28 button Description: New Tab, ID: NewTabButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		29 button Description: Tab Overview, ID: TabOverviewButton, Secondary Actions: Move previous, Remove from toolbar
+	30 tab group Description: Tab bar, 5 tabs, ID: TabBar?isSeparate=false
+		31 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			32 image FaviconImageView
+			33 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		34 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			35 image FaviconImageView
+			36 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		37 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			38 image FaviconImageView
+			39 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		40 tab Second Nature Trail · Chapter 2 review, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			41 image FaviconImageView
+			42 text Value: Second Nature Trail · Chapter 2 review, ID: UnifiedTabBarButton._titleTextField
+		43 tab Second Nature Trail, Help: To interact with the items in this button, press Control-Option-Shift-Down Arrow., Value: on, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=true, Secondary Actions: close tab
+			44 image FaviconImageView
+			45 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+	46 close button
+	47 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	48 minimize button
+49 menu bar
+	50 Safari
+	51 File
+	52 Edit
+	53 View, ID: SafariViewMenu
+	54 History
+	55 Bookmarks, ID: SafariBookmarksMenu
+	56 Window, ID: SafariWindowMenu
+	57 Help, ID: SafariHelpMenu
+
+The focused UI element is 5 container A quick practice question

@@ -1,0 +1,287 @@
+{
+  "status": "Local rollout complete. Chapters 3\u20138 and the finale were developer-played solo and with 99 simulated peers. 335 automated checks passed.",
+  "chapters": [
+    {
+      "id": 3,
+      "title": "Attack of the clones",
+      "description": "Check requests against inspected evidence and a known contact channel.",
+      "solo": {
+        "start": "chapter3-decision-solo.png",
+        "outcome": "chapter3-outcome-solo-final.png",
+        "result": "Keyboard: all six jobs completed; one first-case wrong choice and retry; 60 points, six parts used. Reload retained completion and score."
+      },
+      "crowd": {
+        "start": "chapter3-decision-crowd.png",
+        "outcome": "chapter3-outcome-crowd-final.png",
+        "result": "Pointer: all six jobs completed with 99 connected peers; false accusation reduced score from 10 to 5, then retry succeeded. Finished at 55 points. All 99 colocated for the first decision and final outcome; three companions drawn. Deliberate name selection and reload verified."
+      },
+      "failure": {
+        "image": "chapter3-retry-crowd.png",
+        "result": "The wrong verdict kept the site unresolved and showed the five-point loss; the correct retry earned normal credit."
+      }
+    },
+    {
+      "id": 4,
+      "title": "Home, after the storm",
+      "description": "Help a resident document belongings, stay clear of hazards and plan recovery.",
+      "solo": {
+        "start": "chapter4-decision-solo.png",
+        "outcome": "chapter4-outcome-solo-final.png",
+        "result": "Keyboard: six jobs; the wrong second choice reduced the score from 10 to 5, then the retry succeeded. Finished at 55 points. Two each of food, parts and cable used. Completion and score retained on reload."
+      },
+      "crowd": {
+        "start": "chapter4-start-crowd.png",
+        "outcome": "chapter4-outcome-crowd-final.png",
+        "result": "Pointer: six jobs with 99 connected peers, finishing at 60 points. All 99 concentrated for the start and final outcome; maximum three companions. Reload retained completion."
+      },
+      "failure": {
+        "image": "chapter4-retry-solo.png",
+        "result": "Wrong hazard response did not advance; five points lost, correct retry earned ten."
+      }
+    },
+    {
+      "id": 5,
+      "title": "Pest resistance",
+      "description": "Resolve marked warnings at three sites while leaving friendly targets alone.",
+      "solo": {
+        "start": "chapter5-decision-solo.png",
+        "outcome": "chapter5-outcome-solo-final.png",
+        "result": "Keyboard manual confirmation: all 18 successful rounds across three sites; one decoy mistake kept progress at zero and the score floor at zero. Finished at 60 points, with three parts used. Reload retained completion."
+      },
+      "crowd": {
+        "start": "chapter5-start-crowd.png",
+        "outcome": "chapter5-outcome-crowd-final.png",
+        "result": "99 connected peers; manual pointer confirmation for the first six hits, deliberate selection with assisted timing for the last 12. Finished at 60 points, with three parts used. All 99 colocated at the first site and final outcome; three companions drawn. Reload verified."
+      },
+      "failure": {
+        "image": "chapter5-retry-solo.png",
+        "result": "A decoy gives no hit and cannot be retried in the same round; a correct selection in the next round succeeds."
+      }
+    },
+    {
+      "id": 6,
+      "title": "Credit where it\u2019s due",
+      "description": "Plan three fictional payment cycles with visible deadlines and retained funds.",
+      "solo": {
+        "start": "chapter6-decision-solo-final.png",
+        "outcome": "chapter6-outcome-solo-final.png",
+        "result": "Keyboard: all three cycles recorded. The first incomplete payment earned zero; the next two on-time payments earned 40 points. Three food used; final retained budget 70. Future-cycle confirmation disabled until opening. Reload verified."
+      },
+      "crowd": {
+        "start": "chapter6-decision-crowd-stacked.png",
+        "outcome": "chapter6-outcome-crowd.png",
+        "result": "Pointer: all three on-time cycles with 99 connected peers; 60 points, three food used and final retained budget 90 after the optional 20 expense in cycle two. All 99 concentrated for cycles two and three; three companions drawn."
+      },
+      "failure": {
+        "image": "chapter6-incomplete-solo.png",
+        "result": "Paid 20 against 60 due: recorded but no on-time points; the home remained dark. A later sufficient on-time payment lit it. Counter budget label fixed after native review."
+      }
+    },
+    {
+      "id": 7,
+      "title": "Rewards rebellion",
+      "description": "Complete distinct jobs, earn tokens and fund visible neighborhood projects.",
+      "solo": {
+        "start": "chapter7-decision-solo.png",
+        "outcome": "chapter7-outcome-solo.png",
+        "result": "Keyboard: six jobs and two funded projects. The wrong second job lost five points; retry succeeded. Finished at 55 points; 12 tokens earned and spent on garden (4) and welcome (8). Two each of parts, food and cable used. Saved art persists."
+      },
+      "crowd": {
+        "start": "chapter7-redemption-crowd-stacked.png",
+        "outcome": "chapter7-outcome-crowd-final.png",
+        "result": "Pointer: six jobs and a celebration funded with 12 tokens; 60 points. 99 peers connected throughout, all 99 colocated at redemption. Reload retained stage art and completion. An empty wallet now opens Field notes."
+      },
+      "failure": {
+        "image": "chapter7-retry-solo.png",
+        "result": "Wrong answer did not grant tokens or advance. Redeemed and unaffordable project choices disabled."
+      },
+      "video": "chapter7-repair.mp4"
+    },
+    {
+      "id": 8,
+      "title": "Reconnect humanity",
+      "description": "Connect three homes through real relay, broken-link and cable-budget constraints.",
+      "solo": {
+        "start": "chapter8-decision-solo.png",
+        "outcome": "chapter8-outcome-solo-final.png",
+        "result": "Keyboard Tab/Return node selection and E confirmation: three routes completed, 55 points and three cables used. Missing-link and broken-link failures retried. Accepted homes remain lit; reload verified."
+      },
+      "crowd": {
+        "start": "chapter8-decision-crowd-stacked.png",
+        "outcome": "chapter8-outcome-crowd.png",
+        "result": "Pointer: all three routes completed within budgets 8/9, 8/9 and 12/12; 60 points and three cables used. 99 peers connected throughout and all 99 colocated for the first and final repair; three companions drawn."
+      },
+      "failure": {
+        "image": "chapter8-broken-link-solo.png",
+        "result": "A route crossing a broken link lost five points (40\u219235) and left the third home dark. Reset and a valid 12/12 route succeeded; the first two homes remained connected."
+      },
+      "video": "chapter8-repair.mp4"
+    },
+    {
+      "id": "finale",
+      "title": "Bring the lights home",
+      "description": "Record one repair per neighbor, reveal the shared ending and celebrate the frozen results.",
+      "solo": {
+        "start": "finale-decision-solo.png",
+        "outcome": "finale-outcome-solo-final.png",
+        "result": "Keyboard E restored the home and reached the real 1-repair target. A second action did not add another contribution. Reload retained the repair."
+      },
+      "crowd": {
+        "start": "finale-decision-crowd.png",
+        "outcome": "finale-outcome-crowd-final.png",
+        "result": "100 connected participants froze a target of 60. After 59 normal bot contributions, the player used the pointer to make repair 60. The neighborhood lit and reload retained the result. Three companions kept the scene clear."
+      },
+      "failure": {
+        "image": "finale-fallback-awards.png",
+        "result": "Separate fresh event: zero of one repairs, then normal host advance. The fallback ending appeared without inventing a contribution. Fresh awards were unawarded because earlier chapters were intentionally unplayed."
+      },
+      "video": "finale-repair.mp4"
+    }
+  ],
+  "surfaces": [
+    {
+      "id": "entry",
+      "title": "Entry, practice, and the shared lobby",
+      "result": "Normal invitation setup, friendly robot visuals, reduced motion, all five practice steps and Ready were exercised solo and with 99 peers. Solo included a practice-question mistake and retry; crowd used pointer movement. Invalid invitations remain readable.",
+      "images": [
+        {
+          "file": "entry-after.png",
+          "label": "Arrival page"
+        },
+        {
+          "file": "entry-invalid-invitation-final.png",
+          "label": "Invalid invitation feedback"
+        },
+        {
+          "file": "lobby-solo-ready.png",
+          "label": "Solo \u00b7 all five practice steps and Ready"
+        },
+        {
+          "file": "lobby-crowd-ready.png",
+          "label": "100 connected \u00b7 all five steps and Ready"
+        }
+      ]
+    },
+    {
+      "id": "host",
+      "title": "Host and transitions",
+      "result": "Normal operator sign-in, Start confirmation, ten-second countdown, chapter opening, and chapter-to-brag advance were exercised. The host roster correctly showed 100 connected participants. A normal Move Day delivery also verified the resident, filled parcel, warm home, and cleared travel message.",
+      "images": [
+        {
+          "file": "host-crowd.png",
+          "label": "Host \u00b7 100 connected participants"
+        },
+        {
+          "file": "host-crowd-roster.png",
+          "label": "Host \u00b7 participant controls"
+        },
+        {
+          "file": "countdown-player.png",
+          "label": "Actual shared countdown"
+        },
+        {
+          "file": "brag-player-final.png",
+          "label": "Recorded chapter recap"
+        },
+        {
+          "file": "move-day-resident-repair.png",
+          "label": "Move Day \u00b7 earned delivery response"
+        },
+        {
+          "file": "lobby-presentation-crowd.png",
+          "label": "Safe room presentation \u00b7 100 connected"
+        }
+      ]
+    },
+    {
+      "id": "presentation",
+      "title": "Safe presentation across the chapters",
+      "result": "Actual laptop renders were inspected for every new chapter and the finale. Presentation is read-only and uses friendly robot visuals. These are local screen checks, not a projector-distance test.",
+      "images": [
+        {
+          "file": "chapter3-presentation.png",
+          "label": "Chapter 3 \u00b7 safe presentation"
+        },
+        {
+          "file": "chapter4-presentation.png",
+          "label": "Chapter 4 \u00b7 safe presentation"
+        },
+        {
+          "file": "chapter5-presentation.png",
+          "label": "Chapter 5 \u00b7 safe presentation"
+        },
+        {
+          "file": "chapter6-presentation.png",
+          "label": "Chapter 6 \u00b7 safe presentation"
+        },
+        {
+          "file": "chapter7-presentation.png",
+          "label": "Chapter 7 \u00b7 safe presentation"
+        },
+        {
+          "file": "chapter8-presentation.png",
+          "label": "Chapter 8 \u00b7 safe presentation"
+        }
+      ]
+    },
+    {
+      "id": "accessibility",
+      "title": "Text size and finding neighbors",
+      "result": "Extra-large text, reduced motion, safe visuals, and the scrollable Neighbors list were inspected with 99 peers. Neighbor 100 remained reachable with Help and Trade controls. Chapter runs used keyboard controls in solo and pointer controls in the crowded pass; this is not a claim of four complete input/crowd combinations per chapter.",
+      "images": [
+        {
+          "file": "lobby-extra-large-crowd.png",
+          "label": "Extra-large text \u00b7 crowded lobby"
+        },
+        {
+          "file": "neighbors-crowd-last.png",
+          "label": "Neighbor 100 remains discoverable"
+        }
+      ]
+    },
+    {
+      "id": "awards",
+      "title": "Ending and awards",
+      "result": "Fresh successful and fallback endings were exercised through normal host transitions. The populated 15-winner presentation uses the preserved historical f7ea6a8 event export, not newly invented winners. Its archive explicitly states that the finale outcome was not retained. The fallback also reached the closed phase; its 0/1 result, ending, and read-only controls remained correct.",
+      "images": [
+        {
+          "file": "awards-fresh-crowd.png",
+          "label": "Fresh successful finale \u00b7 earlier chapters unplayed"
+        },
+        {
+          "file": "finale-fallback-awards.png",
+          "label": "Fresh fallback ending"
+        },
+        {
+          "file": "awards-archived-presentation-final-top.png",
+          "label": "Historical awarded results \u00b7 explicit archive disclosure"
+        },
+        {
+          "file": "awards-archived-presentation-final-bottom.png",
+          "label": "Historical awarded results \u00b7 final rows"
+        },
+        {
+          "file": "finale-fallback-closed.png",
+          "label": "Closed event \u00b7 fallback and retained results"
+        }
+      ]
+    }
+  ],
+  "verification": "Native Safari at a 1366 \u00d7 768 laptop window: 12 complete chapter runs (chapters 3\u20138, solo keyboard and crowded pointer), two successful finale runs, a separate fallback ending, normal onboarding and host transitions. Incorrect choices, timed gates, insufficient payments, invalid routes, empty rewards, and saved reload outcomes were exercised where applicable. Automated rule, handler, crowd, lifecycle, and presentation checks are recorded in the developer ledger. Final combined suite: 335 passed, zero skipped; source hashes remained unchanged during the run.",
+  "boundary": "The 99 peers are normal local HTTP/SSE clients, not 99 physical browsers or employees. Screenshots and sampled interaction clips prove rendered local behavior; employee usability, actual room-display readability, and representative network rehearsal remain later checks. Hosting remains deferred.",
+  "automated": {
+    "passed": 335,
+    "failed": 0,
+    "skipped": 0,
+    "runtime": "Node 24.20.0",
+    "log": "../full-visual-rollout/developer-suite-final.tap"
+  },
+  "launcherVerification": {
+    "solo3": "Actual gallery Play opened normal setup and resumed the zero-progress chapter. Paused afterward.",
+    "crowd3": "Actual gallery Play opened setup, automatically connected99 peers, and resumed at100 connected with0/6 progress. Paused afterward.",
+    "progressPreserved": "All16 prior review states and journals archived before fresh preview handoff. Existing user saved games and old review services preserved.",
+    "archiveManifest": "fresh-handoff-archives.json",
+    "freshVerification": "fresh-handoff-ready.json",
+    "crowdfinale": "Actual gallery Play opened normal setup, connected99 peers and entered the real finale with frozen target60 and zero repairs. Paused afterward."
+  }
+}

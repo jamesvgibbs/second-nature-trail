@@ -1,0 +1,251 @@
+Window: "Second Nature Trail · Full game review", App: Safari.
+0 standard window Second Nature Trail · Full game review, ID: SafariWindow?IsSecure=false&UUID=48BFC54F-3E6F-4C44-985F-0ED3AC8E327A, Secondary Actions: Raise
+	1 split group
+		2 tab group
+			3 scroll area
+				4 HTML content Description: Second Nature Trail · Full game review, URL: 127.0.0.1:4192/full-rollout/
+					5 container
+						6 text LOCAL ART AND GAMEPLAY REVIEW
+						7 heading A neighborhood worth putting back together, Value: 1
+							8 text A neighborhood worth putting back together
+						9 text The approved chapter 2 style continues through identity checks, apartment recovery, pest resistance, payments, rewards, the network and the finale. Each scene shows the existing task and its earned result. Local rollout complete. Chapters 3–8 and the finale were developer-played solo and with 99 simulated peers. 335 automated checks passed.
+						10 link Approved chapter 2 review, Value: 127.0.0.1:4192/#repair
+						11 link Chapter 3, Value: 127.0.0.1:4192/full-rollout/#chapter-3
+						12 link Chapter 4, Value: 127.0.0.1:4192/full-rollout/#chapter-4
+						13 link Chapter 5, Value: 127.0.0.1:4192/full-rollout/#chapter-5
+						14 link Chapter 6, Value: 127.0.0.1:4192/full-rollout/#chapter-6
+						15 link Chapter 7, Value: 127.0.0.1:4192/full-rollout/#chapter-7
+						16 link Chapter 8, Value: 127.0.0.1:4192/full-rollout/#chapter-8
+						17 link Finale, Value: 127.0.0.1:4192/full-rollout/#chapter-finale
+						18 link Entry and shared views, Value: 127.0.0.1:4192/full-rollout/#entry
+						19 link Preview controls, Value: 127.0.0.1:4220/
+						20 text Play opens an isolated local event. These previews use the real game rules and saved progress within each preview. Existing review events and the main saved game remain separate. CHAPTER 3
+						21 heading Attack of the clones, Value: 2
+							22 text Attack of the clones
+						23 text Check requests against inspected evidence and a known contact channel.
+						24 button Play solo
+						25 button Play with 99 neighbors
+						26 link Solo · decision, Value: 127.0.0.1:4192/full-rollout/chapter3-decision-solo.png
+						27 text Solo · decision
+						28 link Solo · recorded outcome, Value: 127.0.0.1:4192/full-rollout/chapter3-outcome-solo-final.png
+						29 text Solo · recorded outcome
+						30 link 99 peers · decision, Value: 127.0.0.1:4192/full-rollout/chapter3-decision-crowd.png
+						31 text 99 peers · decision
+						32 link 99 peers · recorded outcome, Value: 127.0.0.1:4192/full-rollout/chapter3-outcome-crowd-final.png
+						33 text 99 peers · recorded outcome
+						34 text Solo:  Keyboard: all six jobs completed; one first-case wrong choice and retry; 60 points, six parts used. Reload retained completion and score. 99 peers:  Pointer: all six jobs completed with 99 connected peers; false accusation reduced score from 10 to 5, then retry succeeded. Finished at 55 points. All 99 colocated for the first decision and final outcome; three companions drawn. Deliberate name selection and reload verified. Retry:  The wrong verdict kept the site unresolved and showed the five-point loss; the correct retry earned normal credit.
+						35 link View feedback, Value: 127.0.0.1:4192/full-rollout/chapter3-retry-crowd.png
+						36 text CHAPTER 4
+						37 heading Home, after the storm, Value: 2
+							38 text Home, after the storm
+						39 text Help a resident document belongings, stay clear of hazards and plan recovery.
+						40 button Play solo
+						41 button Play with 99 neighbors
+						42 link Solo · decision, Value: 127.0.0.1:4192/full-rollout/chapter4-decision-solo.png
+						43 text Solo · decision
+						44 link Solo · recorded outcome, Value: 127.0.0.1:4192/full-rollout/chapter4-outcome-solo-final.png
+						45 text Solo · recorded outcome
+						46 link 99 peers · decision, Value: 127.0.0.1:4192/full-rollout/chapter4-start-crowd.png
+						47 text 99 peers · decision
+						48 link 99 peers · recorded outcome, Value: 127.0.0.1:4192/full-rollout/chapter4-outcome-crowd-final.png
+						49 text 99 peers · recorded outcome
+						50 text Solo:  Keyboard: six jobs; the wrong second choice reduced the score from 10 to 5, then the retry succeeded. Finished at 55 points. Two each of food, parts and cable used. Completion and score retained on reload. 99 peers:  Pointer: six jobs with 99 connected peers, finishing at 60 points. All 99 concentrated for the start and final outcome; maximum three companions. Reload retained completion. Retry:  Wrong hazard response did not advance; five points lost, correct retry earned ten.
+						51 link View feedback, Value: 127.0.0.1:4192/full-rollout/chapter4-retry-solo.png
+						52 text CHAPTER 5
+						53 heading Pest resistance, Value: 2
+							54 text Pest resistance
+						55 text Resolve marked warnings at three sites while leaving friendly targets alone.
+						56 button Play solo
+						57 button Play with 99 neighbors
+						58 link Solo · decision, Value: 127.0.0.1:4192/full-rollout/chapter5-decision-solo.png
+						59 text Solo · decision
+						60 link Solo · recorded outcome, Value: 127.0.0.1:4192/full-rollout/chapter5-outcome-solo-final.png
+						61 text Solo · recorded outcome
+						62 link 99 peers · decision, Value: 127.0.0.1:4192/full-rollout/chapter5-start-crowd.png
+						63 text 99 peers · decision
+						64 link 99 peers · recorded outcome, Value: 127.0.0.1:4192/full-rollout/chapter5-outcome-crowd-final.png
+						65 text 99 peers · recorded outcome
+						66 text Solo:  Keyboard manual confirmation: all 18 successful rounds across three sites; one decoy mistake kept progress at zero and the score floor at zero. Finished at 60 points, with three parts used. Reload retained completion. 99 peers:  99 connected peers; manual pointer confirmation for the first six hits, deliberate selection with assisted timing for the last 12. Finished at 60 points, with three parts used. All 99 colocated at the first site and final outcome; three companions drawn. Reload verified. Retry:  A decoy gives no hit and cannot be retried in the same round; a correct selection in the next round succeeds.
+						67 link View feedback, Value: 127.0.0.1:4192/full-rollout/chapter5-retry-solo.png
+						68 text CHAPTER 6
+						69 heading Credit where it’s due, Value: 2
+							70 text Credit where it’s due
+						71 text Plan three fictional payment cycles with visible deadlines and retained funds.
+						72 button Play solo
+						73 button Play with 99 neighbors
+						74 link Solo · decision, Value: 127.0.0.1:4192/full-rollout/chapter6-decision-solo-final.png
+						75 text Solo · decision
+						76 link Solo · recorded outcome, Value: 127.0.0.1:4192/full-rollout/chapter6-outcome-solo-final.png
+						77 text Solo · recorded outcome
+						78 link 99 peers · decision, Value: 127.0.0.1:4192/full-rollout/chapter6-decision-crowd-stacked.png
+						79 text 99 peers · decision
+						80 link 99 peers · recorded outcome, Value: 127.0.0.1:4192/full-rollout/chapter6-outcome-crowd.png
+						81 text 99 peers · recorded outcome
+						82 text Solo:  Keyboard: all three cycles recorded. The first incomplete payment earned zero; the next two on-time payments earned 40 points. Three food used; final retained budget 70. Future-cycle confirmation disabled until opening. Reload verified. 99 peers:  Pointer: all three on-time cycles with 99 connected peers; 60 points, three food used and final retained budget 90 after the optional 20 expense in cycle two. All 99 concentrated for cycles two and three; three companions drawn. Retry:  Paid 20 against 60 due: recorded but no on-time points; the home remained dark. A later sufficient on-time payment lit it. Counter budget label fixed after native review.
+						83 link View feedback, Value: 127.0.0.1:4192/full-rollout/chapter6-incomplete-solo.png
+						84 text CHAPTER 7
+						85 heading Rewards rebellion, Value: 2
+							86 text Rewards rebellion
+						87 text Complete distinct jobs, earn tokens and fund visible neighborhood projects.
+						88 button Play solo
+						89 button Play with 99 neighbors
+						90 link Solo · decision, Value: 127.0.0.1:4192/full-rollout/chapter7-decision-solo.png
+						91 text Solo · decision
+						92 link Solo · recorded outcome, Value: 127.0.0.1:4192/full-rollout/chapter7-outcome-solo.png
+						93 text Solo · recorded outcome
+						94 link 99 peers · decision, Value: 127.0.0.1:4192/full-rollout/chapter7-redemption-crowd-stacked.png
+						95 text 99 peers · decision
+						96 link 99 peers · recorded outcome, Value: 127.0.0.1:4192/full-rollout/chapter7-outcome-crowd-final.png
+						97 text 99 peers · recorded outcome
+						98 text Solo:  Keyboard: six jobs and two funded projects. The wrong second job lost five points; retry succeeded. Finished at 55 points; 12 tokens earned and spent on garden (4) and welcome (8). Two each of parts, food and cable used. Saved art persists. 99 peers:  Pointer: six jobs and a celebration funded with 12 tokens; 60 points. 99 peers connected throughout, all 99 colocated at redemption. Reload retained stage art and completion. An empty wallet now opens Field notes. Retry:  Wrong answer did not grant tokens or advance. Redeemed and unaffordable project choices disabled.
+						99 link View feedback, Value: 127.0.0.1:4192/full-rollout/chapter7-retry-solo.png
+						100 button Play
+						101 text CHAPTER 8
+						102 heading Reconnect humanity, Value: 2
+							103 text Reconnect humanity
+						104 text Connect three homes through real relay, broken-link and cable-budget constraints.
+						105 button Play solo
+						106 button Play with 99 neighbors
+						107 link Solo · decision, Value: 127.0.0.1:4192/full-rollout/chapter8-decision-solo.png
+						108 text Solo · decision
+						109 link Solo · recorded outcome, Value: 127.0.0.1:4192/full-rollout/chapter8-outcome-solo-final.png
+						110 text Solo · recorded outcome
+						111 link 99 peers · decision, Value: 127.0.0.1:4192/full-rollout/chapter8-decision-crowd-stacked.png
+						112 text 99 peers · decision
+						113 link 99 peers · recorded outcome, Value: 127.0.0.1:4192/full-rollout/chapter8-outcome-crowd.png
+						114 text 99 peers · recorded outcome
+						115 text Solo:  Keyboard Tab/Return node selection and E confirmation: three routes completed, 55 points and three cables used. Missing-link and broken-link failures retried. Accepted homes remain lit; reload verified. 99 peers:  Pointer: all three routes completed within budgets 8/9, 8/9 and 12/12; 60 points and three cables used. 99 peers connected throughout and all 99 colocated for the first and final repair; three companions drawn. Retry:  A route crossing a broken link lost five points (40→35) and left the third home dark. Reset and a valid 12/12 route succeeded; the first two homes remained connected.
+						116 link View feedback, Value: 127.0.0.1:4192/full-rollout/chapter8-broken-link-solo.png
+						117 button Play
+						118 text THE FINALE
+						119 heading Bring the lights home, Value: 2
+							120 text Bring the lights home
+						121 text Record one repair per neighbor, reveal the shared ending and celebrate the frozen results.
+						122 button Play solo
+						123 button Play with 99 neighbors
+						124 link Solo · decision, Value: 127.0.0.1:4192/full-rollout/finale-decision-solo.png
+						125 text Solo · decision
+						126 link Solo · recorded outcome, Value: 127.0.0.1:4192/full-rollout/finale-outcome-solo-final.png
+						127 text Solo · recorded outcome
+						128 link 99 peers · decision, Value: 127.0.0.1:4192/full-rollout/finale-decision-crowd.png
+						129 text 99 peers · decision
+						130 link 99 peers · recorded outcome, Value: 127.0.0.1:4192/full-rollout/finale-outcome-crowd-final.png
+						131 text 99 peers · recorded outcome
+						132 text Solo:  Keyboard E restored the home and reached the real 1-repair target. A second action did not add another contribution. Reload retained the repair. 99 peers:  100 connected participants froze a target of 60. After 59 normal bot contributions, the player used the pointer to make repair 60. The neighborhood lit and reload retained the result. Three companions kept the scene clear. Retry:  Separate fresh event: zero of one repairs, then normal host advance. The fallback ending appeared without inventing a contribution. Fresh awards were unawarded because earlier chapters were intentionally unplayed.
+						133 link View feedback, Value: 127.0.0.1:4192/full-rollout/finale-fallback-awards.png
+						134 button Play
+						135 heading Entry, practice, and the shared lobby, Value: 2
+							136 text Entry, practice, and the shared lobby
+						137 text Normal invitation setup, friendly robot visuals, reduced motion, all five practice steps and Ready were exercised solo and with 99 peers. Solo included a practice-question mistake and retry; crowd used pointer movement. Invalid invitations remain readable.
+						138 link Arrival page, Value: 127.0.0.1:4192/full-rollout/entry-after.png
+						139 text Arrival page
+						140 link Invalid invitation feedback, Value: 127.0.0.1:4192/full-rollout/entry-invalid-invitation-final.png
+						141 text Invalid invitation feedback
+						142 link Solo · all five practice steps and Ready, Value: 127.0.0.1:4192/full-rollout/lobby-solo-ready.png
+						143 text Solo · all five practice steps and Ready
+						144 link 100 connected · all five steps and Ready, Value: 127.0.0.1:4192/full-rollout/lobby-crowd-ready.png
+						145 text 100 connected · all five steps and Ready
+						146 heading Host and transitions, Value: 2
+							147 text Host and transitions
+						148 text Normal operator sign-in, Start confirmation, ten-second countdown, chapter opening, and chapter-to-brag advance were exercised. The host roster correctly showed 100 connected participants. A normal Move Day delivery also verified the resident, filled parcel, warm home, and cleared travel message.
+						149 link Host · 100 connected participants, Value: 127.0.0.1:4192/full-rollout/host-crowd.png
+						150 text Host · 100 connected participants
+						151 link Host · participant controls, Value: 127.0.0.1:4192/full-rollout/host-crowd-roster.png
+						152 text Host · participant controls
+						153 link Actual shared countdown, Value: 127.0.0.1:4192/full-rollout/countdown-player.png
+						154 text Actual shared countdown
+						155 link Recorded chapter recap, Value: 127.0.0.1:4192/full-rollout/brag-player-final.png
+						156 text Recorded chapter recap
+						157 link Move Day · earned delivery response, Value: 127.0.0.1:4192/full-rollout/move-day-resident-repair.png
+						158 text Move Day · earned delivery response
+						159 link Safe room presentation · 100 connected, Value: 127.0.0.1:4192/full-rollout/lobby-presentation-crowd.png
+						160 text Safe room presentation · 100 connected
+						161 heading Safe presentation across the chapters, Value: 2
+							162 text Safe presentation across the chapters
+						163 text Actual laptop renders were inspected for every new chapter and the finale. Presentation is read-only and uses friendly robot visuals. These are local screen checks, not a projector-distance test.
+						164 link Chapter 3 · safe presentation, Value: 127.0.0.1:4192/full-rollout/chapter3-presentation.png
+						165 text Chapter 3 · safe presentation
+						166 link Chapter 4 · safe presentation, Value: 127.0.0.1:4192/full-rollout/chapter4-presentation.png
+						167 text Chapter 4 · safe presentation
+						168 link Chapter 5 · safe presentation, Value: 127.0.0.1:4192/full-rollout/chapter5-presentation.png
+						169 text Chapter 5 · safe presentation
+						170 link Chapter 6 · safe presentation, Value: 127.0.0.1:4192/full-rollout/chapter6-presentation.png
+						171 text Chapter 6 · safe presentation
+						172 link Chapter 7 · safe presentation, Value: 127.0.0.1:4192/full-rollout/chapter7-presentation.png
+						173 text Chapter 7 · safe presentation
+						174 link Chapter 8 · safe presentation, Value: 127.0.0.1:4192/full-rollout/chapter8-presentation.png
+						175 text Chapter 8 · safe presentation
+						176 heading Text size and finding neighbors, Value: 2
+							177 text Text size and finding neighbors
+						178 text Extra-large text, reduced motion, safe visuals, and the scrollable Neighbors list were inspected with 99 peers. Neighbor 100 remained reachable with Help and Trade controls. Chapter runs used keyboard controls in solo and pointer controls in the crowded pass; this is not a claim of four complete input/crowd combinations per chapter.
+						179 link Extra-large text · crowded lobby, Value: 127.0.0.1:4192/full-rollout/lobby-extra-large-crowd.png
+						180 text Extra-large text · crowded lobby
+						181 link Neighbor 100 remains discoverable, Value: 127.0.0.1:4192/full-rollout/neighbors-crowd-last.png
+						182 text Neighbor 100 remains discoverable
+						183 heading Ending and awards, Value: 2
+							184 text Ending and awards
+						185 text Fresh successful and fallback endings were exercised through normal host transitions. The populated 15-winner presentation uses the preserved historical f7ea6a8 event export, not newly invented winners. Its archive explicitly states that the finale outcome was not retained. The fallback also reached the closed phase; its 0/1 result, ending, and read-only controls remained correct.
+						186 link Fresh successful finale · earlier chapters unplayed, Value: 127.0.0.1:4192/full-rollout/awards-fresh-crowd.png
+						187 text Fresh successful finale · earlier chapters unplayed
+						188 link Fresh fallback ending, Value: 127.0.0.1:4192/full-rollout/finale-fallback-awards.png
+						189 text Fresh fallback ending
+						190 link Historical awarded results · explicit archive disclosure, Value: 127.0.0.1:4192/full-rollout/awards-archived-presentation-final-top.png
+						191 text Historical awarded results · explicit archive disclosure
+						192 link Historical awarded results · final rows, Value: 127.0.0.1:4192/full-rollout/awards-archived-presentation-final-bottom.png
+						193 text Historical awarded results · final rows
+						194 link Closed event · fallback and retained results, Value: 127.0.0.1:4192/full-rollout/finale-fallback-closed.png
+						195 text Closed event · fallback and retained results
+						196 heading What was checked, Value: 2
+							197 text What was checked
+						198 text Native Safari at a 1366 × 768 laptop window: 12 complete chapter runs (chapters 3–8, solo keyboard and crowded pointer), two successful finale runs, a separate fallback ending, normal onboarding and host transitions. Incorrect choices, timed gates, insufficient payments, invalid routes, empty rewards, and saved reload outcomes were exercised where applicable. Automated rule, handler, crowd, lifecycle, and presentation checks are recorded in the developer ledger. Final combined suite: 335 passed, zero skipped; source hashes remained unchanged during the run. The 99 peers are normal local HTTP/SSE clients, not 99 physical browsers or employees. Screenshots and sampled interaction clips prove rendered local behavior; employee usability, actual room-display readability, and representative network rehearsal remain later checks. Hosting remains deferred. Native Safari captures at a 1366 × 768 laptop window. Any clips assembled from native screen frames retain their original elapsed times and are labeled sampled interaction, not a frame-rate benchmark.
+						199 link Coverage record, Value: 127.0.0.1:4192/full-rollout/coverage.json
+				200 scroll bar (settable, float) 0.6440189
+	201 image WindowControlShadowView._shadowImageView
+	202 toolbar
+		203 container Secondary Actions: Move next, Remove from toolbar
+			204 button Description: show sidebar, Help: Show sidebar, ID: SidebarButton
+			205 menu button Description: Tab Group picker, ID: TabGroupPickerButton?TabGroup=
+		206 container BackForwardSegmentedControl
+			207 button Description: Go back, Help: Show the previous page, ID: BackButton
+			208 button (disabled) Description: Go forward, Help: Show the next page, ID: ForwardButton
+		209 container Secondary Actions: Move previous, Move next, Remove from toolbar
+			210 button Page Menu, ID: AssistantButton
+			211 button Add page to Reading List, ID: OneStepBookmarkingButton
+			212 text field (settable) Description: smart search field, Value: 127.0.0.1:4192/full-rollout/, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			213 button Reload this page, ID: ReloadButton
+		214 button Description: Share, ID: ShareButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		215 button Description: New Tab, ID: NewTabButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		216 button Description: Tab Overview, ID: TabOverviewButton, Secondary Actions: Move previous, Remove from toolbar
+	217 tab group Description: Tab bar, 6 tabs, ID: TabBar?isSeparate=false
+		218 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			219 image FaviconImageView
+			220 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		221 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			222 image FaviconImageView
+			223 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		224 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			225 image FaviconImageView
+			226 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		227 tab Chapter 2 review, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			228 image FaviconImageView
+			229 text Value: Chapter 2 review, ID: UnifiedTabBarButton._titleTextField
+		230 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			231 image FaviconImageView
+			232 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		233 tab Full game review, Help: To interact with the items in this button, press Control-Option-Shift-Down Arrow., Value: on, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=true, Secondary Actions: close tab
+			234 image FaviconImageView
+			235 text Value: Full game review, ID: UnifiedTabBarButton._titleTextField
+	236 close button
+	237 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	238 minimize button
+239 menu bar
+	240 Safari
+	241 File
+	242 Edit
+	243 View, ID: SafariViewMenu
+	244 History
+	245 Bookmarks, ID: SafariBookmarksMenu
+	246 Window, ID: SafariWindowMenu
+	247 Help, ID: SafariHelpMenu
+
+The focused UI element is 4 HTML content Description: Second Nature Trail · Full game review, URL: 127.0.0.1:4192/full-rollout/

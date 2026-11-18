@@ -1,0 +1,1665 @@
+{
+  "recordedAt": "2026-11-18T18:29:11.920Z",
+  "label": "Completed native review states archived before replacing only the new local review runner. Sanitized summary; full state/action journals remain in private ignored data files.",
+  "before": [
+    {
+      "key": "solo3",
+      "url": "http://solo3.localhost:4193/?invite=solo3-invite-1",
+      "chapter": 3,
+      "mode": "solo",
+      "roster": 1,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 131044,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "solo4",
+      "url": "http://solo4.localhost:4194/?invite=solo4-invite-1",
+      "chapter": 4,
+      "mode": "solo",
+      "roster": 1,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 243750,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "solo5",
+      "url": "http://solo5.localhost:4195/?invite=solo5-invite-1",
+      "chapter": 5,
+      "mode": "solo",
+      "roster": 1,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 105863,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "solo6",
+      "url": "http://solo6.localhost:4196/?invite=solo6-invite-1",
+      "chapter": 6,
+      "mode": "solo",
+      "roster": 1,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 197341,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "solo7",
+      "url": "http://solo7.localhost:4197/?invite=solo7-invite-1",
+      "chapter": 7,
+      "mode": "solo",
+      "roster": 1,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 195864,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "solo8",
+      "url": "http://solo8.localhost:4198/?invite=solo8-invite-1",
+      "chapter": 8,
+      "mode": "solo",
+      "roster": 1,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 57368,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "solofinale",
+      "url": "http://solofinale.localhost:4199/?invite=solofinale-invite-1",
+      "chapter": "finale",
+      "mode": "solo",
+      "roster": 1,
+      "phase": "paused",
+      "pausedPhase": "finale",
+      "remainingMs": 213370,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "soloentry",
+      "url": "http://soloentry.localhost:4200/?invite=soloentry-invite-1",
+      "chapter": "entry",
+      "mode": "solo",
+      "roster": 1,
+      "phase": "paused",
+      "pausedPhase": "brag",
+      "remainingMs": 98718,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {},
+      "errors": []
+    },
+    {
+      "key": "crowd3",
+      "url": "http://crowd3.localhost:4203/?invite=crowd3-invite-1",
+      "chapter": 3,
+      "mode": "crowd",
+      "roster": 100,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 28202,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {
+        "setup": 99,
+        "move": 2139
+      },
+      "errors": []
+    },
+    {
+      "key": "crowd4",
+      "url": "http://crowd4.localhost:4204/?invite=crowd4-invite-1",
+      "chapter": 4,
+      "mode": "crowd",
+      "roster": 100,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 238432,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {
+        "setup": 99,
+        "move": 1380
+      },
+      "errors": []
+    },
+    {
+      "key": "crowd5",
+      "url": "http://crowd5.localhost:4205/?invite=crowd5-invite-1",
+      "chapter": 5,
+      "mode": "crowd",
+      "roster": 100,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 103134,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {
+        "setup": 99,
+        "move": 2267
+      },
+      "errors": []
+    },
+    {
+      "key": "crowd6",
+      "url": "http://crowd6.localhost:4206/?invite=crowd6-invite-1",
+      "chapter": 6,
+      "mode": "crowd",
+      "roster": 100,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 199834,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {
+        "setup": 99,
+        "move": 1383
+      },
+      "errors": []
+    },
+    {
+      "key": "crowd7",
+      "url": "http://crowd7.localhost:4207/?invite=crowd7-invite-1",
+      "chapter": 7,
+      "mode": "crowd",
+      "roster": 100,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 216728,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {
+        "setup": 99,
+        "move": 936
+      },
+      "errors": []
+    },
+    {
+      "key": "crowd8",
+      "url": "http://crowd8.localhost:4208/?invite=crowd8-invite-1",
+      "chapter": 8,
+      "mode": "crowd",
+      "roster": 100,
+      "phase": "paused",
+      "pausedPhase": "chapter",
+      "remainingMs": 209064,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "status": "Ready",
+      "accepted": {
+        "setup": 99,
+        "move": 2744
+      },
+      "errors": []
+    },
+    {
+      "key": "crowdfinale",
+      "url": "http://crowdfinale.localhost:4209/?invite=crowdfinale-invite-1",
+      "chapter": "finale",
+      "mode": "crowd",
+      "roster": 100,
+      "phase": "closed",
+      "pausedPhase": null,
+      "remainingMs": null,
+      "connected": 0,
+      "botConnections": 0,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Error: crowdfinale /api/host/action: 400 Cannot pause this phase",
+      "accepted": {
+        "setup": 99,
+        "finale": 59
+      },
+      "errors": [
+        "crowdfinale /api/host/action: 400 Cannot pause this phase"
+      ]
+    },
+    {
+      "key": "crowdentry",
+      "url": "http://crowdentry.localhost:4210/?invite=crowdentry-invite-1",
+      "chapter": "entry",
+      "mode": "crowd",
+      "roster": 100,
+      "phase": "lobby",
+      "pausedPhase": null,
+      "remainingMs": null,
+      "connected": 99,
+      "botConnections": 99,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "Ready",
+      "accepted": {
+        "setup": 99
+      },
+      "errors": []
+    }
+  ],
+  "archives": [
+    {
+      "key": "crowd3",
+      "path": "data/review-archives/crowd3-1795026539818.json",
+      "sha256": "6f71ae4e7cd64333afa83502ff3b609ad51d2790ddbb514fedadfc22c03e6265",
+      "bytes": 1464691,
+      "phase": "paused",
+      "chapterIndex": 2,
+      "players": 100,
+      "actions": 125,
+      "acceptedRequests": 125,
+      "contributions": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "humanProgress": [
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 6,
+          "complete": true,
+          "score": 55,
+          "primary": 5
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        }
+      ],
+      "finale": {
+        "target": 0,
+        "contributions": 0,
+        "ending": null
+      },
+      "awardedRecipients": 0
+    },
+    {
+      "key": "crowd4",
+      "path": "data/review-archives/crowd4-1795026539821.json",
+      "sha256": "b2ae11173c81e1c9dc03e28c2ad7a2554f4a4868f292e3369660478255648fe9",
+      "bytes": 1463949,
+      "phase": "paused",
+      "chapterIndex": 3,
+      "players": 100,
+      "actions": 126,
+      "acceptedRequests": 124,
+      "contributions": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "humanProgress": [
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 6,
+          "complete": true,
+          "score": 60,
+          "primary": 60
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        }
+      ],
+      "finale": {
+        "target": 0,
+        "contributions": 0,
+        "ending": null
+      },
+      "awardedRecipients": 0
+    },
+    {
+      "key": "crowd5",
+      "path": "data/review-archives/crowd5-1795026539823.json",
+      "sha256": "0bfb0ce7545df24de8abf3f82ab65d10880227c3119a66fded4986f6abfd22c9",
+      "bytes": 1469969,
+      "phase": "paused",
+      "chapterIndex": 4,
+      "players": 100,
+      "actions": 131,
+      "acceptedRequests": 132,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "humanProgress": [
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 3,
+          "complete": true,
+          "score": 60,
+          "primary": 18
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        }
+      ],
+      "finale": {
+        "target": 0,
+        "contributions": 0,
+        "ending": null
+      },
+      "awardedRecipients": 0
+    },
+    {
+      "key": "crowd6",
+      "path": "data/review-archives/crowd6-1795026539825.json",
+      "sha256": "69e9ad0211a07514bf5e724459ff438850d168a614c55ec736d4ea911e9f2089",
+      "bytes": 1463503,
+      "phase": "paused",
+      "chapterIndex": 5,
+      "players": 100,
+      "actions": 118,
+      "acceptedRequests": 119,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "humanProgress": [
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 3,
+          "complete": true,
+          "score": 60,
+          "primary": 3
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        }
+      ],
+      "finale": {
+        "target": 0,
+        "contributions": 0,
+        "ending": null
+      },
+      "awardedRecipients": 0
+    },
+    {
+      "key": "crowd7",
+      "path": "data/review-archives/crowd7-1795026539830.json",
+      "sha256": "b4729f6e9a411e4e29d48c24c05f51d31d2bda21aa772dd7d70d0b43a256de60",
+      "bytes": 1470619,
+      "phase": "paused",
+      "chapterIndex": 6,
+      "players": 100,
+      "actions": 139,
+      "acceptedRequests": 131,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "humanProgress": [
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 7,
+          "complete": true,
+          "score": 60,
+          "primary": 6
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        }
+      ],
+      "finale": {
+        "target": 0,
+        "contributions": 0,
+        "ending": null
+      },
+      "awardedRecipients": 0
+    },
+    {
+      "key": "crowd8",
+      "path": "data/review-archives/crowd8-1795026539835.json",
+      "sha256": "1cffda4ac33961e4c26d025322cc0692d03d48f572895b55c252d324eb006daf",
+      "bytes": 1466113,
+      "phase": "paused",
+      "chapterIndex": 7,
+      "players": 100,
+      "actions": 122,
+      "acceptedRequests": 123,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "humanProgress": [
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 3,
+          "complete": true,
+          "score": 60,
+          "primary": 3
+        }
+      ],
+      "finale": {
+        "target": 0,
+        "contributions": 0,
+        "ending": null
+      },
+      "awardedRecipients": 0
+    },
+    {
+      "key": "crowdentry",
+      "path": "data/review-archives/crowdentry-1795026539850.json",
+      "sha256": "e81f7734feb4048483f8630ff2e6f134f55efb0ce7410776c24c0ad0e6e5a004",
+      "bytes": 1463658,
+      "phase": "lobby",
+      "chapterIndex": 0,
+      "players": 100,
+      "actions": 100,
+      "acceptedRequests": 110,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "humanProgress": [
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        }
+      ],
+      "finale": {
+        "target": 0,
+        "contributions": 0,
+        "ending": null
+      },
+      "awardedRecipients": 0
+    },
+    {
+      "key": "crowdfinale",
+      "path": "data/review-archives/crowdfinale-1795026539840.json",
+      "sha256": "50f3a62a52fe14e41be393b4c7257cadea69bb9fc57e06060925cc7ac20ffff3",
+      "bytes": 3086411,
+      "phase": "closed",
+      "chapterIndex": 7,
+      "players": 100,
+      "actions": 119,
+      "acceptedRequests": 182,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "humanProgress": [
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        }
+      ],
+      "finale": {
+        "target": 60,
+        "contributions": 60,
+        "ending": "The neighborhood is back online. The AI has accepted a new job: labeling extension cords."
+      },
+      "awardedRecipients": 0
+    },
+    {
+      "key": "solo3",
+      "path": "data/review-archives/solo3-1795026539815.json",
+      "sha256": "5a1af41604b02f41c822703a3de1578ee33343a6b236bb90fdfe4b5a3a1fcfe4",
+      "bytes": 31104,
+      "phase": "paused",
+      "chapterIndex": 2,
+      "players": 1,
+      "actions": 26,
+      "acceptedRequests": 24,
+      "contributions": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "humanProgress": [
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 6,
+          "complete": true,
+          "score": 60,
+          "primary": 6
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        }
+      ],
+      "finale": {
+        "target": 0,
+        "contributions": 0,
+        "ending": null
+      },
+      "awardedRecipients": 0
+    },
+    {
+      "key": "solo4",
+      "path": "data/review-archives/solo4-1795026539816.json",
+      "sha256": "dc861e967dea7d4b2ba5eb4af03e82e1a91fb654b13fe1fd6e55f15174fa509a",
+      "bytes": 32048,
+      "phase": "paused",
+      "chapterIndex": 3,
+      "players": 1,
+      "actions": 28,
+      "acceptedRequests": 26,
+      "contributions": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "humanProgress": [
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 6,
+          "complete": true,
+          "score": 55,
+          "primary": 59
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        }
+      ],
+      "finale": {
+        "target": 0,
+        "contributions": 0,
+        "ending": null
+      },
+      "awardedRecipients": 0
+    },
+    {
+      "key": "solo5",
+      "path": "data/review-archives/solo5-1795026539816.json",
+      "sha256": "f65fda3645f7b7ec991d87747c4294f85a002fa98c22b74f20d1813b2573b725",
+      "bytes": 38109,
+      "phase": "paused",
+      "chapterIndex": 4,
+      "players": 1,
+      "actions": 33,
+      "acceptedRequests": 34,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "humanProgress": [
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 3,
+          "complete": true,
+          "score": 60,
+          "primary": 17
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        }
+      ],
+      "finale": {
+        "target": 0,
+        "contributions": 0,
+        "ending": null
+      },
+      "awardedRecipients": 0
+    },
+    {
+      "key": "solo6",
+      "path": "data/review-archives/solo6-1795026539816.json",
+      "sha256": "2c414fc0b08516b722d8e3a71ae0febf7c2dd27ca5606731ac2bfd672c90158d",
+      "bytes": 31068,
+      "phase": "paused",
+      "chapterIndex": 5,
+      "players": 1,
+      "actions": 19,
+      "acceptedRequests": 20,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "humanProgress": [
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 3,
+          "complete": true,
+          "score": 40,
+          "primary": 2
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        }
+      ],
+      "finale": {
+        "target": 0,
+        "contributions": 0,
+        "ending": null
+      },
+      "awardedRecipients": 0
+    },
+    {
+      "key": "solo7",
+      "path": "data/review-archives/solo7-1795026539816.json",
+      "sha256": "732ebb189c208dbacbc52d7ea5597500c911add2a0443a32d87b9ff8842a0c0c",
+      "bytes": 39323,
+      "phase": "paused",
+      "chapterIndex": 6,
+      "players": 1,
+      "actions": 42,
+      "acceptedRequests": 34,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "humanProgress": [
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 7,
+          "complete": true,
+          "score": 55,
+          "primary": 5
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        }
+      ],
+      "finale": {
+        "target": 0,
+        "contributions": 0,
+        "ending": null
+      },
+      "awardedRecipients": 0
+    },
+    {
+      "key": "solo8",
+      "path": "data/review-archives/solo8-1795026539817.json",
+      "sha256": "0d4557743a10525ad2aef62b25fac0c47932408945dac824fbb6f9214058abce",
+      "bytes": 37152,
+      "phase": "paused",
+      "chapterIndex": 7,
+      "players": 1,
+      "actions": 25,
+      "acceptedRequests": 30,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "humanProgress": [
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 3,
+          "complete": true,
+          "score": 55,
+          "primary": 1
+        }
+      ],
+      "finale": {
+        "target": 0,
+        "contributions": 0,
+        "ending": null
+      },
+      "awardedRecipients": 0
+    },
+    {
+      "key": "soloentry",
+      "path": "data/review-archives/soloentry-1795026539818.json",
+      "sha256": "dfb79554dd4f6de73fec271c6f547e9cc39f971a2f98f20ddb3ca786c6ee5405",
+      "bytes": 23186,
+      "phase": "paused",
+      "chapterIndex": 0,
+      "players": 1,
+      "actions": 6,
+      "acceptedRequests": 17,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "humanProgress": [
+        {
+          "step": 1,
+          "complete": false,
+          "score": 20,
+          "primary": 12
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        }
+      ],
+      "finale": {
+        "target": 0,
+        "contributions": 0,
+        "ending": null
+      },
+      "awardedRecipients": 0
+    },
+    {
+      "key": "solofinale",
+      "path": "data/review-archives/solofinale-1795026539818.json",
+      "sha256": "2c046650f42d0c9879c45820b6385d0f06600e0bd6f1937f3780dd20d11ee3d8",
+      "bytes": 72262,
+      "phase": "paused",
+      "chapterIndex": 7,
+      "players": 1,
+      "actions": 18,
+      "acceptedRequests": 24,
+      "contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "humanProgress": [
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        },
+        {
+          "step": 0,
+          "complete": false,
+          "score": 0,
+          "primary": 0
+        }
+      ],
+      "finale": {
+        "target": 1,
+        "contributions": 1,
+        "ending": "The neighborhood is back online. The AI has accepted a new job: labeling extension cords."
+      },
+      "awardedRecipients": 0
+    }
+  ]
+}

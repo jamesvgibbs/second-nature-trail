@@ -1,0 +1,93 @@
+Window: "Second Nature Trail", App: Safari.
+0 standard window Second Nature Trail, ID: SafariWindow?IsSecure=false&UUID=48BFC54F-3E6F-4C44-985F-0ED3AC8E327A, Secondary Actions: Raise
+	1 split group
+		2 tab group
+			3 scroll area
+				4 HTML content Description: Second Nature Trail, URL: solo8.localhost:4198/
+					5 container
+						6 text sn SECOND NATURE TRAIL CONNECTED
+						7 text CHAPTER
+						8 text 04:13
+						9 text RECONNECT HUMANITY 0/3 steps · Chapter score 0 0/1 shared completions
+						10 container Chapter scene. Tab reaches all choices. E continues. Movement keys switch to the neighborhood overview.
+						11 text RECONNECT HUMANITY Choose beside the scene · E continues · WASD / arrows switch to free walking
+						12 summary Message from the host, Value: off
+							13 text Message from the host
+						14 text CHAPTER 8 · 0/3 STEPS
+						15 heading Reconnect humanity, Value: 2
+							16 text Reconnect humanity
+						17 container
+							18 heading This route needs another look., Value: 3
+								19 text This route needs another look.
+							20 text Chapter score 0. This route did not meet every connection, relay and budget requirement. Adjust the plan and try again.
+						21 text 3 cable
+						22 text + 6 reserve
+						23 text Required: relay-west · Cable 0/9 · Broken or missing link
+						24 toggle button Exchange, Value: off
+						25 toggle button North junction, Value: off
+						26 toggle button South junction, Value: off
+						27 toggle button West relay, Value: off
+						28 toggle button East relay, Value: off
+						29 toggle button Neighborhood hub, Value: off
+						30 toggle button Bypass, Value: off
+						31 toggle button Home A, Value: on
+						32 toggle button Home B, Value: off
+						33 toggle button Home C, Value: off
+						34 text exchange → home-a
+						35 text From home-a: bypass (3) · hub (2, broken)
+						36 button Reset path
+						37 button Connect this route
+						38 text 0 nearby · 1 connected
+						39 button Inventory [I]
+						40 button Map [M]
+						41 button Neighbors
+						42 button Help [H]
+						43 button Settings
+						44 button Field notes
+						45 text One neighborhood. Everyone belongs. Your review neighbor
+	46 image WindowControlShadowView._shadowImageView
+	47 toolbar
+		48 container Secondary Actions: Move next, Remove from toolbar
+			49 button Description: show sidebar, Help: Show sidebar, ID: SidebarButton
+			50 menu button Description: Tab Group picker, ID: TabGroupPickerButton?TabGroup=
+		51 container BackForwardSegmentedControl
+			52 button Description: Go back, Help: Show the previous page, ID: BackButton
+			53 button (disabled) Description: Go forward, Help: Show the next page, ID: ForwardButton
+		54 container Secondary Actions: Move previous, Move next, Remove from toolbar
+			55 button Page Menu, ID: AssistantButton
+			56 button Add page to Reading List, ID: OneStepBookmarkingButton
+			57 text field (settable) Description: smart search field, Value: solo8.localhost:4198, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			58 button Reload this page, ID: ReloadButton
+		59 button Description: Share, ID: ShareButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		60 button Description: New Tab, ID: NewTabButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		61 button Description: Tab Overview, ID: TabOverviewButton, Secondary Actions: Move previous, Remove from toolbar
+	62 tab group Description: Tab bar, 5 tabs, ID: TabBar?isSeparate=false
+		63 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			64 image FaviconImageView
+			65 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		66 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			67 image FaviconImageView
+			68 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		69 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			70 image FaviconImageView
+			71 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		72 tab Second Nature Trail · Chapter 2 review, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			73 image FaviconImageView
+			74 text Value: Second Nature Trail · Chapter 2 review, ID: UnifiedTabBarButton._titleTextField
+		75 tab Second Nature Trail, Help: To interact with the items in this button, press Control-Option-Shift-Down Arrow., Value: on, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=true, Secondary Actions: close tab
+			76 image FaviconImageView
+			77 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+	78 close button
+	79 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	80 minimize button
+81 menu bar
+	82 Safari
+	83 File
+	84 Edit
+	85 View, ID: SafariViewMenu
+	86 History
+	87 Bookmarks, ID: SafariBookmarksMenu
+	88 Window, ID: SafariWindowMenu
+	89 Help, ID: SafariHelpMenu
+
+The focused UI element is 18 heading This route needs another look., Value: 3

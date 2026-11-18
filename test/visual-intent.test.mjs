@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import vm from "node:vm";
 import { readFileSync } from "node:fs";
+import { drawEventScene } from "../public/event-scenes.mjs";
 const source = readFileSync(
   new URL("../public/app.js", import.meta.url),
   "utf8",
@@ -11,6 +12,7 @@ const section = (a, b) =>
 function fixture() {
   const elements = new Map();
   const node = () => ({
+    getContext: () => new Proxy({}, {get: () => () => {}}),
     children: [],
     value: "",
     dataset: {},
@@ -28,6 +30,7 @@ function fixture() {
   const radios = [{ value: "false" }, { value: "true" }];
   get("#setup-form").inputs = radios;
   const c = {
+    drawEventScene,
     safe: true,
     forceSafe: true,
     visualIntentGeneration: 0,

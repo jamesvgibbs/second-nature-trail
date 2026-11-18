@@ -1,0 +1,68 @@
+Window: "Second Nature Trail", App: Safari.
+0 standard window Second Nature Trail, ID: SafariWindow?IsSecure=false&UUID=48BFC54F-3E6F-4C44-985F-0ED3AC8E327A, Secondary Actions: Raise
+	1 split group
+		2 tab group
+			3 scroll area
+				4 HTML content Description: Second Nature Trail, URL: entry.localhost:4175/
+					5 container
+						6 text sn SECOND NATURE TRAIL A NEIGHBORHOOD WORTH SAVING
+					7 container
+						8 text 100 NEIGHBORS · ONE SHARED WORLD
+						9 heading Value: 1, The machines
+lost the plot.
+We’ve got this.
+							10 text The machines lost the plot. We’ve got this.
+						11 text Pack your cart. Find your people. Bring a neighborhood back to life, one very human decision at a time. Your private invitation code
+						12 text field (settable) Your private invitation code, Placeholder: Paste your invitation code
+						13 button Set out →
+						14 text Laptop or desktop · Keyboard or mouse · No install
+						15 image Original pixel neighborhood with houses, parks, and a central meeting square
+						16 text EST. BEFORE THE ROBOTS GOT IDEAS   /   BRAGGING SQUARE
+					17 container
+						18 text 08 chapters A fresh district. A different kind of trouble. 15 ways to shine Find your edge. Help a neighbor find theirs. 01 neighborhood Every repair makes this place a little more human.
+	19 image WindowControlShadowView._shadowImageView
+	20 toolbar
+		21 container Secondary Actions: Move next, Remove from toolbar
+			22 button Description: show sidebar, Help: Show sidebar, ID: SidebarButton
+			23 menu button Description: Tab Group picker, ID: TabGroupPickerButton?TabGroup=
+		24 container BackForwardSegmentedControl
+			25 button Description: Go back, Help: Show the previous page, ID: BackButton
+			26 button (disabled) Description: Go forward, Help: Show the next page, ID: ForwardButton
+		27 container Secondary Actions: Move previous, Move next, Remove from toolbar
+			28 button Page Menu, ID: AssistantButton
+			29 button Add page to Reading List, ID: OneStepBookmarkingButton
+			30 text field (settable) Description: smart search field, Value: entry.localhost:4175, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			31 button Reload this page, ID: ReloadButton
+		32 button Description: Share, ID: ShareButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		33 button Description: New Tab, ID: NewTabButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		34 button Description: Tab Overview, ID: TabOverviewButton, Secondary Actions: Move previous, Remove from toolbar
+	35 tab group Description: Tab bar, 5 tabs, ID: TabBar?isSeparate=false
+		36 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			37 image FaviconImageView
+			38 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		39 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			40 image FaviconImageView
+			41 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		42 tab Second Nature Trail, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			43 image FaviconImageView
+			44 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+		45 tab Second Nature Trail · Chapter 2 review, Value: off, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=false, Secondary Actions: close tab
+			46 image FaviconImageView
+			47 text Value: Second Nature Trail · Chapter 2 review, ID: UnifiedTabBarButton._titleTextField
+		48 tab Second Nature Trail, Help: To interact with the items in this button, press Control-Option-Shift-Down Arrow., Value: on, ID: TabBarTab?isPinned=false&isNarrow=false&isActive=true, Secondary Actions: close tab
+			49 image FaviconImageView
+			50 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+	51 close button
+	52 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	53 minimize button
+54 menu bar
+	55 Safari
+	56 File
+	57 Edit
+	58 View, ID: SafariViewMenu
+	59 History
+	60 Bookmarks, ID: SafariBookmarksMenu
+	61 Window, ID: SafariWindowMenu
+	62 Help, ID: SafariHelpMenu
+
+The focused UI element is 4 HTML content Description: Second Nature Trail, URL: entry.localhost:4175/
