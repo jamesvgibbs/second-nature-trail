@@ -13,6 +13,7 @@ import { restorationProgress } from "../public/helpers.mjs";
 import { SITE_LABELS } from "../public/trail-visuals.mjs";
 import { overviewCrowd } from "../public/crowd-view.mjs";
 import { moveDaySceneModel } from "../public/move-day-scene.mjs";
+import { destinationVisit, destinationBadgeBounds } from "../public/destination-visits.mjs";
 import { RULES } from "../content.mjs";
 
 const source = readFileSync(
@@ -73,6 +74,7 @@ function renderer(restored = 0, self = "p0", chapter = -1) {
   };
   const context = vm.createContext({
     DOORS,
+    destinationVisit, destinationBadgeBounds,
     districtScenery,
     SQUARE_TREES,
     ROAD_BANDS,

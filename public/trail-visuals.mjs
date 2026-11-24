@@ -17,11 +17,11 @@ export const DELIVERY_STAGES = [
   ['load', 'Pack'], ['route', 'Choose route'], ['travel', 'Inspect'], ['deliver', 'Deliver'],
 ];
 export function stageLabel(task) {
-  return ({ load: 'Pack the cart', route: 'Choose your route', travel: 'Inspect the route', deliver: 'Make the delivery', inspect: 'Inspect the site', decide: 'Put the plan to work', redeem: 'Use your rewards' })[task?.stage] || ({ targeting: 'Resolve the warning', routing: 'Connect the home', budget: 'Plan this payment', rewards: 'Use your rewards' })[task?.kind] || 'Continue the objective';
+  return ({ load: 'Pack the cart', route: 'Choose your route', travel: 'Inspect the route', repair: 'Reseat the wheel', deliver: 'Make the delivery', inspect: 'Inspect the site', decide: 'Put the plan to work', redeem: 'Use your rewards' })[task?.stage] || ({ targeting: 'Resolve the warning', routing: 'Connect the home', budget: 'Plan this payment', rewards: 'Use your rewards' })[task?.kind] || 'Continue the objective';
 }
 export const SITE_LABELS = [
   ['MOVING DEPOT', 'HIGHWAY'], ['FILTER DEPOT', 'VENT MAZE'],
-  ['IDENTITY OFFICE', 'TOWN HALL'], ['INSURANCE', 'DISASTER BLK'],
+  ['IDENTITY OFFICE', 'TOWN HALL'], ['INSURANCE', 'DISASTER'],
   ['APARTMENTS', 'SERVICE HQ'], ['TRADING POST', 'PAYMENT STN'],
   ['REWARDS ARCADE', 'NIGHT MARKET'], ['NET EXCHANGE', 'AI HQ'],
 ];

@@ -224,6 +224,15 @@ try {
     await sleep(700); // Receive subsequent peer/full projections after own accepted result.
     for (const client of clients) { assert.equal(client.state.me.progress[0].score, 45); assert.equal(client.state.players.length, count); }
     const final = await status(); assert.equal(final.summary.completedObjectives, count); assert.equal(errors.length, 0);
+    const wheelRepairTrips = app.engine.state.actions.filter(action => action.type === 'deliveryRepair').map(action => ({ playerId: action.playerId, trip: action.trip }));
+    for (const repair of wheelRepairTrips) {
+      const trip = app.engine.get(repair.playerId).progress[0].deliveryHistory[repair.trip];
+      assert.equal(repair.trip, 1); assert.equal(trip.route, 'shortcut');
+      assert.equal(trip.incident.type, 'loose-wheel'); assert(Number.isFinite(trip.incident.repairedAt));
+    }
+    assert.equal(new Set(wheelRepairTrips.map(repair => repair.playerId + ':' + repair.trip)).size, wheelRepairTrips.length);
+    assert.equal(samples.length, count * 12 + wheelRepairTrips.length);
+    Object.assign(report, { wheelRepairCount: wheelRepairTrips.length, wheelRepairTrips });
     const sorted = [...samples].sort((a,b) => a-b), quantile = q => sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * q))] || 0;
     Object.assign(report, { passed: true, completedObjectives: count, scoringSamples: samples.length, actionLatencyMs: { p50: quantile(.5), p95: quantile(.95), p99: quantile(.99) }, phase: final.summary.phase, frames: frameCount, scores: { perPlayer: 45, primaryValue: 27 }, inventoryPerPlayer: { parts: 0, filters: 3, food: 1, cable: 1 }, reservesConsumed: 0, answersExposed: false, peerUpdatesPreservedOwnProgress: true, humanVisualAcceptance: false });
     await close();

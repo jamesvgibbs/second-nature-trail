@@ -201,7 +201,9 @@ export function createGameServer({
           actionTime >= engine.state.deadline
         )
           mutate(() => engine.tick());
-        result = engine.dispatch(player, action);
+        result = engine.movementNeedsPersistence(player, action)
+          ? mutate(() => engine.dispatch(player, action))
+          : engine.dispatch(player, action);
       } finally {
         engine.now = clock;
       }

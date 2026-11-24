@@ -1,0 +1,2250 @@
+TAP version 13
+# Subtest: backup preserves committed WAL data and refuses to overwrite an existing backup
+ok 1 - backup preserves committed WAL data and refuses to overwrite an existing backup
+  ---
+  duration_ms: 133.685916
+  type: 'test'
+  ...
+# Subtest: chapter 3 six actual inspect/decision controls retain wrong retries, supplies and confirmed repair
+ok 2 - chapter 3 six actual inspect/decision controls retain wrong retries, supplies and confirmed repair
+  ---
+  duration_ms: 20.761208
+  type: 'test'
+  ...
+# Subtest: chapter 4 six actual inspect/decision controls retain wrong retries, supplies and confirmed repair
+ok 3 - chapter 4 six actual inspect/decision controls retain wrong retries, supplies and confirmed repair
+  ---
+  duration_ms: 10.807958
+  type: 'test'
+  ...
+# Subtest: chapter 7 six actual inspect/decision controls retain wrong retries, supplies and confirmed repair
+ok 4 - chapter 7 six actual inspect/decision controls retain wrong retries, supplies and confirmed repair
+  ---
+  duration_ms: 14.264959
+  type: 'test'
+  ...
+# Subtest: three actual route controls use public node IDs, reject broken paths, reset and complete constrained graphs
+ok 5 - three actual route controls use public node IDs, reject broken paths, reset and complete constrained graphs
+  ---
+  duration_ms: 8.659417
+  type: 'test'
+  ...
+# Subtest: payment controls enforce opening, retain late outcome and carry budgets through all three recorded cycles
+ok 6 - payment controls enforce opening, retain late outcome and carry budgets through all three recorded cycles
+  ---
+  duration_ms: 4.316625
+  type: 'test'
+  ...
+# Subtest: targeting keyboard/manual resolves all18 rounds with six-hit site boundaries
+ok 7 - targeting keyboard/manual resolves all18 rounds with six-hit site boundaries
+  ---
+  duration_ms: 23.068042
+  type: 'test'
+  ...
+# Subtest: targeting selected-auto resolves all18 rounds with six-hit site boundaries
+ok 8 - targeting selected-auto resolves all18 rounds with six-hit site boundaries
+  ---
+  duration_ms: 30.897583
+  type: 'test'
+  ...
+# Subtest: pending actions stay single and cannot steal a new Help panel or show stale phase/epoch repair
+ok 9 - pending actions stay single and cannot steal a new Help panel or show stale phase/epoch repair
+  ---
+  duration_ms: 10.587833
+  type: 'test'
+  ...
+# Subtest: target controls reject early/decoy/repeat and paused selection; a fresh round requires deliberate new choice
+ok 10 - target controls reject early/decoy/repeat and paused selection; a fresh round requires deliberate new choice
+  ---
+  duration_ms: 2.760417
+  type: 'test'
+  ...
+# Subtest: 100-peer updates preserve owned keyboard choice/result focus and reload reconstructs authoritative progress
+ok 11 - 100-peer updates preserve owned keyboard choice/result focus and reload reconstructs authoritative progress
+  ---
+  duration_ms: 26.998458
+  type: 'test'
+  ...
+# Subtest: finale focused semantic action reaches the same authoritative contribution and leaves frozen scores untouched
+ok 12 - finale focused semantic action reaches the same authoritative contribution and leaves frozen scores untouched
+  ---
+  duration_ms: 3.011708
+  type: 'test'
+  ...
+# Subtest: finale pending button and semantic key cannot duplicate, and newer dialogs/epochs cannot receive old repair feedback
+ok 13 - finale pending button and semantic key cannot duplicate, and newer dialogs/epochs cannot receive old repair feedback
+  ---
+  duration_ms: 10.275333
+  type: 'test'
+  ...
+# Subtest: remapped interact from the actual focused choice/result controls confirms then continues without a canvas focus requirement
+ok 14 - remapped interact from the actual focused choice/result controls confirms then continues without a canvas focus requirement
+  ---
+  duration_ms: 2.548583
+  type: 'test'
+  ...
+# Subtest: completed reload retains chapter score; paused completion opens only read-only field notes
+ok 15 - completed reload retains chapter score; paused completion opens only read-only field notes
+  ---
+  duration_ms: 6.751334
+  type: 'test'
+  ...
+# Subtest: same-chapter overview preference survives snapshots but a new chapter or finale defaults to its focused scene
+ok 16 - same-chapter overview preference survives snapshots but a new chapter or finale defaults to its focused scene
+  ---
+  duration_ms: 4.275334
+  type: 'test'
+  ...
+# Subtest: actual presentation frame uses only public safe scenes in all six chapters, breaks and finale, while player practice stays in its world
+ok 17 - actual presentation frame uses only public safe scenes in all six chapters, breaks and finale, while player practice stays in its world
+  ---
+  duration_ms: 3.038709
+  type: 'test'
+  ...
+# Subtest: finale and result captions/hints follow phase rather than the last chapter
+ok 18 - finale and result captions/hints follow phase rather than the last chapter
+  ---
+  duration_ms: 3.01225
+  type: 'test'
+  ...
+# Subtest: countdown and brag captions suppress frozen movement instructions, including paused equivalents
+ok 19 - countdown and brag captions suppress frozen movement instructions, including paused equivalents
+  ---
+  duration_ms: 2.598625
+  type: 'test'
+  ...
+# Subtest: finale and results cannot expose invisible incomplete prior-chapter task hotspots
+ok 20 - finale and results cannot expose invisible incomplete prior-chapter task hotspots
+  ---
+  duration_ms: 11.347084
+  type: 'test'
+  ...
+# Subtest: spatial identity/recovery/reward scenes gate evidence and preserve authored choices and actual six-job results
+ok 21 - spatial identity/recovery/reward scenes gate evidence and preserve authored choices and actual six-job results
+  ---
+  duration_ms: 15.769
+  type: 'test'
+  ...
+# Subtest: reward projects use canonical garden/welcome/festival IDs and preserve earned balances with no extra score
+ok 22 - reward projects use canonical garden/welcome/festival IDs and preserve earned balances with no extra score
+  ---
+  duration_ms: 4.703667
+  type: 'test'
+  ...
+# Subtest: target scene preserves public IDs and all18 real round resolutions, with safe art and site-only credit
+ok 23 - target scene preserves public IDs and all18 real round resolutions, with safe art and site-only credit
+  ---
+  duration_ms: 7.20375
+  type: 'test'
+  ...
+# Subtest: payment scenes retain actual late/incomplete cycle outcome and do not borrow next-cycle budget in held results
+ok 24 - payment scenes retain actual late/incomplete cycle outcome and do not borrow next-cycle budget in held results
+  ---
+  duration_ms: 3.354
+  type: 'test'
+  ...
+# Subtest: network model retains real public graph shapes/constraints and depicts each accepted path without inventing links
+ok 25 - network model retains real public graph shapes/constraints and depicts each accepted path without inventing links
+  ---
+  duration_ms: 2.595959
+  type: 'test'
+  ...
+# Subtest: all six scenes have stable solo/100 crowd, no automatic names and no modal/phase mutation
+ok 26 - all six scenes have stable solo/100 crowd, no automatic names and no modal/phase mutation
+  ---
+  duration_ms: 6.236042
+  type: 'test'
+  ...
+# Subtest: network preview cannot light home windows; only accepted route steps survive continuation and reload
+ok 27 - network preview cannot light home windows; only accepted route steps survive continuation and reload
+  ---
+  duration_ms: 3.885542
+  type: 'test'
+  ...
+# Subtest: archive art preserves the actual fifteen award records and800 completions without inventing a finale outcome
+ok 28 - archive art preserves the actual fifteen award records and800 completions without inventing a finale outcome
+  ---
+  duration_ms: 23.159375
+  type: 'test'
+  ...
+# Subtest: public presentation distinguishes zero/partial/full shared restoration without borrowing personal progress or issuing commands
+ok 29 - public presentation distinguishes zero/partial/full shared restoration without borrowing personal progress or issuing commands
+  ---
+  duration_ms: 3.53525
+  type: 'test'
+  ...
+# Subtest: SSE cannot enable actions or persist preference before its first accepted snapshot
+ok 30 - SSE cannot enable actions or persist preference before its first accepted snapshot
+  ---
+  duration_ms: 2.299666
+  type: 'test'
+  ...
+# Subtest: callbacks from replaced SSE cannot alter state, connection, or epoch
+ok 31 - callbacks from replaced SSE cannot alter state, connection, or epoch
+  ---
+  duration_ms: 0.861791
+  type: 'test'
+  ...
+# Subtest: a late lease probe cannot replace the newer requested stream
+ok 32 - a late lease probe cannot replace the newer requested stream
+  ---
+  duration_ms: 0.444708
+  type: 'test'
+  ...
+# Subtest: action callbacks ignore changed chapter/phase but retain same-context SSE-confirmed commits
+ok 33 - action callbacks ignore changed chapter/phase but retain same-context SSE-confirmed commits
+  ---
+  duration_ms: 1.243167
+  type: 'test'
+  ...
+# Subtest: move inputs get increasing sequences and reversed HTTP replies preserve newest position
+ok 34 - move inputs get increasing sequences and reversed HTTP replies preserve newest position
+  ---
+  duration_ms: 0.396083
+  type: 'test'
+  ...
+# Subtest: old-epoch HTTP completion cannot mutate or invoke success after SSE restart
+ok 35 - old-epoch HTTP completion cannot mutate or invoke success after SSE restart
+  ---
+  duration_ms: 0.328417
+  type: 'test'
+  ...
+# Subtest: every setup gets an independent settings sequence retained across reconnects
+ok 36 - every setup gets an independent settings sequence retained across reconnects
+  ---
+  duration_ms: 2.164583
+  type: 'test'
+  ...
+# Subtest: player action 401 stops gameplay and stale stream callbacks cannot restore CONNECTED
+ok 37 - player action 401 stops gameplay and stale stream callbacks cannot restore CONNECTED
+  ---
+  duration_ms: 0.59175
+  type: 'test'
+  ...
+# Subtest: unauthorized lease probe does not open a stream using a different role
+ok 38 - unauthorized lease probe does not open a stream using a different role
+  ---
+  duration_ms: 0.43425
+  type: 'test'
+  ...
+# Subtest: late action 401 from a replaced connection does not sign out the current player
+ok 39 - late action 401 from a replaced connection does not sign out the current player
+  ---
+  duration_ms: 0.452334
+  type: 'test'
+  ...
+# Subtest: cross-role join failure shows role guidance instead of invitation takeover
+ok 40 - cross-role join failure shows role guidance instead of invitation takeover
+  ---
+  duration_ms: 0.424417
+  type: 'test'
+  ...
+# Subtest: expired player authorization stops explicit takeover before opening SSE
+ok 41 - expired player authorization stops explicit takeover before opening SSE
+  ---
+  duration_ms: 0.342667
+  type: 'test'
+  ...
+# Subtest: authorized explicit takeover probes authentication and permits another client lease
+ok 42 - authorized explicit takeover probes authentication and permits another client lease
+  ---
+  duration_ms: 0.280167
+  type: 'test'
+  ...
+# Subtest: player reads/descriptors capture once, success retains plain map and untouched identities
+ok 43 - player reads/descriptors capture once, success retains plain map and untouched identities
+  ---
+  duration_ms: 0.6565
+  type: 'test'
+  ...
+# Subtest: failure restores nested aliases, descriptor access, add/replace/delete and other mutable fields
+ok 44 - failure restores nested aliases, descriptor access, add/replace/delete and other mutable fields
+  ---
+  duration_ms: 0.559917
+  type: 'test'
+  ...
+# Subtest: unexpected map/root/history replacement, async callbacks and proxy escapes fail closed
+ok 45 - unexpected map/root/history replacement, async callbacks and proxy escapes fail closed
+  ---
+  duration_ms: 0.63
+  type: 'test'
+  ...
+# Subtest: Object.values captures every player and new snapshot/result are ordinary cloneable data
+ok 46 - Object.values captures every player and new snapshot/result are ordinary cloneable data
+  ---
+  duration_ms: 0.119917
+  type: 'test'
+  ...
+# Subtest: real Engine barter, supplier credit, assist completion and rejected mutations match full-state rollback
+ok 47 - real Engine barter, supplier credit, assist completion and rejected mutations match full-state rollback
+  ---
+  duration_ms: 17.829834
+  type: 'test'
+  ...
+# Subtest: due boundary reads and failure match full rollback without leaking scoped map
+ok 48 - due boundary reads and failure match full rollback without leaking scoped map
+  ---
+  duration_ms: 1.516542
+  type: 'test'
+  ...
+# Subtest: isolated demo ignores saved DB/environment, uses actual one-player roster and normal audited phase controls
+ok 49 - isolated demo ignores saved DB/environment, uses actual one-player roster and normal audited phase controls
+  ---
+  duration_ms: 10407.231
+  type: 'test'
+  ...
+# Subtest: multiple invitations set actual roster and stdin EOF neither starts nor stops the demo
+ok 50 - multiple invitations set actual roster and stdin EOF neither starts nor stops the demo
+  ---
+  duration_ms: 194.635292
+  type: 'test'
+  ...
+# Subtest: invalid roster sizes fail before creating a server
+ok 51 - invalid roster sizes fail before creating a server
+  ---
+  duration_ms: 162.881209
+  type: 'test'
+  ...
+# Subtest: event runs exactly 60 minutes through chapters, breaks and finale
+ok 52 - event runs exactly 60 minutes through chapters, breaks and finale
+  ---
+  duration_ms: 2.640625
+  type: 'test'
+  ...
+# Subtest: delivery requires physical route checkpoint and changes metric by damage
+ok 53 - delivery requires physical route checkpoint and changes metric by damage
+  ---
+  duration_ms: 5.967792
+  type: 'test'
+  ...
+# Subtest: same request is idempotent and changed payload fails
+ok 54 - same request is idempotent and changed payload fails
+  ---
+  duration_ms: 0.354625
+  type: 'test'
+  ...
+# Subtest: quiz first answer immutable and projections contain no keys/explanations
+ok 55 - quiz first answer immutable and projections contain no keys/explanations
+  ---
+  duration_ms: 0.4515
+  type: 'test'
+  ...
+# Subtest: pause freezes actions and preserves remaining schedule
+ok 56 - pause freezes actions and preserves remaining schedule
+  ---
+  duration_ms: 0.37775
+  type: 'test'
+  ...
+# Subtest: trade requires both confirmations, commits once, preserves total and supplier provenance
+ok 57 - trade requires both confirmations, commits once, preserves total and supplier provenance
+  ---
+  duration_ms: 0.893916
+  type: 'test'
+  ...
+# Subtest: inventory changes and disconnect invalidate uncommitted trades
+ok 58 - inventory changes and disconnect invalidate uncommitted trades
+  ---
+  duration_ms: 0.292708
+  type: 'test'
+  ...
+# Subtest: snapshot cannot change through finale, projections or exported mutations
+ok 59 - snapshot cannot change through finale, projections or exported mutations
+  ---
+  duration_ms: 2.780209
+  type: 'test'
+  ...
+# Subtest: skipped chapter unranked and its trade/quiz/secret contributions excluded
+ok 60 - skipped chapter unranked and its trade/quiz/secret contributions excluded
+  ---
+  duration_ms: 0.328167
+  type: 'test'
+  ...
+# Subtest: forged values and reserved identities rejected
+ok 61 - forged values and reserved identities rejected
+  ---
+  duration_ms: 0.373542
+  type: 'test'
+  ...
+# Subtest: restore serialized state preserves accepted progress and request deduplication
+ok 62 - restore serialized state preserves accepted progress and request deduplication
+  ---
+  duration_ms: 0.373666
+  type: 'test'
+  ...
+# Subtest: assists need real unfinished request and credit once after completion
+ok 63 - assists need real unfinished request and credit once after completion
+  ---
+  duration_ms: 2.98975
+  type: 'test'
+  ...
+# Subtest: target sites require eighteen deliberate signals; rapid and telegraph attempts cannot count
+ok 64 - target sites require eighteen deliberate signals; rapid and telegraph attempts cannot count
+  ---
+  duration_ms: 4.773917
+  type: 'test'
+  ...
+# Subtest: routing enforces physical stations, required relays, broken edges and cost budget
+ok 65 - routing enforces physical stations, required relays, broken edges and cost budget
+  ---
+  duration_ms: 1.334584
+  type: 'test'
+  ...
+# Subtest: budget model carries actual retained budget and excludes optional overspend
+ok 66 - budget model carries actual retained budget and excludes optional overspend
+  ---
+  duration_ms: 0.400083
+  type: 'test'
+  ...
+# Subtest: tutorial acknowledgments cannot manufacture actual practice actions
+ok 67 - tutorial acknowledgments cannot manufacture actual practice actions
+  ---
+  duration_ms: 0.3205
+  type: 'test'
+  ...
+# Subtest: movement does not grow durable scoring deduplication ledger
+ok 68 - movement does not grow durable scoring deduplication ledger
+  ---
+  duration_ms: 0.375
+  type: 'test'
+  ...
+# Subtest: recorded complete run allocates fifteen distinct qualifying recipients
+ok 69 - recorded complete run allocates fifteen distinct qualifying recipients
+  ---
+  duration_ms: 297.052208
+  type: 'test'
+  ...
+# Subtest: payment cycles use server opening and due times and exclude late payments
+ok 70 - payment cycles use server opening and due times and exclude late payments
+  ---
+  duration_ms: 0.422542
+  type: 'test'
+  ...
+# Subtest: paused targeting projection freezes rounds and resumes same round
+ok 71 - paused targeting projection freezes rounds and resumes same round
+  ---
+  duration_ms: 0.482042
+  type: 'test'
+  ...
+# Subtest: many assists grant only one bounded chapter bonus
+ok 72 - many assists grant only one bounded chapter bonus
+  ---
+  duration_ms: 4.654709
+  type: 'test'
+  ...
+# Subtest: unclean restart cancels pending barter and preserves completed transfers
+ok 73 - unclean restart cancels pending barter and preserves completed transfers
+  ---
+  duration_ms: 0.608042
+  type: 'test'
+  ...
+# Subtest: content drift blocks restart even when semantic version is unchanged
+ok 74 - content drift blocks restart even when semantic version is unchanged
+  ---
+  duration_ms: 0.320834
+  type: 'test'
+  ...
+# Subtest: delayed chapter, task stage and targeting round actions cannot score current content
+ok 75 - delayed chapter, task stage and targeting round actions cannot score current content
+  ---
+  duration_ms: 0.382875
+  type: 'test'
+  ...
+# Subtest: compact personal action projection matches full authoritative personal fields
+ok 76 - compact personal action projection matches full authoritative personal fields
+  ---
+  duration_ms: 0.425583
+  type: 'test'
+  ...
+# Subtest: expanded spatial activity requires arrival and inspection before each of six decisions
+ok 77 - expanded spatial activity requires arrival and inspection before each of six decisions
+  ---
+  duration_ms: 1.441083
+  type: 'test'
+  ...
+# Subtest: false accusations reduce clone primary; unsafe mistakes still lose score but are not mislabeled
+ok 78 - false accusations reduce clone primary; unsafe mistakes still lose score but are not mislabeled
+  ---
+  duration_ms: 3.775334
+  type: 'test'
+  ...
+# Subtest: rewards earn once per unique job; spending changes authored projects without changing attainable scores
+ok 79 - rewards earn once per unique job; spending changes authored projects without changing attainable scores
+  ---
+  duration_ms: 2.433
+  type: 'test'
+  ...
+# Subtest: host shortening cannot extend time and records exact recovery action
+ok 80 - host shortening cannot extend time and records exact recovery action
+  ---
+  duration_ms: 0.316625
+  type: 'test'
+  ...
+# Subtest: advance preserves ranked scoring and can recover from paused breaks through immutable finale
+ok 81 - advance preserves ranked scoring and can recover from paused breaks through immutable finale
+  ---
+  duration_ms: 2.478875
+  type: 'test'
+  ...
+# Subtest: skip during brag preserves remaining break instead of adding time
+ok 82 - skip during brag preserves remaining break instead of adding time
+  ---
+  duration_ms: 0.236667
+  type: 'test'
+  ...
+# Subtest: restoration denominator is stable after event start regardless of connected population
+ok 83 - restoration denominator is stable after event start regardless of connected population
+  ---
+  duration_ms: 2.863459
+  type: 'test'
+  ...
+# Subtest: cargo completion records one exact clock reading across replay and frozen export
+ok 84 - cargo completion records one exact clock reading across replay and frozen export
+  ---
+  duration_ms: 2.399041
+  type: 'test'
+  ...
+# Subtest: shared task completion records exact pause-adjusted time despite later outcome logging
+ok 85 - shared task completion records exact pause-adjusted time despite later outcome logging
+  ---
+  duration_ms: 0.846916
+  type: 'test'
+  ...
+# Subtest: event artwork uses public totals and explicit phases without private task data
+ok 86 - event artwork uses public totals and explicit phases without private task data
+  ---
+  duration_ms: 1.063917
+  type: 'test'
+  ...
+# Subtest: paused countdown and breaks retain their phase and frozen public time
+ok 87 - paused countdown and breaks retain their phase and frozen public time
+  ---
+  duration_ms: 0.112084
+  type: 'test'
+  ...
+# Subtest: arrival,setup,gathering,countdown,break andoperator paint bounded original art with no names or answer data
+ok 88 - arrival,setup,gathering,countdown,break andoperator paint bounded original art with no names or answer data
+  ---
+  duration_ms: 2.083916
+  type: 'test'
+  ...
+# Subtest: audit exporter reads committed state only, hashes exact evidence and refuses overwrite/unfrozen data
+ok 89 - audit exporter reads committed state only, hashes exact evidence and refuses overwrite/unfrozen data
+  ---
+  duration_ms: 22.622708
+  type: 'test'
+  ...
+# Subtest: six real filter work orders inspect, reject wrong choice, install and retain the completed home until Next
+ok 90 - six real filter work orders inspect, reject wrong choice, install and retain the completed home until Next
+  ---
+  duration_ms: 17.6105
+  type: 'test'
+  ...
+# Subtest: pointer cards and keyboard numbers select the same authored IDs; only confirmation sends a task
+ok 91 - pointer cards and keyboard numbers select the same authored IDs; only confirmation sends a task
+  ---
+  duration_ms: 4.210791
+  type: 'test'
+  ...
+# Subtest: pending confirmation deduplicates; pause, phase and epoch changes cannot publish a stale installed home
+ok 92 - pending confirmation deduplicates; pause, phase and epoch changes cannot publish a stale installed home
+  ---
+  duration_ms: 10.370125
+  type: 'test'
+  ...
+# Subtest: newer Help/overview focus is never hijacked by accepted installation
+ok 93 - newer Help/overview focus is never hijacked by accepted installation
+  ---
+  duration_ms: 3.77325
+  type: 'test'
+  ...
+# Subtest: 100 peers and unrelated score updates preserve selected option and deliberate companion names
+ok 94 - 100 peers and unrelated score updates preserve selected option and deliberate companion names
+  ---
+  duration_ms: 2.930666
+  type: 'test'
+  ...
+# Subtest: movement reveals the real overview; Escape returns, and arrival clears only its travel toast
+ok 95 - movement reveals the real overview; Escape returns, and arrival clears only its travel toast
+  ---
+  duration_ms: 1.860458
+  type: 'test'
+  ...
+# Subtest: number-key selection keeps E confirmation working from the now-focused choice button
+ok 96 - number-key selection keeps E confirmation working from the now-focused choice button
+  ---
+  duration_ms: 2.427166
+  type: 'test'
+  ...
+# Subtest: inspection gates all filter evidence and authored options; private answers are never read
+ok 97 - inspection gates all filter evidence and authored options; private answers are never read
+  ---
+  duration_ms: 3.62025
+  type: 'test'
+  ...
+# Subtest: six accepted repairs rebuild from saved state; wrong attempts never warm a home or inflate shared restoration
+ok 98 - six accepted repairs rebuild from saved state; wrong attempts never warm a home or inflate shared restoration
+  ---
+  duration_ms: 6.683333
+  type: 'test'
+  ...
+# Subtest: semantic card selection exposes authored IDs; pause, pending and other phases have no active hotspots
+ok 99 - semantic card selection exposes authored IDs; pause, pending and other phases have no active hotspots
+  ---
+  duration_ms: 0.657542
+  type: 'test'
+  ...
+# Subtest: solo and100person distributions retain stable at-most-three safe companion anchors and no automatic names
+ok 100 - solo and100person distributions retain stable at-most-three safe companion anchors and no automatic names
+  ---
+  duration_ms: 0.965959
+  type: 'test'
+  ...
+# Subtest: scene rendering is deterministic, read-only and keeps all authored option text available in its model
+ok 101 - scene rendering is deterministic, read-only and keeps all authored option text available in its model
+  ---
+  duration_ms: 3.803375
+  type: 'test'
+  ...
+# Subtest: Cedar direction cue appears only after public inspection and points into the cabinet
+ok 102 - Cedar direction cue appears only after public inspection and points into the cabinet
+  ---
+  duration_ms: 0.925917
+  type: 'test'
+  ...
+# Subtest: distant windows reflect bounded shared completions without repairing the current personal home
+ok 103 - distant windows reflect bounded shared completions without repairing the current personal home
+  ---
+  duration_ms: 0.704875
+  type: 'test'
+  ...
+# Subtest: unmet-target finale ending stays visible through awards and closed
+ok 104 - unmet-target finale ending stays visible through awards and closed
+  ---
+  duration_ms: 6.52425
+  type: 'test'
+  ...
+# Subtest: successful finale ending stays visible through awards and closed
+ok 105 - successful finale ending stays visible through awards and closed
+  ---
+  duration_ms: 2.177458
+  type: 'test'
+  ...
+# Subtest: results escape authoritative ending text and do not invent an absent ending
+ok 106 - results escape authoritative ending text and do not invent an absent ending
+  ---
+  duration_ms: 2.268625
+  type: 'test'
+  ...
+# Subtest: paused countdown keeps its display context and frozen authority
+ok 107 - paused countdown keeps its display context and frozen authority
+  ---
+  duration_ms: 3.150125
+  type: 'test'
+  ...
+# Subtest: paused chapter keeps its display context and frozen authority
+ok 108 - paused chapter keeps its display context and frozen authority
+  ---
+  duration_ms: 1.418584
+  type: 'test'
+  ...
+# Subtest: paused brag keeps its display context and frozen authority
+ok 109 - paused brag keeps its display context and frozen authority
+  ---
+  duration_ms: 1.331417
+  type: 'test'
+  ...
+# Subtest: paused finale keeps its display context and frozen authority
+ok 110 - paused finale keeps its display context and frozen authority
+  ---
+  duration_ms: 2.902042
+  type: 'test'
+  ...
+# Subtest: paused-phase projection only exposes supported display phases
+ok 111 - paused-phase projection only exposes supported display phases
+  ---
+  duration_ms: 0.280959
+  type: 'test'
+  ...
+# Subtest: frame labels a closed event ENDED while paused clocks remain fixed
+ok 112 - frame labels a closed event ENDED while paused clocks remain fixed
+  ---
+  duration_ms: 0.541917
+  type: 'test'
+  ...
+# Subtest: actual phase/chapter transition resets sidebar scroll without stealing modal focus; same-phase updates retain scroll
+ok 113 - actual phase/chapter transition resets sidebar scroll without stealing modal focus; same-phase updates retain scroll
+  ---
+  duration_ms: 0.913916
+  type: 'test'
+  ...
+# Subtest: frame measurement counts long visible stalls and excludes hidden/paused partial windows
+ok 114 - frame measurement counts long visible stalls and excludes hidden/paused partial windows
+  ---
+  duration_ms: 0.709292
+  type: 'test'
+  ...
+# Subtest: operator stream refreshes counts, phase, owner and participant status without a polling delay
+ok 115 - operator stream refreshes counts, phase, owner and participant status without a polling delay
+  ---
+  duration_ms: 3.2485
+  type: 'test'
+  ...
+# Subtest: all16 front walks connect the fixed collision edge to a continuous street without crossing a sign or house
+ok 116 - all16 front walks connect the fixed collision edge to a continuous street without crossing a sign or house
+  ---
+  duration_ms: 2.752625
+  type: 'test'
+  ...
+# Subtest: all three actual tree variants and16 yard props fit their reserved bounds and avoid roads, signs and walks
+ok 117 - all three actual tree variants and16 yard props fit their reserved bounds and avoid roads, signs and walks
+  ---
+  duration_ms: 4.827917
+  type: 'test'
+  ...
+# Subtest: actual final paint preserves every front-walk centerline and threshold above foundations for all restoration states
+ok 118 - actual final paint preserves every front-walk centerline and threshold above foundations for all restoration states
+  ---
+  duration_ms: 52.280041
+  type: 'test'
+  ...
+# Subtest: saved preexisting facade and road-intersection edits remain byte-for-byte intact
+ok 119 - saved preexisting facade and road-intersection edits remain byte-for-byte intact
+  ---
+  duration_ms: 1.863083
+  type: 'test'
+  ...
+# Subtest: SIGKILL preserves confirmed task/inventory and restart cancels pending trade after verified stale-lock recovery
+ok 120 - SIGKILL preserves confirmed task/inventory and restart cancels pending trade after verified stale-lock recovery
+  ---
+  duration_ms: 501.490375
+  type: 'test'
+  ...
+# Subtest: operator stream loss does not stop the authoritative countdown and chapter schedule
+ok 121 - operator stream loss does not stop the authoritative countdown and chapter schedule
+  ---
+  duration_ms: 734.869958
+  type: 'test'
+  ...
+# Subtest: load runner follows all spatial routes using actual speed limits and collision clipping
+ok 122 - load runner follows all spatial routes using actual speed limits and collision clipping
+  ---
+  duration_ms: 94.8035
+  type: 'test'
+  ...
+# Subtest: load runner preserves corner waypoint until reached and recovers the recorded Willow stall
+ok 123 - load runner preserves corner waypoint until reached and recovers the recorded Willow stall
+  ---
+  duration_ms: 0.695416
+  type: 'test'
+  ...
+# Subtest: routes remain traversable from actual prior-door stopping positions
+ok 124 - routes remain traversable from actual prior-door stopping positions
+  ---
+  duration_ms: 35.501458
+  type: 'test'
+  ...
+# Subtest: capacity routes include required relays, avoid broken links, and meet all three budgets
+ok 125 - capacity routes include required relays, avoid broken links, and meet all three budgets
+  ---
+  duration_ms: 1.673125
+  type: 'test'
+  ...
+# Subtest: timing artifact recomputes the exact historical percentile convention
+ok 126 - timing artifact recomputes the exact historical percentile convention
+  ---
+  duration_ms: 0.551291
+  type: 'test'
+  ...
+# Subtest: bounded raw timing coverage is explicit and secrets are excluded
+ok 127 - bounded raw timing coverage is explicit and secrets are excluded
+  ---
+  duration_ms: 0.422375
+  type: 'test'
+  ...
+# Subtest: HTTP rejected move commits due award and trade cancellation before restart
+ok 128 - HTTP rejected move commits due award and trade cancellation before restart
+  ---
+  duration_ms: 199.874459
+  type: 'test'
+  ...
+# Subtest: move uses one captured clock when time crosses deadline inside dispatch
+ok 129 - move uses one captured clock when time crosses deadline inside dispatch
+  ---
+  duration_ms: 168.380667
+  type: 'test'
+  ...
+# Subtest: failed boundary persistence rolls back award and restores clock and movement retry
+ok 130 - failed boundary persistence rolls back award and restores clock and movement retry
+  ---
+  duration_ms: 161.033583
+  type: 'test'
+  ...
+# Subtest: player invitations never grant operator privileges; presentation has no secrets
+ok 131 - player invitations never grant operator privileges; presentation has no secrets
+  ---
+  duration_ms: 93.377333
+  type: 'test'
+  ...
+# Subtest: host session opens safe display without replacing host authentication
+ok 132 - host session opens safe display without replacing host authentication
+  ---
+  duration_ms: 264.453542
+  type: 'test'
+  ...
+# Subtest: explicit takeover revokes the old session and a player cannot act without its stream lease
+ok 133 - explicit takeover revokes the old session and a player cannot act without its stream lease
+  ---
+  duration_ms: 29.793875
+  type: 'test'
+  ...
+# Subtest: operators can distinguish unjoined, connected, and reconnecting participants
+ok 134 - operators can distinguish unjoined, connected, and reconnecting participants
+  ---
+  duration_ms: 25.264084
+  type: 'test'
+  ...
+# Subtest: mutation endpoints reject cross-origin, non-JSON, and oversized requests
+ok 135 - mutation endpoints reject cross-origin, non-JSON, and oversized requests
+  ---
+  duration_ms: 14.159083
+  type: 'test'
+  ...
+# Subtest: invitation identity and committed state survive process reconstruction
+ok 136 - invitation identity and committed state survive process reconstruction
+  ---
+  duration_ms: 79.993958
+  type: 'test'
+  ...
+# Subtest: database ownership prevents a second server and roster mutation freezes at event start
+ok 137 - database ownership prevents a second server and roster mutation freezes at event start
+  ---
+  duration_ms: 70.444083
+  type: 'test'
+  ...
+# Subtest: mixed valid and invalid queued actions preserve independent outcomes across restart
+ok 138 - mixed valid and invalid queued actions preserve independent outcomes across restart
+  ---
+  duration_ms: 64.9385
+  type: 'test'
+  ...
+# Subtest: batch persistence failure rejects accepted commands and restores state and retry keys
+ok 139 - batch persistence failure rejects accepted commands and restores state and retry keys
+  ---
+  duration_ms: 36.055458
+  type: 'test'
+  ...
+# Subtest: production credentials separate two operators from the read-only display
+ok 140 - production credentials separate two operators from the read-only display
+  ---
+  duration_ms: 0.438709
+  type: 'test'
+  ...
+# Subtest: projection order survives equal clocks and stale movement cannot reverse authority across reconnect
+ok 141 - projection order survives equal clocks and stale movement cannot reverse authority across reconnect
+  ---
+  duration_ms: 53.681083
+  type: 'test'
+  ...
+# Subtest: older insect-enabling inputs cannot overwrite replacement, and failed commits preserve settings retries
+ok 142 - older insect-enabling inputs cannot overwrite replacement, and failed commits preserve settings retries
+  ---
+  duration_ms: 121.582292
+  type: 'test'
+  ...
+# Subtest: cross-role login preserves the original cookie, authority, and live player lease
+ok 143 - cross-role login preserves the original cookie, authority, and live player lease
+  ---
+  duration_ms: 82.210916
+  type: 'test'
+  ...
+# Subtest: device policy blocks representative mobile signals while preserving touchscreen laptops
+ok 144 - device policy blocks representative mobile signals while preserving touchscreen laptops
+  ---
+  duration_ms: 0.504292
+  type: 'test'
+  ...
+# Subtest: unavailable or corrupt preference storage does not crash entry
+ok 145 - unavailable or corrupt preference storage does not crash entry
+  ---
+  duration_ms: 0.334375
+  type: 'test'
+  ...
+# Subtest: text size and sound settings survive the client/server conversion and key conflicts are rejected
+ok 146 - text size and sound settings survive the client/server conversion and key conflicts are rejected
+  ---
+  duration_ms: 0.142833
+  type: 'test'
+  ...
+# Subtest: desktop-UA iPad remains unsupported when a trackpad is the primary pointer
+ok 147 - desktop-UA iPad remains unsupported when a trackpad is the primary pointer
+  ---
+  duration_ms: 0.053334
+  type: 'test'
+  ...
+# Subtest: late-player untouched prior chapters remain visibly unplayed and zero despite allocated reserves
+ok 148 - late-player untouched prior chapters remain visibly unplayed and zero despite allocated reserves
+  ---
+  duration_ms: 3.909542
+  type: 'test'
+  ...
+# Subtest: partial records include zero-score learning, secrets, attempts, inspections, assistance and loaded cargo
+ok 149 - partial records include zero-score learning, secrets, attempts, inspections, assistance and loaded cargo
+  ---
+  duration_ms: 4.743708
+  type: 'test'
+  ...
+# Subtest: completed and skipped chapters report saved scores without granting completion or counting excluded scores
+ok 150 - completed and skipped chapters report saved scores without granting completion or counting excluded scores
+  ---
+  duration_ms: 0.580917
+  type: 'test'
+  ...
+# Subtest: current, future, countdown and paused/finished chapter labels remain distinct
+ok 151 - current, future, countdown and paused/finished chapter labels remain distinct
+  ---
+  duration_ms: 1.961916
+  type: 'test'
+  ...
+# Subtest: actual Map rendering exposes history in button text and preserves current-district navigation
+not ok 152 - actual Map rendering exposes history in button text and preserves current-district navigation
+  ---
+  duration_ms: 2.126667
+  type: 'test'
+  location: '/Users/jgibbs/Code/second-nature-trail/test/map-history.test.mjs:59:1'
+  failureType: 'testCodeFailure'
+  error: 'holder.replaceChildren is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    renderMapDistricts (evalmachine.<anonymous>:12:10)
+    map (evalmachine.<anonymous>:7:3)
+    evalmachine.<anonymous>:1:1
+    Script.runInContext (node:vm:149:12)
+    Object.runInContext (node:vm:301:6)
+    TestContext.<anonymous> (file:///Users/jgibbs/Code/second-nature-trail/test/map-history.test.mjs:81:6)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1397:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+    Test.postRun (node:internal/test_runner/test:1537:19)
+  ...
+# Subtest: saved personal delivery fills the resident supply crate; other neighbors cannot claim it
+ok 153 - saved personal delivery fills the resident supply crate; other neighbors cannot claim it
+  ---
+  duration_ms: 1.934958
+  type: 'test'
+  ...
+# Subtest: bounded HTTP/SSE scenario performs actual cargo choices and preserves every peer projection
+not ok 154 - bounded HTTP/SSE scenario performs actual cargo choices and preserves every peer projection
+  ---
+  duration_ms: 19404.451875
+  type: 'test'
+  location: '/Users/jgibbs/Code/second-nature-trail/test/move-day-review.test.mjs:30:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+
+    37 !== 36
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 36
+  actual: 37
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/jgibbs/Code/second-nature-trail/test/move-day-review.test.mjs:39:57)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1404:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: visual review reserves one human identity; real peers can move between crowd arrangements without scoring
+ok 155 - visual review reserves one human identity; real peers can move between crowd arrangements without scoring
+  ---
+  duration_ms: 18368.341167
+  type: 'test'
+  ...
+# Subtest: 100 peers at square, depot, or spread remain bounded to nearby stable safe companions; names require deliberate selection
+ok 156 - 100 peers at square, depot, or spread remain bounded to nearby stable safe companions; names require deliberate selection
+  ---
+  duration_ms: 21.783916
+  type: 'test'
+  ...
+# Subtest: personal saved delivery warms one home before shared contribution; three trips contribute exactly one of100
+ok 157 - personal saved delivery warms one home before shared contribution; three trips contribute exactly one of100
+  ---
+  duration_ms: 18.780542
+  type: 'test'
+  ...
+# Subtest: retained paused stage is visible but no scoring hotspot is available, and other chapters/lobby are unavailable
+ok 158 - retained paused stage is visible but no scoring hotspot is available, and other chapters/lobby are unavailable
+  ---
+  duration_ms: 0.632292
+  type: 'test'
+  ...
+# Subtest: cart movement uses supplied public positions/checkpoints, not clock or peer motion, and stays on its chosen scene route
+ok 159 - cart movement uses supplied public positions/checkpoints, not clock or peer motion, and stays on its chosen scene route
+  ---
+  duration_ms: 1.995625
+  type: 'test'
+  ...
+# Subtest: roads form two connected, visibly different silhouettes on one pixel grid and meet both entrances
+ok 160 - roads form two connected, visibly different silhouettes on one pixel grid and meet both entrances
+  ---
+  duration_ms: 6.324125
+  type: 'test'
+  ...
+# Subtest: scene consumes only public stage/presence/restoration facts and leaves private question fields unread
+ok 161 - scene consumes only public stage/presence/restoration facts and leaves private question fields unread
+  ---
+  duration_ms: 0.686958
+  type: 'test'
+  ...
+# Subtest: one stage-specific next marker follows the chosen crossing or delivery while the own cart stays identified
+ok 162 - one stage-specific next marker follows the chosen crossing or delivery while the own cart stays identified
+  ---
+  duration_ms: 1.145792
+  type: 'test'
+  ...
+# Subtest: actual scenery paint leaves both route surfaces continuous with no tree, sign or house overpaint
+ok 163 - actual scenery paint leaves both route surfaces continuous with no tree, sign or house overpaint
+  ---
+  duration_ms: 32.657041
+  type: 'test'
+  ...
+# Subtest: focused cargo choices and journal use accepted actions and prevent double confirmation
+ok 164 - focused cargo choices and journal use accepted actions and prevent double confirmation
+  ---
+  duration_ms: 7.085959
+  type: 'test'
+  ...
+# Subtest: peer movement and joins preserve inline selection and keyboard focus
+ok 165 - peer movement and joins preserve inline selection and keyboard focus
+  ---
+  duration_ms: 1.716042
+  type: 'test'
+  ...
+# Subtest: an accepted action cannot reopen focused view or steal a notes dialog focus
+ok 166 - an accepted action cannot reopen focused view or steal a notes dialog focus
+  ---
+  duration_ms: 2.928875
+  type: 'test'
+  ...
+# Subtest: paused play rejects inline submissions and epoch replacement rejects pending journal
+ok 167 - paused play rejects inline submissions and epoch replacement rejects pending journal
+  ---
+  duration_ms: 2.340458
+  type: 'test'
+  ...
+# Subtest: scene route hotspots select a choice without treating picture coordinates as world movement
+ok 168 - scene route hotspots select a choice without treating picture coordinates as world movement
+  ---
+  duration_ms: 2.604833
+  type: 'test'
+  ...
+# Subtest: three focused deliveries keep accepted route, score and personal completion authoritative
+ok 169 - three focused deliveries keep accepted route, score and personal completion authoritative
+  ---
+  duration_ms: 11.212917
+  type: 'test'
+  ...
+# Subtest: nearby roster changes update companion controls without resetting cargo choice
+ok 170 - nearby roster changes update companion controls without resetting cargo choice
+  ---
+  duration_ms: 1.543833
+  type: 'test'
+  ...
+# Subtest: free movement switches to the real overview and Escape restores the focused scene
+ok 171 - free movement switches to the real overview and Escape restores the focused scene
+  ---
+  duration_ms: 1.307
+  type: 'test'
+  ...
+# Subtest: a task response projected into a later phase cannot publish an active-stage journal
+ok 172 - a task response projected into a later phase cannot publish an active-stage journal
+  ---
+  duration_ms: 1.350708
+  type: 'test'
+  ...
+# Subtest: accepted inline confirmation restores intent when DOM replacement drops focus to the page
+ok 173 - accepted inline confirmation restores intent when DOM replacement drops focus to the page
+  ---
+  duration_ms: 1.6755
+  type: 'test'
+  ...
+# Subtest: Safari-style pointer activation without button focus still announces its accepted journal
+ok 174 - Safari-style pointer activation without button focus still announces its accepted journal
+  ---
+  duration_ms: 1.427917
+  type: 'test'
+  ...
+# Subtest: a shared district completion preserves the focused journal and accepted local selection
+ok 175 - a shared district completion preserves the focused journal and accepted local selection
+  ---
+  duration_ms: 2.433167
+  type: 'test'
+  ...
+# Subtest: first arrival and crossing are durable before success; failed arrival commit rolls back and same sequence retries; restart keeps repair journal and deduplication
+ok 176 - first arrival and crossing are durable before success; failed arrival commit rolls back and same sequence retries; restart keeps repair journal and deduplication
+  ---
+  duration_ms: 258.625042
+  type: 'test'
+  ...
+# Subtest: personal destination arrivals require accepted physical movement, never a click, snapshot load, rescue or team completion
+ok 177 - personal destination arrivals require accepted physical movement, never a click, snapshot load, rescue or team completion
+  ---
+  duration_ms: 13.188416
+  type: 'test'
+  ...
+# Subtest: visits are first-arrival records per destination and successful physical interactions can establish a legacy visit
+ok 178 - visits are first-arrival records per destination and successful physical interactions can establish a legacy visit
+  ---
+  duration_ms: 7.360625
+  type: 'test'
+  ...
+# Subtest: quarter-chance draw matches independent HMAC bucket and differs by trip without consuming mutable randomness
+ok 179 - quarter-chance draw matches independent HMAC bucket and differs by trip without consuming mutable randomness
+  ---
+  duration_ms: 2.096417
+  type: 'test'
+  ...
+# Subtest: shortcut normal crossing is checked once, survives retry/restart, and preserves published cargo points
+ok 180 - shortcut normal crossing is checked once, survives retry/restart, and preserves published cargo points
+  ---
+  duration_ms: 9.225625
+  type: 'test'
+  ...
+# Subtest: shortcut unlucky crossing is checked once, survives retry/restart, and preserves published cargo points
+ok 181 - shortcut unlucky crossing is checked once, survives retry/restart, and preserves published cargo points
+  ---
+  duration_ms: 6.742125
+  type: 'test'
+  ...
+# Subtest: paved crossing never triggers a wheel incident even for an unlucky identity
+ok 182 - paved crossing never triggers a wheel incident even for an unlucky identity
+  ---
+  duration_ms: 4.863708
+  type: 'test'
+  ...
+# Subtest: arrival status never infers a visit from completed work, current position, shared repair, or malformed legacy records
+ok 183 - arrival status never infers a visit from completed work, current position, shared repair, or malformed legacy records
+  ---
+  duration_ms: 0.909041
+  type: 'test'
+  ...
+# Subtest: all16 personal badge boxes clear signs, streets, front walks, trees, yard props and objective-marker areas
+ok 184 - all16 personal badge boxes clear signs, streets, front walks, trees, yard props and objective-marker areas
+  ---
+  duration_ms: 2.181833
+  type: 'test'
+  ...
+# Subtest: actual accessible Map distinguishes reached sites from objective completion and reacts to authoritative arrivals without navigation creating records
+ok 185 - actual accessible Map distinguishes reached sites from objective completion and reacts to authoritative arrivals without navigation creating records
+  ---
+  duration_ms: 7.633792
+  type: 'test'
+  ...
+# Subtest: actual unlucky repair handler keeps cargo and score unchanged while pending, blocks double submit, then persists journal and permits normal delivery
+ok 186 - actual unlucky repair handler keeps cargo and score unchanged while pending, blocks double submit, then persists journal and permits normal delivery
+  ---
+  duration_ms: 13.295875
+  type: 'test'
+  ...
+# Subtest: keyboard repair honors pause, rejected response, retry and phase change without premature wheel restoration or focus takeover
+ok 187 - keyboard repair honors pause, rejected response, retry and phase change without premature wheel restoration or focus takeover
+  ---
+  duration_ms: 6.547958
+  type: 'test'
+  ...
+# Subtest: normal shortcut and paved journeys do not invent a repair, and old in-progress deliveries restore without retroactive incidents or visits
+ok 188 - normal shortcut and paved journeys do not invent a repair, and old in-progress deliveries restore without retroactive incidents or visits
+  ---
+  duration_ms: 9.338042
+  type: 'test'
+  ...
+# Subtest: focused choice, primary and journal controls accept the remapped interact key through the actual handler
+ok 189 - focused choice, primary and journal controls accept the remapped interact key through the actual handler
+  ---
+  duration_ms: 4.034667
+  type: 'test'
+  ...
+# Subtest: actual game entry and frame send arrow/WASD movement to the draft engine without scoring
+ok 190 - actual game entry and frame send arrow/WASD movement to the draft engine without scoring
+  ---
+  duration_ms: 17.512708
+  type: 'test'
+  ...
+# Subtest: pointer practice follows the same draft movement path
+ok 191 - pointer practice follows the same draft movement path
+  ---
+  duration_ms: 2.670625
+  type: 'test'
+  ...
+# Subtest: non-play phases and pause still freeze client movement and reject engine movement
+ok 192 - non-play phases and pause still freeze client movement and reject engine movement
+  ---
+  duration_ms: 5.430708
+  type: 'test'
+  ...
+# Subtest: entry focuses the map on return but preserves intro, existing modal and presentation focus
+ok 193 - entry focuses the map on return but preserves intro, existing modal and presentation focus
+  ---
+  duration_ms: 3.526041
+  type: 'test'
+  ...
+# Subtest: read-only presentation canvas announces an illustration without movement or keyboard focus
+ok 194 - read-only presentation canvas announces an illustration without movement or keyboard focus
+  ---
+  duration_ms: 0.80575
+  type: 'test'
+  ...
+# Subtest: waiting preview remains in lobby until newline, then starts chapter6 once with its normal clock
+ok 195 - waiting preview remains in lobby until newline, then starts chapter6 once with its normal clock
+  ---
+  duration_ms: 437.802583
+  type: 'test'
+  ...
+# Subtest: immediate preview retains its previous offset behavior
+ok 196 - immediate preview retains its previous offset behavior
+  ---
+  duration_ms: 69.075666
+  type: 'test'
+  ...
+# Subtest: stdin EOF alone does not start a waiting preview
+ok 197 - stdin EOF alone does not start a waiting preview
+  ---
+  duration_ms: 99.806042
+  type: 'test'
+  ...
+# Subtest: late-event fixture retains captured history and labels reconstructed state without mutating evidence
+ok 198 - late-event fixture retains captured history and labels reconstructed state without mutating evidence
+  ---
+  duration_ms: 5.301292
+  type: 'test'
+  ...
+# Subtest: small synthetic profile exercises durable routing with two operators/display and reports measured stages
+ok 199 - small synthetic profile exercises durable routing with two operators/display and reports measured stages
+  ---
+  duration_ms: 398.816083
+  type: 'test'
+  ...
+# Subtest: delayed SSE cannot rewind a corner already reached and removed from a path
+ok 200 - delayed SSE cannot rewind a corner already reached and removed from a path
+  ---
+  duration_ms: 0.963834
+  type: 'test'
+  ...
+# Subtest: equal wall times do not roll back committed progress and a patch retains shared fields
+ok 201 - equal wall times do not roll back committed progress and a patch retains shared fields
+  ---
+  duration_ms: 0.136416
+  type: 'test'
+  ...
+# Subtest: reversed movement acknowledgments cannot rewind position
+ok 202 - reversed movement acknowledgments cannot rewind position
+  ---
+  duration_ms: 0.477459
+  type: 'test'
+  ...
+# Subtest: frequent movement cannot starve full-view peer and phase refreshes
+ok 203 - frequent movement cannot starve full-view peer and phase refreshes
+  ---
+  duration_ms: 0.165125
+  type: 'test'
+  ...
+# Subtest: epoch changes require an authorized full bootstrap and reject late old HTTP
+ok 204 - epoch changes require an authorized full bootstrap and reject late old HTTP
+  ---
+  duration_ms: 0.112292
+  type: 'test'
+  ...
+# Subtest: unversioned input and duplicates are rejected without mutation
+ok 205 - unversioned input and duplicates are rejected without mutation
+  ---
+  duration_ms: 0.161208
+  type: 'test'
+  ...
+# Subtest: all sixteen first-correct answers show one completed result and retain list credit
+ok 206 - all sixteen first-correct answers show one completed result and retain list credit
+  ---
+  duration_ms: 10.538583
+  type: 'test'
+  ...
+# Subtest: wrong first answer followed by correct retry remains zero and explains both outcomes visibly
+ok 207 - wrong first answer followed by correct retry remains zero and explains both outcomes visibly
+  ---
+  duration_ms: 0.973334
+  type: 'test'
+  ...
+# Subtest: selection is reset per encounter and an old chapter confirmation cannot score the next chapter
+ok 208 - selection is reset per encounter and an old chapter confirmation cannot score the next chapter
+  ---
+  duration_ms: 0.71825
+  type: 'test'
+  ...
+# Subtest: earned encounters stay complete on review with focused Next then Back actions and no answering controls
+ok 209 - earned encounters stay complete on review with focused Next then Back actions and no answering controls
+  ---
+  duration_ms: 1.68
+  type: 'test'
+  ...
+# Subtest: shared restoration follows completed objectives against the fixed server target
+ok 210 - shared restoration follows completed objectives against the fixed server target
+  ---
+  duration_ms: 0.671625
+  type: 'test'
+  ...
+# Subtest: archived review preserves actual fifteen awards, orders presentation projections, and rejects every mutation
+ok 211 - archived review preserves actual fifteen awards, orders presentation projections, and rejects every mutation
+  ---
+  duration_ms: 543.560917
+  type: 'test'
+  ...
+# Subtest: paired local review events preserve progress, use normal countdown/advances and isolate browser identities
+ok 212 - paired local review events preserve progress, use normal countdown/advances and isolate browser identities
+  ---
+  duration_ms: 21035.492125
+  type: 'test'
+  ...
+# Subtest: crowd Play connects 99 neighbors after human setup for finale, chapter and practice lobby
+ok 213 - crowd Play connects 99 neighbors after human setup for finale, chapter and practice lobby
+  ---
+  duration_ms: 33683.851
+  type: 'test'
+  ...
+# Subtest: manual pause cancels auto-play even when its state read was already pending
+ok 214 - manual pause cancels auto-play even when its state read was already pending
+  ---
+  duration_ms: 0.421542
+  type: 'test'
+  ...
+# Subtest: auto-play requires both human setup and the live lease, then passes its cancellation guard to the host queue
+ok 215 - auto-play requires both human setup and the live lease, then passes its cancellation guard to the host queue
+  ---
+  duration_ms: 0.107667
+  type: 'test'
+  ...
+# Subtest: Pause waits for a dispatched automatic Resume before checking whether the event is already paused
+ok 216 - Pause waits for a dispatched automatic Resume before checking whether the event is already paused
+  ---
+  duration_ms: 0.902083
+  type: 'test'
+  ...
+# Subtest: finale launch waits for the complete connected roster and uses normal phase advances
+ok 217 - finale launch waits for the complete connected roster and uses normal phase advances
+  ---
+  duration_ms: 0.520166
+  type: 'test'
+  ...
+# Subtest: cancelled or incomplete finale attendance cannot freeze scoring
+ok 218 - cancelled or incomplete finale attendance cannot freeze scoring
+  ---
+  duration_ms: 0.392458
+  type: 'test'
+  ...
+# Subtest: finale attendance race reports the actual frozen target without refreezing
+ok 219 - finale attendance race reports the actual frozen target without refreezing
+  ---
+  duration_ms: 0.16975
+  type: 'test'
+  ...
+# Subtest: route preview totals undirected costs and exposes required relays and broken links
+ok 220 - route preview totals undirected costs and exposes required relays and broken links
+  ---
+  duration_ms: 0.66825
+  type: 'test'
+  ...
+# Subtest: replacement selected offline survives a new client read before server persistence
+ok 221 - replacement selected offline survives a new client read before server persistence
+  ---
+  duration_ms: 0.378334
+  type: 'test'
+  ...
+# Subtest: only an explicit successful enabling choice clears persistent replacement
+ok 222 - only an explicit successful enabling choice clears persistent replacement
+  ---
+  duration_ms: 0.05775
+  type: 'test'
+  ...
+# Subtest: unavailable storage defaults safely without crashing
+ok 223 - unavailable storage defaults safely without crashing
+  ---
+  duration_ms: 0.093583
+  type: 'test'
+  ...
+# Subtest: all road and shoulder pixels inside playable world bounds are traversable with unchanged collision geometry
+ok 224 - all road and shoulder pixels inside playable world bounds are traversable with unchanged collision geometry
+  ---
+  duration_ms: 1.124042
+  type: 'test'
+  ...
+# Subtest: actual plots, roofs, signs, trees, projects and repairs never repaint streets in any active district or recovery state
+not ok 225 - actual plots, roofs, signs, trees, projects and repairs never repaint streets in any active district or recovery state
+  ---
+  duration_ms: 1.875541
+  type: 'test'
+  location: '/Users/jgibbs/Code/second-nature-trail/test/scenery.test.mjs:211:1'
+  failureType: 'testCodeFailure'
+  error: 'destinationVisit is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    evalmachine.<anonymous>:344:23
+    Array.forEach (<anonymous>)
+    evalmachine.<anonymous>:335:12
+    Array.forEach (<anonymous>)
+    Object.drawMap (evalmachine.<anonymous>:283:9)
+    TestContext.<anonymous> (file:///Users/jgibbs/Code/second-nature-trail/test/scenery.test.mjs:215:17)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1397:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+    Test.postRun (node:internal/test_runner/test:1537:19)
+  ...
+# Subtest: all one hundred individual finale outlines clear roads and destination labels including stroke width
+not ok 226 - all one hundred individual finale outlines clear roads and destination labels including stroke width
+  ---
+  duration_ms: 0.734083
+  type: 'test'
+  location: '/Users/jgibbs/Code/second-nature-trail/test/scenery.test.mjs:227:1'
+  failureType: 'testCodeFailure'
+  error: 'destinationVisit is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    evalmachine.<anonymous>:344:23
+    Array.forEach (<anonymous>)
+    evalmachine.<anonymous>:335:12
+    Array.forEach (<anonymous>)
+    Object.drawMap (evalmachine.<anonymous>:283:9)
+    TestContext.<anonymous> (file:///Users/jgibbs/Code/second-nature-trail/test/scenery.test.mjs:231:15)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1397:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+    Test.postRun (node:internal/test_runner/test:1537:19)
+  ...
+# Subtest: actual tree canopy, trunk and shadow clear every home, entrance and street
+ok 227 - actual tree canopy, trunk and shadow clear every home, entrance and street
+  ---
+  duration_ms: 7.143
+  type: 'test'
+  ...
+# Subtest: all sixteen service facades retain their footprint and leave doors unobscured
+ok 228 - all sixteen service facades retain their footprint and leave doors unobscured
+  ---
+  duration_ms: 27.272167
+  type: 'test'
+  ...
+# Subtest: destination signs stay readable in every active district and recovery state
+not ok 229 - destination signs stay readable in every active district and recovery state
+  ---
+  duration_ms: 0.807958
+  type: 'test'
+  location: '/Users/jgibbs/Code/second-nature-trail/test/scenery.test.mjs:323:1'
+  failureType: 'testCodeFailure'
+  error: 'destinationVisit is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    evalmachine.<anonymous>:344:23
+    Array.forEach (<anonymous>)
+    evalmachine.<anonymous>:335:12
+    Array.forEach (<anonymous>)
+    Object.drawMap (evalmachine.<anonymous>:283:9)
+    TestContext.<anonymous> (file:///Users/jgibbs/Code/second-nature-trail/test/scenery.test.mjs:328:17)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1397:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+    Test.postRun (node:internal/test_runner/test:1537:19)
+  ...
+# Subtest: plaza tree beds clear its fountain, benches, reward projects, signs and streets
+ok 230 - plaza tree beds clear its fountain, benches, reward projects, signs and streets
+  ---
+  duration_ms: 1.803958
+  type: 'test'
+  ...
+# Subtest: one completed objective cannot paint a twenty-participant district as fully restored
+not ok 231 - one completed objective cannot paint a twenty-participant district as fully restored
+  ---
+  duration_ms: 0.647209
+  type: 'test'
+  location: '/Users/jgibbs/Code/second-nature-trail/test/scenery.test.mjs:367:1'
+  failureType: 'testCodeFailure'
+  error: 'destinationVisit is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    evalmachine.<anonymous>:344:23
+    Array.forEach (<anonymous>)
+    evalmachine.<anonymous>:335:12
+    Array.forEach (<anonymous>)
+    Object.drawMap (evalmachine.<anonymous>:283:9)
+    TestContext.<anonymous> (file:///Users/jgibbs/Code/second-nature-trail/test/scenery.test.mjs:383:15)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1397:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+    Test.postRun (node:internal/test_runner/test:1537:19)
+  ...
+# Subtest: immutable cargo crossings and their between-home corridor remain walkable
+not ok 232 - immutable cargo crossings and their between-home corridor remain walkable
+  ---
+  duration_ms: 0.828833
+  type: 'test'
+  location: '/Users/jgibbs/Code/second-nature-trail/test/scenery.test.mjs:397:1'
+  failureType: 'testCodeFailure'
+  error: 'destinationVisit is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    evalmachine.<anonymous>:344:23
+    Array.forEach (<anonymous>)
+    evalmachine.<anonymous>:335:12
+    Array.forEach (<anonymous>)
+    Object.drawMap (evalmachine.<anonymous>:283:9)
+    TestContext.<anonymous> (file:///Users/jgibbs/Code/second-nature-trail/test/scenery.test.mjs:410:13)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1397:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+    Test.postRun (node:internal/test_runner/test:1537:19)
+  ...
+# Subtest: timer skips idle and paused serialization but commits each due boundary once
+ok 233 - timer skips idle and paused serialization but commits each due boundary once
+  ---
+  duration_ms: 1144.397542
+  type: 'test'
+  ...
+# Subtest: shutdown bounds idle/partial sockets, shares completion, closes SSE and preserves committed score on disk
+ok 234 - shutdown bounds idle/partial sockets, shares completion, closes SSE and preserves committed score on disk
+  ---
+  duration_ms: 1092.600833
+  type: 'test'
+  ...
+# Subtest: shutdown also terminates a partial request whose body never arrives
+ok 235 - shutdown also terminates a partial request whose body never arrives
+  ---
+  duration_ms: 1010.317208
+  type: 'test'
+  ...
+# Subtest: shutdown flushes an already queued command durably before its HTTP success
+ok 236 - shutdown flushes an already queued command durably before its HTTP success
+  ---
+  duration_ms: 1027.028125
+  type: 'test'
+  ...
+# Subtest: actual audio controls stay silent by default and mix independent music/effects volumes without duplicate timers
+ok 237 - actual audio controls stay silent by default and mix independent music/effects volumes without duplicate timers
+  ---
+  duration_ms: 1.086292
+  type: 'test'
+  ...
+# Subtest: missing or asynchronously rejected audio permission cannot reject gameplay
+ok 238 - missing or asynchronously rejected audio permission cannot reject gameplay
+  ---
+  duration_ms: 1.422083
+  type: 'test'
+  ...
+# Subtest: all16 learning answers wrong-first→correct practice preserve zero credit and completing feedback
+ok 239 - all16 learning answers wrong-first→correct practice preserve zero credit and completing feedback
+  ---
+  duration_ms: 33.905083
+  type: 'test'
+  ...
+# Subtest: quiz,secret,mystery,trade callbacks cannot replace a newer dialog and submit once while pending
+ok 240 - quiz,secret,mystery,trade callbacks cannot replace a newer dialog and submit once while pending
+  ---
+  duration_ms: 12.861875
+  type: 'test'
+  ...
+# Subtest: all8 actual secret controls collect once; pointer mystery rejects incomplete/wrong then saves all8
+ok 241 - all8 actual secret controls collect once; pointer mystery rejects incomplete/wrong then saves all8
+  ---
+  duration_ms: 7.67475
+  type: 'test'
+  ...
+# Subtest: chapter2: actual six inspected sites, wrong retry, all correct decisions and optional challenge
+ok 242 - chapter2: actual six inspected sites, wrong retry, all correct decisions and optional challenge
+  ---
+  duration_ms: 6.617375
+  type: 'test'
+  ...
+# Subtest: chapter3: actual six inspected sites, wrong retry, all correct decisions and optional challenge
+ok 243 - chapter3: actual six inspected sites, wrong retry, all correct decisions and optional challenge
+  ---
+  duration_ms: 6.011958
+  type: 'test'
+  ...
+# Subtest: chapter4: actual six inspected sites, wrong retry, all correct decisions and optional challenge
+ok 244 - chapter4: actual six inspected sites, wrong retry, all correct decisions and optional challenge
+  ---
+  duration_ms: 5.081375
+  type: 'test'
+  ...
+# Subtest: chapter7: actual six inspected sites, wrong retry, all correct decisions and optional challenge
+ok 245 - chapter7: actual six inspected sites, wrong retry, all correct decisions and optional challenge
+  ---
+  duration_ms: 6.149375
+  type: 'test'
+  ...
+# Subtest: budget controls disable early cycles, keep pending lock, then record all three on-time payments
+ok 246 - budget controls disable early cycles, keep pending lock, then record all three on-time payments
+  ---
+  duration_ms: 2.894042
+  type: 'test'
+  ...
+# Subtest: targeting manual: all18 deliberate hits over3 sites; no early, repeat, unselected or paused action
+ok 247 - targeting manual: all18 deliberate hits over3 sites; no early, repeat, unselected or paused action
+  ---
+  duration_ms: 12.016667
+  type: 'test'
+  ...
+# Subtest: targeting selected-auto: all18 deliberate hits over3 sites; no early, repeat, unselected or paused action
+ok 248 - targeting selected-auto: all18 deliberate hits over3 sites; no early, repeat, unselected or paused action
+  ---
+  duration_ms: 11.868708
+  type: 'test'
+  ...
+# Subtest: routing actual node controls preserve selected focus, reject broken path, reset and finish three constrained homes
+ok 249 - routing actual node controls preserve selected focus, reject broken path, reset and finish three constrained homes
+  ---
+  duration_ms: 4.794833
+  type: 'test'
+  ...
+# Subtest: Rewards shop uses earned tokens only once per project, blocks unaffordable purchases and adds no score
+ok 250 - Rewards shop uses earned tokens only once per project, blocks unaffordable purchases and adds no score
+  ---
+  duration_ms: 5.2155
+  type: 'test'
+  ...
+# Subtest: all8 optional challenge controls enforce main completion, preserve wrong retry and save exactly one bonus
+ok 251 - all8 optional challenge controls enforce main completion, preserve wrong retry and save exactly one bonus
+  ---
+  duration_ms: 17.80825
+  type: 'test'
+  ...
+# Subtest: trade UI uses two confirmations, refreshes live inventory, and cancellation prevents exchange
+ok 252 - trade UI uses two confirmations, refreshes live inventory, and cancellation prevents exchange
+  ---
+  duration_ms: 3.013958
+  type: 'test'
+  ...
+# Subtest: help/emote/assist UI registers the intended peer and only completed recipient task grants bonus
+ok 253 - help/emote/assist UI registers the intended peer and only completed recipient task grants bonus
+  ---
+  duration_ms: 6.215542
+  type: 'test'
+  ...
+# Subtest: practice callbacks cannot close a newly opened dialog or continue its request chain
+ok 254 - practice callbacks cannot close a newly opened dialog or continue its request chain
+  ---
+  duration_ms: 6.794167
+  type: 'test'
+  ...
+# Subtest: an old request error cannot overwrite a newer Help dialog
+ok 255 - an old request error cannot overwrite a newer Help dialog
+  ---
+  duration_ms: 1.20375
+  type: 'test'
+  ...
+# Subtest: actual Settings persists all text sizes, volumes, control preference and eight remapped keys; invalid keys never send
+ok 256 - actual Settings persists all text sizes, volumes, control preference and eight remapped keys; invalid keys never send
+  ---
+  duration_ms: 2.45575
+  type: 'test'
+  ...
+# Subtest: recipient sees active preset emotes in Neighbors without focus churn; expiry and replacement clear accurately
+ok 257 - recipient sees active preset emotes in Neighbors without focus churn; expiry and replacement clear accurately
+  ---
+  duration_ms: 1.683417
+  type: 'test'
+  ...
+# Subtest: a delayed accepted assist cannot put feedback in a newly opened Help dialog
+ok 258 - a delayed accepted assist cannot put feedback in a newly opened Help dialog
+  ---
+  duration_ms: 1.47775
+  type: 'test'
+  ...
+# Subtest: failed practice help remains retryable and does not submit or complete the tutorial step
+ok 259 - failed practice help remains retryable and does not submit or complete the tutorial step
+  ---
+  duration_ms: 1.42875
+  type: 'test'
+  ...
+# Subtest: a100-person roster puts outgoing/incoming trade confirmations first with friendly escaped names and unchanged quantities
+ok 260 - a100-person roster puts outgoing/incoming trade confirmations first with friendly escaped names and unchanged quantities
+  ---
+  duration_ms: 18.07975
+  type: 'test'
+  ...
+# Subtest: actual overview paints at most self plus3 nearby peers across all8chapters, lobby, breaks, finale and results
+not ok 261 - actual overview paints at most self plus3 nearby peers across all8chapters, lobby, breaks, finale and results
+  ---
+  duration_ms: 9.042792
+  type: 'test'
+  location: '/Users/jgibbs/Code/second-nature-trail/test/simulation-crowd-render.test.mjs:127:1'
+  failureType: 'testCodeFailure'
+  error: 'destinationVisit is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    evalmachine.<anonymous>:344:23
+    Array.forEach (<anonymous>)
+    evalmachine.<anonymous>:335:12
+    Array.forEach (<anonymous>)
+    Object.drawMap (evalmachine.<anonymous>:283:9)
+    render (file:///Users/jgibbs/Code/second-nature-trail/test/simulation-crowd-render.test.mjs:123:11)
+    TestContext.<anonymous> (file:///Users/jgibbs/Code/second-nature-trail/test/simulation-crowd-render.test.mjs:142:19)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1397:25)
+    Test.start (node:internal/test_runner/test:1257:17)
+  ...
+# Subtest: actual read-only display has no fictitious self and at most4 stable representatives for100players
+ok 262 - actual read-only display has no fictitious self and at most4 stable representatives for100players
+  ---
+  duration_ms: 80.589875
+  type: 'test'
+  ...
+# Subtest: nearby visibility excludes offline/unset peers and protects both task approaches without hiding the roster
+ok 263 - nearby visibility excludes offline/unset peers and protects both task approaches without hiding the roster
+  ---
+  duration_ms: 0.222625
+  type: 'test'
+  ...
+# Subtest: End scoring cannot freeze or restart a paused countdown
+ok 264 - End scoring cannot freeze or restart a paused countdown
+  ---
+  duration_ms: 2.257667
+  type: 'test'
+  ...
+# Subtest: End scoring cannot freeze or restart a paused finale
+ok 265 - End scoring cannot freeze or restart a paused finale
+  ---
+  duration_ms: 0.888125
+  type: 'test'
+  ...
+# Subtest: actual host controls require confirmation and reason, cancel countdown, retain pause time and allow backup recovery
+ok 266 - actual host controls require confirmation and reason, cancel countdown, retain pause time and allow backup recovery
+  ---
+  duration_ms: 15.481375
+  type: 'test'
+  ...
+# Subtest: actual rescue, skip, early ending, export and close preserve player progress and frozen results
+ok 267 - actual rescue, skip, early ending, export and close preserve player progress and frozen results
+  ---
+  duration_ms: 6.442833
+  type: 'test'
+  ...
+# Subtest: operator reconnect blocks commands and rendered errors/broadcasts do not replace authority or escape HTML
+ok 268 - operator reconnect blocks commands and rendered errors/broadcasts do not replace authority or escape HTML
+  ---
+  duration_ms: 1.776208
+  type: 'test'
+  ...
+# Subtest: a replaced operator connection cannot publish an old request failure into the current view
+ok 269 - a replaced operator connection cannot publish an old request failure into the current view
+  ---
+  duration_ms: 1.001
+  type: 'test'
+  ...
+# Subtest: End scoring remains available from legitimately paused chapter and break controls
+ok 270 - End scoring remains available from legitimately paused chapter and break controls
+  ---
+  duration_ms: 4.939334
+  type: 'test'
+  ...
+# Subtest: mixed HTTP event reconciles all eight earned objectives, mistakes, recovery and fifteen unique awards
+ok 271 - mixed HTTP event reconciles all eight earned objectives, mistakes, recovery and fifteen unique awards
+  ---
+  duration_ms: 27004.842834
+  type: 'test'
+  ...
+# Subtest: seeded HTTP actions preserve exact supplies, rollback, immutable answers and lifecycle snapshots
+not ok 272 - seeded HTTP actions preserve exact supplies, rollback, immutable answers and lifecycle snapshots
+  ---
+  duration_ms: 1982.797916
+  type: 'test'
+  location: '/Users/jgibbs/Code/second-nature-trail/test/simulation-properties.test.mjs:52:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+
+      assert(scorer.state.me.progress[0].complete)
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/jgibbs/Code/second-nature-trail/test/simulation-properties.test.mjs:121:9)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1404:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: actual Rescue snapshot replans a blocked final waypoint and the real client frame reaches its original destination
+ok 273 - actual Rescue snapshot replans a blocked final waypoint and the real client frame reaches its original destination
+  ---
+  duration_ms: 11.272792
+  type: 'test'
+  ...
+# Subtest: ordinary visible movement and peer-only snapshots keep the existing path object and arrival intent
+ok 274 - ordinary visible movement and peer-only snapshots keep the existing path object and arrival intent
+  ---
+  duration_ms: 1.484083
+  type: 'test'
+  ...
+# Subtest: an unreachable old destination cancels with recovery guidance, while pause still clears movement
+ok 275 - an unreachable old destination cancels with recovery guidance, while pause still clears movement
+  ---
+  duration_ms: 1.147125
+  type: 'test'
+  ...
+# Subtest: actual target canvases use replacement robots for every round without changing target IDs, warning cues or selection
+ok 276 - actual target canvases use replacement robots for every round without changing target IDs, warning cues or selection
+  ---
+  duration_ms: 8.280791
+  type: 'test'
+  ...
+# Subtest: actual accepted stale insect preference cannot paint insects under local replacement or presentation policy
+ok 277 - actual accepted stale insect preference cannot paint insects under local replacement or presentation policy
+  ---
+  duration_ms: 4.039
+  type: 'test'
+  ...
+# Subtest: open Neighbors reflects help requests, clears, joins and names while keeping the same peer action focused
+ok 278 - open Neighbors reflects help requests, clears, joins and names while keeping the same peer action focused
+  ---
+  duration_ms: 2.600375
+  type: 'test'
+  ...
+# Subtest: movement, emotes and self help do not redraw an open Neighbors panel
+ok 279 - movement, emotes and self help do not redraw an open Neighbors panel
+  ---
+  duration_ms: 0.6475
+  type: 'test'
+  ...
+# Subtest: trade refresh preserves the offer identity and does not steal focus outside the panel
+ok 280 - trade refresh preserves the offer identity and does not steal focus outside the panel
+  ---
+  duration_ms: 1.347417
+  type: 'test'
+  ...
+# Subtest: chapter change refreshes captured social actions without requiring the panel to reopen
+ok 281 - chapter change refreshes captured social actions without requiring the panel to reopen
+  ---
+  duration_ms: 0.720625
+  type: 'test'
+  ...
+# Subtest: real public projection supplies every cargo fact without consuming or confusing storage with loaded cargo
+ok 282 - real public projection supplies every cargo fact without consuming or confusing storage with loaded cargo
+  ---
+  duration_ms: 3.699916
+  type: 'test'
+  ...
+# Subtest: plan affordability includes finite separate reserves and derives all values from supplied public rules
+ok 283 - plan affordability includes finite separate reserves and derives all values from supplied public rules
+  ---
+  duration_ms: 0.409208
+  type: 'test'
+  ...
+# Subtest: real engine receipts match plan0 route0 across all stages and completion
+ok 284 - real engine receipts match plan0 route0 across all stages and completion
+  ---
+  duration_ms: 3.310917
+  type: 'test'
+  ...
+# Subtest: real engine receipts match plan0 route1 across all stages and completion
+ok 285 - real engine receipts match plan0 route1 across all stages and completion
+  ---
+  duration_ms: 2.823625
+  type: 'test'
+  ...
+# Subtest: real engine receipts match plan1 route0 across all stages and completion
+ok 286 - real engine receipts match plan1 route0 across all stages and completion
+  ---
+  duration_ms: 2.289333
+  type: 'test'
+  ...
+# Subtest: real engine receipts match plan1 route1 across all stages and completion
+ok 287 - real engine receipts match plan1 route1 across all stages and completion
+  ---
+  duration_ms: 2.456583
+  type: 'test'
+  ...
+# Subtest: real engine receipts match plan2 route0 across all stages and completion
+ok 288 - real engine receipts match plan2 route0 across all stages and completion
+  ---
+  duration_ms: 2.094792
+  type: 'test'
+  ...
+# Subtest: real engine receipts match plan2 route1 across all stages and completion
+ok 289 - real engine receipts match plan2 route1 across all stages and completion
+  ---
+  duration_ms: 2.098542
+  type: 'test'
+  ...
+# Subtest: receipt rejects nonaccepted, duplicated, stale, cross-epoch/phase/player/chapter and unexpected stage responses
+ok 290 - receipt rejects nonaccepted, duplicated, stale, cross-epoch/phase/player/chapter and unexpected stage responses
+  ---
+  duration_ms: 0.431792
+  type: 'test'
+  ...
+# Subtest: concurrent learning score is reported as observed total without attributing it to delivery
+ok 291 - concurrent learning score is reported as observed total without attributing it to delivery
+  ---
+  duration_ms: 1.141292
+  type: 'test'
+  ...
+# Subtest: concurrent trade/resource changes are not presented as an exclusive consumption receipt
+ok 292 - concurrent trade/resource changes are not presented as an exclusive consumption receipt
+  ---
+  duration_ms: 0.748458
+  type: 'test'
+  ...
+# Subtest: feedback never reads or leaks quiz, challenge or private authored answers
+ok 293 - feedback never reads or leaks quiz, challenge or private authored answers
+  ---
+  duration_ms: 0.411792
+  type: 'test'
+  ...
+# Subtest: generic spatial receipts cover evidence inspection, incorrect decisions and correct completion without answers
+ok 294 - generic spatial receipts cover evidence inspection, incorrect decisions and correct completion without answers
+  ---
+  duration_ms: 2.759583
+  type: 'test'
+  ...
+# Subtest: budget receipts use the actual recorded payment cycle for on-time and incomplete plans
+ok 295 - budget receipts use the actual recorded payment cycle for on-time and incomplete plans
+  ---
+  duration_ms: 1.122333
+  type: 'test'
+  ...
+# Subtest: routing receipts report a valid route and a failed attempt without revealing a solution
+ok 296 - routing receipts report a valid route and a failed attempt without revealing a solution
+  ---
+  duration_ms: 0.697333
+  type: 'test'
+  ...
+# Subtest: target receipts occur at site completion only, not every successful hit or miss
+ok 297 - target receipts occur at site completion only, not every successful hit or miss
+  ---
+  duration_ms: 1.015
+  type: 'test'
+  ...
+# Subtest: challenge and reward receipts use accepted outcomes and never replay completed claims
+ok 298 - challenge and reward receipts use accepted outcomes and never replay completed claims
+  ---
+  duration_ms: 0.960958
+  type: 'test'
+  ...
+# Subtest: generic receipts reject unaccepted, stale, wrong phase/epoch/task context and quiz actions
+ok 299 - generic receipts reject unaccepted, stale, wrong phase/epoch/task context and quiz actions
+  ---
+  duration_ms: 0.265875
+  type: 'test'
+  ...
+# Subtest: world fitting preserves world proportions within wide and compact viewports
+ok 300 - world fitting preserves world proportions within wide and compact viewports
+  ---
+  duration_ms: 0.4485
+  type: 'test'
+  ...
+# Subtest: actual delivery Confirm rejects repeated activation while pending and focuses its saved receipt
+ok 301 - actual delivery Confirm rejects repeated activation while pending and focuses its saved receipt
+  ---
+  duration_ms: 5.535041
+  type: 'test'
+  ...
+# Subtest: same-phase SSE preserves an action selection and an open receipt without stealing focus
+ok 302 - same-phase SSE preserves an action selection and an open receipt without stealing focus
+  ---
+  duration_ms: 1.799458
+  type: 'test'
+  ...
+# Subtest: closing or replacing a pending activity does not reopen a receipt or steal Help focus
+ok 303 - closing or replacing a pending activity does not reopen a receipt or steal Help focus
+  ---
+  duration_ms: 2.703334
+  type: 'test'
+  ...
+# Subtest: late accepted response cannot create a receipt after phase, chapter, epoch or stream changes
+ok 304 - late accepted response cannot create a receipt after phase, chapter, epoch or stream changes
+  ---
+  duration_ms: 5.481125
+  type: 'test'
+  ...
+# Subtest: receipt continuation is inert after authoritative context changes
+ok 305 - receipt continuation is inert after authoritative context changes
+  ---
+  duration_ms: 5.142834
+  type: 'test'
+  ...
+# Subtest: a new projection epoch keeps unrelated Help open and its existing focus
+ok 306 - a new projection epoch keeps unrelated Help open and its existing focus
+  ---
+  duration_ms: 1.057791
+  type: 'test'
+  ...
+# Subtest: rejected action retains selection, restores Confirm and cannot produce a saved receipt
+ok 307 - rejected action retains selection, restores Confirm and cannot produce a saved receipt
+  ---
+  duration_ms: 0.989709
+  type: 'test'
+  ...
+# Subtest: receipt outcome and details are escaped inside the stable Field report dialog
+ok 308 - receipt outcome and details are escaped inside the stable Field report dialog
+  ---
+  duration_ms: 0.840333
+  type: 'test'
+  ...
+# Subtest: newer personal SSE totals cannot be replaced by an older HTTP receipt, while peer-only updates retain it
+ok 309 - newer personal SSE totals cannot be replaced by an older HTTP receipt, while peer-only updates retain it
+  ---
+  duration_ms: 2.229042
+  type: 'test'
+  ...
+# Subtest: later personal updates preserve a historical receipt and focus while updating live supplies
+ok 310 - later personal updates preserve a historical receipt and focus while updating live supplies
+  ---
+  duration_ms: 3.176667
+  type: 'test'
+  ...
+# Subtest: actual three-trip UI loop consumes only on delivery and ends without an extra task
+ok 311 - actual three-trip UI loop consumes only on delivery and ends without an extra task
+  ---
+  duration_ms: 5.717333
+  type: 'test'
+  ...
+# Subtest: spatial encounter exposes inspected evidence and keeps wrong-decision retry at the same site
+ok 312 - spatial encounter exposes inspected evidence and keeps wrong-decision retry at the same site
+  ---
+  duration_ms: 2.2535
+  type: 'test'
+  ...
+# Subtest: optional challenge failure returns to its challenge, while success returns to the neighborhood
+ok 313 - optional challenge failure returns to its challenge, while success returns to the neighborhood
+  ---
+  duration_ms: 1.337542
+  type: 'test'
+  ...
+# Subtest: fictional payment receipt displays the recorded cycle and retained budget
+ok 314 - fictional payment receipt displays the recorded cycle and retained budget
+  ---
+  duration_ms: 1.144667
+  type: 'test'
+  ...
+# Subtest: actual draft tutorial UI completes all five practice steps and Ready without competitive changes
+ok 315 - actual draft tutorial UI completes all five practice steps and Ready without competitive changes
+  ---
+  duration_ms: 3.985875
+  type: 'test'
+  ...
+# Subtest: draft practice preserves collection/question/Ready prerequisites
+ok 316 - draft practice preserves collection/question/Ready prerequisites
+  ---
+  duration_ms: 0.755917
+  type: 'test'
+  ...
+# Subtest: actual lobby tutorial UI completes all five practice steps and Ready without competitive changes
+ok 317 - actual lobby tutorial UI completes all five practice steps and Ready without competitive changes
+  ---
+  duration_ms: 1.521375
+  type: 'test'
+  ...
+# Subtest: lobby practice preserves collection/question/Ready prerequisites
+ok 318 - lobby practice preserves collection/question/Ready prerequisites
+  ---
+  duration_ms: 1.26075
+  type: 'test'
+  ...
+# Subtest: reported draft position with guide and movement complete can collect without resetting progress
+ok 319 - reported draft position with guide and movement complete can collect without resetting progress
+  ---
+  duration_ms: 1.282792
+  type: 'test'
+  ...
+# Subtest: independent seeded tie selects known beta; used winner excluded and exhausted categories stay empty
+ok 320 - independent seeded tie selects known beta; used winner excluded and exhausted categories stay empty
+  ---
+  duration_ms: 2.37375
+  type: 'test'
+  ...
+# Subtest: chapter qualification beats a higher incomplete primary; secondary metric precedes seeded draw
+ok 321 - chapter qualification beats a higher incomplete primary; secondary metric precedes seeded draw
+  ---
+  duration_ms: 0.29375
+  type: 'test'
+  ...
+# Subtest: unranked chapter contributes no prize, quiz, discovery or aggregate score
+ok 322 - unranked chapter contributes no prize, quiz, discovery or aggregate score
+  ---
+  duration_ms: 0.157959
+  type: 'test'
+  ...
+# Subtest: mutated award, derived metric and duplicated winner cannot pass
+ok 323 - mutated award, derived metric and duplicated winner cannot pass
+  ---
+  duration_ms: 0.361958
+  type: 'test'
+  ...
+# Subtest: inventory replay validates first-transfer consumed provenance and rejects forged supplier
+ok 324 - inventory replay validates first-transfer consumed provenance and rejects forged supplier
+  ---
+  duration_ms: 0.384292
+  type: 'test'
+  ...
+# Subtest: repeated barter removes supplier eligibility
+ok 325 - repeated barter removes supplier eligibility
+  ---
+  duration_ms: 0.190334
+  type: 'test'
+  ...
+# Subtest: bound journal supplies missing mystery success and tampered binding fails closed
+ok 326 - bound journal supplies missing mystery success and tampered binding fails closed
+  ---
+  duration_ms: 2.773625
+  type: 'test'
+  ...
+# Subtest: missing request success cannot manufacture mystery evidence; accepted success cannot disappear
+ok 327 - missing request success cannot manufacture mystery evidence; accepted success cannot disappear
+  ---
+  duration_ms: 0.414375
+  type: 'test'
+  ...
+# Subtest: phase audit requires all 103 identities and 18 scheduled boundaries each
+ok 328 - phase audit requires all 103 identities and 18 scheduled boundaries each
+  ---
+  duration_ms: 6.035958
+  type: 'test'
+  ...
+# Subtest: phase audit rejects negative lag, >1s, inconsistent timestamps and shifted schedules
+ok 329 - phase audit rejects negative lag, >1s, inconsistent timestamps and shifted schedules
+  ---
+  duration_ms: 6.441375
+  type: 'test'
+  ...
+# Subtest: consumed item IDs cannot be allocated again and altered scoring outcomes are detected
+ok 330 - consumed item IDs cannot be allocated again and altered scoring outcomes are detected
+  ---
+  duration_ms: 0.442084
+  type: 'test'
+  ...
+# Subtest: legacy separate clock reads remain explicitly qualified instead of claiming exact timing
+ok 331 - legacy separate clock reads remain explicitly qualified instead of claiming exact timing
+  ---
+  duration_ms: 0.13375
+  type: 'test'
+  ...
+# Subtest: exact completion records remove legacy timing gap and reject duplicate or inconsistent durations
+ok 332 - exact completion records remove legacy timing gap and reject duplicate or inconsistent durations
+  ---
+  duration_ms: 0.8065
+  type: 'test'
+  ...
+# Subtest: clone decision classifications replay distinct penalties and preserve legacy missing-field gap
+ok 333 - clone decision classifications replay distinct penalties and preserve legacy missing-field gap
+  ---
+  duration_ms: 0.389875
+  type: 'test'
+  ...
+# Subtest: setup: replacement selection invalidates an older pending enable acknowledgment
+ok 334 - setup: replacement selection invalidates an older pending enable acknowledgment
+  ---
+  duration_ms: 1.969416
+  type: 'test'
+  ...
+# Subtest: settings: replacement selection invalidates an older pending enable acknowledgment
+ok 335 - settings: replacement selection invalidates an older pending enable acknowledgment
+  ---
+  duration_ms: 0.638334
+  type: 'test'
+  ...
+# Subtest: setup: failed enable keeps replacement
+ok 336 - setup: failed enable keeps replacement
+  ---
+  duration_ms: 0.5235
+  type: 'test'
+  ...
+# Subtest: settings: failed enable keeps replacement
+ok 337 - settings: failed enable keeps replacement
+  ---
+  duration_ms: 0.466959
+  type: 'test'
+  ...
+# Subtest: automatic replacement persistence cannot supersede an explicit pending enable
+ok 338 - automatic replacement persistence cannot supersede an explicit pending enable
+  ---
+  duration_ms: 0.508834
+  type: 'test'
+  ...
+# Subtest: settings acknowledgement saves latest intent without closing a newer dialog
+ok 339 - settings acknowledgement saves latest intent without closing a newer dialog
+  ---
+  duration_ms: 0.452584
+  type: 'test'
+  ...
+# Subtest: world doors remain aligned with all16 authored activity locations
+ok 340 - world doors remain aligned with all16 authored activity locations
+  ---
+  duration_ms: 0.706708
+  type: 'test'
+  ...
+# Subtest: every district door, route checkpoint and spatial site is reachable from square
+ok 341 - every district door, route checkpoint and spatial site is reachable from square
+  ---
+  duration_ms: 24.78775
+  type: 'test'
+  ...
+# Subtest: delivery route and consecutive spatial sites remain reachable
+ok 342 - delivery route and consecutive spatial sites remain reachable
+  ---
+  duration_ms: 4.674834
+  type: 'test'
+  ...
+# Subtest: all16 building interiors block paths and movement cannot tunnel through walls
+ok 343 - all16 building interiors block paths and movement cannot tunnel through walls
+  ---
+  duration_ms: 0.259334
+  type: 'test'
+  ...
+# Subtest: bounds and non-finite coordinates never produce a playable route
+ok 344 - bounds and non-finite coordinates never produce a playable route
+  ---
+  duration_ms: 0.080459
+  type: 'test'
+  ...
+# Subtest: path planning preserves input positions
+ok 345 - path planning preserves input positions
+  ---
+  duration_ms: 5.410917
+  type: 'test'
+  ...
+# Subtest: actual client traversal reaches every spatial route without cutting wall corners
+ok 346 - actual client traversal reaches every spatial route without cutting wall corners
+  ---
+  duration_ms: 5.817
+  type: 'test'
+  ...
+# Subtest: exact collision rejects the subpixel Night market crossing accepted by sampled visibility
+ok 347 - exact collision rejects the subpixel Night market crossing accepted by sampled visibility
+  ---
+  duration_ms: 7.001042
+  type: 'test'
+  ...
+# Subtest: exact collision preserves legal edges, corner tangency and the maximum safe boundary point
+ok 348 - exact collision preserves legal edges, corner tangency and the maximum safe boundary point
+  ---
+  duration_ms: 0.187042
+  type: 'test'
+  ...
+# Subtest: fractional valid starts around every door traverse every spatial site with varied step lengths
+ok 349 - fractional valid starts around every door traverse every spatial site with varied step lengths
+  ---
+  duration_ms: 1332.12175
+  type: 'test'
+  ...
+1..349
+# tests 349
+# suites 0
+# pass 340
+# fail 9
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 38033.120667

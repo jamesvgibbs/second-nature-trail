@@ -1,0 +1,54 @@
+{
+  "ports": {
+    "4230": {
+      "app.js": "f3b660b35e372f7f20ac0e986d3dc5dd2509fece4a811d53e1deeb57a4502fdc",
+      "move-day-scene.mjs": "39a85005a59c4b1784f64f5898730ff4aece2e1e63eddce1e694c63beeb9440d",
+      "destination-visits.mjs": "0acb894b5dee069771aadb41b390d3cecacbddb05b87e6cb2bcca7e70f22b0d7",
+      "trail-feedback.mjs": "54ec122bc3d6e43d1d5ab02274a7c69c3dee2ba0349735711a856d0de00eab93",
+      "trail-visuals.mjs": "7e62f481c8f1adb662fbe0b6df1aa18445ced00ba205a1c99030b535ff86bac6"
+    },
+    "4231": {
+      "app.js": "f3b660b35e372f7f20ac0e986d3dc5dd2509fece4a811d53e1deeb57a4502fdc",
+      "move-day-scene.mjs": "39a85005a59c4b1784f64f5898730ff4aece2e1e63eddce1e694c63beeb9440d",
+      "destination-visits.mjs": "0acb894b5dee069771aadb41b390d3cecacbddb05b87e6cb2bcca7e70f22b0d7",
+      "trail-feedback.mjs": "54ec122bc3d6e43d1d5ab02274a7c69c3dee2ba0349735711a856d0de00eab93",
+      "trail-visuals.mjs": "7e62f481c8f1adb662fbe0b6df1aa18445ced00ba205a1c99030b535ff86bac6"
+    },
+    "4233": {
+      "app.js": "f3b660b35e372f7f20ac0e986d3dc5dd2509fece4a811d53e1deeb57a4502fdc",
+      "move-day-scene.mjs": "39a85005a59c4b1784f64f5898730ff4aece2e1e63eddce1e694c63beeb9440d",
+      "destination-visits.mjs": "0acb894b5dee069771aadb41b390d3cecacbddb05b87e6cb2bcca7e70f22b0d7",
+      "trail-feedback.mjs": "54ec122bc3d6e43d1d5ab02274a7c69c3dee2ba0349735711a856d0de00eab93",
+      "trail-visuals.mjs": "7e62f481c8f1adb662fbe0b6df1aa18445ced00ba205a1c99030b535ff86bac6"
+    }
+  },
+  "evidence": {
+    "index": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 11149
+    },
+    "incident-delivered.png": {
+      "status": 200,
+      "contentType": "image/jpeg",
+      "bytes": 178790
+    },
+    "overview-mixed-full-final.png": {
+      "status": 200,
+      "contentType": "image/jpeg",
+      "bytes": 220878
+    },
+    "overview-mixed-compact-final.png": {
+      "status": 200,
+      "contentType": "image/jpeg",
+      "bytes": 213570
+    }
+  },
+  "incidentAfterRestartAndDelivery": {
+    "sameIncidentTimestamp": true,
+    "trip": 0,
+    "repaired": true,
+    "step": 1,
+    "score": 10
+  }
+}

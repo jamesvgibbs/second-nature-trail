@@ -55,7 +55,7 @@ function locate(e, id, pos) {
 }
 function delivery(f, id = "p0", route = 0) {
   for (let k = 0; k < 3; k++)
-    for (let j = 0; j < 4; j++) {
+    for (let j = 0; j < 5 && f.e.get(id).progress[0].step === k; j++) {
       const t = f.e.view(id).chapter.task;
       locate(f.e, id, t.target);
       f.act(id, "task", {

@@ -204,7 +204,7 @@ export function moveDaySceneModel(state, options = {}) {
     event.chapter === 0 &&
     (phase === "chapter" ||
       (phase === "paused" && event.pausedPhase === "chapter"));
-  const stage = ["load", "route", "travel", "deliver"].includes(delivery.stage)
+  const stage = ["load", "route", "travel", "repair", "deliver"].includes(delivery.stage)
     ? delivery.stage
     : "load";
   const selectedRoute = ["scenic", "shortcut"].includes(delivery.route)
@@ -272,6 +272,8 @@ export function moveDaySceneModel(state, options = {}) {
   if (stage === "travel") {
     travelFraction = fractionBetween(me.position, depot, crossing);
     cartPose = along(routePoints.slice(0, checkpointIndex + 1), travelFraction);
+  } else if (stage === "repair") {
+    cartPose = point(...routePoints[checkpointIndex]);
   } else if (stage === "deliver") {
     travelFraction = fractionBetween(me.position, crossing, home);
     cartPose = along(
@@ -333,6 +335,8 @@ export function moveDaySceneModel(state, options = {}) {
     totalDeliveries,
     selectedRoute,
     loadedCargo: delivery.loaded ? { ...delivery.loaded } : null,
+    wheelSlipped: stage === "repair" && delivery.incident?.type === "loose-wheel" && delivery.incident.repairedAt == null,
+    wheelRepaired: delivery.incident?.type === "loose-wheel" && Number.isFinite(delivery.incident.repairedAt),
     homeRestored: completedDeliveries > 0,
     sharedRecovery,
     teammates,
@@ -561,9 +565,16 @@ export function drawMoveDayScene(ctx, state, options = {}) {
   rect(x - 44, y - 24, 88, 8, p.line);
   rect(x - 40, y - 4, 80, 4, "#574b3e");
   rect(x - 36, y + 20, 20, 20, p.ink);
-  rect(x + 20, y + 20, 20, 20, p.ink);
+  const wheelX = model.wheelSlipped ? x + 36 : x + 20, wheelY = model.wheelSlipped ? y + 32 : y + 20;
+  rect(wheelX, wheelY, 20, 20, p.ink);
   rect(x - 32, y + 24, 12, 12, p.road);
-  rect(x + 24, y + 24, 12, 12, p.road);
+  rect(wheelX + 4, wheelY + 4, 12, 12, p.road);
+  if (model.wheelSlipped) {
+    rect(x + 20, y + 24, 12, 4, p.paper);
+    rect(wheelX + 8, wheelY + 8, 4, 4, p.amber);
+  } else if (model.wheelRepaired) {
+    rect(wheelX + 8, wheelY + 8, 4, 4, p.mint);
+  }
   rect(x + 40, y - 8, 32, 8, p.timber);
   rect(x + 64, y - 16, 8, 16, p.timber);
   if (model.loadedCargo) {

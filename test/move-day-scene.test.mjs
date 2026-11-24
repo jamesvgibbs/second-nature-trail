@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { Engine } from "../engine.mjs";
+import { Engine, shortcutWheelIncident } from "../engine.mjs";
 import {
   moveDaySceneModel,
   drawMoveDayScene,
@@ -13,6 +13,8 @@ function fixture(count = 100) {
   let now = 100000,
     seq = 0;
   const engine = new Engine({ now: () => now });
+  // Existing road/marker scenarios follow the normal branch; unlucky repair is covered separately.
+  for (let i=0;;i++) { const seed = `scene-normal-${i}`; if ([0,1,2].every(trip=>!shortcutWheelIncident(seed,"neighbor-000",trip))) {engine.state.seed=seed;break;} }
   for (let i = 0; i < count; i++) {
     const id = `neighbor-${String(i).padStart(3, "0")}`;
     engine.addPlayer(id, `Neighbor ${i}`);

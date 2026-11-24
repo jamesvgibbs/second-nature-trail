@@ -113,12 +113,14 @@ test('seeded HTTP actions preserve exact supplies, rollback, immutable answers a
         check(beforeRace);await refreshAll();evidence.concurrentTradeRaces++;
         // Each seed first earns a real objective so later lifecycle tests have real inventory and score to preserve.
         const scorer=players[0];
-        for(let action=0;action<12;action++){
+        let deliveryActions=0;
+        for(;deliveryActions<15&&!scorer.state.me.progress[0].complete;deliveryActions++){
           const task=scorer.state.chapter.task;await travel(scorer,task.target);clock+=RULES.taskCooldownMs;
           const choice=task.stage==='load'?random(3):task.stage==='route'?random(2):0;
           assert.equal((await act(scorer,'task',{choice})).status,200);
         }
         assert(scorer.state.me.progress[0].complete);
+        assert.equal(deliveryActions,12+scorer.state.me.progress[0].deliveryHistory.filter(trip=>trip.incident&&Number.isFinite(trip.incident.repairedAt)).length);
         for(let step=0;step<90;step++){
           clock+=100;const p=players[random(3)],other=players[(players.indexOf(p)+1)%3],kind=random(13);
           if(kind===0){const target=p.state.chapter.task?.target||{x:600,y:380},path=findPath(p.state.me.position,target);await act(p,'move',nextWaypoint(p.state.me.position,path)||target);}

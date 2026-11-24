@@ -1,0 +1,42 @@
+{
+  "startedAt": "2026-11-24T13:27:13.929144+00:00",
+  "baseCommit": "507ee6f2feb2377acae225641f89aa17c3a70336",
+  "runtime": "Node v24.20.0",
+  "qualification": "Working tree includes Nov24 changes; baseCommit alone is not the tested build. Native evidence and full-suite checks are separate.",
+  "sourceHashes": {
+    "engine.mjs": "d062dda26005093f65de8244f08409ac365f630d029cbbb67d4c7eb4e138cc8e",
+    "server.mjs": "010ff02f12710e0a2aec6ca92360c486312e8b3d4e8a146557d6221c40999353",
+    "public/app.js": "f3b660b35e372f7f20ac0e986d3dc5dd2509fece4a811d53e1deeb57a4502fdc",
+    "public/destination-visits.mjs": "0acb894b5dee069771aadb41b390d3cecacbddb05b87e6cb2bcca7e70f22b0d7",
+    "public/move-day-scene.mjs": "39a85005a59c4b1784f64f5898730ff4aece2e1e63eddce1e694c63beeb9440d",
+    "public/trail-feedback.mjs": "54ec122bc3d6e43d1d5ab02274a7c69c3dee2ba0349735711a856d0de00eab93",
+    "public/trail-visuals.mjs": "7e62f481c8f1adb662fbe0b6df1aa18445ced00ba205a1c99030b535ff86bac6",
+    "public/world.mjs": "d412a2dee8b4b1dc3779d1dabc46561383646ac63651dcf7cd30eeba8bd063a0",
+    "public/scenery.mjs": "5fbf4c1a01fb4062cd79e082bbf28bec1e2ab814cf10778f428f1b2be2974361",
+    "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+    "scripts/move-day-review.mjs": "362e50ff75e5eb2528714e9d2c67990e562d58cd8ee9df3e0652538022e2fb1d"
+  },
+  "finishedAt": "2026-11-24T13:28:37.387783+00:00",
+  "sourceUnchangedThroughoutRun": true,
+  "sourceHashesAfter": {
+    "engine.mjs": "d062dda26005093f65de8244f08409ac365f630d029cbbb67d4c7eb4e138cc8e",
+    "server.mjs": "010ff02f12710e0a2aec6ca92360c486312e8b3d4e8a146557d6221c40999353",
+    "public/app.js": "f3b660b35e372f7f20ac0e986d3dc5dd2509fece4a811d53e1deeb57a4502fdc",
+    "public/destination-visits.mjs": "0acb894b5dee069771aadb41b390d3cecacbddb05b87e6cb2bcca7e70f22b0d7",
+    "public/move-day-scene.mjs": "39a85005a59c4b1784f64f5898730ff4aece2e1e63eddce1e694c63beeb9440d",
+    "public/trail-feedback.mjs": "54ec122bc3d6e43d1d5ab02274a7c69c3dee2ba0349735711a856d0de00eab93",
+    "public/trail-visuals.mjs": "7e62f481c8f1adb662fbe0b6df1aa18445ced00ba205a1c99030b535ff86bac6",
+    "public/world.mjs": "d412a2dee8b4b1dc3779d1dabc46561383646ac63651dcf7cd30eeba8bd063a0",
+    "public/scenery.mjs": "5fbf4c1a01fb4062cd79e082bbf28bec1e2ab814cf10778f428f1b2be2974361",
+    "content.mjs": "f5aafea17f0d329e1506db81a6896cdb3ce935d40aab394dd3ea54db7193844d",
+    "scripts/move-day-review.mjs": "362e50ff75e5eb2528714e9d2c67990e562d58cd8ee9df3e0652538022e2fb1d"
+  },
+  "result": {
+    "tests": 351,
+    "pass": 351,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "durationMs": 44319.762041
+  }
+}

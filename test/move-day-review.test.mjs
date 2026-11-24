@@ -36,7 +36,10 @@ test('bounded HTTP/SSE scenario performs actual cargo choices and preserves ever
     const [code] = await exited; assert.equal(code, 0, run.errors());
     const result = JSON.parse(readFileSync(report));
     assert.equal(result.passed, true); assert.equal(result.concurrentParticipants, 3);
-    assert.equal(result.completedObjectives, 3); assert.equal(result.scoringSamples, 36);
+    assert.equal(result.completedObjectives, 3); assert.equal(result.scoringSamples, 36 + result.wheelRepairCount);
+    assert.equal(result.wheelRepairCount, result.wheelRepairTrips.length);
+    assert.equal(new Set(result.wheelRepairTrips.map(x => x.playerId)).size, result.wheelRepairCount);
+    assert(result.wheelRepairTrips.every(x => x.trip === 1));
     assert.deepEqual(result.scores, { perPlayer: 45, primaryValue: 27 });
     assert.deepEqual(result.inventoryPerPlayer, { parts: 0, filters: 3, food: 1, cable: 1 });
     assert.equal(result.reservesConsumed, 0); assert.equal(result.answersExposed, false);

@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import vm from "node:vm";
 import { readFileSync } from "node:fs";
 import { Engine } from "../engine.mjs";
+import { destinationVisit } from "../public/destination-visits.mjs";
+import { DOORS } from "../public/world.mjs";
 import { chapterMapStatus } from "../public/helpers.mjs";
 
 function untouched() {
@@ -58,7 +60,7 @@ test("current, future, countdown and paused/finished chapter labels remain disti
 
 test("actual Map rendering exposes history in button text and preserves current-district navigation", () => {
   const source = readFileSync(new URL("../public/app.js", import.meta.url), "utf8");
-  const holder = { children: [], append(node) { this.children.push(node); } };
+  const holder = { children: [], replaceChildren() { this.children=[]; }, append(node) { this.children.push(node); } };
   const focus = { id: "close-modal" };
   const context = vm.createContext({
     state: { event: { ...event, chapter: 1 }, me: { progress: [untouched(), { ...untouched(), step: 1, score: 10 }] } },
@@ -71,9 +73,9 @@ test("actual Map rendering exposes history in button text and preserves current-
     sceneFocused: () => false,
     sceneAvailable: () => false,
     isFilterAvailable: () => false,
-    chapterMapStatus, panel: "", document: { activeElement: focus, createElement: () => ({}) },
+    destinationVisit, DOORS, chapterMapStatus, panel: "", document: { activeElement: focus, createElement: () => ({}) },
     $: () => holder, open() {}, close() {},
-    btn: (textContent, onclick, className) => ({ textContent, onclick, className, children: [], append(...nodes) { this.children.push(...nodes); } }),
+    btn: (textContent, onclick, className) => ({ textContent, onclick, className, dataset: {}, children: [], append(...nodes) { this.children.push(...nodes); } }),
     toast: (message) => { context.message = message; },
     travel: (...args) => { context.destination = args; },
   });

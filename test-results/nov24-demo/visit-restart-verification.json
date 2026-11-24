@@ -1,0 +1,24 @@
+{
+  "playerStateExactlyPreservedAcrossRestart": true,
+  "phase": "paused",
+  "visits": {
+    "300,160": {
+      "x": 300,
+      "y": 160,
+      "at": 1795526367555
+    },
+    "160,160": {
+      "x": 160,
+      "y": 160,
+      "at": 1795526368138
+    },
+    "530,140": {
+      "x": 530,
+      "y": 140,
+      "at": 1795526457030
+    }
+  },
+  "deliveryProgress": 1,
+  "score": 10,
+  "qualification": "Real native UI movement and delivery before normal process restart; no assigned visits or progress."
+}

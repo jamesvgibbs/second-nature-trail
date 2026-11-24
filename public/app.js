@@ -1,3 +1,4 @@
+import { destinationVisit, destinationBadgeBounds } from "/destination-visits.mjs";
 import { eventSceneModel, drawEventScene } from "/event-scenes.mjs";
 import { chapterSceneModel, drawChapterScene, hitChapterHotspot, CHAPTER_SCENE_TITLES } from "/chapter-scenes.mjs";
 import { filterSceneModel, drawFilterScene, hitFilterHotspot } from "/filter-scene.mjs";
@@ -789,6 +790,9 @@ function accept(s, kind = "full", allowEpoch = false) {
       neighborListSignature(previous) !== neighborListSignature(state))
   )
     preservePanelFocus(() => neighbors(true));
+  if (panel === "map" && modal.open &&
+      JSON.stringify(previous?.me?.visitedDestinations) !== JSON.stringify(state.me?.visitedDestinations))
+    preservePanelFocus(() => renderMapDistricts());
   refreshNeighborEmotes();
   if (
     panel === "inventory" &&
@@ -940,8 +944,9 @@ function renderSupplyHUD() {
   hud.innerHTML += `<span class="hud-safe overview-presence">${crowd.nearby} nearby · ${crowd.total} connected · Meet everyone in Neighbors</span>`;
 }
 function deliveryTrailHTML(task, progress) {
-  const stage = DELIVERY_STAGES.findIndex(([key]) => key === task?.stage);
-  return `<div class="delivery-trail" aria-label="Delivery stages">${DELIVERY_STAGES.map(
+  const stages = task?.stage === "repair" ? [...DELIVERY_STAGES.slice(0, 3), ["repair", "Reseat wheel"], DELIVERY_STAGES[3]] : DELIVERY_STAGES;
+  const stage = stages.findIndex(([key]) => key === task?.stage);
+  return `<div class="delivery-trail" aria-label="Delivery stages">${stages.map(
     ([key, label], i) =>
       `<span class="${
         progress?.complete
@@ -1004,7 +1009,7 @@ function moveDayNearTarget() {
 function moveDaySidebarHTML() {
   const model = syncMoveDayState();
   if (!model) return "<p>Loading your delivery cart…</p>";
-  const latest = moveDayState.journal.at(-1);
+  const latest = state.me?.progress?.[0]?.delivery?.journal || moveDayState.journal.at(-1);
   const heading = model.complete ? "A little more human." : "Move Day";
   const manifest = model.loaded
     ? Object.entries(model.loaded)
@@ -1053,6 +1058,7 @@ function renderMoveDaySidebar() {
         load: "What will you carry?",
         route: "Which way will you go?",
         travel: "Check the crossing.",
+        repair: "Reseat the slipped wheel.",
         deliver: "Bring the supplies home.",
       }[model.stage];
   holder.append(prompt);
@@ -1067,6 +1073,7 @@ function renderMoveDaySidebar() {
         `move-day-choice${moveDayState.selection === i ? " selected" : ""}`,
       );
       b.dataset.focusKey = `move-day:${model.stage}:choice:${i}`;
+      b.onkeydown = moveDayControlKeys;
       b.setAttribute("aria-pressed", String(moveDayState.selection === i));
       const detail = document.createElement("span");
       detail.className = "choice-detail";
@@ -1088,12 +1095,14 @@ function renderMoveDaySidebar() {
       model.selectedRoute === "shortcut"
         ? "Take the damaged shortcut"
         : "Take the paved detour",
+    repair: "Return to the crossing",
     deliver: "Go to the roadside home",
   }[model.stage];
   const actionLabel = {
     load: "Pack this load",
     route: "Choose this route",
     travel: "Inspect the crossing",
+    repair: "Reseat the wheel",
     deliver: "Deliver supplies",
   }[model.stage];
   const primary = btn(
@@ -1111,6 +1120,8 @@ function renderMoveDaySidebar() {
   );
   primary.id = "move-day-primary";
   primary.dataset.focusKey = "move-day:primary";
+  primary.onkeydown = moveDayControlKeys;
+  if ($("#move-day-result")) $("#move-day-result").onkeydown = moveDayControlKeys;
   primary.disabled =
     !model.complete && (paused || moveDayState.pending || (!near && traveling));
   controls.append(primary);
@@ -1129,6 +1140,16 @@ function renderMoveDaySidebar() {
   }
   holder.append(controls);
   renderMoveDayCompanions();
+}
+function moveDayControlKeys(event) {
+  if (!isMoveDayFocused() || modal.open || event.ctrlKey || event.metaKey || event.altKey ||
+      ["INPUT", "SELECT", "TEXTAREA"].includes(event.target?.tagName)) return;
+  const key = event.key.toLowerCase();
+  if (key === keys.interact) {
+    event.preventDefault();
+    return deliveryModel(state)?.complete ? moveDayFieldNotes() : moveDayPrimary();
+  }
+  if (/^[1-3]$/.test(key)) { event.preventDefault(); selectMoveDayChoice(Number(key) - 1); }
 }
 function selectMoveDayChoice(index) {
   const model = syncMoveDayState();
@@ -3344,6 +3365,7 @@ function deliveryPrompt(task) {
       load: "What will you take?",
       route: "Which crossing will you use?",
       travel: "Check the crossing.",
+      repair: "Reseat the slipped wheel.",
       deliver: "Unload at the highway.",
     }[task?.stage] ||
     task?.prompt ||
@@ -3369,7 +3391,7 @@ function deliveryChoiceDetail(model, index) {
     return route
       ? `${route.value} useful value · ${route.points} delivery points · ${
           route.damageValue
-            ? `loses ${route.damageValue} cargo value`
+            ? `loses ${route.damageValue} cargo value · Rough ground can cause a delay`
             : "cargo protected"
         }`
       : "";
@@ -3818,8 +3840,14 @@ function map() {
   panel = "map";
   open(
     "One shared neighborhood",
-    `<p class="small">Eight districts around Bragging Square. The active chapter’s locations are open to everyone at once.</p><p class="small muted">Unplayed means no objective, learning, clue, or assist progress is recorded; moving and socializing do not count as chapter progress. Complete means the main objective is finished.</p><div class="chapter-map" id="map-districts"></div>`,
+    `<p class="small">Eight districts around Bragging Square. The active chapter’s locations are open to everyone at once.</p><p class="small">Your visits: ✓ Reached · ? Unexplored. Arrival marks are separate from chapter objectives and scores.</p><p class="small muted">Unplayed means no objective, learning, clue, or assist progress is recorded; moving and socializing do not count as chapter progress. Complete means the main objective is finished.</p><div class="chapter-map" id="map-districts"></div>`,
   );
+  renderMapDistricts();
+}
+function renderMapDistricts() {
+  const holder = $("#map-districts");
+  if (!holder) return;
+  holder.replaceChildren();
   if (sceneAvailable()) $("#map-districts").append(btn("Explore the neighborhood overview",()=>setChapterOverview(true)),btn("Return to the chapter scene",()=>setChapterOverview(false),"primary"));
   if (isFilterAvailable()) $("#map-districts").append(
     btn("Explore the neighborhood overview", () => setFilterOverview(true)),
@@ -3853,9 +3881,13 @@ function map() {
       },
       status.position === "current" ? "primary" : "",
     );
+    b.dataset.focusKey = `map:district:${i}`;
     const places = document.createElement("span");
     places.className = "map-places";
-    places.textContent = `${d[1]} · ${d[2]}`;
+    places.textContent = [1, 2].map((site) => {
+      const visit = destinationVisit(state, DOORS[i * 2 + site - 1]);
+      return `${visit.symbol} ${d[site]} — ${visit.label}`;
+    }).join(" · ");
     const progress = document.createElement("span");
     progress.className = "map-places";
     progress.textContent = status.label;
@@ -4084,7 +4116,9 @@ function worldKeys(e) {
     } else toast("Walk to one of the current chapter’s marked locations.");
   } else if (sceneFocused() && (/^[1-3]$/.test(k) || k === " ")) {
     sceneKeys(e);
-  } else if (isFilterFocused() && /^[1-3]$/.test(k)) {
+  } else if (isMoveDayFocused() && /^[1-3]$/.test(k)) {
+    moveDayControlKeys(e);
+} else if (isFilterFocused() && /^[1-3]$/.test(k)) {
     e.preventDefault();selectFilterChoice(Number(k)-1);
   } else if (k === keys.inventory) {
     e.preventDefault();
@@ -4628,6 +4662,13 @@ function drawMap(ctx, live) {
       ctx.textAlign = "center";
       ctx.fillStyle = site === 0 ? "#f3e6bc" : "#c6ddc1";
       ctx.fillText(label, door[0], door[1] + 40);
+      if (live && !isPresentation && state?.me) {
+        const visit = destinationVisit(state, door), badge = destinationBadgeBounds(door, label);
+        rect(ctx, badge.x, badge.y, badge.width, badge.height, "#203a40");
+        ctx.font = "bold 16px monospace";
+        ctx.fillStyle = visit.reached ? "#d1e8bf" : "#f3e6bc";
+        ctx.fillText(visit.symbol, badge.x + badge.width / 2, badge.y + 16);
+      }
     });
   });
   // The central square remains open, with no collisions between players.
@@ -5916,7 +5957,7 @@ function updateControlHints() {
         )} continues · ${movementKeys()} / arrows switch to free walking`
       : `Click to walk · ${movementKeys()} / arrows to move · ${keyLabel(
           "interact",
-        )} to interact`);
+        )} to interact · Personal visits: ✓ reached / ? unexplored`);
   if ($("#field-notes-menu"))
     $("#field-notes-menu").hidden = !isMoveDayAvailable() && !isFilterAvailable() && !sceneAvailable();
   if ($("#move-day-return")) {

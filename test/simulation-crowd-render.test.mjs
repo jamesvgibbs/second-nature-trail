@@ -11,6 +11,7 @@ import {
 } from "../public/scenery.mjs";
 import { SITE_LABELS } from "../public/trail-visuals.mjs";
 import { restorationProgress } from "../public/helpers.mjs";
+import { destinationVisit, destinationBadgeBounds } from "../public/destination-visits.mjs";
 import { overviewCrowd } from "../public/crowd-view.mjs";
 const source = readFileSync(
   new URL("../public/app.js", import.meta.url),
@@ -94,6 +95,7 @@ function render(state, presentation = false) {
   };
   const context = vm.createContext({
     DOORS,
+    destinationVisit, destinationBadgeBounds,
     districtScenery,
     SQUARE_TREES,
     ROAD_BANDS,
@@ -242,4 +244,13 @@ test("nearby visibility excludes offline/unset peers and protects both task appr
     for (const site of state.chapter.locations)
       assert(Math.hypot(p.position.x - site.x, p.position.y - site.y) >= 45);
   assert.equal(state.players.length, 100, "Only drawing visibility is capped");
+});
+
+
+test("personal arrival badges render sixteen distinct site states with100 peers while public presentation has no personal visit markers",()=>{
+ const state=view(0,'chapter','stack');state.me.visitedDestinations=Object.fromEntries(DOORS.slice(0,3).map(([x,y])=>[`${x},${y}`,{x,y,at:1000}]));
+ const isBadge=m=>m.kind==='text'&&DOORS.some((door,i)=>{const b=destinationBadgeBounds(door,SITE_LABELS[Math.floor(i/2)][i%2]);return m.x===b.x+b.width/2&&m.y===b.y+16&&['✓','?'].includes(m.text);});
+ const painted=render(state).marks.filter(isBadge);assert.equal(painted.length,16);assert.equal(painted.filter(m=>m.text==='✓').length,3);assert.equal(painted.filter(m=>m.text==='?').length,13);
+ for(let i=0;i<16;i++){const b=destinationBadgeBounds(DOORS[i],SITE_LABELS[Math.floor(i/2)][i%2]);assert(painted.some(m=>m.x===b.x+b.width/2&&m.y===b.y+16&&m.text===(i<3?'✓':'?')));}
+ const publicView=view(0,'chapter','stack',true);assert.equal(render(publicView,true).marks.filter(isBadge).length,0);
 });

@@ -1,4 +1,4 @@
-import { createHash, randomUUID } from "node:crypto";
+import { createHash, createHmac, randomUUID } from "node:crypto";
 import {
   RULES,
   CHAPTERS,
@@ -23,6 +23,18 @@ const copy = (x) => structuredClone(x),
   assert = (ok, message) => {
     if (!ok) throw new Error(message);
   };
+export const SHORTCUT_WHEEL_CHANCE = Object.freeze({ numerator: 1, denominator: 4 });
+// Stable per event/player/trip: transaction rollback and retries cannot reroll.
+// The event seed stays server-side; this pure helper is not an HTTP override.
+export function shortcutWheelIncident(seed, playerId, trip) {
+  return createHmac("sha256", seed)
+    .update(JSON.stringify(["move-day-wheel-v1", playerId, trip]))
+    .digest().readUInt32BE(0) % SHORTCUT_WHEEL_CHANCE.denominator === 0;
+}
+const newDelivery = (journal = null) => ({
+  stage: "load", loaded: null, route: null, visited: false,
+  crossingChecked: false, incident: null, journal,
+});
 const progress = () => ({
   step: 0,
   score: 0,
@@ -46,7 +58,8 @@ const progress = () => ({
   siteHits: 0,
   targetHits: 0,
   cycles: [],
-  delivery: { stage: "load", loaded: null, route: null, visited: false },
+  delivery: newDelivery(),
+  deliveryHistory: [],
   reserve: Object.fromEntries(
     ["parts", "filters", "food", "cable"].map((k) => [
       k,
@@ -102,7 +115,17 @@ export class Engine {
       pause: null,
       controlOwner: null,
     };
-    if (state) this.cancelTrades();
+    if (state) {
+      // Additive save migration: prior position/progress is not arrival evidence.
+      for (const p of Object.values(state.players)) {
+        p.visitedDestinations ||= {};
+        for (const r of p.progress) {
+          r.deliveryHistory ||= [];
+          r.delivery = { ...newDelivery(), ...r.delivery };
+        }
+      }
+      this.cancelTrades();
+    }
   }
   log(type, data = {}) {
     this.state.actions.push({ at: this.now(), type, ...data });
@@ -140,6 +163,7 @@ export class Engine {
         answered: false,
       },
       position: { x: 600, y: 380 },
+      visitedDestinations: {},
       lastMoveAt: this.now(),
       items: [],
       inventoryVersion: 0,
@@ -250,6 +274,33 @@ export class Engine {
       });
     }
   }
+  destinationArrivals(p, position = p.position) {
+    return CHAPTERS.flatMap(c => c.locations).filter(site =>
+      !own(p.visitedDestinations || {}, `${site.x},${site.y}`) &&
+      Math.hypot(position.x - site.x, position.y - site.y) <= RULES.siteDistance);
+  }
+  recordDestinationArrivals(p) {
+    p.visitedDestinations ||= {};
+    for (const site of this.destinationArrivals(p)) {
+      const key = `${site.x},${site.y}`;
+      p.visitedDestinations[key] = { x: site.x, y: site.y, at: this.now() };
+      this.log("destinationVisited", { playerId: p.id, key, x: site.x, y: site.y });
+    }
+  }
+  movementPosition(p, a) {
+    assert(p.setup, "Finish setup");
+    assert(["draft", "lobby", "chapter", "finale"].includes(this.state.phase), "Movement is frozen");
+    assert(Number.isFinite(a.x) && Number.isFinite(a.y), "Invalid coordinates");
+    const x = Math.max(30, Math.min(1170, a.x)), y = Math.max(30, Math.min(770, a.y));
+    const dx = x - p.position.x, dy = y - p.position.y, distance = Math.hypot(dx, dy);
+    const limit = Math.min(1, (this.now() - p.lastMoveAt) / 1000) * RULES.moveSpeed;
+    const ratio = distance ? Math.min(1, limit / distance) : 0;
+    return clipMove(p.position, { x: p.position.x + dx * ratio, y: p.position.y + dy * ratio });
+  }
+  movementNeedsPersistence(id, a) {
+    const p = this.get(id), next = this.movementPosition(p, a);
+    return (next.x !== p.position.x || next.y !== p.position.y) && this.destinationArrivals(p, next).length > 0;
+  }
   dispatch(id, a) {
     this.tick();
     const p = this.get(id);
@@ -284,6 +335,7 @@ export class Engine {
           "The delivery stage changed; review the current action",
         );
       }
+      const apply = () => {
       switch (a.type) {
         case "setup": {
           assert(
@@ -374,27 +426,9 @@ export class Engine {
           p.ready = true;
           break;
         case "move": {
-          assert(p.setup, "Finish setup");
-          assert(
-            ["draft", "lobby", "chapter", "finale"].includes(s.phase),
-            "Movement is frozen",
-          );
-          assert(
-            Number.isFinite(a.x) && Number.isFinite(a.y),
-            "Invalid coordinates",
-          );
-          const x = Math.max(30, Math.min(1170, a.x)),
-            y = Math.max(30, Math.min(770, a.y));
-          const dx = x - p.position.x,
-            dy = y - p.position.y,
-            d = Math.hypot(dx, dy),
-            limit =
-              Math.min(1, (this.now() - p.lastMoveAt) / 1000) * RULES.moveSpeed;
-          const ratio = d ? Math.min(1, limit / d) : 0;
-          p.position = clipMove(p.position, {
-            x: p.position.x + dx * ratio,
-            y: p.position.y + dy * ratio,
-          });
+          const previous = p.position;
+          p.position = this.movementPosition(p, a);
+          if (p.position.x !== previous.x || p.position.y !== previous.y) this.recordDestinationArrivals(p);
           p.lastMoveAt = this.now();
           if (Math.hypot(p.position.x - 600, p.position.y - 380) >= 20) {
             p.practice ||= {};
@@ -620,6 +654,10 @@ export class Engine {
           throw new Error("Unknown action");
       }
       return { ok: true };
+      };
+      const result = apply();
+      if (["task", "challenge", "secret"].includes(a.type)) this.recordDestinationArrivals(p);
+      return result;
     });
   }
   chapterView(p) {
@@ -752,7 +790,7 @@ export class Engine {
     const target =
       d.stage === "deliver"
         ? c.locations[1]
-        : d.stage === "travel"
+        : ["travel", "repair"].includes(d.stage)
           ? RULES.deliveryCheckpoints[d.route]
           : c.locations[0];
     const prompts = {
@@ -779,6 +817,10 @@ export class Engine {
       travel: {
         prompt: "Move to the route checkpoint, then inspect the crossing.",
         options: ["Inspect crossing"],
+      },
+      repair: {
+        prompt: "The rubble shook a wheel loose. Reseat it before continuing; your cargo is still loaded.",
+        options: ["Reseat the wheel"],
       },
       deliver: {
         prompt: "Deliver your loaded cargo at the broken highway.",
@@ -1115,12 +1157,27 @@ export class Engine {
         );
       d.loaded = copy(plan);
       d.stage = "route";
+      d.journal = { id: a.requestId, title: "Cart packed", text: "Your cargo is loaded. Choose a route to the crossing." };
     } else if (d.stage === "route") {
       d.route = a.choice === 0 ? "scenic" : "shortcut";
       d.stage = "travel";
+      d.journal = { id: a.requestId, title: "Route chosen", text: d.route === "shortcut" ? "Take the rubble shortcut. Check the crossing when you arrive." : "Take the paved detour to protect the cargo." };
     } else if (d.stage === "travel") {
       d.visited = true;
+      if (!d.crossingChecked) {
+        d.crossingChecked = true;
+        if (d.route === "shortcut" && shortcutWheelIncident(this.state.seed, p.id, r.step))
+          d.incident = { type: "loose-wheel", at: this.now(), trip: r.step, repairedAt: null };
+        this.log("deliveryCrossing", { playerId: p.id, chapter: 0, trip: r.step, route: d.route, incident: copy(d.incident) });
+      }
+      d.stage = d.incident && d.incident.repairedAt === null ? "repair" : "deliver";
+      d.journal = { id: a.requestId, title: d.stage === "repair" ? "A wheel came loose" : "Crossing checked", text: d.stage === "repair" ? "Reseat the wheel here before continuing. Your cargo stays loaded." : "The cart is ready. Continue to the delivery." };
+    } else if (d.stage === "repair") {
+      assert(d.visited && d.crossingChecked && d.incident?.type === "loose-wheel" && d.incident.repairedAt === null, "No loose wheel to repair");
+      d.incident.repairedAt = this.now();
       d.stage = "deliver";
+      d.journal = { id: a.requestId, title: "Wheel reseated", text: "The wheel is secure. Your loaded cart can continue to the delivery." };
+      this.log("deliveryRepair", { playerId: p.id, chapter: 0, trip: r.step, repairedAt: d.incident.repairedAt });
     } else {
       assert(d.visited, "Visit the route checkpoint first");
       let value = 0;
@@ -1135,7 +1192,7 @@ export class Engine {
           );
       }
       r.primary += value;
-      r.score += Math.round(
+      const deliveryPoints = Math.round(
         (value /
           Math.max(
             ...RULES.cargoPlans.map((plan) =>
@@ -1147,6 +1204,7 @@ export class Engine {
           )) *
           RULES.taskPoints,
       );
+      r.score += deliveryPoints;
       r.step++;
       this.log("delivery", {
         playerId: p.id,
@@ -1156,7 +1214,9 @@ export class Engine {
         value,
         step: r.step,
       });
-      r.delivery = { stage: "load", loaded: null, route: null, visited: false };
+      r.deliveryHistory ||= [];
+      r.deliveryHistory.push({ trip: r.step - 1, route: d.route, incident: copy(d.incident), deliveredAt: this.now() });
+      r.delivery = newDelivery({ id: a.requestId, title: "Delivery complete", text: `Cargo delivered: +${deliveryPoints} points, ${value} useful value. ${r.step}/${this.taskCount(c)} deliveries complete.` });
       if (r.step === this.taskCount(c)) {
         r.complete = true;
         const completedAt = this.now();
@@ -1701,7 +1761,7 @@ export class Engine {
         (this.state.phase === "paused" && this.state.pause?.phase === "brag"))
         ? this.standings()
         : [],
-      rules: RULES,
+      rules: { ...RULES, shortcutWheelChance: SHORTCUT_WHEEL_CHANCE },
     });
   }
   standings() {

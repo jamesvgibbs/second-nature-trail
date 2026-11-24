@@ -1,0 +1,101 @@
+Window: "Second Nature Trail", App: Safari.
+0 standard window Second Nature Trail, ID: SafariWindow?IsSecure=false&UUID=344E2032-A34E-463C-99A5-9AE8C7B2BB5F, Secondary Actions: Raise
+	1 split group
+		2 splitter (disabled, settable, float) -1
+		3 tab group
+			4 scroll area
+				5 HTML content Description: Second Nature Trail, URL: nov24-normal.localhost:4230/
+					6 container
+						7 text sn SECOND NATURE TRAIL CONNECTED
+						8 text PAUSED
+						9 text 02:45
+						10 text YOUR SUPPLIES 10 / 12 stored 1 Parts 3 Filters 3 Food 3 Cable 0 nearby · 1 connected · Meet everyone in Neighbors
+						11 container Shared neighborhood. Move with arrow keys or WASD, or click a destination. Press E to interact. Tab reaches all menus.
+						12 text MOVING DEPOT Click to walk · WASD / arrows to move · E to interact · Personal visits: ✓ reached / ? unexplored CHAPTER 1 / 08
+						13 heading Move day mayhem, Value: 2
+							14 text Move day mayhem
+						15 text Pack a four-slot delivery cart from your twelve-item storage. Complete three deliveries, choosing between protected cargo and the shorter damaged route.
+						16 text Your chapter score
+						17 text 10
+						18 text Objective progress
+						19 text 1 / 3
+						20 container Delivery stages
+							21 container
+								22 text 1 Pack
+							23 text 2 Choose route 3 Inspect 4 Deliver
+						24 text The host paused play. Movement, supplies, and scoring are frozen.
+						25 button (disabled) Pack the cart →
+						26 text Destination: Moving depot
+						27 text FIELD NOTES & EXPLORATION
+						28 button (disabled) Learning encounters
+						29 button (disabled) Try the harder challenge
+						30 button (disabled) Look for a secret
+						31 button (disabled) The neighborhood mystery
+						32 heading Neighborhood restoration, Value: 3
+							33 text Neighborhood restoration
+						34 text 0 completed objectives · AI control 100%
+						35 container Neighborhood restored 0%
+						36 text Completed objectives restore the district’s homes. Mint foundations show shared progress; warm windows mark a fully restored district.
+						37 text 1. Moving depot
+						38 text 0
+						39 text 2. Filter warehouse
+						40 text 0
+						41 text 3. Identity bureau
+						42 text 0
+						43 text 4. Insurance office
+						44 text 0
+						45 text 5. Apartment block
+						46 text 0
+						47 text 6. Trading post
+						48 text 0
+						49 text 7. Rewards arcade
+						50 text 0
+						51 text 8. Internet exchange
+						52 text 0
+						53 button Inventory [I]
+						54 button Map [M]
+						55 button Neighbors
+						56 button Help [H]
+						57 button Settings
+						58 button Field notes
+						59 button Return to Move Day
+						60 text One neighborhood. Everyone belongs. Route review neighbor
+	61 toolbar
+		62 container Secondary Actions: Move previous, Move next, Remove from toolbar
+			63 button Description: show sidebar, Help: Show sidebar, ID: SidebarButton
+			64 menu button Description: Tab Group picker, ID: TabGroupPickerButton?TabGroup=
+		65 container BackForwardSegmentedControl
+			66 button (disabled) Description: Go back, Help: Show the previous page, ID: BackButton
+			67 button (disabled) Description: Go forward, Help: Show the next page, ID: ForwardButton
+		68 container Secondary Actions: Move previous, Move next, Remove from toolbar
+			69 button Page Menu, ID: AssistantButton
+			70 button Add page to Reading List, ID: OneStepBookmarkingButton
+			71 text field (settable) Description: smart search field, Value: nov24-normal.localhost:4230, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			72 button Reload this page, ID: ReloadButton
+		73 button Description: Share, ID: ShareButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		74 button Description: New Tab, ID: NewTabButton, Secondary Actions: Move previous, Move next, Remove from toolbar
+		75 button Description: Tab Overview, ID: TabOverviewButton, Secondary Actions: Move previous, Remove from toolbar
+	76 tab group Description: Tab bar, 3 tabs, ID: TabBar?isSeparate=false
+		77 tab Start Page, Value: off, Secondary Actions: close tab, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			78 image Description: favorite, ID: FaviconImageView
+			79 text Value: Start Page, ID: UnifiedTabBarButton._titleTextField
+		80 tab Second Nature Trail · Nov24 review, Value: off, Secondary Actions: close tab, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			81 image FaviconImageView
+			82 text Value: Second Nature Trail · Nov24 review, ID: UnifiedTabBarButton._titleTextField
+		83 tab Second Nature Trail, Help: To interact with the items in this button, press Control-Option-Shift-Down Arrow., Value: on, Secondary Actions: close tab, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=true
+			84 image FaviconImageView
+			85 text Value: Second Nature Trail, ID: UnifiedTabBarButton._titleTextField
+	86 close button
+	87 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	88 minimize button
+89 menu bar
+	90 Safari
+	91 File
+	92 Edit
+	93 View, ID: SafariViewMenu
+	94 History
+	95 Bookmarks, ID: SafariBookmarksMenu
+	96 Window, ID: SafariWindowMenu
+	97 Help, ID: SafariHelpMenu
+
+The focused UI element is 11 container Shared neighborhood. Move with arrow keys or WASD, or click a destination. Press E to interact. Tab reaches all menus.

@@ -61,6 +61,10 @@ for (const plan of [0, 1, 2]) for (const route of [0, 1]) {
     const f = fixture(); let last;
     for (let trip = 0; trip < 3; trip++) {
       for (const [choice, stage] of [[plan,'load'],[route,'route'],[0,'travel'],[0,'deliver']]) {
+        if (stage === 'deliver' && f.view().chapter.task.stage === 'repair') {
+          const repaired = f.step(0); assert.equal(repaired.receipt.title, 'Wheel reseated');
+          assert.equal(repaired.receipt.stage, 'repair'); assert.equal(repaired.after.me.progress[0].score,repaired.before.me.progress[0].score);
+        }
         last = f.step(choice); const receipt = last.receipt;
         assert(receipt, stage); assert.equal(receipt.stage, stage); assert.equal(receipt.id, last.action.requestId);
         assert.equal(receipt.deltaStatus, 'consistent'); assert.equal(receipt.completed, trip === 2 && stage === 'deliver');

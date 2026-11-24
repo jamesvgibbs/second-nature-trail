@@ -1,5 +1,5 @@
 // Presentation-only delivery facts. The server remains the scoring authority.
-const stages = ["load", "route", "travel", "deliver"];
+const stages = ["load", "route", "travel", "repair", "deliver"];
 const numeric = value => Number.isFinite(value) && value >= 0;
 const equal = (left, right) => JSON.stringify(left) === JSON.stringify(right);
 const quantities = (source, keys) => Object.fromEntries(keys.map(key => [key, source?.[key] ?? 0]));
@@ -44,6 +44,9 @@ export function deliveryModel(state) {
   ] : [];
   return {
     stage: cart.stage, loaded, storage, reserve,
+    incident: cart.incident ? { ...cart.incident } : null,
+    journal: cart.journal ? { ...cart.journal } : null,
+    wheelChance: rules.shortcutWheelChance ? { ...rules.shortcutWheelChance } : null,
     storageUsed: Object.values(storage).reduce((sum, quantity) => sum + quantity, 0),
     storageLimit: rules.storageLimit, storageValue: value(storage),
     slots: loaded ? slots(loaded) : 0, maxSlots: rules.cargoSlots,
@@ -80,9 +83,19 @@ export function deliveryReceipt(before, after, action, result) {
     title = "Route chosen";
     details = [route.label, route.damageValue ? `This route will lose ${route.damageValue} cargo value: ${route.value} useful value and ${route.points} delivery points remain.` : `Cargo stays protected: ${route.value} useful value and ${route.points} delivery points.`, "Reach the marked crossing before delivering."];
   } else if (stage === "travel") {
-    if (action.choice !== 0 || nextCart.stage !== "deliver" || nextCart.visited !== true || nextCart.route !== model.selectedRoute || !sameCargo(nextCart.loaded, model.loaded, keys)) return null;
-    title = "Crossing checked";
-    details = ["Your loaded supplies are ready for delivery at the broken highway."];
+    if (action.choice !== 0 || !["deliver", "repair"].includes(nextCart.stage) || nextCart.visited !== true || nextCart.route !== model.selectedRoute || !sameCargo(nextCart.loaded, model.loaded, keys)) return null;
+    if (nextCart.stage === "repair") {
+      if (model.selectedRoute !== "shortcut" || nextCart.incident?.type !== "loose-wheel" || nextCart.incident.repairedAt !== null) return null;
+      title = "A wheel came loose";
+      details = ["The rubble shook a wheel loose. Reseat it here before continuing.", "Your cargo stays loaded; the repair uses no extra supplies or points."];
+    } else {
+      title = "Crossing checked";
+      details = ["Your loaded supplies are ready for delivery at the broken highway."];
+    }
+  } else if (stage === "repair") {
+    if (action.choice !== 0 || model.incident?.type !== "loose-wheel" || model.incident.repairedAt !== null || nextCart.stage !== "deliver" || nextCart.incident?.type !== "loose-wheel" || !Number.isFinite(nextCart.incident.repairedAt) || nextCart.visited !== true || nextCart.route !== model.selectedRoute || !sameCargo(nextCart.loaded, model.loaded, keys)) return null;
+    title = "Wheel reseated";
+    details = ["The wheel is secure. Continue to the delivery with your loaded cart."];
   } else {
     outcome = model.routes.find(route => route.id === model.selectedRoute);
     if (action.choice !== 0 || !previous.delivery.visited || !outcome || nextCart.stage !== "load" || nextCart.loaded !== null || nextCart.route !== null || nextCart.visited !== false) return null;
